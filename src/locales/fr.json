@@ -1,0 +1,11 @@
+{
+  "nav": {
+    "accueil": "Accueil",
+    "programme": "Programme",
+    "intervenant": "Intervenant",
+    "billeterie": "Billetterie",
+    "galerie": "Galerie",
+    "contact": "Contact",
+    "seConnecter": "Se connecter"
+  }
+}

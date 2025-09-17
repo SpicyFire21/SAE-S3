@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Bebas';
+    src: url('@/assets/font/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --noir:#000000;
+    --bleu:#14203E;
+    --jaune:#FCA616;
+    --gris:#EAEAEA;
+    --blanc:#FFFFFF;
+}
+
+* {
+    font-family:Bebas ;
+    font-weight: 400;
+
+}
