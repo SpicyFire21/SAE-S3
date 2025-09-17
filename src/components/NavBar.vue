@@ -3,7 +3,7 @@
       as="nav"
       :class="[
       'fixed w-full transition-colors duration-500',
-      isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.8)]' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.8)]'
+      isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
     ]"
       v-slot="{ open }"
   >
