@@ -5,7 +5,7 @@ import { createI18n } from 'vue-i18n'
 import './index.css'
 
 import App from './App.vue'
-import router from './router'
+import router from './router/index.js'
 import fr from '@/locales/fr.json'
 import en from '@/locales/en.json'
 
