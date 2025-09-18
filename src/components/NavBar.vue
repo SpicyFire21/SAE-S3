@@ -2,9 +2,12 @@
   <Disclosure
       as="nav"
       :class="[
+
       'fixed w-full transition-colors duration-500',
       isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
-    ]"
+      ,'fixed w-full z-10 transition-colors duration-500',
+      isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-10' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
+]"
       v-slot="{ open }"
   >
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
