@@ -1,7 +1,7 @@
 <template>
   <NavBar/>
   <RouterView />
-
+  <p>je suis un test de lien de repo</p>
 </template>
 
 <script setup>
