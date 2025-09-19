@@ -55,7 +55,7 @@
         </div>
         <div class="flex items-center justify-center space-x-2">
           <button
-              @click="locale = 'fr'"
+              @click="changeLanguage('fr')"
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
@@ -66,7 +66,8 @@
             FR
           </button>
           <button
-              @click="locale = 'en'"
+              @click="changeLanguage('en')"
+
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
@@ -118,20 +119,26 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
 import {RouterLink} from 'vue-router'
 import {useI18n} from 'vue-i18n'
 
-const {t, locale} = useI18n()
+const { t, locale } = useI18n() // 👈 global = partout la même instance
+
 const route = useRoute()
 
 const navigation = [
   {name: 'nav.accueil', href: '/'},
-  {name: 'nav.programme', href: '/programme'},
-  {name: 'nav.intervenant', href: '/intervenant'},
-  {name: 'nav.billeterie', href: '/billeterie'},
-  {name: 'nav.galerie', href: '/galerie'},
+  {name: 'nav.programme', href: '/program'},
+  {name: 'nav.intervenant', href: '/speaker'},
+  {name: 'nav.billeterie', href: '/ticket'},
+  {name: 'nav.galerie', href: '/galery'},
   {name: 'nav.contact', href: '/contact'}
 ]
 
 const isScrolled = ref(false)
 const isHome = computed(() => route.path === '/')
+
+
+const changeLanguage = (lan) => {
+  locale.value = lan;
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0

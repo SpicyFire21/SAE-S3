@@ -7,5 +7,8 @@
     "galerie": "Gallery",
     "contact": "Contact",
     "seConnecter": "Login"
+  },
+  "hero": {
+    "title": "Cinema in all its forms, brought together in a single event."
   }
 }

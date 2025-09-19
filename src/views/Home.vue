@@ -39,4 +39,5 @@
 <script setup>
 import Hero from "@/components/Accueil/Hero.vue";
 import Carrousel from "@/components/Accueil/Carrousel.vue";
+
 </script>
