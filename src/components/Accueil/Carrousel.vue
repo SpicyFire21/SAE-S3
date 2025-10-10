@@ -7,11 +7,14 @@
       <div
           v-for="(slide, index) in slides"
           :key="index"
-          class="snap-center flex-shrink-0 w-1/5 h-56 bg-[var(--blanc)] shadow-lg rounded-lg overflow-hidden flex flex-col"
+          class="snap-center flex-shrink-0 w-1/5 bg-[var(--blanc)] shadow-lg rounded-lg overflow-hidden flex flex-col"
       >
         <img :src="slide.src" class="w-full h-40 object-cover" />
-        <div class="bg-[#001f3f] text-white text-center py-2 text-sm">
-          {{ slide.title }}
+        <div class="text-[var(--blanc)] text-center py-2 flex items-center justify-center ">
+          <div class="bg-[var(--bleu)] w-fit px-2 py-0">
+            {{ slide.title }}
+          </div>
+
         </div>
       </div>
     </div>
@@ -35,15 +38,16 @@
 <script setup>
 import { ref } from "vue"
 
+
 const slides = ref([
-  { src: "https://picsum.photos/id/1018/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1024/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1037/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1041/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1052/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1062/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1074/800/400", title: "Crohn" },
-  { src: "https://picsum.photos/id/1084/800/400", title: "Crohn" },
+  { src: "https://picsum.photos/id/1018/800/400", title: "Leonardo DiCaprio" },
+  { src: "https://picsum.photos/id/1024/800/400", title: "Gérard Depardieu" },
+  { src: "https://picsum.photos/id/1037/800/400", title: "Brad Pitt" },
+  { src: "https://picsum.photos/id/1041/800/400", title: "Johnny Depp" },
+  { src: "https://picsum.photos/id/1052/800/400", title: "Morgan Freeman" },
+  { src: "https://picsum.photos/id/1062/800/400", title: "Omar Sy" },
+  { src: "https://picsum.photos/id/1074/800/400", title: "Samuel L. Jackson" },
+  { src: "https://picsum.photos/id/1084/800/400", title: "Jack Nicholson" },
 ])
 
 const slider = ref(null)

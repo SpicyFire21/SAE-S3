@@ -10,5 +10,16 @@
   },
   "hero": {
     "title": "Cinema in all its forms, brought together in a single event."
+  },
+  "cardlist": {
+    "learnMore":"Learn More"
+  },
+  "home": {
+    "doNotMiss": "Do Not Miss",
+    "news": "News",
+    "famous": "Famous",
+    "Discover": "Discover cinema icons",
+    "takeTicket": "Get your tickets now",
+    "listTicket": "List of available tickets"
   }
 }

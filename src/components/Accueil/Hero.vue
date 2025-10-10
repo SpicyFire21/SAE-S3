@@ -5,7 +5,7 @@
         alt="Hero"
         class="w-full h-full object-cover"
     />
-    <h1 class="absolute top-1/2 left-[45%] transform -translate-x-1/2 -translate-y-1/2 text-white text-[54px] max-w-[600px] font-bold">
+    <h1 class="absolute top-1/2 left-[45%] transform -translate-x-1/2 -translate-y-1/2 text-[var(--blanc)] text-[54px] max-w-[600px] font-bold">
       {{ t('hero.title') }}
     </h1>
   </div>

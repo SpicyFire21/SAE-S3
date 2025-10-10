@@ -10,5 +10,16 @@
   },
   "hero": {
     "title": "Le cinéma sous toutes ses formes, réuni en un seul événement."
+  },
+  "cardlist": {
+    "learnMore":"En savoir plus"
+  },
+  "home": {
+    "doNotMiss": "À Ne Pas Manquer",
+    "news": "Nouveautés",
+    "famous": "Populaires",
+    "Discover": "Decouvrez des icônes du cinema",
+    "takeTicket": "Prenez vos billets dès maintenant",
+    "listTicket": "Listes des Billets disponibles"
   }
 }

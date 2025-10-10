@@ -4,9 +4,9 @@
       :class="[
 
       'fixed w-full transition-colors duration-500',
-      isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
+      isHome ? (isScrolled ? 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]' : 'bg-transparent text-[var(--blanc)]') : 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
       ,'fixed w-full z-10 transition-colors duration-500',
-      isHome ? (isScrolled ? 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-10' : 'bg-transparent text-white') : 'bg-white text-black shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
+      isHome ? (isScrolled ? 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-10' : 'bg-transparent text-[var(--blanc)]') : 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
 ]"
       v-slot="{ open }"
   >
@@ -17,8 +17,8 @@
               :class="[
               'relative inline-flex items-center justify-center rounded-md p-2 focus:outline-2 focus:-outline-offset-1 transition-colors duration-300',
               isHome
-                ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white focus:outline-black' : 'text-white hover:bg-[var(--bleu)] hover:text-white focus:outline-white')
-                : 'text-black hover:bg-[var(--bleu)] hover:text-white focus:outline-black'
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)] focus:outline-[var(--noir)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)] focus:outline-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)] focus:outline-[var(--noir)]'
             ]"
           >
             <span class="absolute -inset-0.5"/>
@@ -44,8 +44,8 @@
                   :class="[
                   'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
                   isHome
-                    ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white' : 'text-white hover:bg-[var(--bleu)] hover:text-white')
-                    : 'text-black hover:bg-[var(--bleu)] hover:text-white'
+                    ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                    : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
                 ]"
               >
                 {{ t(item.name) }}
@@ -59,8 +59,8 @@
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
-                ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white' : 'text-white hover:bg-[var(--bleu)] hover:text-white')
-                : 'text-black hover:bg-[var(--bleu)] hover:text-white'
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
             ]"
           >
             FR
@@ -71,8 +71,8 @@
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
-                ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white' : 'text-white hover:bg-[var(--bleu)] hover:text-white')
-                : 'text-black hover:bg-[var(--bleu)] hover:text-white'
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
             ]"
           >
             EN
@@ -82,8 +82,8 @@
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
-                ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white' : 'text-white hover:bg-[var(--bleu)] hover:text-white')
-                : 'text-black hover:bg-[var(--bleu)] hover:text-white'
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
             ]"
           >
             {{ t('nav.seConnecter') }}
@@ -100,8 +100,8 @@
             :class="[
             'block rounded-md px-3 py-2 text-base font-medium transition-colors duration-300',
             isHome
-              ? (isScrolled ? 'text-black hover:bg-[var(--bleu)] hover:text-white' : 'text-white hover:bg-[var(--bleu)] hover:text-white')
-              : 'text-black hover:bg-[var(--bleu)] hover:text-white'
+              ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+              : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
           ]"
         >
           {{ t(item.name) }}
