@@ -1,31 +1,39 @@
 let users = [
     {
         "id":"1",
+        "name":"",
         "login":"admin",
         "password":"admin",
         "email":"email@gmail.cm",
-        "droit":"2"
+        "droit":"2",
+        "session":""
     },
     {
         "id":"2",
+        "name":"",
         "login":"presta",
         "password":"presta",
         "email":"email@gmail.cm",
-        "droit":"1"
+        "droit":"1",
+        "session":""
     },
     {
         "id":"3",
+        "name":"",
         "login":"client",
         "password":"client",
         "email":"email@gmail.cm",
-        "droit":"0"
+        "droit":"0",
+        "session":""
     },
     {
         "id":"4",
+        "name":"",
         "login":"client2",
         "password":"client2",
         "email":"email@gmail.cm",
-        "droit":"0"
+        "droit":"0",
+        "session":""
     }
 ]
 
