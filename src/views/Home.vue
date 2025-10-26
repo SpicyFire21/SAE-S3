@@ -47,7 +47,37 @@
     <hr>
 
       <CardList/>
+      <div class="flex flex-col items-center">
+        <h1 class="text-2xl underline">Prestataires</h1>
 
+        <form action="" class="w-full py-5">
+          <fieldset class="flex flex-col items-center gap-3">
+            <div class="flex flex-col">
+              <label for="prest" class="font-roboto">Rechercher un prestataire</label>
+              <input type="text" id="prest" placeholder="Entrez un nom"
+                     class="w-60 px-3 py-2 border-1 border-[var(--noir)] outline-none rounded"
+              >
+            </div>
+
+
+            <div class="flex items-center gap-2">
+              <p>Note ></p> <RankingStars/>
+            </div>
+
+
+            <div class="flex gap-10">
+              <div v-for="(item,index) in tabCheckbox" :key="index" class="flex gap-2 items-center">
+                <label :for="item.id">{{item.name}}</label>
+                <input type="checkbox" :id="item.id"
+                       class="appearance-none w-5 h-5 border-1 border-[var(--noir)] rounded-sm checked:bg-[var(--jaune)] checked:border-[var(--noir)] cursor-pointer"
+                >
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+      </div>
       
   </div>
 
@@ -58,9 +88,14 @@
 <script setup>
 import {useI18n} from 'vue-i18n'
 
-const { t } = useI18n()
+const { t,tm,locale } = useI18n()
 import Hero from "@/components/Accueil/Hero.vue";
 import Carrousel from "@/components/Accueil/Carrousel.vue";
 import CardList from "@/components/Accueil/CardList.vue";
+import RankingStars from "@/components/Accueil/RankingStars.vue";
+import {computed} from "vue";
+
+const tabCheckbox = computed(() => tm('checkboxfilter'))
+
 
 </script>

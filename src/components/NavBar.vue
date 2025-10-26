@@ -28,13 +28,6 @@
           </DisclosureButton>
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="flex shrink-0 items-center">
-            <img
-                class="h-8 w-auto"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-            />
-          </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <RouterLink
@@ -55,6 +48,8 @@
         </div>
         <div class="flex items-center justify-center space-x-2">
           <button
+              v-if="locale === 'en'"
+
               @click="changeLanguage('fr')"
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
@@ -67,6 +62,7 @@
           </button>
           <button
               @click="changeLanguage('en')"
+              v-if="locale === 'fr'"
 
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
@@ -118,6 +114,8 @@ import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/vue'
 import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
 import {RouterLink} from 'vue-router'
 import {useI18n} from 'vue-i18n'
+
+import logo from '@/assets/img/logo.webp'
 
 const { t, locale } = useI18n() // 👈 global = partout la même instance
 

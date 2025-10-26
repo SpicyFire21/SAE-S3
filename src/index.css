@@ -7,6 +7,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('@/assets/font/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --noir:#000000;
     --bleu:#14203E;
@@ -14,10 +21,17 @@
     --grisf:#666666;
     --gris:#EAEAEA;
     --blanc:#FFFFFF;
+
+
 }
 
-* {
+body  {
     font-family:Bebas ;
     font-weight: 400;
 
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
 }

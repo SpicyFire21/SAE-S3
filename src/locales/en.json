@@ -12,7 +12,8 @@
     "title": "Cinema in all its forms, brought together in a single event."
   },
   "cardlist": {
-    "learnMore":"Learn More"
+    "learnMore":"Learn More",
+    "seeAll": "See All"
   },
   "home": {
     "doNotMiss": "Do Not Miss",
@@ -21,5 +22,19 @@
     "Discover": "Discover cinema icons",
     "takeTicket": "Get your tickets now",
     "listTicket": "List of available tickets"
-  }
+  },
+  "checkboxfilter": [
+    {
+      "id":1,
+      "name":"director"
+    },
+    {
+      "id":2,
+      "name":"actor"
+    },
+    {
+      "id":3,
+      "name":"producer"
+    }
+  ]
 }

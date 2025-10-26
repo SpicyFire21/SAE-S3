@@ -12,7 +12,8 @@
     "title": "Le cinéma sous toutes ses formes, réuni en un seul événement."
   },
   "cardlist": {
-    "learnMore":"En savoir plus"
+    "learnMore":"En savoir plus",
+    "seeAll": "Tout Voir"
   },
   "home": {
     "doNotMiss": "À Ne Pas Manquer",
@@ -21,5 +22,19 @@
     "Discover": "Decouvrez des icônes du cinema",
     "takeTicket": "Prenez vos billets dès maintenant",
     "listTicket": "Listes des Billets disponibles"
-  }
+  },
+  "checkboxfilter": [
+    {
+      "id":1,
+      "name":"realisateur"
+    },
+    {
+      "id":2,
+      "name":"acteur"
+    },
+    {
+      "id":3,
+      "name":"producteur"
+    }
+  ]
 }
