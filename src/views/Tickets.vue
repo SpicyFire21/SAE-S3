@@ -7,7 +7,7 @@
   <div class="w-screen h-screen flex justify-center items-center">
 
     <form class="shadow-2xl p-3 rounded-lg bg-[var(--blanc)] flex flex-col gap-3 w-fit">
-      <h1 class="text-[28px] text-center">Billetterie</h1>
+      <h1 class="text-[28px] text-center">Billetterie fgggvdbd</h1>
 
       <div class="flex flex-row gap-2">
         <div class="flex flex-col">
