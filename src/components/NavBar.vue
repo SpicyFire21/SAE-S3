@@ -123,11 +123,10 @@ const route = useRoute()
 
 const navigation = [
   {name: 'nav.accueil', href: '/'},
-  {name: 'nav.programme', href: '/program'},
-  {name: 'nav.intervenant', href: '/speaker'},
+
+
   {name: 'nav.billeterie', href: '/ticket'},
-  {name: 'nav.galerie', href: '/galery'},
-  {name: 'nav.contact', href: '/contact'}
+
 ]
 
 const isScrolled = ref(false)

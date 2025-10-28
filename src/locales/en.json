@@ -1,11 +1,8 @@
 {
   "nav": {
     "accueil": "Home",
-    "programme": "Program",
-    "intervenant": "Speakers",
+
     "billeterie": "Tickets",
-    "galerie": "Gallery",
-    "contact": "Contact",
     "seConnecter": "Login"
   },
   "hero": {
