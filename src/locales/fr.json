@@ -1,16 +1,14 @@
 {
   "nav": {
     "accueil": "Accueil",
-
     "billeterie": "Billetterie",
-
     "seConnecter": "Se connecter"
   },
   "hero": {
     "title": "Le cinéma sous toutes ses formes, réuni en un seul événement."
   },
   "cardlist": {
-    "learnMore":"En savoir plus",
+    "learnMore": "En savoir plus",
     "seeAll": "Tout Voir"
   },
   "home": {
@@ -19,20 +17,54 @@
     "famous": "Populaires",
     "Discover": "Decouvrez des icônes du cinema",
     "takeTicket": "Prenez vos billets dès maintenant",
-    "listTicket": "Listes des Billets disponibles"
+    "listTicket": "Listes des Billets disponibles",
+    "provider": "Prestataire",
+    "fprovider": "Rechercher un Prestataire"
   },
   "checkboxfilter": [
     {
-      "id":1,
-      "name":"realisateur"
+      "id": 1,
+      "name": "realisateur"
     },
     {
-      "id":2,
-      "name":"acteur"
+      "id": 2,
+      "name": "acteur"
     },
     {
-      "id":3,
-      "name":"producteur"
+      "id": 3,
+      "name": "producteur"
     }
-  ]
+  ],
+  "Tickets": {
+    "tickets": "Billetterie",
+    "firstname": "Prénom",
+    "lastname": "Nom",
+    "enddate": "Date de Fin",
+    "CreditCardNumber": "Numéro de Carte",
+    "priceList": "Tarifs",
+    "choose": "Choissisez une option",
+    "submit": "Acheter",
+    "list": [
+      {
+        "id": 1,
+        "price": 6,
+        "name": "enfant"
+      },
+      {
+        "id": 2,
+        "price": 8,
+        "name": "étudiant"
+      },
+      {
+        "id": 3,
+        "price": 11,
+        "name": "adulte"
+      }
+    ]
+  },
+  "ticketpay": {
+    "title": "Merci pour Votre Achat",
+    "content": "Votre numéro de ticket est le",
+    "btn": "Retour a l'accueil"
+  }
 }

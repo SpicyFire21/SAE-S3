@@ -18,7 +18,11 @@
     "famous": "Famous",
     "Discover": "Discover cinema icons",
     "takeTicket": "Get your tickets now",
-    "listTicket": "List of available tickets"
+    "listTicket": "List of available tickets",
+    "provider": "Provider",
+    "fprovider": "Find a Provider"
+
+
   },
   "checkboxfilter": [
     {
@@ -33,5 +37,38 @@
       "id":3,
       "name":"producer"
     }
-  ]
+  ],
+  "Tickets": {
+    "tickets": "Tickets",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "enddate": "End date",
+    "CreditCardNumber":"Credit Card Number",
+    "priceList": "Price List",
+    "choose": "Choose an option",
+    "submit": "Buy",
+
+    "list": [
+      {
+        "id": 1,
+        "price": 6,
+        "name": "kid"
+      },
+      {
+        "id": 2,
+        "price": 8,
+        "name": "student"
+      },
+      {
+        "id": 3,
+        "price": 11,
+        "name": "adult"
+      }
+    ]
+  },
+  "ticketpay": {
+    "title": "Thanks for your purchase",
+    "content": "Our ticket number is ",
+    "btn": "Back Home"
+  }
 }

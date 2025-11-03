@@ -48,13 +48,13 @@
 
       <CardList/>
       <div class="flex flex-col items-center">
-        <h1 class="text-2xl underline">Prestataires</h1>
+        <h1 class="text-2xl underline">{{ t('home.provider') }}</h1>
 
         <form action="" class="w-full py-5">
           <fieldset class="flex flex-col items-center gap-3">
             <div class="flex flex-col">
-              <label for="prest" class="font-roboto">Rechercher un prestataire</label>
-              <input type="text" id="prest" placeholder="Entrez un nom"
+              <label for="prest" class="font-roboto">{{t('home.fprovider')}}</label>
+              <input type="text" id="prest" :placeholder="t('home.fprovider')"
                      class="w-60 px-3 py-2 border-1 border-[var(--noir)] outline-none rounded"
               >
             </div>

@@ -7,21 +7,22 @@
   <div class="w-screen h-screen flex justify-center items-center">
 
     <form class="shadow-2xl p-3 rounded-lg bg-[var(--blanc)] flex flex-col gap-3 w-fit">
-      <h1 class="text-[28px] text-center">Billetterie</h1>
+      <h1 class="text-[28px] text-center">{{ t('Tickets.tickets') }}</h1>
 
       <div class="flex flex-row gap-2">
         <div class="flex flex-col">
-          <label for="firstname" class="font-roboto text-xs">Prénom</label>
+          <label for="firstname" class="font-roboto text-xs">{{ t('Tickets.firstname') }}</label>
           <input
               id="firstname"
               v-model="firstname"
               type="text"
+              required
               class="border border-[var(--noir)] outline-none rounded px-2"
           />
         </div>
 
         <div class="flex flex-col">
-          <label for="lastname" class="font-roboto text-xs">Nom</label>
+          <label for="lastname" class="font-roboto text-xs">{{ t('Tickets.lastname') }}</label>
           <input
               id="lastname"
               v-model="lastname"
@@ -40,9 +41,25 @@
             class="border border-[var(--noir)] outline-none rounded px-2"
         />
       </div>
-
       <div class="flex flex-col">
-        <label for="creditnumber" class="font-roboto text-xs">Numéro de Carte</label>
+        <label for="tarif" class="font-roboto text-xs">{{ t('Tickets.priceList') }}</label>
+        <select
+            id="tarif"
+            v-model="selectedTarif"
+            class="border border-[var(--noir)] outline-none rounded px-2"
+        >
+          <option value="" disabled hidden>{{ t('Tickets.choose') }}</option>
+          <option
+              v-for="(item, index) in tarifs"
+              :key="index"
+              :value="item.id"
+          >
+            {{ item.name }} - {{ item.price }}€
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col">
+        <label for="creditnumber" class="font-roboto text-xs">{{ t('Tickets.CreditCardNumber') }}</label>
         <input
             id="creditnumber"
             v-model="formattedCardNumber"
@@ -67,7 +84,7 @@
         </div>
 
         <div class="flex flex-col w-1/2">
-          <label for="enddate" class="font-roboto text-xs">Date de fin</label>
+          <label for="enddate" class="font-roboto text-xs">{{ t('Tickets.enddate') }}</label>
           <input
               id="enddate"
               v-model="formattedExpiry"
@@ -79,23 +96,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col">
-        <label for="tarif" class="font-roboto text-xs">Tarif</label>
-        <select
-            id="tarif"
-            v-model="selectedTarif"
-            class="border border-[var(--noir)] outline-none rounded px-2"
-        >
-          <option value="" disabled hidden>Choisissez une option</option>
-          <option
-              v-for="(item, index) in tarifs"
-              :key="index"
-              :value="item.id"
-          >
-            {{ item.name }} - {{ item.price }}€
-          </option>
-        </select>
-      </div>
+
 
       <p
           v-if="message"
@@ -112,9 +113,8 @@
       <input
           type="submit"
           class="bg-[var(--grisf)] hover:bg-[var(--jaune)] hover:text-[var(--noir)] transition rounded w-fit self-center px-3 py-1 cursor-pointer"
-          value="Acheter"
+          :value=" t('Tickets.submit') "
           @click="pay"
-          :disabled="!isValid"
       />
     </form>
   </div>
@@ -122,6 +122,13 @@
 
 <script setup>
 import { ref, computed } from "vue"
+import {useRouter} from "vue-router";
+import {useI18n} from 'vue-i18n'
+
+const { t,tm } = useI18n()
+const route = useRouter()
+
+
 
 const firstname = ref("")
 const lastname = ref("")
@@ -132,11 +139,7 @@ const cardNumber = ref("")
 const expiry = ref("")
 const cvv = ref("")
 
-const tarifs = [
-  { id: 1, name: "Enfant", price: 6 },
-  { id: 2, name: "Étudiant", price: 8 },
-  { id: 3, name: "Adulte", price: 11 },
-]
+const tarifs = computed(() => tm('Tickets.list'))
 
 const formattedCardNumber = computed({
   get: () =>
@@ -175,7 +178,8 @@ const pay = (e) => {
     return
   }
 
-  message.value = "💳 Paiement en cours..."
+  message.value = "Paiement en cours..."
+  route.push({path:`/ticket/${1}`})
 }
 </script>
 

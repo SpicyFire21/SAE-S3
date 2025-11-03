@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
+
 import Home from '../views/Home.vue'
 import Tickets from "@/views/Tickets.vue";
+import TicketPay from "@/views/TicketPay.vue"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,11 @@ const router = createRouter({
             name: 'ticketPage',
             component:Tickets
         },
+        {
+            path:'/ticket/:id',
+            name:'ticketPay',
+            component:TicketPay
+        }
 
 
     ],
