@@ -53,34 +53,32 @@
         <form action="" class="w-full py-5">
           <fieldset class="flex flex-col items-center gap-3">
             <div class="flex flex-col">
-              <label for="prest" class="font-roboto">{{t('home.fprovider')}}</label>
+              <label for="prest" class="font-[Roboto] tracking-widest text-1">{{t('home.fprovider')}}</label>
               <input type="text" id="prest" :placeholder="t('home.fprovider')"
                      class="w-60 px-3 py-2 border-1 border-[var(--noir)] outline-none rounded"
               >
             </div>
 
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 font-[Roboto] tracking-widest">
               <p>Note ></p> <RankingStars/>
             </div>
 
 
             <div class="flex gap-10">
-              <div v-for="(item,index) in tabCheckbox" :key="index" class="flex gap-2 items-center">
+              <div v-for="(item,index) in tabCheckbox" :key="index" class="flex gap-2 items-center font-[Roboto]">
                 <label :for="item.id">{{item.name}}</label>
                 <input type="checkbox" :id="item.id"
                        class="appearance-none w-5 h-5 border-1 border-[var(--noir)] rounded-sm checked:bg-[var(--jaune)] checked:border-[var(--noir)] cursor-pointer"
                 >
               </div>
             </div>
-
+            <h1 class="text-[30px] max-w-[400px] mt-5 text-center border-b border-gray bottom">Votre acteur préféré est présent ? Reservez une dédicace dès maintenant</h1>
           </fieldset>
         </form>
 
       </div>
-      
   </div>
-
   </div>
 
 </template>

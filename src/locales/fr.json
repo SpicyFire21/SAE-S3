@@ -18,21 +18,21 @@
     "Discover": "Decouvrez des icônes du cinema",
     "takeTicket": "Prenez vos billets dès maintenant",
     "listTicket": "Listes des Billets disponibles",
-    "provider": "Prestataire",
+    "provider": "Prestataires",
     "fprovider": "Rechercher un Prestataire"
   },
   "checkboxfilter": [
     {
       "id": 1,
-      "name": "realisateur"
+      "name": "Réalisateur"
     },
     {
       "id": 2,
-      "name": "acteur"
+      "name": "Acteur"
     },
     {
       "id": 3,
-      "name": "producteur"
+      "name": "Producteur"
     }
   ],
   "Tickets": {

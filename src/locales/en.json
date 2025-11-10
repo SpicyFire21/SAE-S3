@@ -19,7 +19,7 @@
     "Discover": "Discover cinema icons",
     "takeTicket": "Get your tickets now",
     "listTicket": "List of available tickets",
-    "provider": "Provider",
+    "provider": "Providers",
     "fprovider": "Find a Provider"
 
 
@@ -27,15 +27,15 @@
   "checkboxfilter": [
     {
       "id":1,
-      "name":"director"
+      "name":"Director"
     },
     {
       "id":2,
-      "name":"actor"
+      "name":"Actor"
     },
     {
       "id":3,
-      "name":"producer"
+      "name":"Producer"
     }
   ],
   "Tickets": {

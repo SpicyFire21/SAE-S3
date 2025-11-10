@@ -15,9 +15,13 @@
       </div>
     </div>
   </div>
-  <div class="flex justify-end ">
-    <h1 class="text-3xl">{{t('cardlist.seeAll')}} >></h1>
+  <div class="flex justify-end pr-6 mt-3">
+    <h1 class="text-3xl flex items-center">
+      {{ t('cardlist.seeAll') }}
+      <span class="text-lg text-gray-600 ml-4">></span><span class="text-4xl">></span>
+    </h1>
   </div>
+
 
 
 </template>
