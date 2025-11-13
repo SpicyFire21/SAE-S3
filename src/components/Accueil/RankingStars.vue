@@ -25,7 +25,6 @@
 <script setup>
 import { ref, defineEmits } from 'vue'
 
-const emit = defineEmits(['update:rating'])
 const rating = ref(0)
 const hoverRating = ref(0)
 
@@ -38,13 +37,14 @@ function onHover(event, star) {
 }
 
 // 🔹 Clic : arrondi à 0.5 près
+const emit = defineEmits(['update:modelValue']) // model value car cest la valeur de base lorsque l'on met v-model
+
 function onClick(event, star) {
   const { offsetX, target } = event
   const width = target.clientWidth
   let value = star - (offsetX < width / 2 ? 0.5 : 0)
   rating.value = Math.round(value * 2) / 2
-  emit('update:rating', rating.value)
-  console.log(rating.value, "étoiles")
+  emit('update:modelValue', rating.value)
 }
 
 // 🔹 Calcul du remplissage

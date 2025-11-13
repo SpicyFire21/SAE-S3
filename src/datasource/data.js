@@ -6,16 +6,24 @@ let users = [
         "password":"admin",
         "email":"email@gmail.cm",
         "droit":"2",
-        "session":""
+        "session":"",
+        "note": "",
+        "type": "",
+        "nom_photo": "",
+        "description": ""
     },
     {
         "id":"2",
-        "name":"",
+        "name":"leprestaoriginel",
         "login":"presta",
         "password":"presta",
         "email":"email@gmail.cm",
         "droit":"1",
-        "session":""
+        "session":"",
+        "note": "5",
+        "type": "Producteur",
+        "nom_photo": "producteur.jpg",
+        "description": "Le prestateur originel il est fort et a une aura incroyable"
     },
     {
         "id":"3",
@@ -24,7 +32,11 @@ let users = [
         "password":"client",
         "email":"email@gmail.cm",
         "droit":"0",
-        "session":""
+        "session":"",
+        "note": "",
+        "type": "",
+        "nom_photo": "",
+        "description": ""
     },
     {
         "id":"4",
@@ -33,8 +45,51 @@ let users = [
         "password":"client2",
         "email":"email@gmail.cm",
         "droit":"0",
-        "session":""
-    }
+        "session":"",
+        "note": "",
+        "type": "",
+        "nom_photo": "",
+        "description": ""
+    },
+    {
+        "id":"5",
+        "name":"laknackultime",
+        "login":"prestaknaghui",
+        "password":"prestakhnaghui",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "1",
+        "type": "Réalisateur",
+        "nom_photo": "realisateur.jpg",
+        "description": "Il ressemble a bedi boy prime et il fait que parler c'est insupportable"
+    },
+    {
+        "id":"6",
+        "name":"laknackultime V2",
+        "login":"prestaknaghui V2",
+        "password":"prestakhnaghui V2",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "1.5",
+        "type": "Réalisateur",
+        "nom_photo": "realisateur.jpg",
+        "description": "abedi"
+    },
+    {
+        "id":"7",
+        "name":"The honored one",
+        "login":"cityxl",
+        "password":"cityxl",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "4.5",
+        "type": "Acteur",
+        "nom_photo": "acteur.png",
+        "description": "The strongest, il est inspiré de johan lançon"
+    },
 ]
 
 let tickets = [

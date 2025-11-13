@@ -4,7 +4,7 @@ async function getUserFromLocalSource(){
     return LocalSource.getUsers();
 }
 
-async function getUsers(){
+export async function getUsers(){
     let response = null;
     try {
         response = await getUserFromLocalSource();
