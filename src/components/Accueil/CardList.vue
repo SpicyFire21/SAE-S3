@@ -2,14 +2,14 @@
 
   <div class="flex justify-evenly">
     <div
-        v-for="(slide, index) in slides"
+        v-for="(slide, index) in films"
         :key="index"
         class="snap-center flex-shrink-0 w-1/5 h-full shadow-lg rounded-lg overflow-hidden flex flex-col relative"
     >
-      <img :src="slide.src" class="w-full h-60 object-cover"  alt="prestataires"/>
+      <img :src="getFilmImage(slide.poster)" class="w-full h-60 object-cover"  alt="prestataires"/>
       <div class="absolute inset-0 top-30 flex flex-col h-30 px-3 items-center justify-center text-[var(--blanc)] bg-[var(--noir)]/40">
         <h1 class="text-xl">{{ slide.title }}</h1>
-        <em>{{ slide.note }}</em>
+        <em>{{ getDirectorName(slide.director_id) }}</em>
         <button class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 border-[var(--jaune)] rounded">
           {{ t('cardlist.learnMore') }}</button>
       </div>
@@ -27,16 +27,28 @@
 </template>
 
 <script setup lang="ts">
-
-import {ref} from "vue";
 import {useI18n} from 'vue-i18n'
 
 const { t } = useI18n()
-const slides = ref([
-  { src: "https://picsum.photos/id/1018/800/400", title: "Leonardo DiCaprio",note:"5/5" },
-  { src: "https://picsum.photos/id/1024/800/400", title: "Gérard Depardieu",note:"4.5/5" },
-  { src: "https://picsum.photos/id/1037/800/400", title: "Brad Pitt",note:"4.5/5" },
-])
+
+defineProps({
+  films: {
+    type: Array,
+    required: true
+  },
+  getDirectorName: {
+    type: Function,
+    required: true
+  },
+});
+
+
+const getFilmImage = (fileName) => {
+  return new URL(`../../assets/img/${fileName}`, import.meta.url).href;
+};
+
+
+
 
 </script>
 

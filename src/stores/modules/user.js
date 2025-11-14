@@ -27,6 +27,16 @@ export const useUserStore = defineStore('user', () => {
             console.error(e)
         }
     }
+
+    const getProviders = async () => {
+        try {
+            const response = await userService.getProviders();
+            updateUsers(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const login = async (data) =>{
         try{
             const response = await userService.login(data);
@@ -35,6 +45,8 @@ export const useUserStore = defineStore('user', () => {
             console.error(e)
         }
     }
+
+
 
 
     //sert a export les fonctions/states du store
@@ -49,6 +61,7 @@ export const useUserStore = defineStore('user', () => {
 
         //action
         getUsers,
+        getProviders,
         login
     }
 })

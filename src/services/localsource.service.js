@@ -1,9 +1,27 @@
-import { users } from '@/datasource/data.js'
+import { users, films, film_tickets } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
 
 async function getUsers() {
     return {error:0,status:200,data:users}
+}
+
+async function getFilms() {
+    return {error:0, status:200, data:films}
+}
+
+async function getFilmTickets() {
+    return {error:0, status:200, data:film_tickets}
+}
+
+async function getProviders() {
+    const providers = users.filter(user => Number(user.droit) === 1)
+    return { error: 0, status: 200, data: providers }
+}
+
+async function getFilmDirector(director_id) {
+    const director = users.find(user => user.id === director_id)
+    return { error: 0, status: 200, data: director }
 }
 
 async function login(data){
@@ -37,5 +55,9 @@ async function login(data){
 
 export default {
     getUsers,
-    login
+    login,
+    getFilms,
+    getFilmTickets,
+    getProviders,
+    getFilmDirector
 }

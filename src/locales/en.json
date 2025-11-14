@@ -1,8 +1,8 @@
 {
   "nav": {
     "accueil": "Home",
-
     "billeterie": "Tickets",
+    "films": "Films",
     "seConnecter": "Login"
   },
   "hero": {

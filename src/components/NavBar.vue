@@ -117,7 +117,7 @@ import {useI18n} from 'vue-i18n'
 
 import logo from '@/assets/img/logo.webp'
 
-const { t, locale } = useI18n() // 👈 global = partout la même instance
+const { t, locale } = useI18n()
 
 const route = useRoute()
 
@@ -126,6 +126,8 @@ const navigation = [
 
 
   {name: 'nav.billeterie', href: '/ticket'},
+
+  {name: 'nav.films', href: '/films'},
 
 ]
 

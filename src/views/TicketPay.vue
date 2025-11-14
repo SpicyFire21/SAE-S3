@@ -1,6 +1,6 @@
 <template>
   <img
-      src="@/assets/img/hero.webp"
+      src="@/assets/img/bgbilleterie.png"
       alt="Hero"
       class="w-full h-full object-cover absolute z-[-1]"
   />

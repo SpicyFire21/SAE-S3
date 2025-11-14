@@ -195,6 +195,61 @@ let basket_items = [
     }
 ]
 
+let films = [
+    {
+        "id": "1",
+        "title": "Le Spicyfire Show",
+        "director_id": "2",
+        "cast_ids": ["1", "2"],
+        "genre": "Action",
+        "release_date": "2025-03-18",
+        "poster": "spicyfire.webp",
+        "description": "Le show de spicyfire (horrible)",
+        "duration": 120
+    },
+    {
+        "id": "2",
+        "title": "Le Luan Show",
+        "director_id": "5",
+        "cast_ids": ["3", "4"],
+        "genre": "Adventure",
+        "release_date": "2025-03-19",
+        "poster": "luan.jpg",
+        "description": "Le show de Luan Aliu c hard insane",
+        "duration": 135
+    },
+    {
+        "id": "3",
+        "title": "Brainrot Simulator",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-03-20",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    }
+]
+
+let film_tickets = [
+    {
+        "iduser": "3",
+        "idfilm": "1",
+        "idticket": "1",
+        "datefrom": "2025-03-18T14:00:00",
+        "dateto": "2025-03-18T16:00:00",
+        "priceid": "1"
+    },
+    {
+        "iduser": "3",
+        "idfilm": "2",
+        "idticket": "2",
+        "datefrom": "2025-03-19T18:00:00",
+        "dateto": "2025-03-19T20:15:00",
+        "priceid": "2"
+    }
+]
+
 export {
-    users, tickets, tickets_price, stands, comments_golden_book, goodies, goodies_size, basket, basket_items
+    users, tickets, tickets_price, stands, comments_golden_book, goodies, goodies_size, basket, basket_items, film_tickets, films
 }

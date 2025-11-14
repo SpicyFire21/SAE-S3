@@ -28,7 +28,7 @@
         <a href="" class="text-[var(--grisf)]">{{ t('home.famous')}}</a>
       </div>
       <hr>
-      <CardList/>
+      <CardList :films="filmsStore.films" :getDirectorName="getDirectorName"/>
       <div class="flex flex-col items-center">
         <h1 class="text-2xl underline">{{ t('home.provider') }}</h1>
 
@@ -82,29 +82,42 @@ import PrestataireCard from "@/components/Accueil/PrestataireCard.vue";
 import { ref, onMounted, computed } from "vue";
 import { getUsers } from "@/services/user.service.js";
 import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
+import {useFilmsStore} from "@/stores/modules/films.js";
+import {useUserStore} from "@/stores/index.js";
 
 const { t, tm } = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))
 
 const providers = ref([]);
+const films = ref([]);
 const filterName = ref('');
 const filterNote = ref(0);
 const filterTypes = ref([]);
+const filmsStore = useFilmsStore()
+const userStore = useUserStore()
+
+
 
 onMounted(async () => {
-  const res = await getUsers();
-  if (res.error === 0) providers.value = res.data;
+  await filmsStore.getFilms();
+  await userStore.getProviders();
 });
 
+const getDirectorName = (director_id) => {
+  const director = userStore.users.find(user => user.id === director_id)
+  return director ? director.name : 'Directeur inconnu'
+}
+
 const filteredProviders = computed(() => {
-  return providers.value.filter(provider => {
+  return userStore.users.filter(provider => {
     const matchName = provider.name.toLowerCase().includes(filterName.value.toLowerCase());
-    const matchNote = provider.note >= filterNote.value; // demi-étoiles incluses
+    const matchNote = provider.note >= filterNote.value;
     const matchType = filterTypes.value.length ? filterTypes.value.includes(provider.type) : true;
     const matchDroit = Number(provider.droit) === 1;
     return matchName && matchNote && matchType && matchDroit;
   });
 });
+
 
 </script>
 

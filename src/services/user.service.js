@@ -14,6 +14,20 @@ export async function getUsers(){
     return response;
 }
 
+async function getProvidersFromLocalSource() {
+    return LocalSource.getProviders();
+}
+
+export async function getProviders() {
+    let response = null;
+    try {
+        response = await getProvidersFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les prestataires'}
+    }
+    return response;
+}
+
 async function loginFromLocalSource(data){
     return LocalSource.login(data);
 }
@@ -31,5 +45,6 @@ async function login(data){
 
 export default {
     getUsers,
-    login
+    login,
+    getProviders
 }
