@@ -59,10 +59,10 @@ let users = [
         "email":"email@gmail.cm",
         "droit":"1",
         "session":"",
-        "note": "1",
+        "note": "5",
         "type": "Réalisateur",
         "nom_photo": "realisateur.jpg",
-        "description": "Il ressemble a bedi boy prime et il fait que parler c'est insupportable"
+        "description": "Il a trop de flow en vrai de vrai"
     },
     {
         "id":"6",
@@ -75,7 +75,7 @@ let users = [
         "note": "1.5",
         "type": "Réalisateur",
         "nom_photo": "realisateur.jpg",
-        "description": "abedi"
+        "description": "encore mieux que la v1"
     },
     {
         "id":"7",
@@ -88,7 +88,7 @@ let users = [
         "note": "4.5",
         "type": "Acteur",
         "nom_photo": "acteur.png",
-        "description": "The strongest, il est inspiré de johan lançon"
+        "description": "The strongest, il est inspiré de adam KHNAGUI"
     },
 ]
 

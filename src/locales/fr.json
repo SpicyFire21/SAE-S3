@@ -66,5 +66,11 @@
     "title": "Merci pour Votre Achat",
     "content": "Votre numéro de ticket est le",
     "btn": "Retour a l'accueil"
+  },
+
+  "prestataireCard": {
+    "giveOpinion": "Donner un avis"
   }
+
+
 }

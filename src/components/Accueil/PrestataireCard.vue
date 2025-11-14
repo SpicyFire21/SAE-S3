@@ -67,7 +67,7 @@
             href="#"
             class="inline-flex items-center text-white tracking-widest bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-md text-sm px-4 py-2.5"
         >
-          Donner un avis
+          {{t('prestataireCard.giveOpinion')}}
         </a>
       </div>
     </div>
@@ -75,6 +75,10 @@
 </template>
 
 <script setup>
+import {useI18n} from "vue-i18n";
+
+const { t,tm } = useI18n()
+
 defineProps({
   providers: {
     type: Array,

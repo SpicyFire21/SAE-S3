@@ -70,5 +70,8 @@
     "title": "Thanks for your purchase",
     "content": "Our ticket number is ",
     "btn": "Back Home"
+  },
+  "prestataireCard": {
+    "giveOpinion": "Give An Opinion"
   }
 }
