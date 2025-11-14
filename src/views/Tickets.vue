@@ -1,52 +1,50 @@
 <template>
-  <img
-      src="@/assets/img/hero.webp"
-      alt="Hero"
-      class="w-full h-full object-cover absolute z-[-1]"
-  />
-  <div class="w-screen h-screen flex justify-center items-center">
+  <div class="w-screen min-h-screen bg-cover bg-center flex justify-center pt-24 pb-24" :style="{ backgroundImage: `url(${bgImage})` }">
+    <form
+        class="w-full max-w-lg bg-[var(--blanc)] text-black rounded-3xl shadow-2xl flex flex-col gap-6 p-8 border border-gray-700"
+    >
+      <h1 class="text-3xl font-bold text-center tracking-wide mb-4">
+        {{ t('Tickets.tickets') }}
+      </h1>
 
-    <form class="shadow-2xl p-3 rounded-lg bg-[var(--blanc)] flex flex-col gap-3 w-fit">
-      <h1 class="text-[28px] text-center">{{ t('Tickets.tickets') }}</h1>
-
-      <div class="flex flex-row gap-2">
+      <div class="grid grid-cols-2 gap-4">
         <div class="flex flex-col">
-          <label for="firstname" class="font-roboto text-xs">{{ t('Tickets.firstname') }}</label>
+          <label for="firstname" class="text-xs text-black mb-1">{{ t('Tickets.firstname') }}</label>
           <input
               id="firstname"
               v-model="firstname"
               type="text"
-              required
-              class="border border-[var(--noir)] outline-none rounded px-2"
+              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
           />
         </div>
 
         <div class="flex flex-col">
-          <label for="lastname" class="font-roboto text-xs">{{ t('Tickets.lastname') }}</label>
+          <label for="lastname" class="text-xs text-black mb-1">{{ t('Tickets.lastname') }}</label>
           <input
               id="lastname"
               v-model="lastname"
               type="text"
-              class="border border-[var(--noir)] outline-none rounded px-2"
+              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
           />
         </div>
       </div>
 
       <div class="flex flex-col">
-        <label for="email" class="font-roboto text-xs">Email</label>
+        <label for="email" class="text-xs text-black mb-1">Email</label>
         <input
             id="email"
             v-model="email"
             type="email"
-            class="border border-[var(--noir)] outline-none rounded px-2"
+            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
         />
       </div>
+
       <div class="flex flex-col">
-        <label for="tarif" class="font-roboto text-xs">{{ t('Tickets.priceList') }}</label>
+        <label for="tarif" class="text-xs text-black mb-1">{{ t('Tickets.priceList') }}</label>
         <select
             id="tarif"
             v-model="selectedTarif"
-            class="border border-[var(--noir)] outline-none rounded px-2"
+            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
         >
           <option value="" disabled hidden>{{ t('Tickets.choose') }}</option>
           <option
@@ -58,76 +56,79 @@
           </option>
         </select>
       </div>
+
       <div class="flex flex-col">
-        <label for="creditnumber" class="font-roboto text-xs">{{ t('Tickets.CreditCardNumber') }}</label>
+        <label for="creditnumber" class="text-xs text-black mb-1">{{ t('Tickets.CreditCardNumber') }}</label>
         <input
             id="creditnumber"
             v-model="formattedCardNumber"
             placeholder="1234 5678 9012 3456"
             type="text"
             maxlength="19"
-            class="border border-[var(--noir)] outline-none rounded px-2"
+            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
         />
       </div>
 
-      <div class="flex flex-row gap-2">
-        <div class="flex flex-col w-1/2">
-          <label for="creditcode" class="font-roboto text-xs">CVV</label>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col">
+          <label for="creditcode" class="text-xs text-black mb-1">CVV</label>
           <input
               id="creditcode"
               v-model="formattedCvv"
               placeholder="123"
               type="text"
               maxlength="3"
-              class="border border-[var(--noir)] outline-none rounded px-2"
+              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
           />
         </div>
 
-        <div class="flex flex-col w-1/2">
-          <label for="enddate" class="font-roboto text-xs">{{ t('Tickets.enddate') }}</label>
+        <div class="flex flex-col">
+          <label for="enddate" class="text-xs text-black mb-1">{{ t('Tickets.enddate') }}</label>
           <input
               id="enddate"
               v-model="formattedExpiry"
               placeholder="MM/AA"
               type="text"
               maxlength="5"
-              class="border border-[var(--noir)] outline-none rounded px-2"
+              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
           />
         </div>
       </div>
 
-
-
       <p
           v-if="message"
-          class="text-center mt-2 text-sm"
+          class="text-center text-sm"
           :class="{
-            'text-green-600': message.includes('✅'),
-            'text-red-600': message.includes('❌'),
-            'text-yellow-600': message.includes('💳')
-          }"
+          'text-green-400': message.includes('✅'),
+          'text-red-400': message.includes('❌'),
+          'text-yellow-400': message.includes('💳')
+        }"
       >
         {{ message }}
       </p>
 
-      <input
+      <button
           type="submit"
-          class="bg-[var(--grisf)] hover:bg-[var(--jaune)] hover:text-[var(--noir)] transition rounded w-fit self-center px-3 py-1 cursor-pointer"
-          :value=" t('Tickets.submit') "
+          class="bg-yellow-500 hover:bg-yellow-400 text-[var(--blanc)] tracking-widest font-semibold rounded-xl py-2 transition-all"
           @click="pay"
-      />
+      >
+        {{ t('Tickets.submit') }}
+      </button>
     </form>
   </div>
 </template>
 
+
+
+
 <script setup>
-import { ref, computed } from "vue"
+import bgImage from '../assets/img/bgbilleterie.png'
+import {ref, computed} from "vue"
 import {useRouter} from "vue-router";
 import {useI18n} from 'vue-i18n'
 
-const { t,tm } = useI18n()
+const {t, tm} = useI18n()
 const route = useRouter()
-
 
 
 const firstname = ref("")
@@ -174,12 +175,12 @@ const pay = (e) => {
   e.preventDefault()
 
   if (!isValid.value) {
-    message.value = "Veuillez remplir correctement tous les champs."
+    message.value = "❌ Veuillez remplir correctement tous les champs."
     return
   }
 
   message.value = "Paiement en cours..."
-  route.push({path:`/ticket/${1}`})
+  route.push({path: `/ticket/${1}`})
 }
 </script>
 

@@ -28,7 +28,7 @@
 body  {
     font-family:Bebas ;
     font-weight: 400;
-
+    overflow-x: hidden;
 }
 
 .font-roboto {

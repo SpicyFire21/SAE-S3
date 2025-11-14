@@ -88,7 +88,7 @@ let users = [
         "note": "4.5",
         "type": "Acteur",
         "nom_photo": "acteur.png",
-        "description": "The strongest, il est inspiré de adam KHNAGUI"
+        "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
     },
 ]
 

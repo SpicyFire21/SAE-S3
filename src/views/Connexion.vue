@@ -29,7 +29,7 @@
             <button type="submit"
                     class="flex w-full justify-center rounded-md bg-[var(--jaune)] px-3 py-1.5 text-sm/6 text-white
                          hover:bg-[color-mix(in_srgb,var(--jaune)_85%,black_15%)]
-                         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">
+                         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 tracking-widest">
               Se connecter
             </button>
           </div>
