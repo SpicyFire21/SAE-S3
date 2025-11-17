@@ -1,20 +1,19 @@
 <template>
-  <div class="relative w-[95%] mx-auto mt-3">
+  <div class="relative w-full px-4 mt-3">
+
     <div
         ref="slider"
-        class="flex overflow-x-scroll scrollbar-hide scroll-smooth snap-x snap-mandatory space-x-4"
+        class="flex overflow-x-scroll scrollbar-hide scroll-smooth snap-x snap-mandatory space-x-6 px-2"
     >
       <div
-          v-for="(slide, index) in slides"
+          v-for="(provider, index) in providers"
           :key="index"
-          class="snap-center flex-shrink-0 w-1/5 bg-[var(--blanc)] shadow-lg rounded-lg overflow-hidden flex flex-col"
+          class="snap-center flex-shrink-0 w-[calc((100%-48px)/5)] bg-[var(--blanc)] shadow-lg rounded-lg overflow-hidden flex flex-col"
       >
-        <img :src="slide.src" class="w-full h-40 object-cover" />
-        <div class="text-[var(--blanc)] text-center py-2 flex items-center justify-center ">
-          <div class="bg-[var(--bleu)] w-fit px-2 py-0">
-            {{ slide.title }}
-          </div>
+        <img :src="getProviderImage(provider.nom_photo)" class="w-full h-40 object-cover" alt="" />
 
+        <div class="text-[var(--blanc)] text-center py-2 flex items-center justify-center">
+          <div class="bg-[var(--bleu)] px-2 py-0">{{ provider.name }}</div>
         </div>
       </div>
     </div>
@@ -35,20 +34,15 @@
   </div>
 </template>
 
+
+
 <script setup>
 import { ref } from "vue"
 
 
-const slides = ref([
-  { src: "https://picsum.photos/id/1018/800/400", title: "Leonardo DiCaprio" },
-  { src: "https://picsum.photos/id/1024/800/400", title: "Gérard Depardieu" },
-  { src: "https://picsum.photos/id/1037/800/400", title: "Brad Pitt" },
-  { src: "https://picsum.photos/id/1041/800/400", title: "Johnny Depp" },
-  { src: "https://picsum.photos/id/1052/800/400", title: "Morgan Freeman" },
-  { src: "https://picsum.photos/id/1062/800/400", title: "Omar Sy" },
-  { src: "https://picsum.photos/id/1074/800/400", title: "Samuel L. Jackson" },
-  { src: "https://picsum.photos/id/1084/800/400", title: "Jack Nicholson" },
-])
+defineProps({
+  providers: { type: Array, required: true },
+})
 
 const slider = ref(null)
 
@@ -59,6 +53,8 @@ function scrollLeft() {
 function scrollRight() {
   slider.value.scrollBy({ left: slider.value.clientWidth / 5, behavior: "smooth" })
 }
+
+const getProviderImage = (fileName) => new URL(`../../assets/img/${fileName}`, import.meta.url).href
 </script>
 
 <style>

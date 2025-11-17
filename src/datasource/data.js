@@ -90,6 +90,58 @@ let users = [
         "nom_photo": "acteur.png",
         "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
     },
+    {
+        "id":"8",
+        "name":"The honored one",
+        "login":"cityxl",
+        "password":"cityxl",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "4.5",
+        "type": "Acteur",
+        "nom_photo": "acteur.png",
+        "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
+    },
+    {
+        "id":"9",
+        "name":"The honored one",
+        "login":"cityxl",
+        "password":"cityxl",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "4.5",
+        "type": "Acteur",
+        "nom_photo": "acteur.png",
+        "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
+    },
+    {
+        "id":"10",
+        "name":"The honored one",
+        "login":"cityxl",
+        "password":"cityxl",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "4.5",
+        "type": "Acteur",
+        "nom_photo": "acteur.png",
+        "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
+    },
+    {
+        "id":"11",
+        "name":"The honored one",
+        "login":"cityxl",
+        "password":"cityxl",
+        "email":"email@gmail.cm",
+        "droit":"1",
+        "session":"",
+        "note": "4.5",
+        "type": "Acteur",
+        "nom_photo": "acteur.png",
+        "description": "The strongest, il est inspiré de johan lançon (il n'a jamais atteint son aura)"
+    },
 ]
 
 let tickets = [
@@ -198,6 +250,83 @@ let basket_items = [
 let films = [
     {
         "id": "1",
+        "title": "new 1",
+        "director_id": "2",
+        "cast_ids": ["1", "2"],
+        "genre": "Action",
+        "release_date": "2025-11-01",
+        "poster": "spicyfire.webp",
+        "description": "Le show de spicyfire (horrible)",
+        "duration": 120
+    },
+    {
+        "id": "2",
+        "title": "new 2",
+        "director_id": "5",
+        "cast_ids": ["3", "4"],
+        "genre": "Adventure",
+        "release_date": "2025-11-01",
+        "poster": "luan.jpg",
+        "description": "Le show de Luan Aliu c hard insane",
+        "duration": 135
+    },
+    {
+        "id": "3",
+        "title": "new 3",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-11-01",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    },
+    {
+        "id": "4",
+        "title": "new 4",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-11-01",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    },
+    {
+        "id": "5",
+        "title": "new 5",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-11-01",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    },
+    {
+        "id": "5",
+        "title": "new 6",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-11-01",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    },
+    {
+        "id": "7",
+        "title": "new 7",
+        "director_id": "6",
+        "cast_ids": ["5", "6"],
+        "genre": "Comedy",
+        "release_date": "2025-11-01",
+        "poster": "producteur.jpg",
+        "description": "Sahur bedi bedi bedi bedi bedi",
+        "duration": 90
+    },
+    {
+        "id": "4",
         "title": "Le Spicyfire Show",
         "director_id": "2",
         "cast_ids": ["1", "2"],
@@ -208,18 +337,18 @@ let films = [
         "duration": 120
     },
     {
-        "id": "2",
+        "id": "5",
         "title": "Le Luan Show",
         "director_id": "5",
         "cast_ids": ["3", "4"],
         "genre": "Adventure",
-        "release_date": "2025-03-19",
+        "release_date": "2025-11-10",
         "poster": "luan.jpg",
         "description": "Le show de Luan Aliu c hard insane",
         "duration": 135
     },
     {
-        "id": "3",
+        "id": "6",
         "title": "Brainrot Simulator",
         "director_id": "6",
         "cast_ids": ["5", "6"],
@@ -234,7 +363,7 @@ let films = [
 let film_tickets = [
     {
         "iduser": "3",
-        "idfilm": "1",
+        "idfilm": "5",
         "idticket": "1",
         "datefrom": "2025-03-18T14:00:00",
         "dateto": "2025-03-18T16:00:00",
@@ -242,7 +371,7 @@ let film_tickets = [
     },
     {
         "iduser": "3",
-        "idfilm": "2",
+        "idfilm": "5",
         "idticket": "2",
         "datefrom": "2025-03-19T18:00:00",
         "dateto": "2025-03-19T20:15:00",

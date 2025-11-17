@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', () => {
     // state
     const users = ref([])
     const currentUser = ref(null)
+    const providers = ref([])
 
     //getter
 
@@ -16,6 +17,10 @@ export const useUserStore = defineStore('user', () => {
     const updateCurrentUser = (data) =>{
         currentUser.value = data;
     }
+    const updateProviders = (data) => {
+        providers.value = data;
+    }
+
 
 
     //action
@@ -31,7 +36,7 @@ export const useUserStore = defineStore('user', () => {
     const getProviders = async () => {
         try {
             const response = await userService.getProviders();
-            updateUsers(response.data)
+            updateProviders(response.data)
         } catch (e) {
             console.error(e)
         }
@@ -52,6 +57,7 @@ export const useUserStore = defineStore('user', () => {
     //sert a export les fonctions/states du store
     return {
         //state
+        providers,
         users,
         currentUser,
 
@@ -60,8 +66,8 @@ export const useUserStore = defineStore('user', () => {
         //mutation
 
         //action
-        getUsers,
         getProviders,
-        login
+        getUsers,
+        login,
     }
 })

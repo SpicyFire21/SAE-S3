@@ -14,9 +14,11 @@
       </div>
     </div>
 
-    <div class="mt-5 text-center">
+    <div class="mt-5 text-center w-full">
       <h1 class="text-[28px] inline-block bg-[var(--gris)] px-3 py-1">{{ t('home.Discover') }}</h1>
-      <div id="carrousel"><Carrousel/></div>
+      <div id="carrousel" class="w-full max-w-screen-xl mx-auto px-4">
+        <Carrousel v-if="userStore.providers && userStore.providers.length" :providers="userStore.providers"/>
+      </div>
     </div>
   </div>
 
@@ -24,11 +26,24 @@
     <h1 class="underline ml-10 text-[22px]">{{ t('home.doNotMiss')}}</h1>
     <div class="flex flex-col gap-2">
       <div class="flex gap-10 ml-25">
-        <a href="" class="text-[var(--jaune)]">{{ t('home.news')}}</a>
-        <a href="" class="text-[var(--grisf)]">{{ t('home.famous')}}</a>
+        <button
+            :class="{'text-[var(--jaune)] border font-semibold tracking-widest': activeTab === 'news', 'text-[var(--grisf)] tracking-widest': activeTab !== 'news'}"
+            class="px-4 rounded"
+            @click="activeTab = 'news'"
+        >
+          {{ t('home.news') }}
+        </button>
+        <button
+            :class="{'text-[var(--jaune)] border font-semibold tracking-widest': activeTab === 'famous', 'text-[var(--grisf)] tracking-widest': activeTab !== 'famous'}"
+            class="px-4 rounded"
+            @click="activeTab = 'famous'"
+        >
+          {{ t('home.famous') }}
+        </button>
       </div>
       <hr>
-      <CardList :films="filmsStore.films" :getDirectorName="getDirectorName"/>
+      <CardList v-if="activeTab === 'news'" :films="filteredNewFilms" :getDirectorName="getDirectorName"/>
+      <CardList v-if="activeTab === 'famous'" :films="filteredFamousFilms" :getDirectorName="getDirectorName"/>
       <div class="flex flex-col items-center">
         <h1 class="text-2xl underline">{{ t('home.provider') }}</h1>
 
@@ -80,36 +95,36 @@ import CardList from "@/components/Accueil/CardList.vue";
 import RankingStars from "@/components/Accueil/RankingStars.vue";
 import PrestataireCard from "@/components/Accueil/PrestataireCard.vue";
 import { ref, onMounted, computed } from "vue";
-import { getUsers } from "@/services/user.service.js";
 import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
 import {useFilmsStore} from "@/stores/modules/films.js";
 import {useUserStore} from "@/stores/index.js";
+import {useTicketsStore} from "@/stores/modules/tickets.js";
 
 const { t, tm } = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))
 
-const providers = ref([]);
-const films = ref([]);
 const filterName = ref('');
 const filterNote = ref(0);
 const filterTypes = ref([]);
 const filmsStore = useFilmsStore()
 const userStore = useUserStore()
-
+const ticketsStore = useTicketsStore()
+const activeTab = ref('news')
 
 
 onMounted(async () => {
   await filmsStore.getFilms();
   await userStore.getProviders();
+  await ticketsStore.getTickets();
 });
 
 const getDirectorName = (director_id) => {
-  const director = userStore.users.find(user => user.id === director_id)
+  const director = userStore.providers.find(user => user.id === director_id)
   return director ? director.name : 'Directeur inconnu'
 }
 
 const filteredProviders = computed(() => {
-  return userStore.users.filter(provider => {
+  return userStore.providers.filter(provider => {
     const matchName = provider.name.toLowerCase().includes(filterName.value.toLowerCase());
     const matchNote = provider.note >= filterNote.value;
     const matchType = filterTypes.value.length ? filterTypes.value.includes(provider.type) : true;
@@ -117,6 +132,36 @@ const filteredProviders = computed(() => {
     return matchName && matchNote && matchType && matchDroit;
   });
 });
+
+const filteredNewFilms = computed(() => {
+  const now = new Date() // aujd
+  const oneMonthAgo = new Date() // il y a 1 mois
+  oneMonthAgo.setMonth(now.getMonth() - 1)
+
+  return filmsStore.films.filter(film => {
+    const releaseDate = new Date(film.release_date)
+    return releaseDate >= oneMonthAgo && releaseDate <= now
+  })
+})
+
+const filteredFamousFilms = computed(() => {
+  console.log("test tickets:" + ticketsStore.tickets)
+  if (!filmsStore.films || !ticketsStore.tickets) return []
+  const ticketCount = {}
+
+
+  ticketsStore.tickets.forEach(ticket => {
+    if (!ticketCount[ticket.idfilm]) ticketCount[ticket.idfilm] = 0
+    ticketCount[ticket.idfilm]++
+  })
+
+  return [...filmsStore.films]
+      .sort((a, b) => (ticketCount[b.id] || 0) - (ticketCount[a.id] || 0))
+      .slice(0, 7) // top 7 des films les plus populaires des données
+})
+
+
+
 
 
 </script>

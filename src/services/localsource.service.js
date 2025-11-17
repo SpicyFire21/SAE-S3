@@ -6,6 +6,10 @@ async function getUsers() {
     return {error:0,status:200,data:users}
 }
 
+async function getTickets() {
+    return {error:0, status:200, data:film_tickets}
+}
+
 async function getFilms() {
     return {error:0, status:200, data:films}
 }
