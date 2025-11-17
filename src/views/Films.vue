@@ -6,7 +6,7 @@
   <div class="">
     <div class="pt-15">
 
-    c les films nigga
+    c les films
     </div>
   </div>
 </template>
