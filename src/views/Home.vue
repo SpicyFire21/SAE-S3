@@ -67,7 +67,8 @@
                        class="appearance-none w-5 h-5 border-1 border-[var(--noir)] rounded-sm checked:bg-[var(--jaune)] checked:border-[var(--noir)] cursor-pointer">
               </div>
             </div>
-
+          </fieldset>
+</form>
             <PrestataireCard :providers="filteredProviders"/>
             <h1 class="text-[30px] max-w-[400px] mt-5 text-center border-b border-gray bottom">
               Votre acteur préféré est présent ? Reservez une dédicace dès maintenant
@@ -80,8 +81,8 @@
   </div>
 
 
-          </fieldset>
-        </form>
+
+
       </div>
     </div>
   </div>
@@ -137,7 +138,6 @@ const filteredNewFilms = computed(() => {
   const now = new Date() // aujd
   const oneMonthAgo = new Date() // il y a 1 mois
   oneMonthAgo.setMonth(now.getMonth() - 1)
-
   return filmsStore.films.filter(film => {
     const releaseDate = new Date(film.release_date)
     return releaseDate >= oneMonthAgo && releaseDate <= now
