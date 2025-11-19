@@ -9,7 +9,7 @@
         </select>
         <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--grisf)] pointer-events-none"
              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M7 10l5 5 5-5H7z" />
+          <path d="M7 10l5 5 5-5H7z"/>
         </svg>
       </div>
     </div>
@@ -23,7 +23,7 @@
   </div>
 
   <div class="flex flex-col gap-10">
-    <h1 class="underline ml-10 text-[22px]">{{ t('home.doNotMiss')}}</h1>
+    <h1 class="underline ml-10 text-[22px]">{{ t('home.doNotMiss') }}</h1>
     <div class="flex flex-col gap-2">
       <div class="flex gap-10 ml-25">
         <button
@@ -44,13 +44,18 @@
       <hr>
       <CardList v-if="activeTab === 'news'" :films="filteredNewFilms" :getDirectorName="getDirectorName"/>
       <CardList v-if="activeTab === 'famous'" :films="filteredFamousFilms" :getDirectorName="getDirectorName"/>
+      <h2 class="justify-center text-center items-center left-0 tracking-wider max-w-150 mx-auto mt-10 mb-10 font-semibold">Bienvenue à la première édition du Grand Focus, l’événement incontournable dédié à
+        l’univers du cinéma !
+        Plongez au cœur d’un festival inédit où coulisses, innovations et émotions se rencontrent.
+        Entre rencontres avec les créateurs, avant-premières exclusives et expériences immersives, découvrez le
+        rendez-vous qui célèbre le 7ᵉ art sous toutes ses formes.</h2>
       <div class="flex flex-col items-center">
         <h1 class="text-2xl underline">{{ t('home.provider') }}</h1>
 
         <form action="" class="w-full py-5">
           <fieldset class="flex flex-col items-center gap-3">
             <div class="flex flex-col">
-              <label for="prest" class="font-[Roboto] tracking-widest text-1">{{t('home.fprovider')}}</label>
+              <label for="prest" class="font-[Roboto] tracking-widest text-1">{{ t('home.fprovider') }}</label>
               <input type="text" id="prest" v-model="filterName" :placeholder="t('home.fprovider')"
                      class="w-60 px-3 py-2 border-1 border-[var(--noir)] outline-none rounded">
             </div>
@@ -62,25 +67,23 @@
 
             <div class="flex gap-10">
               <div v-for="(item,index) in tabCheckbox" :key="index" class="flex gap-2 items-center font-[Roboto]">
-                <label :for="item.id">{{item.name}}</label>
+                <label :for="item.id">{{ item.name }}</label>
                 <input type="checkbox" :id="item.id" v-model="filterTypes" :value="item.name"
                        class="appearance-none w-5 h-5 border-1 border-[var(--noir)] rounded-sm checked:bg-[var(--jaune)] checked:border-[var(--noir)] cursor-pointer">
               </div>
             </div>
           </fieldset>
-</form>
-            <PrestataireCard :providers="filteredProviders"/>
-            <h1 class="text-[30px] max-w-[400px] mt-5 text-center border-b border-gray bottom">
-              Votre acteur préféré est présent ? Reservez une dédicace dès maintenant
-            </h1>
+        </form>
+        <PrestataireCard :providers="filteredProviders"/>
+        <h1 class="text-[30px] max-w-[400px] mt-5 text-center border-b border-gray bottom">
+          Votre acteur préféré est présent ? Reservez une dédicace dès maintenant
+        </h1>
 
-<div>
-<InteractiveMap/>
-
-
-  </div>
+        <div>
+          <InteractiveMap/>
 
 
+        </div>
 
 
       </div>
@@ -95,13 +98,13 @@ import Carrousel from "@/components/Accueil/Carrousel.vue";
 import CardList from "@/components/Accueil/CardList.vue";
 import RankingStars from "@/components/Accueil/RankingStars.vue";
 import PrestataireCard from "@/components/Accueil/PrestataireCard.vue";
-import { ref, onMounted, computed } from "vue";
+import {ref, onMounted, computed} from "vue";
 import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
 import {useFilmsStore} from "@/stores/modules/films.js";
 import {useUserStore} from "@/stores/index.js";
 import {useTicketsStore} from "@/stores/modules/tickets.js";
 
-const { t, tm } = useI18n()
+const {t, tm} = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))
 
 const filterName = ref('');
@@ -159,9 +162,6 @@ const filteredFamousFilms = computed(() => {
       .sort((a, b) => (ticketCount[b.id] || 0) - (ticketCount[a.id] || 0))
       .slice(0, 7) // top 7 des films les plus populaires des données
 })
-
-
-
 
 
 </script>

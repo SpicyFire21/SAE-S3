@@ -1,9 +1,5 @@
 <template>
   <div class="">
-    <br>  <br>  <br>  <br>  <br>
-    <br>  <br>  <br>  <br>  <br>
-    <br>  <br>  <br>  <br>  <br>
-    <br>  <br>  <br>  <br>  <br>
     <div v-for="category in categories" :key="category" class="pt-10">
       <FilmCarousel
           :get-director-name="getDirectorName"
