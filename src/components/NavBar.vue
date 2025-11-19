@@ -3,9 +3,9 @@
       as="nav"
       :class="[
 
-      'fixed w-full transition-colors duration-500',
+      'fixed w-full transition-colors duration-500 z-100',
       isHome ? (isScrolled ? 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]' : 'bg-transparent text-[var(--blanc)]') : 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
-      ,'fixed w-full z-10 transition-colors duration-500',
+      ,'fixed w-full z-10 transition-colors duration-500 z-100',
       isHome ? (isScrolled ? 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] z-10' : 'bg-transparent text-[var(--blanc)]') : 'bg-[var(--blanc)] text-[var(--noir)] shadow-[0_10px_30px_rgba(0,0,0,0.6)]'
 ]"
       v-slot="{ open }"

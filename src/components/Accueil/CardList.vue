@@ -25,7 +25,7 @@
         <div class="absolute inset-0 top-30 flex flex-col h-30 px-3 items-center justify-center text-[var(--blanc)] bg-[var(--noir)]/40">
           <h1 class="text-xl text-center">{{ slide.title }}</h1>
           <em>{{ getDirectorName(slide.director_id) }}</em>
-          <button class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 border-[var(--jaune)] rounded mt-2">
+          <button class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 border-[var(--jaune)] rounded mt-2 hover:brightness-110 transition">
             {{ t('cardlist.learnMore') }}
           </button>
         </div>
