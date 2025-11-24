@@ -7,10 +7,10 @@ let users = [
         "email":"admin@festival.com",
         "droit":"2",
         "session":"",
-        "note": "",
-        "type": "",
-        "nom_photo": "",
-        "description": ""
+        "note": [],
+        "type":"",
+        "nom_photo":"",
+        "description":""
     },
     {
         "id":"2",
@@ -20,10 +20,10 @@ let users = [
         "email":"scorsese@cinema.com",
         "droit":"1",
         "session":"",
-        "note": "4.9",
-        "type": "Réalisateur",
-        "nom_photo": "scorsese.jpg",
-        "description": "Réalisateur légendaire oscarisé, maître du cinéma américain"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5,5,5,5],
+        "type":"Réalisateur",
+        "nom_photo":"scorsese.jpg",
+        "description":"Réalisateur légendaire oscarisé, maître du cinéma américain"
     },
     {
         "id":"3",
@@ -33,10 +33,10 @@ let users = [
         "email":"client@mail.com",
         "droit":"0",
         "session":"",
-        "note": "",
-        "type": "",
-        "nom_photo": "",
-        "description": ""
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"",
+        "nom_photo":"",
+        "description":""
     },
     {
         "id":"4",
@@ -46,10 +46,10 @@ let users = [
         "email":"client2@mail.com",
         "droit":"0",
         "session":"",
-        "note": "",
-        "type": "",
-        "nom_photo": "",
-        "description": ""
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"",
+        "nom_photo":"",
+        "description":""
     },
     {
         "id":"5",
@@ -59,10 +59,10 @@ let users = [
         "email":"tarantino@pulp.com",
         "droit":"1",
         "session":"",
-        "note": "4.8",
-        "type": "Réalisateur",
-        "nom_photo": "tarantino.jpg",
-        "description": "Créateur de Pulp Fiction et Kill Bill, style unique et référencé"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisateur",
+        "nom_photo":"tarantino.jpg",
+        "description":"Créateur de Pulp Fiction et Kill Bill, style unique et référencé"
     },
     {
         "id":"6",
@@ -72,10 +72,10 @@ let users = [
         "email":"nolan@inception.com",
         "droit":"1",
         "session":"",
-        "note": "4.9",
-        "type": "Réalisateur",
-        "nom_photo": "nolan.jpg",
-        "description": "Génie des films à intrigue complexe et effets visuels innovants"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisateur",
+        "nom_photo":"nolan.jpg",
+        "description":"Génie des films à intrigue complexe et effets visuels innovants"
     },
     {
         "id":"7",
@@ -85,10 +85,10 @@ let users = [
         "email":"dicaprio@actor.com",
         "droit":"1",
         "session":"",
-        "note": "4.7",
-        "type": "Acteur",
-        "nom_photo": "dicaprio.jpg",
-        "description": "Acteur oscarisé, star internationale au talent incontesté"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Acteur",
+        "nom_photo":"dicaprio.jpg",
+        "description":"Acteur oscarisé, star internationale au talent incontesté"
     },
     {
         "id":"8",
@@ -98,10 +98,10 @@ let users = [
         "email":"streep@actress.com",
         "droit":"1",
         "session":"",
-        "note": "4.9",
-        "type": "Actrice",
-        "nom_photo": "streep.jpg",
-        "description": "L'actrice la plus nominée aux Oscars, légende vivante"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Actrice",
+        "nom_photo":"streep.jpg",
+        "description":"L'actrice la plus nominée aux Oscars, légende vivante"
     },
     {
         "id":"9",
@@ -111,10 +111,10 @@ let users = [
         "email":"villeneuve@sci-fi.com",
         "droit":"1",
         "session":"",
-        "note": "4.6",
-        "type": "Réalisateur",
-        "nom_photo": "villeneuve.jpg",
-        "description": "Maître de la science-fiction moderne, réalisateur de Dune"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisateur",
+        "nom_photo":"villeneuve.jpg",
+        "description":"Maître de la science-fiction moderne, réalisateur de Dune"
     },
     {
         "id":"10",
@@ -124,10 +124,10 @@ let users = [
         "email":"blanchett@actress.com",
         "droit":"1",
         "session":"",
-        "note": "4.8",
-        "type": "Actrice",
-        "nom_photo": "blanchett.jpg",
-        "description": "Actrice australienne doublement oscarisée, polyvalente et intense"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Actrice",
+        "nom_photo":"blanchett.jpg",
+        "description":"Actrice australienne doublement oscarisée, polyvalente et intense"
     },
     {
         "id":"11",
@@ -137,10 +137,10 @@ let users = [
         "email":"spielberg@films.com",
         "droit":"1",
         "session":"",
-        "note": "4.9",
-        "type": "Réalisateur",
-        "nom_photo": "spielberg.jpg",
-        "description": "Légende du cinéma, créateur de E.T. et Jurassic Park"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisateur",
+        "nom_photo":"spielberg.jpg",
+        "description":"Légende du cinéma, créateur de E.T. et Jurassic Park"
     },
     {
         "id":"12",
@@ -150,10 +150,10 @@ let users = [
         "email":"cotillard@actress.com",
         "droit":"1",
         "session":"",
-        "note": "4.7",
-        "type": "Actrice",
-        "nom_photo": "cotillard.jpg",
-        "description": "Actrice française oscarisée, renommée internationale"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Actrice",
+        "nom_photo":"cotillard.jpg",
+        "description":"Actrice française oscarisée, renommée internationale"
     },
     {
         "id":"13",
@@ -163,10 +163,10 @@ let users = [
         "email":"pacino@actor.com",
         "droit":"1",
         "session":"",
-        "note": "4.8",
-        "type": "Acteur",
-        "nom_photo": "pacino.jpg",
-        "description": "Icône du cinéma, mémorable dans Le Parrain et Scarface"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Acteur",
+        "nom_photo":"pacino.jpg",
+        "description":"Icône du cinéma, mémorable dans Le Parrain et Scarface"
     },
     {
         "id":"14",
@@ -176,10 +176,10 @@ let users = [
         "email":"campion@director.com",
         "droit":"1",
         "session":"",
-        "note": "4.6",
-        "type": "Réalisatrice",
-        "nom_photo": "campion.jpg",
-        "description": "Réalisatrice néo-zélandaise, Palme d'Or et Oscar"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisatrice",
+        "nom_photo":"campion.jpg",
+        "description":"Réalisatrice néo-zélandaise, Palme d'Or et Oscar"
     },
     {
         "id":"15",
@@ -189,10 +189,10 @@ let users = [
         "email":"phoenix@actor.com",
         "droit":"1",
         "session":"",
-        "note": "4.7",
-        "type": "Acteur",
-        "nom_photo": "phoenix.jpg",
-        "description": "Acteur oscarisé, performances puissantes et engagées"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Acteur",
+        "nom_photo":"phoenix.jpg",
+        "description":"Acteur oscarisé, performances puissantes et engagées"
     },
     {
         "id":"16",
@@ -202,10 +202,10 @@ let users = [
         "email":"gerwig@director.com",
         "droit":"1",
         "session":"",
-        "note": "4.5",
-        "type": "Réalisatrice",
-        "nom_photo": "gerwig.jpg",
-        "description": "Réalisatrice et scénariste acclamée, voix féminine du cinéma moderne"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Réalisatrice",
+        "nom_photo":"gerwig.jpg",
+        "description":"Réalisatrice et scénariste acclamée, voix féminine du cinéma moderne"
     },
     {
         "id":"17",
@@ -215,12 +215,12 @@ let users = [
         "email":"hanks@actor.com",
         "droit":"1",
         "session":"",
-        "note": "4.8",
-        "type": "Acteur",
-        "nom_photo": "hanks.jpg",
-        "description": "Acteur américain emblématique, deux fois oscarisé"
+        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
+        "type":"Acteur",
+        "nom_photo":"hanks.jpg",
+        "description":"Acteur américain emblématique, deux fois oscarisé"
     }
-]
+];
 
 let tickets = [
     {

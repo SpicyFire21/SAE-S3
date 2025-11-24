@@ -71,6 +71,13 @@
 
   "prestataireCard": {
     "giveOpinion": "Donner un avis"
+  },
+  "login": {
+    "1": "Se connecter",
+    "2": "Mot de passe",
+    "3": "pas de compte",
+    "4": "s'inscrire",
+    "5": "Entrez votre email"
   }
 
 

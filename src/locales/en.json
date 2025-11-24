@@ -73,5 +73,12 @@
   },
   "prestataireCard": {
     "giveOpinion": "Give An Opinion"
+  },
+  "login": {
+    "1": "Sign in",
+    "2": "Password",
+    "3": "no account",
+    "4": "sign up",
+    "5": "Enter your email"
   }
 }
