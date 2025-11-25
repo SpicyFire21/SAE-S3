@@ -126,10 +126,11 @@ import bgImage from '../assets/img/bgbilleterie.png'
 import {ref, computed} from "vue"
 import {useRouter} from "vue-router";
 import {useI18n} from 'vue-i18n'
+import {useUserStore} from "@/stores/index.js";
 
 const {t, tm} = useI18n()
 const route = useRouter()
-
+const userStore = useUserStore();
 
 const firstname = ref("")
 const lastname = ref("")
@@ -139,6 +140,8 @@ const message = ref("")
 const cardNumber = ref("")
 const expiry = ref("")
 const cvv = ref("")
+
+
 
 const tarifs = computed(() => tm('Tickets.list'))
 
@@ -180,7 +183,12 @@ const pay = (e) => {
   }
 
   message.value = "Paiement en cours..."
-  route.push({path: `/ticket/${1}`})
+  if(userStore.currentUser){
+    route.push({path: `/ticket/${1}`})
+  } else {
+    route.push({path: `/login`})
+
+  }
 }
 </script>
 
