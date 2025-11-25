@@ -20,7 +20,7 @@ let users = [
         "email":"scorsese@cinema.com",
         "droit":"1",
         "session":"",
-        "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5,5,5,5],
+        "note": [0,0.5,1,1.5,2,2.5,1,5,4,4.5,5,5,5,5,5],
         "type":"Réalisateur",
         "nom_photo":"scorsese.jpg",
         "description":"Réalisateur légendaire oscarisé, maître du cinéma américain"

@@ -79,6 +79,11 @@
     "2": "Password",
     "3": "no account",
     "4": "sign up",
-    "5": "Enter your email"
+    "5": "Enter your email",
+    "6": "You already got an account",
+    "7": "Enter your nom",
+    "8": "Enter your login",
+    "9": "Confirm your email",
+    "10": "Become provider"
   }
 }
