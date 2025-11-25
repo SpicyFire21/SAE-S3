@@ -103,6 +103,7 @@ import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
 import {useFilmsStore} from "@/stores/modules/films.js";
 import {useUserStore} from "@/stores/index.js";
 import {useTicketsStore} from "@/stores/modules/tickets.js";
+import router from "@/router/index.js";
 
 const {t, tm} = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))

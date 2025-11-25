@@ -37,7 +37,7 @@
                 {{ genre }}
               </span>
             </div>
-            <button class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 rounded-md hover:brightness-110 transition">
+            <button @click="goToDetails(slide.id)" class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 rounded-md hover:brightness-110 transition">
               {{ t('cardlist.learnMore') }}
             </button>
           </div>
@@ -60,6 +60,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import router from "@/router/index.js";
 
 const { t } = useI18n()
 
@@ -78,6 +79,11 @@ const scrollAmount = () => carousel.value ? carousel.value.offsetWidth / 5 : 0
 
 const scrollLeft = () => carousel.value?.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
 const scrollRight = () => carousel.value?.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+
+function goToDetails(id) {
+  router.push({ name: 'FilmDetails', params: { id } })
+  console.log("test id: " + id)
+}
 </script>
 
 <style scoped>

@@ -25,7 +25,7 @@
         <div class="absolute inset-0 top-30 flex flex-col h-30 px-3 items-center justify-center text-[var(--blanc)] bg-[var(--noir)]/40">
           <h1 class="text-xl text-center">{{ slide.title }}</h1>
           <em>{{ getDirectorName(slide.director_id) }}</em>
-          <button class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 border-[var(--jaune)] rounded mt-2 hover:brightness-110 transition">
+          <button @click="goToDetails(slide.id)" class="bg-[var(--jaune)] text-[var(--noir)] w-full py-1 border-[var(--jaune)] rounded mt-2 hover:brightness-110 transition">
             {{ t('cardlist.learnMore') }}
           </button>
         </div>
@@ -59,8 +59,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import router from "../../router/index.js";
 
 const { t } = useI18n()
+
 
 defineProps({
   films: { type: Array, required: true },
@@ -78,6 +80,11 @@ const scrollAmount = () => carousel.value ? carousel.value.offsetWidth / 5 : 0
 
 const scrollLeft = () => carousel.value?.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
 const scrollRight = () => carousel.value?.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+
+function goToDetails(id) {
+  router.push({ name: 'FilmDetails', params: { id } })
+  console.log("test id: " + id)
+}
 </script>
 
 <style scoped>
