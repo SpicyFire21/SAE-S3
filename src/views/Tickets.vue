@@ -127,10 +127,12 @@ import {ref, computed} from "vue"
 import {useRouter} from "vue-router";
 import {useI18n} from 'vue-i18n'
 import {useUserStore} from "@/stores/index.js";
+import {useTicketsStore} from "@/stores/modules/tickets.js";
 
 const {t, tm} = useI18n()
 const route = useRouter()
 const userStore = useUserStore();
+const ticketStore = useTicketsStore();
 
 const firstname = ref("")
 const lastname = ref("")
@@ -174,7 +176,7 @@ const isValid = computed(() => {
   )
 })
 
-const pay = (e) => {
+const pay = async (e) => {
   e.preventDefault()
 
   if (!isValid.value) {
@@ -183,10 +185,17 @@ const pay = (e) => {
   }
 
   message.value = "Paiement en cours..."
+  const buyTicket = await ticketStore.createTicket();
+
+  if (buyTicket.error){
+    alert("Erreur lors du payement");
+    return;
+  }
+
   if(userStore.currentUser){
-    route.push({path: `/ticket/${1}`})
+    await route.push({path: `/ticket/${buyTicket.idticket}`})
   } else {
-    route.push({path: `/login`})
+    await route.push({path: `/login`})
 
   }
 }

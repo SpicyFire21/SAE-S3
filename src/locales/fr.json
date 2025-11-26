@@ -3,7 +3,9 @@
     "accueil": "Accueil",
     "billeterie": "Billetterie",
     "film": "Films",
-    "seConnecter": "Se connecter"
+    "seConnecter": "Se connecter",
+    "seDeconnecter": "Deconnexion",
+    "compte": "Mon compte"
   },
   "hero": {
     "title": "Le cinéma sous toutes ses formes, réuni en un seul événement."

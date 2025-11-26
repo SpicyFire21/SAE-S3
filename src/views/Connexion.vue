@@ -7,9 +7,9 @@
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form class="space-y-6">
           <div>
-            <label for="pseudo" class="block text-sm/6 font-medium text-black">Email</label>
+            <label for="pseudo" class="block text-sm/6 font-medium text-black">Login</label>
             <div class="mt-2">
-              <input v-model="login.email" type="text" id="pseudo" name="pseudo" required :placeholder="t('login.5')"
+              <input v-model="login.login" type="text" id="pseudo" name="pseudo" required :placeholder="t('login.8')"
                      class="block w-full rounded-md bg-black/5 px-3 py-1.5 text-base text-black outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-red-500 sm:text-sm/6" />
             </div>
           </div>
@@ -129,11 +129,15 @@
 import bgImage from '../assets/img/connexionbg.jpg'
 import { ref } from 'vue'
 import {useI18n} from "vue-i18n";
+import {useUserStore} from "@/stores/index.js";
+import {useRouter} from "vue-router";
+const route = useRouter();
 const {t} = useI18n()
 const toggleForm = ref(true);
+const userStore = useUserStore();
 
 const login = {
-  email: "",
+  login: "",
   password: ""
 };
 const registerUser = {
@@ -153,14 +157,18 @@ const registerUser = {
 
 function Login() {
   console.log(login)
+  userStore.Login(login)
+  route.push({path: `/`})
 }
 
 function Register(){
   console.log(registerUser)
   if (registerUser.droit === 0){
     // creation compte user
+    userStore.registerUser(registerUser);
   } else {
     // creation compte prestataire
+    userStore.registerProvider(registerUser);
   }
 }
 

@@ -6,6 +6,7 @@ import TicketPay from "@/views/TicketPay.vue"
 import Connexion from "@/views/Connexion.vue"
 import Films from "@/views/Films.vue"
 import FilmDetails from "@/views/FilmDetails.vue";
+import account from "@/views/Account.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,11 @@ const router = createRouter({
             component: FilmDetails,
             props: true
         },
+        {
+            path: '/account',
+            name: 'account',
+            component:account
+        }
     ],
 })
 

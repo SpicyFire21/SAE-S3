@@ -3,7 +3,10 @@
     "accueil": "Home",
     "billeterie": "Tickets",
     "films": "Films",
-    "seConnecter": "Login"
+    "seConnecter": "Login",
+    "seDeconnecter": "Logout",
+    "compte": "My account"
+
   },
   "hero": {
     "title": "Cinema in all its forms, brought together in a single event."

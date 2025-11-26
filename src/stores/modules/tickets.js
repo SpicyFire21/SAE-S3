@@ -5,8 +5,12 @@ import ticketService from "@/services/tickets.service.js"
 export const useTicketsStore = defineStore('tickets', () => {
     // state
     const tickets = ref([])
+    const billets = ref([])//billet pour l'entré de l'event
 
     const updateTickets = (data) =>{
+        tickets.value = data;
+    }
+    const updateBillets = (data) =>{
         tickets.value = data;
     }
 
@@ -19,9 +23,35 @@ export const useTicketsStore = defineStore('tickets', () => {
         }
     }
 
+    const getBilletsByUserId = async (id) => {
+        try {
+            const response = await ticketService.getBilletsByUserId(id);
+            updateBillets(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const createTicket = async () =>{
+        try {
+            const response = await ticketService.createTicket()
+            if(response.error === 0){
+                return response.data;
+            }
+            return response;
+
+
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
     return {
-        tickets,
+        tickets,billets,
         getTickets,
+            createTicket,
+        getBilletsByUserId
     }
 })

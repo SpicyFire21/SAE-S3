@@ -75,6 +75,7 @@
           </button>
           <RouterLink
               to="/login"
+              v-if="!userStore.currentUser"
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
@@ -84,6 +85,32 @@
           >
             {{ t('nav.seConnecter') }}
           </RouterLink>
+          <RouterLink
+              to="/account"
+              v-if="userStore.currentUser"
+              :class="[
+              'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
+              isHome
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
+            ]"
+          >
+            {{ t('nav.compte') }}
+          </RouterLink>
+          <RouterLink
+              to="/"
+              :class="[
+              'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
+              isHome
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
+            ]"
+              @click="logout"
+              v-if="userStore.currentUser">
+            {{ t('nav.seDeconnecter') }}
+
+          </RouterLink>
+
         </div>
       </div>
     </div>
@@ -114,8 +141,10 @@ import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/vue'
 import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
 import {RouterLink} from 'vue-router'
 import {useI18n} from 'vue-i18n'
-
+import {useUserStore} from "@/stores/index.js";
+const userStore = useUserStore();
 import logo from '@/assets/img/logo.webp'
+
 
 const { t, locale } = useI18n()
 
@@ -127,13 +156,16 @@ const navigation = [
 
   {name: 'nav.billeterie', href: '/ticket'},
 
-  {name: 'nav.films', href: '/films'},
+  {name: 'nav.film', href: '/films'},
 
 ]
 
 const isScrolled = ref(false)
 const isHome = computed(() => route.path === '/')
 
+function logout(){
+  userStore.logout();
+}
 
 const changeLanguage = (lan) => {
   locale.value = lan;

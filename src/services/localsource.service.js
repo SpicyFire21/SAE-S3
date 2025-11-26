@@ -1,5 +1,6 @@
-import { users, films, film_tickets } from '@/datasource/data.js'
+import { users, tickets,films, film_tickets } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
+
 
 
 async function getUsers() {
@@ -57,11 +58,41 @@ async function login(data){
     return { error: 0, status: 200, data: u };
 }
 
+
+async function createTicket() {
+    const t = {
+        idticket: "4c3bfa40-79f0-4f27-9af0-8bc4f606e0c4",
+        iduser: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa",
+        datefrom: "2023-05-02T00:00:00",
+        dateto: "2023-05-02T23:59:59",
+        priceid: "93b0592a-922d-4b39-9227-b5f7d84c95ff"
+    };
+
+
+    tickets.push(t)
+
+
+
+    return { error: 0, status: 200, data: t };
+
+}
+
+
+async function getBilletsByUserId(id){
+    const billets = tickets.filter(b => b.iduser === id)
+
+
+    return { error: 0, status: 200, data: billets };
+}
+
+
 export default {
     getUsers,
     login,
     getFilms,
     getFilmTickets,
     getProviders,
-    getFilmDirector
+    getFilmDirector,
+    createTicket,
+    getBilletsByUserId
 }
