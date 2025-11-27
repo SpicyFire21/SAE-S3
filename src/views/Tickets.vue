@@ -214,13 +214,13 @@ const pay = async (e) => {
     iduser:userStore.currentUser.id,
     from:datefrom.value,
     to:dateto.value,
-    priceid:selectedTarif
+    priceid:selectedTarif.value
   };
 
 
   message.value = "Paiement en cours..."
-  console.log(data)
   const buyTicket = await ticketStore.createTicket(data);
+
 
   if (buyTicket.error){
     alert("Erreur lors du payement");

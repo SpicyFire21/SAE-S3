@@ -33,7 +33,6 @@ const userStore = useUserStore();
 const ticketStore = useTicketsStore();
 
 onMounted(() => {
-  console.log(userStore.currentUser)
   ticketStore.getBilletsByUserId(userStore.currentUser.id)
 });
 </script>

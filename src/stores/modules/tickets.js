@@ -11,7 +11,13 @@ export const useTicketsStore = defineStore('tickets', () => {
         tickets.value = data;
     }
     const updateBillets = (data) =>{
-        tickets.value = data;
+        billets.value = data;
+    }
+
+    const addBillets = (data) =>{
+        console.log(billets.value)
+        billets.value.push(data)
+        console.log(billets.value)
     }
 
     const getTickets = async () => {
@@ -27,6 +33,8 @@ export const useTicketsStore = defineStore('tickets', () => {
         try {
             const response = await ticketService.getBilletsByUserId(id);
             updateBillets(response.data)
+            console.log(billets.value)
+
         } catch (e) {
             console.error(e)
         }
@@ -34,8 +42,15 @@ export const useTicketsStore = defineStore('tickets', () => {
 
     const createTicket = async (data) =>{
         try {
+
             const response = await ticketService.createTicket(data)
+            console.log(response)
             if(response.error === 0){
+
+
+                addBillets(response.data);
+
+
                 return response.data;
             }
             return response;

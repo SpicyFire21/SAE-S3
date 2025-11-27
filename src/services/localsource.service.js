@@ -60,6 +60,20 @@ async function login(data){
 
 
 async function createTicket(data) {
+    if (!data.iduser){
+        return { error: 1, status: 404, data: "iduser manquant" };
+
+    }
+    if (!data.from){
+        return { error: 1, status: 404, data: "date de début manquant" };
+    }
+    if (!data.to){
+        return { error: 1, status: 404, data: "date de fin manquant" };
+    }
+    if (!data.priceid){
+        return { error: 1, status: 404, data: "idprice manquant" };
+    }
+
     const t = {
         idticket: uuidv4(),
         iduser: data.iduser,
@@ -69,11 +83,7 @@ async function createTicket(data) {
     };
 
 
-    tickets.push(t)
-
-
-
-    return { error: 0, status: 200, data: t };
+    return { error: 0, status: 201, data: t };
 
 }
 
