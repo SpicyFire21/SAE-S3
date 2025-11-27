@@ -59,13 +59,13 @@ async function login(data){
 }
 
 
-async function createTicket() {
+async function createTicket(data) {
     const t = {
-        idticket: "4c3bfa40-79f0-4f27-9af0-8bc4f606e0c4",
-        iduser: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa",
-        datefrom: "2023-05-02T00:00:00",
-        dateto: "2023-05-02T23:59:59",
-        priceid: "93b0592a-922d-4b39-9227-b5f7d84c95ff"
+        idticket: uuidv4(),
+        iduser: data.iduser,
+        datefrom: data.from,
+        dateto: data.to,
+        priceid: data.priceid
     };
 
 

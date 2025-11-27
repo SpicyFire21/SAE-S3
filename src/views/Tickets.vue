@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen min-h-screen bg-cover bg-center flex justify-center pt-24 pb-24" :style="{ backgroundImage: `url(${bgImage})` }">
     <form
-        class="w-full max-w-lg bg-[var(--blanc)] text-black rounded-3xl shadow-2xl flex flex-col gap-6 p-8 border border-gray-700"
+        class="w-full max-w-lg bg-[var(--blanc)] text-[var(--noir)] rounded-3xl shadow-2xl flex flex-col gap-6 p-8 border border-[var(--gris)]"
     >
       <h1 class="text-3xl font-bold text-center tracking-wide mb-4">
         {{ t('Tickets.tickets') }}
@@ -9,42 +9,61 @@
 
       <div class="grid grid-cols-2 gap-4">
         <div class="flex flex-col">
-          <label for="firstname" class="text-xs text-black mb-1">{{ t('Tickets.firstname') }}</label>
+          <label for="firstname" class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.firstname') }}</label>
           <input
               id="firstname"
               v-model="firstname"
               type="text"
-              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+              class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
           />
         </div>
 
         <div class="flex flex-col">
-          <label for="lastname" class="text-xs text-black mb-1">{{ t('Tickets.lastname') }}</label>
+          <label for="lastname" class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.lastname') }}</label>
           <input
               id="lastname"
               v-model="lastname"
               type="text"
-              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+              class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
           />
         </div>
       </div>
 
       <div class="flex flex-col">
-        <label for="email" class="text-xs text-black mb-1">Email</label>
+        <label for="email" class="text-xs text-[var(--noir)] mb-1">Email</label>
         <input
             id="email"
             v-model="email"
             type="email"
-            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+            class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
+        />
+      </div>
+      <div class="flex flex-row justify-around gap-5">
+      <div class="flex flex-col w-full">
+        <label class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.from') }}</label>
+        <input
+            type="date"
+            v-model="datefrom"
+            class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
         />
       </div>
 
+      <div class="flex flex-col w-full">
+        <label class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.to') }}</label>
+        <input
+            type="date"
+            v-model="dateto"
+            class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
+        />
+      </div>
+      </div>
+
       <div class="flex flex-col">
-        <label for="tarif" class="text-xs text-black mb-1">{{ t('Tickets.priceList') }}</label>
+        <label for="tarif" class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.priceList') }}</label>
         <select
             id="tarif"
             v-model="selectedTarif"
-            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+            class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
         >
           <option value="" disabled hidden>{{ t('Tickets.choose') }}</option>
           <option
@@ -58,39 +77,39 @@
       </div>
 
       <div class="flex flex-col">
-        <label for="creditnumber" class="text-xs text-black mb-1">{{ t('Tickets.CreditCardNumber') }}</label>
+        <label for="creditnumber" class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.CreditCardNumber') }}</label>
         <input
             id="creditnumber"
             v-model="formattedCardNumber"
             placeholder="1234 5678 9012 3456"
             type="text"
             maxlength="19"
-            class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+            class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
         />
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div class="flex flex-col">
-          <label for="creditcode" class="text-xs text-black mb-1">CVV</label>
+          <label for="creditcode" class="text-xs text-[var(--noir)] mb-1">CVV</label>
           <input
               id="creditcode"
               v-model="formattedCvv"
               placeholder="123"
               type="text"
               maxlength="3"
-              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+              class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
           />
         </div>
 
         <div class="flex flex-col">
-          <label for="enddate" class="text-xs text-black mb-1">{{ t('Tickets.enddate') }}</label>
+          <label for="enddate" class="text-xs text-[var(--noir)] mb-1">{{ t('Tickets.enddate') }}</label>
           <input
               id="enddate"
               v-model="formattedExpiry"
               placeholder="MM/AA"
               type="text"
               maxlength="5"
-              class="p-2 rounded-lg bg-gray-100 text-black outline-none focus:ring-2 ring-yellow-500"
+              class="p-2 rounded-lg bg-[var(--gris)] text-[var(--noir)] outline-none focus:ring-2 ring-[var(--jaune)]"
           />
         </div>
       </div>
@@ -99,9 +118,9 @@
           v-if="message"
           class="text-center text-sm"
           :class="{
-          'text-green-400': message.includes('✅'),
-          'text-red-400': message.includes('❌'),
-          'text-yellow-400': message.includes('💳')
+          'text-green': message.includes('✅'),
+          'text-red': message.includes('❌'),
+          'text-[var(--jaune)]': message.includes('💳')
         }"
       >
         {{ message }}
@@ -109,7 +128,7 @@
 
       <button
           type="submit"
-          class="bg-yellow-500 hover:bg-yellow-400 text-[var(--blanc)] tracking-widest font-semibold rounded-xl py-2 transition-all"
+          class="bg-[var(--jaune)] hover:bg-[var(--jaune)] text-[var(--blanc)] tracking-widest font-semibold rounded-xl py-2 transition-all"
           @click="pay"
       >
         {{ t('Tickets.submit') }}
@@ -142,6 +161,8 @@ const message = ref("")
 const cardNumber = ref("")
 const expiry = ref("")
 const cvv = ref("")
+const datefrom = ref("");
+const dateto = ref("");
 
 
 
@@ -172,32 +193,44 @@ const isValid = computed(() => {
       cardNumber.value.length === 16 &&
       expiry.value.length === 4 &&
       cvv.value.length === 3 &&
-      selectedTarif.value
+      selectedTarif.value &&
+      datefrom.value &&
+      dateto.value
   )
 })
 
 const pay = async (e) => {
   e.preventDefault()
-
+  if(!userStore.currentUser){
+    await route.push({path: `/login`})
+  }
   if (!isValid.value) {
     message.value = "❌ Veuillez remplir correctement tous les champs."
     return
   }
 
+  const data = {
+
+    iduser:userStore.currentUser.id,
+    from:datefrom.value,
+    to:dateto.value,
+    priceid:selectedTarif
+  };
+
+
   message.value = "Paiement en cours..."
-  const buyTicket = await ticketStore.createTicket();
+  console.log(data)
+  const buyTicket = await ticketStore.createTicket(data);
 
   if (buyTicket.error){
     alert("Erreur lors du payement");
     return;
-  }
-
-  if(userStore.currentUser){
-    await route.push({path: `/ticket/${buyTicket.idticket}`})
   } else {
-    await route.push({path: `/login`})
+    await route.push({path: `/ticket/${buyTicket.idticket}`})
 
   }
+
+
 }
 </script>
 

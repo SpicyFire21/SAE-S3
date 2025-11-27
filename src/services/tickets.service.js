@@ -14,14 +14,14 @@ export async function getFilmTickets(){
     return response;
 }
 
-async function createTicketFromLocalSource(){
-    return LocalSource.createTicket();
+async function createTicketFromLocalSource(data){
+    return LocalSource.createTicket(data);
 }
 
-export async function createTicket(){
+export async function createTicket(data){
     let response = null;
     try {
-        response = await createTicketFromLocalSource();
+        response = await createTicketFromLocalSource(data);
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de créer le ticket'}
     }

@@ -67,7 +67,9 @@
         "price": 11,
         "name": "adult"
       }
-    ]
+    ],
+    "from": "from",
+    "to": "to"
   },
   "ticketpay": {
     "title": "Thanks for your purchase",

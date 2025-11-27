@@ -32,9 +32,9 @@ export const useTicketsStore = defineStore('tickets', () => {
         }
     }
 
-    const createTicket = async () =>{
+    const createTicket = async (data) =>{
         try {
-            const response = await ticketService.createTicket()
+            const response = await ticketService.createTicket(data)
             if(response.error === 0){
                 return response.data;
             }
