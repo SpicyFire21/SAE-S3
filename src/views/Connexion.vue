@@ -26,7 +26,7 @@
             </div>
           </div>
           <div>
-            <button type="submit" @click="Login"
+            <button type="button" @click="Login"
                     class="flex w-full justify-center rounded-md bg-[var(--jaune)] px-3 py-1.5 text-sm/6 text-white
                          hover:bg-[color-mix(in_srgb,var(--jaune)_85%,black_15%)]
                          focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 tracking-widest">
@@ -56,32 +56,32 @@
           </div>
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm/6 font-medium text-black">Login</label>
+              <label for="login" class="block text-sm/6 font-medium text-black">Login</label>
 
             </div>
             <div class="mt-2">
-              <input v-model="registerUser.login" type="password" id="password" name="password" required :placeholder="t('login.8')"
+              <input v-model="registerUser.login" type="text" id="login" name="password" required :placeholder="t('login.8')"
                      class="block w-full rounded-md bg-black/5 px-3 py-1.5 text-base text-black outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-red-500 sm:text-sm/6" />
             </div>
           </div>
 
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm/6 font-medium text-black">Email</label>
+              <label for="email" class="block text-sm/6 font-medium text-black">Email</label>
 
             </div>
             <div class="mt-2">
-              <input v-model="registerUser.email" type="password" id="password" name="password" required placeholder="email"
+              <input v-model="registerUser.email" type="email" id="email" name="password" required placeholder="email"
                      class="block w-full rounded-md bg-black/5 px-3 py-1.5 text-base text-black outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-red-500 sm:text-sm/6" />
             </div>
           </div>
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm/6 font-medium text-black">Email</label>
+              <label for="email" class="block text-sm/6 font-medium text-black">Email</label>
 
             </div>
             <div class="mt-2">
-              <input v-model="registerUser.email2" type="password" id="password" name="password" required :placeholder="t('login.9')"
+              <input v-model="registerUser.email2" type="email" id="email" name="password" required :placeholder="t('login.9')"
                      class="block w-full rounded-md bg-black/5 px-3 py-1.5 text-base text-black outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-red-500 sm:text-sm/6" />
             </div>
           </div>
@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="mt-2">
-              <input v-model="password" type="password" id="password" name="password" required placeholder="••••••••"
+              <input v-model="registerUser.password" type="password" id="password" name="password" required placeholder="••••••••"
                      class="block w-full rounded-md bg-black/5 px-3 py-1.5 text-base text-black outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-red-500 sm:text-sm/6" />
             </div>
           </div>
@@ -107,7 +107,7 @@
 
 
 
-            <button type="submit" @click="Register"
+            <button type="button" @click="Register"
                     class="flex w-full justify-center rounded-md bg-[var(--jaune)] px-3 py-1.5 text-sm/6 text-white
                          hover:bg-[color-mix(in_srgb,var(--jaune)_85%,black_15%)]
                          focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 tracking-widest">
@@ -148,28 +148,29 @@ const registerUser = {
   email2:"",
   email:"",
   droit:0,
-  session:"",
-  note: [],
-  type:"",
-  nom_photo:"",
-  description:""
+
 };
 
-function Login() {
+async function Login() {
   console.log(login)
-  userStore.Login(login)
-  route.push({path: `/`})
+  const res = userStore.Login(login)
+  if(res.error ===0){
+    await route.push({path: `/`})
+
+  }
 }
 
-function Register(){
+async function Register(){
+
   console.log(registerUser)
   if (registerUser.droit === 0){
     // creation compte user
-    userStore.registerUser(registerUser);
+    await userStore.registerUser(registerUser);
   } else {
     // creation compte prestataire
     userStore.registerProvider(registerUser);
   }
+  toggleForm.value = true;
 }
 
 </script>

@@ -97,6 +97,52 @@ async function getBilletsByUserId(id){
     return { error: 0, status: 200, data: billets };
 }
 
+async function registerUser(data){
+    if (!data.login){
+        return { error: 1, status: 404, data: 'login manquant' };
+    }
+    if (!data.password){
+        return { error: 1, status: 404, data: 'password manquant' };
+    }
+    if (!data.email){
+        return { error: 1, status: 404, data: 'email manquant' };
+    }
+    if (!data.email2){
+        return { error: 1, status: 404, data: 'confirmez votre email' };
+    }
+
+    if (data.email !== data.email2){
+        return { error: 1, status: 404, data: 'email différents' };
+    }
+    const emailExist = users.find(u => u.email === data.email);
+
+    if(emailExist){
+        return {error:1,status:403,data:"email dejà utilisé"}
+    }
+
+    const r = {
+        id:uuidv4(),
+     name:data.name,
+    login:data.login,
+    password:data.password,
+    email:data.email,
+    droit:0,
+    session:"",
+    note: [],
+    type:"",
+    nom_photo:"",
+    description:""
+    }
+    users.push(r); // Ajouter l'utilisateur à la base
+
+    console.log(users)
+
+
+    return { error: 0, status: 201, data: r };
+
+
+}
+
 
 export default {
     getUsers,
@@ -106,5 +152,6 @@ export default {
     getProviders,
     getFilmDirector,
     createTicket,
-    getBilletsByUserId
+    getBilletsByUserId,
+    registerUser
 }

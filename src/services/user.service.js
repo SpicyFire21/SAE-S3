@@ -42,9 +42,24 @@ async function login(data){
     return response;
 }
 
+async function registerUserFromLocalSource(data){
+    return LocalSource.registerUser(data);
+}
+
+async function registerUser(data){
+    let response = null;
+    try {
+        response = await registerUserFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de créer un compte'}
+    }
+    return response;
+}
+
 
 export default {
     getUsers,
     login,
-    getProviders
+    getProviders,
+    registerUser
 }

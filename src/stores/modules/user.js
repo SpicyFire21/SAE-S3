@@ -29,14 +29,16 @@ export const useUserStore = defineStore('user', () => {
     };
 
 
-
+    // mutations
     const updateUsers = (data) =>{
         users.value = data;
     }
     const updateProviders = (data) => {
         providers.value = data;
     }
-
+    const addUser = (data) =>{
+        users.value.push(data)
+    }
 
 
     //action
@@ -44,6 +46,7 @@ export const useUserStore = defineStore('user', () => {
         try {
             const response = await userService.getUsers();
             updateUsers(response.data)
+
         } catch (e) {
             console.error(e)
         }
@@ -61,8 +64,14 @@ export const useUserStore = defineStore('user', () => {
     const Login = async (data) =>{
         try{
             const response = await userService.login(data);
-            updateCurrentUser(response.data)
-            // alert("Cnnexion réussi")
+            if (response.error ===0){
+                updateCurrentUser(response.data)
+                // alert("Connexion réussi")
+            } else {
+                alert(response.data)
+
+            }
+            return response;
         }catch (e) {
             console.error(e)
         }
@@ -76,7 +85,11 @@ export const useUserStore = defineStore('user', () => {
     const registerUser = async (data) =>{
         try{
             const response = await userService.registerUser(data);
-            updateUsers(response.data)
+
+            if(response.error ===0){
+                addUser(response.data)
+                // alert("Compte créé")
+            }
 
         } catch(e){
             console.error(e)
