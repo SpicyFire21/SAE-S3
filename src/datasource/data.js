@@ -35,7 +35,7 @@ let users = [
         "session": "",
         "note": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
         "type":"",
-        "nom_photo":"",
+        "nom_photo":"producteur.jpg",
         "description":""
     },
     {

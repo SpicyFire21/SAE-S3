@@ -52,7 +52,8 @@ async function login(data){
         password:user.password,
         email:user.email,
         droit:user.droit,
-        session:user.session
+        session:user.session,
+        nom_photo:user.nom_photo
     };
 
     return { error: 0, status: 200, data: u };
@@ -82,6 +83,7 @@ async function createTicket(data) {
         priceid: data.priceid
     };
 
+    tickets.push(t);
 
     return { error: 0, status: 201, data: t };
 
