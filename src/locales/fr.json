@@ -22,7 +22,10 @@
     "takeTicket": "Prenez vos billets dès maintenant",
     "listTicket": "Listes des Billets disponibles",
     "provider": "Prestataires",
-    "fprovider": "Rechercher un Prestataire"
+    "fprovider": "Rechercher un Prestataire",
+    "favActor": "Votre acteur préféré est présent ? Reservez une dédicace dès maintenant",
+    "description1": "Bienvenue à la première édition du Grand Focus, l’événement incontournable dédié à l’univers du cinéma !",
+    "description2": "Plongez au cœur d’un festival inédit où coulisses, innovations et émotions se rencontrent. Entre rencontres avec les créateurs, avant-premières exclusives et expériences immersives, découvrez le rendez-vous qui célèbre le 7ᵉ art sous toutes ses formes."
   },
   "checkboxfilter": [
     {

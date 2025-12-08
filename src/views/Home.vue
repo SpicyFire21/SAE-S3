@@ -1,11 +1,10 @@
 <template>
   <Hero/>
   <div class="bg-[var(--blanc)] flex flex-col items-center px-10 py-5">
-    <h2 class="justify-center text-center items-center left-0 tracking-wider max-w-200 mx-auto mt-10 mb-10 text-2xl">Bienvenue à la première édition du Grand Focus, l’événement incontournable dédié à
-      l’univers du cinéma !
-      Plongez au cœur d’un festival inédit où coulisses, innovations et émotions se rencontrent.
-      Entre rencontres avec les créateurs, avant-premières exclusives et expériences immersives, découvrez le
-      rendez-vous qui célèbre le 7ᵉ art sous toutes ses formes.</h2>
+
+    <h2 class="justify-center text-center items-center text-justify left-0 tracking-wider max-w-200 mx-auto mt-10 mb-10 text-2xl">
+      {{ t('home.description1') }}<br>{{ t('home.description2') }}</h2>
+
     <div class="flex flex-row bg-[var(--gris)] justify-center w-fit py-3 px-2 gap-15 scale-125 m-5">
       <button class="bg-[var(--jaune)] px-2 py-1">{{ t('home.takeTicket') }}</button>
       <div class="relative w-80">
@@ -76,7 +75,7 @@
         </form>
         <PrestataireCard :providers="filteredProviders"/>
         <h1 class="text-[30px] max-w-[400px] mt-5 text-center border-b border-gray bottom">
-          Votre acteur préféré est présent ? Reservez une dédicace dès maintenant
+          {{ t('home.favActor') }}
         </h1>
 
         <div>

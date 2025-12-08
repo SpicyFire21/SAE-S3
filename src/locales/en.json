@@ -23,7 +23,10 @@
     "takeTicket": "Get your tickets now",
     "listTicket": "List of available tickets",
     "provider": "Providers",
-    "fprovider": "Find a Provider"
+    "fprovider": "Find a Provider",
+    "favActor": "Is your favorite actor there? Book an autograph now!",
+    "description1": "Welcome to the first edition of Le Grand Focus, the unmissable event dedicated to the world of cinema!",
+    "description2": "Immerse yourself in a unique festival where behind-the-scenes glimpses, innovations, and emotions collide. Between encounters with creators, exclusive previews, and immersive experiences, discover the event that celebrates cinema in all its forms."
 
 
   },
