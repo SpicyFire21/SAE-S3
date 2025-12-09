@@ -8,6 +8,9 @@ import Films from "@/views/Films.vue"
 import FilmDetails from "@/views/FilmDetails.vue";
 import account from "@/views/Account.vue";
 
+import providerRoutes from "@/router/provider.router.js"
+import adminRoutes from "@/router/admin.router.js";
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -48,8 +51,13 @@ const router = createRouter({
             path: '/account',
             name: 'account',
             component:account
-        }
+        },
+        ...providerRoutes,
+        ...adminRoutes
     ],
+
+
+
 })
 
 export default router

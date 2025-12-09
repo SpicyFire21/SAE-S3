@@ -87,7 +87,7 @@
           </RouterLink>
           <RouterLink
               to="/account"
-              v-if="userStore.currentUser"
+              v-if="userStore.currentUser && userStore.currentUser.droit === '0'"
               :class="[
               'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
               isHome
@@ -97,6 +97,19 @@
           >
             {{ t('nav.compte') }}
           </RouterLink>
+          <RouterLink
+              :to="uri"
+              v-if="userStore.currentUser  && userStore.currentUser.droit !== '0'"
+              :class="[
+              'rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300',
+              isHome
+                ? (isScrolled ? 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]' : 'text-[var(--blanc)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]')
+                : 'text-[var(--noir)] hover:bg-[var(--bleu)] hover:text-[var(--blanc)]'
+            ]"
+          >
+            {{ t('nav.dashboard') }}
+          </RouterLink>
+
           <RouterLink
               to="/"
               :class="[
@@ -151,6 +164,14 @@ import logo from '@/assets/img/logo.webp'
 const { t, locale } = useI18n()
 
 const route = useRoute()
+
+const uri = computed(()=>{
+  if (userStore.currentUser.droit==="2"){
+    return "/admin-dashboard";
+  } else {
+    return "/provider-dashboard"
+  }
+})
 
 const navigation = [
   {name: 'nav.accueil', href: '/'},

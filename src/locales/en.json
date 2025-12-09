@@ -5,7 +5,8 @@
     "films": "Films",
     "seConnecter": "Login",
     "seDeconnecter": "Logout",
-    "compte": "My account"
+    "compte": "My account",
+    "dashboard": "Dashboard"
 
   },
   "hero": {
