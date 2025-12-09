@@ -177,7 +177,7 @@ async function Register(){
     await userStore.registerUser(registerUser);
   } else {
     // creation compte prestataire
-    userStore.registerProvider(registerUser);
+    await userStore.registerProvider(registerUser);
   }
   toggleForm.value = true;
 }

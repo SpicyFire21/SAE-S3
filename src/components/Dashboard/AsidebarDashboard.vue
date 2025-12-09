@@ -1,6 +1,11 @@
 <template>
-  <aside class="w-60 h-screen bg-[var(--gris)] flex flex-col p-5  border-r border-[var(--noir)] pt-20">
-
+  <aside class="w-60 h-screen bg-[var(--gris)] flex flex-col p-5  border-r border-[var(--noir)]">
+    <button
+        @click="logout()"
+        class="w-full text-xl text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
+    >
+      Deconnexion
+    </button>
     <button
         @click="go('/')"
 
@@ -55,6 +60,12 @@ const provider = ref([
 
 function go(to) {
   router.push(to)
+}
+
+async function logout(){
+  await userStore.logout();
+  await router.push("/")
+
 }
 </script>
 
