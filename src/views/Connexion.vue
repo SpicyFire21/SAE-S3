@@ -129,13 +129,13 @@
 import bgImage from '../assets/img/connexionbg.jpg'
 import { ref } from 'vue'
 import {useI18n} from "vue-i18n";
-import {useUserStore} from "@/stores/index.js";
+import {useAdminStore, useUserStore} from "@/stores/index.js";
 import {useRouter} from "vue-router";
 const route = useRouter();
 const {t} = useI18n()
 const toggleForm = ref(true);
 const userStore = useUserStore();
-
+const adminStore = useAdminStore()
 const login = {
   login: "",
   password: ""
@@ -177,7 +177,8 @@ async function Register(){
     await userStore.registerUser(registerUser);
   } else {
     // creation compte prestataire
-    await userStore.registerProvider(registerUser);
+    console.log("demande de prestataire")
+    await adminStore.addProviderRequest(registerUser);
   }
   toggleForm.value = true;
 }

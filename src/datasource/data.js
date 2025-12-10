@@ -560,8 +560,9 @@ let film_tickets = [
     { "iduser": "a1f5c8d0-3b1e-4f2a-9a17-2c6b5f8d3e7a", "idfilm": "a9b0c1d2-3e4f-5a6b-7c8d-9e0f1a2b3c4d", "idticket": "d0e1f2a3-4b5c-6d7e-8f9a-0b1c2d3e4f5a", "datefrom": "2025-04-04T21:00:00", "dateto": "2025-04-05T00:26:00", "priceid": "2" }
 ];
 
-let provider_requets = [
+let provider_requests = [
     {
+        "id":"1",
         "name":"test",
         "login":"test",
         "password":"test",
@@ -583,5 +584,6 @@ export {
     basket,
     basket_items,
     film_tickets,
-    films
+    films,
+    provider_requests
 }

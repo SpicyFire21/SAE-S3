@@ -89,6 +89,8 @@ export const useUserStore = defineStore('user', () => {
             if(response.error ===0){
                 addUser(response.data)
                 // alert("Compte créé")
+            } else {
+                console.error(response)
             }
 
         } catch(e){
@@ -96,15 +98,23 @@ export const useUserStore = defineStore('user', () => {
 
         }
     }
-    const registerProvider = async (data) =>{
+
+    const registerProvider = async (data) => {
         try{
             const response = await userService.registerProvider(data);
+
+            if(response.error ===0){
+                addUser(response.data)
+            } else {
+                console.error(response)
+            }
 
         } catch(e){
             console.error(e)
 
         }
     }
+
 
 
 
@@ -125,7 +135,7 @@ export const useUserStore = defineStore('user', () => {
         getUsers,
         Login,
         registerUser,
-        registerProvider,
-        logout
+        logout,
+        registerProvider
     }
 })

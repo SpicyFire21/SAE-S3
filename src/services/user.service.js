@@ -56,10 +56,26 @@ async function registerUser(data){
     return response;
 }
 
+async function registerProviderFromLocalSource(data){
+    return LocalSource.registerProvider(data);
+}
+
+async function registerProvider(data){
+    let response = null;
+    try {
+        response = await registerProviderFromLocalSource(data);
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de créer un compte prestataire'}
+    }
+    return response;
+}
+
 
 export default {
     getUsers,
     login,
     getProviders,
-    registerUser
+    registerUser,
+    registerProvider
 }

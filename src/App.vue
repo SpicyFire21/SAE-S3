@@ -9,9 +9,14 @@ import NavBar from "@/components/NavBar.vue";
 import {useRoute, useRouter} from "vue-router";
 import {computed} from "vue";
 
-const show = computed(()=>{
-  return route.path !== '/admin-dashboard' && route.path !=='/provider-dashboard'
+const show = computed(() => {
+  const p = route.path
+  return !(
+      p.startsWith('/admin-dashboard') ||
+      p.startsWith('/provider-dashboard')
+  )
 })
+
 
 
 const route = useRoute();
