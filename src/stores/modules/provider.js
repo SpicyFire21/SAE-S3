@@ -35,6 +35,15 @@ export const useProviderStore = defineStore('provider', () => {
     const removeGoodie = (data) => {
         goodies.value = goodies.value.filter(obj => obj.id !== data.id)
     }
+    const editGoodies = (updatedGoodie) => {
+        const index = goodies.value.findIndex(g => g.id === updatedGoodie.id)
+        if (index !== -1) {
+            // remplace l'ancien goodie par le nouveau
+            goodies.value.splice(index, 1, updatedGoodie)
+        } else {
+            console.warn("Goodie non trouvé :", updatedGoodie.id)
+        }
+    }
 
 
     //action
@@ -97,6 +106,21 @@ export const useProviderStore = defineStore('provider', () => {
         }
     }
 
+    const updateGoodie = async(data,userid) =>{
+        try {
+            const response = await providerService.updateGoodie(data,userid);
+
+            if (response.error === 0){
+                editGoodies(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
 
 
@@ -117,7 +141,8 @@ export const useProviderStore = defineStore('provider', () => {
         getGoodiesByProviderId,
         getGoodiesSizes,
         getGoodiesColors,
-        addGoodie
+        addGoodie,
+        updateGoodie
 
     }
 })

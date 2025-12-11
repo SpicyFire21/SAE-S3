@@ -330,6 +330,23 @@ async function addGoodie(data){
 }
 
 
+async function updateGoodie(item, userid) {
+    // Cherche l'index du goodie
+    const index = goodies.findIndex(g => g.id === item.id && g.user_id === userid)
+
+    if (index !== -1) {
+        // Supprime l'ancien
+        goodies.splice(index, 1)
+        // Ajoute le nouveau
+        goodies.push(item)
+        return { error: 0, status: 200, data: item };
+
+    } else {
+        return { error: 1, status: 404, data: "goodie inexistant" };
+    }
+}
+
+
 
 export default {
     getUsers,
@@ -348,5 +365,6 @@ export default {
     getGoodiesByProviderId,
     getGoodiesColors,
     getGoodiesSizes,
-    addGoodie
+    addGoodie,
+    updateGoodie
 }

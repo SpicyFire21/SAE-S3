@@ -78,6 +78,59 @@
 
     </div>
 
+    <div v-if="editingGoodie" class="mb-6 border p-4 rounded bg-gray-50 shadow">
+      <h2 class="text-xl font-semibold mb-2">Modifier le Goodie</h2>
+      <div class="flex flex-col md:flex-row gap-4 items-start">
+        <input
+            v-model="editingGoodie.name"
+            type="text"
+            placeholder="Nom"
+            class="border p-2 rounded flex-1"
+        />
+        <input
+            v-model.number="editingGoodie.price"
+            type="number"
+            placeholder="Prix"
+            class="border p-2 rounded w-32"
+        />
+        <input
+            v-model.number="editingGoodie.quantity"
+            type="number"
+            placeholder="Quantité"
+            class="border p-2 rounded w-32"
+        />
+        <button
+            @click="saveEdit()"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Enregistrer
+        </button>
+        <button
+            @click="cancelEdit()"
+            class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+        >
+          Annuler
+        </button>
+      </div>
+
+      <div class="mt-2">
+        <label class="font-semibold">Tailles :</label>
+        <div class="flex gap-2">
+          <label v-for="s in providerStore.goodiesSizes" :key="s.id" class="flex items-center gap-1">
+            <input type="radio" :value="s.id" v-model="editingGoodie.goodies_size_id" /> {{ s.label }}
+          </label>
+        </div>
+
+        <label class="font-semibold mt-2">Couleurs :</label>
+        <div class="flex gap-2">
+          <label v-for="c in providerStore.goodiesColors" :key="c.id" class="flex items-center gap-1">
+            <input type="radio" :value="c.id" v-model="editingGoodie.goodies_color_id" /> {{ c.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Table des goodies -->
     <div class="overflow-x-auto bg-white rounded shadow">
       <DataTable :headers="headers" :items="displayGoodies">
@@ -85,7 +138,7 @@
         <template #actions="{ item }">
           <button
               class="px-2 py-1 bg-[var(--vert)] text-[var(--noir)] rounded "
-
+              @click="editGoodie(item)"
           >
             {{ t("GoodiesBoard.1") }}
           </button>
@@ -103,6 +156,9 @@
     <p v-if="!sellingActive" class="mt-2 text-red-600 font-semibold">
       La vente de goodies est désactivée.
     </p>
+
+    <!-- Formulaire édition -->
+
   </div>
 </template>
 
@@ -190,4 +246,24 @@ onMounted(async()=>{
 
 })
 
+
+
+
+const editingGoodie = ref(null)
+
+function editGoodie(item) {
+  // créer une copie pour ne pas modifier l'objet directement avant validation
+  editingGoodie.value = { ...item }
+}
+
+function saveEdit() {
+  if (editingGoodie.value) {
+    providerStore.updateGoodie(editingGoodie.value,userStore.currentUser.id)
+    editingGoodie.value = null
+  }
+}
+
+function cancelEdit() {
+  editingGoodie.value = null
+}
 </script>
