@@ -312,22 +312,6 @@ let comments_golden_book = [
     }
 ]
 
-let goodies = [
-    {
-        "id":"f47ac10b-58cc-4372-a567-0e02b2c3d479",
-        "price":"13",
-        "stock":"29",
-        "name":"T shirt"
-    }
-];
-
-let goodies_size = [
-    { "id":"1a1f3b6a-3c6b-4c7d-95f4-4f7c1f2c0d1e", "size":"XS" },
-    { "id":"2b2f4c7b-4d7c-5d8e-a6f5-5f8d2g3h1i2j", "size":"S" },
-    { "id":"3c3g5d8c-5e8d-6e9f-b7g6-6g9e3h4i2j3k", "size":"M" },
-    { "id":"4d4h6e9d-6f9e-7f0g-c8h7-7h0f4i5j3k4l", "size":"L" },
-    { "id":"5e5i7f0e-7g0f-8g1h-d9i8-8i1g5j6k4l5m", "size":"XL" }
-];
 
 let basket = [
     {
@@ -573,6 +557,90 @@ let provider_requests = [
     }
 ]
 
+
+let goodies = [
+    {
+        "id": "1",
+        "user_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        "service_id": "1",
+        "goodies_size_id":"1",
+        "goodies_color_id":"1",
+        "name": "T-shirt",
+        "price": 25,
+        "quantity": 3,
+        "date": "2025-05-01"
+    },
+    {
+        "id": "1",
+        "user_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        "service_id": "1",
+        "goodies_size_id":"1",
+        "goodies_color_id":"1",
+        "name": "Tasse",
+        "price": 25,
+        "quantity": 31,
+        "date": "2025-05-01"
+    },
+
+];
+
+let goodies_size = [
+    { "id":"1", "label":"XS" },
+    { "id":"2", "label":"S" },
+    { "id":"3", "label":"M" },
+    { "id":"4", "label":"L" },
+    { "id":"5", "label":"XL" }
+];
+let goodies_color = [
+    { "id":"1", "label":"Rouge" },
+    { "id":"2", "label":"Bleu" },
+    { "id":"3", "label":"Vert" },
+    { "id":"4", "label":"Noir" },
+    { "id":"5", "label":"Blanc" }
+];
+
+
+// Association entre prestataires et services avec état spécifique
+let provider_services_associations = [
+    {
+        "user_id": "1",            // ID du prestataire
+        "service_id": "1",         // ID du service
+        "service_state_id": "1"    // État choisi par ce prestataire
+    },
+    {
+        "user_id": "1",
+        "service_id": "2",
+        "service_state_id": "2"
+    },
+    {
+        "user_id": "2",
+        "service_id": "1",
+        "service_state_id": "2"
+    }
+];
+
+// Services disponibles
+let provider_services = [
+    { "id": "1", "label": "Goodies", "categorie_id": "1" },
+    { "id": "2", "label": "Dédicaces", "categorie_id": "2" },
+    { "id": "3", "label": "Livre d'or", "categorie_id": "3" }
+];
+
+// États possibles
+let provider_services_state = [
+    { "id": "1", "state": "Activé" },
+    { "id": "2", "state": "Desactivé" },
+    { "id": "3", "state": "Suspendu" }
+];
+
+// Catégories de services
+let provider_services_categories = [
+    { "id": "1", "name": "Vente" },
+    { "id": "2", "name": "Rencontre" },
+    { "id": "3", "name": "Commentaires" }
+];
+
+
 export {
     users,
     tickets,
@@ -581,9 +649,16 @@ export {
     comments_golden_book,
     goodies,
     goodies_size,
+    goodies_color,
     basket,
     basket_items,
     film_tickets,
     films,
-    provider_requests
+    provider_requests,
+
+    provider_services_state,
+    provider_services_categories,
+    provider_services_associations,
+    provider_services
+
 }

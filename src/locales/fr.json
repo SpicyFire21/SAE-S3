@@ -91,6 +91,26 @@
     "8": "Entrez votre login",
     "9": "Confirmez votre email",
     "10": "Devenir prestataire"
+  },
+  "providerRequests": {
+    "1": "Accepter",
+    "2": "Refuser"
+  },
+  "asidebarDashboard": {
+    "1": "Deconnexion",
+    "2": "Accéder aux site",
+    "3": {
+      "1": "Demande de Prestataires",
+      "2": "Statistiques"
+    },
+    "4": {
+      "1": "Goodies",
+      "2": "Statistiques"
+    }
+  },
+  "GoodiesBoard": {
+    "1": "Modifier",
+    "2": "Supprimer"
   }
 
 

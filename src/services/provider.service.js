@@ -1,0 +1,53 @@
+import LocalSource from "@/services/localsource.service.js";
+
+
+async function dgetGoodiesByProviderIdFromLocalSource(data){
+    return LocalSource.getGoodiesByProviderId(data);
+}
+
+async function getGoodiesByProviderId(data){
+    let response = null;
+    try {
+        response = await dgetGoodiesByProviderIdFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les goodies du prestataire'}
+    }
+    return response;
+}
+
+
+
+async function getGoodiesColorsFromLocalSource(){
+    return LocalSource.getGoodiesColors();
+}
+
+async function getGoodiesColors(){
+    let response = null;
+    try {
+        response = await getGoodiesColorsFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les couleurs de goodies'}
+    }
+    return response;
+}
+
+
+async function getGoodiesSizesFromLocalSource(){
+    return LocalSource.getGoodiesSizes();
+}
+
+async function getGoodiesSizes(){
+    let response = null;
+    try {
+        response = await getGoodiesSizesFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les tailles de goodies'}
+    }
+    return response;
+}
+
+export default {
+    getGoodiesByProviderId,
+    getGoodiesColors,
+    getGoodiesSizes
+}

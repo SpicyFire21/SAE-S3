@@ -4,14 +4,15 @@
         @click="logout()"
         class="w-full text-xl text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
     >
-      Deconnexion
+      {{ t("asidebarDashboard.1") }}
+
     </button>
     <button
         @click="go('/')"
 
         class="w-full text-xl text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
     >
-      Acceder au Site
+      {{ t("asidebarDashboard.2") }}
     </button>
 
     <div class="text-xl font-semibold mb-6">Menu</div>
@@ -34,7 +35,9 @@ import { useRouter } from 'vue-router'
 import {useUserStore} from "@/stores/index.js";
 
 const userStore= useUserStore()
+import {useI18n} from "vue-i18n";
 
+const { t } = useI18n()
 const router = useRouter()
 
 const dash = computed(()=>{
@@ -48,14 +51,14 @@ const dash = computed(()=>{
 
 // Définition simple des entrées du menu
 const admin = ref([
-  { label: 'Demande de Prestataires', to: '/admin-dashboard/requests' },
-  { label: 'Statistiques', to: '/admin-dashboard/stats' }
+  { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
+  { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' }
 ])
 
 const provider = ref([
 
-  { label: 'Goodies', to: '/provider-dashboard/goodies' },
-  { label: 'Statistiques', to: '/provider-dashboard/stats' }
+  { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
+  { label: t("asidebarDashboard.4.2"), to: '/provider-dashboard/stats' }
 ])
 
 function go(to) {

@@ -94,5 +94,25 @@
     "8": "Enter your login",
     "9": "Confirm your email",
     "10": "Become provider"
+  },
+  "providerRequests": {
+    "1": "Allow",
+    "2": "Deny"
+  },
+  "asidebarDashboard": {
+    "1": "Logout",
+    "2": "Access the website",
+    "3": {
+      "1": "Request for Providers",
+      "2": "Statistics"
+    },
+    "4": {
+      "1": "Goodies",
+      "2": "Statistics"
+    }
+  },
+  "GoodiesBoard": {
+    "1": "Edit",
+    "2": "Delete"
   }
 }

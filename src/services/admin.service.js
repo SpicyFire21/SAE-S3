@@ -28,7 +28,22 @@ async function addProviderRequest(data){
     return response;
 }
 
+async function deleteProviderRequestsFromLocalSource(data){
+    return LocalSource.deleteProviderRequests(data);
+}
+
+async function deleteProviderRequests(data){
+    let response = null;
+    try {
+        response = await deleteProviderRequestsFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer une demande de prestataire'}
+    }
+    return response;
+}
+
 export default {
     getProvidersRequests,
-    addProviderRequest
+    addProviderRequest,
+    deleteProviderRequests
 }

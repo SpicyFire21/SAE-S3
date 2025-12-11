@@ -1,4 +1,13 @@
-import {users, tickets, films, film_tickets, provider_requests} from '@/datasource/data.js'
+import {
+    users,
+    tickets,
+    films,
+    film_tickets,
+    provider_requests,
+    goodies,
+    goodies_color,
+    goodies_size
+} from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
 
@@ -245,6 +254,42 @@ async function registerProvider(data){
 
 }
 
+async function deleteProviderRequests(data) {
+    if (!data.id) {
+        return { error: 1, status: 404, data: 'id manquant' };
+    }
+
+    const index = provider_requests.findIndex(obj => obj.id === data.id);
+
+    if (index !== -1) {
+        provider_requests.splice(index, 1);
+        return { error: 0, status: 200, data: data };
+    }
+
+    return { error: 1, status: 404, data: 'demande introuvable' };
+}
+
+
+async function getGoodiesByProviderId(id){
+
+    if (!id) {
+        return { error: 1, status: 404, data: 'id manquant' };
+    }
+    let g = goodies.filter(g => g.user_id === id)
+    return { error: 0, status: 200, data: g };
+
+
+}
+
+
+async function getGoodiesColors(){
+    return { error: 0, status: 200, data: goodies_color };
+}
+
+async function getGoodiesSizes(){
+    return { error: 0, status: 200, data: goodies_size };
+}
+
 export default {
     getUsers,
     login,
@@ -257,5 +302,9 @@ export default {
     registerUser,
     getProvidersRequests,
     addProviderRequest,
-    registerProvider
+    registerProvider,
+    deleteProviderRequests,
+    getGoodiesByProviderId,
+    getGoodiesColors,
+    getGoodiesSizes
 }

@@ -51,6 +51,18 @@ export const useAdminStore = defineStore('admin', () => {
 
         }
     }
+    const deleteProviderRequests = async (data) =>{
+        try{
+            const response = await adminService.deleteProviderRequests(data);
+            console.log(response)
+            if (response.error === 0){
+                removeProviderRequests(response.data)
+            }
+        } catch(e){
+            console.error(e)
+
+        }
+    }
 
 
 
@@ -69,7 +81,8 @@ export const useAdminStore = defineStore('admin', () => {
         removeProviderRequests,
         //action
         getProvidersRequests,
-        addProviderRequest
+        addProviderRequest,
+        deleteProviderRequests
 
     }
 })
