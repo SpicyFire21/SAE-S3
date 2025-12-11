@@ -32,6 +32,10 @@ export const useProviderStore = defineStore('provider', () => {
         goodies.value.push(data);
     }
 
+    const removeGoodie = (data) => {
+        goodies.value = goodies.value.filter(obj => obj.id !== data.id)
+    }
+
 
     //action
     const getGoodiesByProviderId = async (id) => {
@@ -107,6 +111,7 @@ export const useProviderStore = defineStore('provider', () => {
         getColor,
         //mutation
         updateGoodies,
+        removeGoodie,
 
         //action
         getGoodiesByProviderId,

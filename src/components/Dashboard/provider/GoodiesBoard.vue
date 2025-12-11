@@ -90,6 +90,7 @@
             {{ t("GoodiesBoard.1") }}
           </button>
           <button
+              @click="removeGoodie(item)"
               class="px-2 py-1 bg-[var(--rouge)] text-[var(--noir)] rounded "
           >
             {{ t("GoodiesBoard.2") }}
@@ -143,20 +144,12 @@ const displayGoodies = computed(() => {
 })
 
 function addGoodieVariants() {
-  console.log(newGoodieBase.value)
   if (!sellingActive.value) return
-  console.log("1")
   if (!newGoodieBase.value.name || newGoodieBase.value.price <= 0) return
-  console.log("2")
   if (selectedSizes.value.length === 0) return
-  console.log("3")
   if (selectedColors.value.length === 0) return
-  console.log("4")
-
-  // produit cartésien tailles × couleurs
   selectedSizes.value.forEach(sizeId => {
     selectedColors.value.forEach(colorId => {
-
       let data = {
         id: uuidv4(),
         ...newGoodieBase.value,
@@ -173,13 +166,13 @@ function addGoodieVariants() {
   selectedColors.value = []
   newGoodieBase.value.name = ""
   newGoodieBase.value.price = 0
-  console.log("créé")
+
 }
 
 
-function removeGoodie(id) {
+function removeGoodie(item) {
   if (!sellingActive.value) return
-  goodies.value = goodies.value.filter(g => g.id !== id)
+  providerStore.removeGoodie(item)
 }
 
 function toggleSelling() {
