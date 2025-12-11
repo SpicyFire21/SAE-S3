@@ -290,6 +290,47 @@ async function getGoodiesSizes(){
     return { error: 0, status: 200, data: goodies_size };
 }
 
+async function addGoodie(data){
+    if (!data.user_id) {
+        return { error: 1, status: 404, data: 'user_id manquant' };
+    }
+    if (!data.goodies_size_id) {
+        return { error: 1, status: 404, data: 'goodies_size_id manquant' };
+    }
+    if (!data.goodies_color_id) {
+        return { error: 1, status: 404, data: 'goodies_color_id manquant' };
+    }
+    if (!data.name) {
+        return { error: 1, status: 404, data: 'name manquant' };
+    }
+    if (!data.price) {
+        return { error: 1, status: 404, data: 'price manquant' };
+    }
+    if (!data.quantity) {
+        return { error: 1, status: 404, data: 'quantity manquant' };
+    }
+
+
+
+
+    const g = {
+        id: uuidv4(),
+        user_id: data.user_id,
+        service_id: "1",
+        goodies_size_id:data.goodies_size_id,
+        goodies_color_id:data.goodies_color_id,
+        name: data.name,
+        price: data.price,
+        quantity: data.quantity,
+        date:new Date().toISOString().split("T")[0]
+    }
+    return { error: 0, status: 201, data: g };
+
+
+}
+
+
+
 export default {
     getUsers,
     login,
@@ -306,5 +347,6 @@ export default {
     deleteProviderRequests,
     getGoodiesByProviderId,
     getGoodiesColors,
-    getGoodiesSizes
+    getGoodiesSizes,
+    addGoodie
 }

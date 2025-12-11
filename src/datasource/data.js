@@ -55,7 +55,7 @@ let users = [
         "id": "e55733ef-f3d2-447d-94db-9e3aaef624c1",
         "name": "Quentin Tarantino",
         "login": "prestaknaghui",
-        "password": "prestakhnaghui",
+        "password": "prestaknaghui",
         "email": "tarantino@pulp.com",
         "droit": "1",
         "session": "",

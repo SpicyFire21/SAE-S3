@@ -46,8 +46,24 @@ async function getGoodiesSizes(){
     return response;
 }
 
+
+async function addGoodieFromLocalSource(d){
+    return LocalSource.addGoodie(d);
+}
+
+async function addGoodie(d){
+    let response = null;
+    try {
+        response = await addGoodieFromLocalSource(d);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de créé le goodie'}
+    }
+    return response;
+}
+
 export default {
     getGoodiesByProviderId,
     getGoodiesColors,
-    getGoodiesSizes
+    getGoodiesSizes,
+    addGoodie
 }

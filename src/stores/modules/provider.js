@@ -8,7 +8,12 @@ export const useProviderStore = defineStore('provider', () => {
     const goodiesColors = ref([])
     const goodiesSizes = ref([])
     //getter
-
+    const getColor = (id) => {
+        return goodiesColors.value.find(c => c.id === id)
+    }
+    const getSize = (id) => {
+        return goodiesSizes.value.find(c => c.id === id)
+    }
     // mutations
     const updateGoodies = (data) =>{
         goodies.value = data
@@ -21,6 +26,10 @@ export const useProviderStore = defineStore('provider', () => {
 
     const updateGoodiesSizes = (data) =>{
         goodiesSizes.value = data;
+    }
+
+    const addGoodies = (data) =>{
+        goodies.value.push(data);
     }
 
 
@@ -69,6 +78,21 @@ export const useProviderStore = defineStore('provider', () => {
         }
     }
 
+    const addGoodie = async(data) =>{
+        try {
+            const response = await providerService.addGoodie(data);
+
+            if (response.error === 0){
+                addGoodies(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
 
 
@@ -79,14 +103,16 @@ export const useProviderStore = defineStore('provider', () => {
         goodiesColors,
         goodiesSizes,
         //getter
-
+        getSize,
+        getColor,
         //mutation
         updateGoodies,
 
         //action
         getGoodiesByProviderId,
         getGoodiesSizes,
-        getGoodiesColors
+        getGoodiesColors,
+        addGoodie
 
     }
 })

@@ -12,20 +12,34 @@
     <div class="mb-6 border p-4 rounded bg-white shadow" :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
       <h2 class="text-xl font-semibold mb-2">Ajouter un Goodie</h2>
       <div class="flex flex-col md:flex-row gap-4 items-start">
-        <input
-            v-model="newGoodieBase.name"
-            type="text"
-            placeholder="Nom du goodie"
-            class="border p-2 rounded flex-1"
-        />
-        <input
-            v-model.number="newGoodieBase.price"
-            type="number"
-            placeholder="Prix"
-            class="border p-2 rounded w-32"
-        />
+
+        <label for="name">Nom</label><input
+          id="name"
+          v-model="newGoodieBase.name"
+          type="text"
+          placeholder="Nom du goodie"
+          class="border p-2 rounded flex-1"
+      />
+        <label for="price">Prix</label><input
+          id="price"
+          v-model.number="newGoodieBase.price"
+          type="number"
+          placeholder="Prix"
+          class="border p-2 rounded w-32"
+      />
+        <label for="quantity">Quantité</label><input
+          id="quantity"
+          v-model.number="newGoodieBase.quantity"
+          type="number"
+          placeholder="Quantité"
+          class="border p-2 rounded w-32"
+      />
+
+
+
+
         <button
-            @click="addGoodieVariants"
+            @click="addGoodieVariants()"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Ajouter
@@ -66,7 +80,7 @@
 
     <!-- Table des goodies -->
     <div class="overflow-x-auto bg-white rounded shadow">
-      <DataTable :headers="headers" :items="providerStore.goodies">
+      <DataTable :headers="headers" :items="displayGoodies">
 
         <template #actions="{ item }">
           <button
@@ -92,7 +106,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import {useProviderStore, useUserStore} from "@/stores/index.js";
 import DataTable from "@/components/utils/DataTable.vue";
@@ -120,22 +134,38 @@ const newGoodieBase = ref({
   date: new Date().toISOString().split("T")[0]
 })
 
+const displayGoodies = computed(() => {
+  return providerStore.goodies.map(g => ({
+    ...g,
+    size: providerStore.getSize(g.goodies_size_id)?.label || "—",
+    color: providerStore.getColor(g.goodies_color_id)?.label || "—"
+  }))
+})
 
 function addGoodieVariants() {
+  console.log(newGoodieBase.value)
   if (!sellingActive.value) return
+  console.log("1")
   if (!newGoodieBase.value.name || newGoodieBase.value.price <= 0) return
+  console.log("2")
   if (selectedSizes.value.length === 0) return
+  console.log("3")
   if (selectedColors.value.length === 0) return
+  console.log("4")
 
   // produit cartésien tailles × couleurs
   selectedSizes.value.forEach(sizeId => {
     selectedColors.value.forEach(colorId => {
-      providerStore.goodies.push({
+
+      let data = {
         id: uuidv4(),
         ...newGoodieBase.value,
         goodies_size_id: sizeId,
         goodies_color_id: colorId
-      })
+      }
+      providerStore.addGoodie(data)
+
+
     })
   })
 
@@ -143,6 +173,7 @@ function addGoodieVariants() {
   selectedColors.value = []
   newGoodieBase.value.name = ""
   newGoodieBase.value.price = 0
+  console.log("créé")
 }
 
 
@@ -162,8 +193,7 @@ onMounted(async()=>{
 
   await providerStore.getGoodiesSizes()
   await providerStore.getGoodiesColors()
-  console.log(providerStore.goodiesSizes)
-  console.log(providerStore.goodiesColors)
+
 
 })
 
