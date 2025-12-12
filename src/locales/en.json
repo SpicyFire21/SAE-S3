@@ -113,6 +113,15 @@
   },
   "GoodiesBoard": {
     "1": "Edit",
-    "2": "Delete"
+    "2": "Delete",
+    "3": "Colors :",
+    "4": "Add",
+    "5": "Quantity",
+    "6": "price",
+    "7": "Name",
+    "8": "Add a goodie",
+    "9": "Management Goodies",
+    "10": "Sizes :",
+    "11": "Goodies Sell active :"
   }
 }

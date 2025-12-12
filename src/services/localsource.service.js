@@ -191,7 +191,8 @@ async function addProviderRequest(data){
         note: [],
         type:"",
         nom_photo:"",
-        description:""
+        description:"",
+        date:new Date().toISOString()
     }
     provider_requests.push(r);
 
@@ -322,7 +323,7 @@ async function addGoodie(data){
         name: data.name,
         price: data.price,
         quantity: data.quantity,
-        date:new Date().toISOString().split("T")[0]
+        date:new Date().toISOString()
     }
     return { error: 0, status: 201, data: g };
 

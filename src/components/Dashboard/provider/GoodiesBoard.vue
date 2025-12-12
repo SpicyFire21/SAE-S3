@@ -1,33 +1,33 @@
 <template>
   <div class="p-6 w-full">
-    <h1 class="text-2xl font-bold mb-4">Gestion des Goodies</h1>
+    <h1 class="text-2xl font-bold mb-4">{{ t("GoodiesBoard.9") }}</h1>
 
     <!-- Activer/désactiver la vente -->
     <div class="mb-6 flex items-center gap-4">
-      <label class="font-semibold">Vente de goodies active :</label>
+      <label class="font-semibold">{{ t("GoodiesBoard.11") }}</label>
       <input type="checkbox" v-model="sellingActive" @change="toggleSelling" />
     </div>
 
     <!-- Formulaire création -->
     <div class="mb-6 border p-4 rounded bg-white shadow" :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
-      <h2 class="text-xl font-semibold mb-2">Ajouter un Goodie</h2>
+      <h2 class="text-xl font-semibold mb-2">{{ t("GoodiesBoard.8") }}</h2>
       <div class="flex flex-col md:flex-row gap-4 items-start">
 
-        <label for="name">Nom</label><input
+        <label for="name">{{ t("GoodiesBoard.7") }}</label><input
           id="name"
           v-model="newGoodieBase.name"
           type="text"
           placeholder="Nom du goodie"
           class="border p-2 rounded flex-1"
       />
-        <label for="price">Prix</label><input
+        <label for="price">{{ t("GoodiesBoard.6") }}</label><input
           id="price"
           v-model.number="newGoodieBase.price"
           type="number"
           placeholder="Prix"
           class="border p-2 rounded w-32"
       />
-        <label for="quantity">Quantité</label><input
+        <label for="quantity">{{ t("GoodiesBoard.5") }}</label><input
           id="quantity"
           v-model.number="newGoodieBase.quantity"
           type="number"
@@ -42,7 +42,7 @@
             @click="addGoodieVariants()"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Ajouter
+          {{ t("GoodiesBoard.4") }}
         </button>
 
 
@@ -50,7 +50,7 @@
 
       </div>
       <div class="flex-col">
-        <label class="font-semibold">Tailles :</label>
+        <label class="font-semibold">{{ t("GoodiesBoard.10") }}</label>
         <div class="flex  gap-2">
           <label v-for="s in providerStore.goodiesSizes" :key="s.id" class="flex items-center gap-1">
             <input
@@ -61,7 +61,7 @@
             {{ s.label }}
           </label>
         </div>
-        <label class="font-semibold">Couleurs :</label>
+        <label class="font-semibold">{{ t("GoodiesBoard.3") }}</label>
         <div class="flex gap-2">
           <label v-for="c in providerStore.goodiesColors" :key="c.id" class="flex items-center gap-1">
             <input

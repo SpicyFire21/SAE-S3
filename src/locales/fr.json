@@ -110,7 +110,16 @@
   },
   "GoodiesBoard": {
     "1": "Modifier",
-    "2": "Supprimer"
+    "2": "Supprimer",
+    "3": "Couleurs :",
+    "4": "Ajouter",
+    "5": "Quantité",
+    "6": "prix",
+    "7": "Nom",
+    "8": "Ajouter un goodie",
+    "9": "Gestion des Goodies",
+    "10": "Tailles :",
+    "11": "Vente de Goodies active :"
   }
 
 

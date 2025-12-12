@@ -14,6 +14,37 @@
     >
       {{ t("asidebarDashboard.2") }}
     </button>
+    <div
+        class="flex items-center"
+        v-if="locale === 'en'"
+    >
+      <img src="@/assets/lang/fr.webp" alt="fr" class="w-[30px] aspect-[480/320]">
+      <button
+          @click="changeLanguage('fr')"
+          :class="['rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
+      >
+        FRANÇAIS
+      </button>
+    </div>
+
+
+    <div
+        class="flex items-center"
+
+        v-if="locale === 'fr'"
+    >
+      <img src="@/assets/lang/en.webp" alt="en" class="w-[30px] aspect-[480/320]">
+
+      <button
+          @click="changeLanguage('en')"
+
+          :class="['rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
+      >
+        ENGLISH
+      </button>
+    </div>
+
+
 
     <div class="text-xl font-semibold mb-6">Menu</div>
     <nav class="flex flex-col space-y-3">
@@ -37,7 +68,7 @@ import {useUserStore} from "@/stores/index.js";
 const userStore= useUserStore()
 import {useI18n} from "vue-i18n";
 
-const { t } = useI18n()
+const { t,locale } = useI18n()
 const router = useRouter()
 
 const dash = computed(()=>{
@@ -48,6 +79,9 @@ const dash = computed(()=>{
   }
 })
 
+const changeLanguage = (lan) => {
+  locale.value = lan;
+}
 
 // Définition simple des entrées du menu
 const admin = ref([
