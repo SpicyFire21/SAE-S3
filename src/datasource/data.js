@@ -54,8 +54,8 @@ let users = [
     {
         "id": "e55733ef-f3d2-447d-94db-9e3aaef624c1",
         "name": "Quentin Tarantino",
-        "login": "prestaknaghui",
-        "password": "prestaknaghui",
+        "login": "presta2",
+        "password": "presta2",
         "email": "tarantino@pulp.com",
         "droit": "1",
         "session": "",
@@ -311,18 +311,18 @@ let comments_golden_book = [
 let basket = [
     {
         "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
-        "iduser":"3e5a7c6b-4f6d-4c8d-b1f5-1a2b3c4d5e6f",
+        "iduser":"c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
         "date": "2025-03-18",
         "state": "0",
         "is_order": true,
-        "iditems":"f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
     }
 ];
 
 let basket_items = [
     {
         "idbasket":"0f8fad5b-d9cb-469f-a165-70867728950e",
-        "idgoodies":"f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "idgoodies":"1",
         "count":"5"
     }
 ];

@@ -50,7 +50,6 @@ export const useProviderStore = defineStore('provider', () => {
     const getGoodies = async () =>{
         try {
             const response = await providerService.getGoodies();
-            console.log(response)
             if (response.error === 0){
                 updateGoodies(response.data)
             } else {

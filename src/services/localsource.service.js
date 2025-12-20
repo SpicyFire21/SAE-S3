@@ -6,7 +6,7 @@ import {
     provider_requests,
     goodies,
     goodies_color,
-    goodies_size, tickets_price
+    goodies_size, tickets_price, basket, basket_items
 } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
@@ -355,6 +355,42 @@ async function getTicketsPrice(){
     return { error: 0, status: 200, data: tickets_price };
 }
 
+async function getBasketByUserId(userid){
+    const userExist = users.find(u => u.id === userid);
+    if (!userExist) {
+        return { error: 1, status: 404, data: "Impossible de trouver l'utilisateur" };
+    }
+
+    const currentBasket = basket.find(b => b.iduser === userid);
+    if (!currentBasket) {
+        const newBasket = {
+            "id": uuidv4(),
+            "iduser":userid,
+            "date": new Date().toISOString(),
+            "state": "0",
+            "is_order": false,
+        }
+
+        basket.push(newBasket);
+        return { error: 0, status: 201, data: newBasket };
+    }
+
+    return { error: 0, status: 200, data: currentBasket };
+}
+
+async function getBasketItems(idbasket){
+    const basketExist = basket.find(b => b.id === idbasket);
+    if (!basketExist) {
+        return { error: 1, status: 404, data: "Impossible de trouver le panier" };
+    }
+
+    const items = basket_items.filter(i => i.idbasket === idbasket)
+
+    return { error: 0, status: 200, data: items };
+}
+
+
+
 export default {
     getUsers,
     login,
@@ -375,5 +411,7 @@ export default {
     addGoodie,
     updateGoodie,
     getGoodies,
-    getTicketsPrice
+    getTicketsPrice,
+    getBasketByUserId,
+    getBasketItems
 }
