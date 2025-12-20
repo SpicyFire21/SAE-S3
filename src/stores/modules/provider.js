@@ -47,6 +47,21 @@ export const useProviderStore = defineStore('provider', () => {
 
 
     //action
+    const getGoodies = async () =>{
+        try {
+            const response = await providerService.getGoodies();
+            console.log(response)
+            if (response.error === 0){
+                updateGoodies(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const getGoodiesByProviderId = async (id) => {
         try {
             const response = await providerService.getGoodiesByProviderId(id);
@@ -142,7 +157,8 @@ export const useProviderStore = defineStore('provider', () => {
         getGoodiesSizes,
         getGoodiesColors,
         addGoodie,
-        updateGoodie
+        updateGoodie,
+        getGoodies
 
     }
 })

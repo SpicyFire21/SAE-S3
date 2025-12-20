@@ -6,7 +6,8 @@
     "seConnecter": "Login",
     "seDeconnecter": "Logout",
     "compte": "My account",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "goodies": "goodies"
 
   },
   "hero": {
@@ -55,23 +56,11 @@
     "choose": "Choose an option",
     "submit": "Buy",
 
-    "list": [
-      {
-        "id": 1,
-        "price": 6,
-        "name": "kid"
-      },
-      {
-        "id": 2,
-        "price": 8,
-        "name": "student"
-      },
-      {
-        "id": 3,
-        "price": 11,
-        "name": "adult"
-      }
-    ],
+    "list": {
+      "child": "child",
+      "student": "student",
+      "adult": "adult"
+    },
     "from": "from",
     "to": "to"
   },
@@ -108,7 +97,8 @@
     },
     "4": {
       "1": "Goodies",
-      "2": "Statistics"
+      "2": "Statistics",
+      "3": "Dedication"
     }
   },
   "GoodiesBoard": {

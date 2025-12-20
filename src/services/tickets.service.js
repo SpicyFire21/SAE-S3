@@ -43,8 +43,24 @@ export async function getBilletsByUserId(id){
     return response;
 }
 
+async function getTicketsPriceFromLocalSource(){
+    return LocalSource.getTicketsPrice();
+}
+
+export async function getTicketsPrice(){
+    let response = null;
+    try {
+        response = await getTicketsPriceFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les billets par l\'id de l\'utilisateur'}
+    }
+    return response;
+}
+
+
 export default {
     getFilmTickets,
     createTicket,
-    getBilletsByUserId
+    getBilletsByUserId,
+    getTicketsPrice
 }

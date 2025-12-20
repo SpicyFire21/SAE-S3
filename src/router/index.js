@@ -7,6 +7,7 @@ import Connexion from "@/views/Connexion.vue"
 import Films from "@/views/Films.vue"
 import FilmDetails from "@/views/FilmDetails.vue";
 import account from "@/views/Account.vue";
+import goodies from "@/views/GoodiesSell.vue"
 
 import providerRoutes from "@/router/provider.router.js"
 import adminRoutes from "@/router/admin.router.js";
@@ -48,10 +49,16 @@ const router = createRouter({
             props: true
         },
         {
+            path: '/goodies',
+            name: 'user-goodies',
+            component:goodies
+        },
+        {
             path: '/account',
             name: 'account',
             component:account
         },
+
         ...providerRoutes,
         ...adminRoutes
     ],

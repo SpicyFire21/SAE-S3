@@ -256,23 +256,18 @@ let tickets = [
 let tickets_price = [
     {
         "id": "93b0592a-922d-4b39-9227-b5f7d84c95ff",
-        "name": "adulte",
+        "name": "adult",
         "price": "11"
     },
     {
         "id": "0936df09-1754-448f-8b09-f6c794c6b251",
-        "name": "etudiant",
+        "name": "student",
         "price": "9"
     },
     {
         "id": "9e671b84-9b15-4543-bc2b-bf7892e0247d",
-        "name": "enfant",
+        "name": "child",
         "price": "5"
-    },
-    {
-        "id": "c5885928-09e4-4238-a633-fcdf6023e030",
-        "name": "senior",
-        "price": "8"
     }
 ]
 

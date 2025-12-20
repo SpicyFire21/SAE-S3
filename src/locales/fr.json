@@ -6,7 +6,8 @@
     "seConnecter": "Se connecter",
     "seDeconnecter": "Deconnexion",
     "compte": "Mon compte",
-    "dashboard": "Tableau de bord"
+    "dashboard": "Tableau de bord",
+    "goodies": "goodies"
   },
   "hero": {
     "title": "Le cinéma sous toutes ses formes, réuni en un seul événement."
@@ -51,23 +52,11 @@
     "priceList": "Tarifs",
     "choose": "Choissisez une option",
     "submit": "Acheter",
-    "list": [
-      {
-        "id": 1,
-        "price": 6,
-        "name": "enfant"
-      },
-      {
-        "id": 2,
-        "price": 8,
-        "name": "étudiant"
-      },
-      {
-        "id": 3,
-        "price": 11,
-        "name": "adulte"
-      }
-    ],
+    "list": {
+        "child": "enfant",
+        "student": "étudiant",
+        "adult": "adulte"
+    },
     "from": "de",
     "to": "à"
   },
@@ -105,7 +94,8 @@
     },
     "4": {
       "1": "Goodies",
-      "2": "Statistiques"
+      "2": "Statistiques",
+      "3": "Dédicace"
     }
   },
   "GoodiesBoard": {

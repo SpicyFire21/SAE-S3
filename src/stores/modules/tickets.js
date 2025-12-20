@@ -6,9 +6,13 @@ export const useTicketsStore = defineStore('tickets', () => {
     // state
     const tickets = ref([])
     const billets = ref([])//billet pour l'entré de l'event
+    const ticketsPrice = ref([])
 
     const updateTickets = (data) =>{
         tickets.value = data;
+    }
+    const updateTicketsPrice = (data) =>{
+        ticketsPrice.value = data;
     }
     const updateBillets = (data) =>{
         billets.value = data;
@@ -22,6 +26,16 @@ export const useTicketsStore = defineStore('tickets', () => {
         try {
             const response = await ticketService.getFilmTickets();
             updateTickets(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const getTicketsPrice = async () => {
+        try {
+            const response = await ticketService.getTicketsPrice();
+            updateTicketsPrice(response.data)
+            console.log(billets.value)
         } catch (e) {
             console.error(e)
         }
@@ -54,8 +68,10 @@ export const useTicketsStore = defineStore('tickets', () => {
 
     return {
         tickets,billets,
+        ticketsPrice,
         getTickets,
             createTicket,
-        getBilletsByUserId
+        getBilletsByUserId,
+        getTicketsPrice
     }
 })

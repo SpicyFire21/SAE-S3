@@ -12,7 +12,7 @@ const router = [
         children:[
             {
                 path:'goodies',
-                name:'goodies',
+                name:'provider-goodies',
                 components: {dashboard:goodies}
             },
             {

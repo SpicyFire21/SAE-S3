@@ -71,7 +71,7 @@
               :key="index"
               :value="item.id"
           >
-            {{ item.name }} - {{ item.price }}€
+            {{ item.name }}
           </option>
         </select>
       </div>
@@ -142,7 +142,7 @@
 
 <script setup>
 import bgImage from '../assets/img/bgbilleterie.png'
-import {ref, computed} from "vue"
+import {ref, computed, onMounted} from "vue"
 import {useRouter} from "vue-router";
 import {useI18n} from 'vue-i18n'
 import {useUserStore} from "@/stores/index.js";
@@ -166,7 +166,13 @@ const dateto = ref("");
 
 
 
-const tarifs = computed(() => tm('Tickets.list'))
+const tarifs = computed(() =>
+    ticketStore.ticketsPrice.map(g => ({
+      id: g.id,
+      name: `${t(`Tickets.list.${g.name}`)} - ${g.price}€`
+    }))
+)
+
 
 const formattedCardNumber = computed({
   get: () =>
@@ -232,6 +238,12 @@ const pay = async (e) => {
 
 
 }
+
+onMounted(async()=>{
+  await ticketStore.getTicketsPrice();
+  console.log(ticketStore.ticketsPrice)
+})
+
 </script>
 
 <style scoped></style>

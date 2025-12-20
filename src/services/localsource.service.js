@@ -6,7 +6,7 @@ import {
     provider_requests,
     goodies,
     goodies_color,
-    goodies_size
+    goodies_size, tickets_price
 } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
@@ -347,7 +347,13 @@ async function updateGoodie(item, userid) {
     }
 }
 
+async function getGoodies(){
+    return { error: 0, status: 200, data: goodies };
+}
 
+async function getTicketsPrice(){
+    return { error: 0, status: 200, data: tickets_price };
+}
 
 export default {
     getUsers,
@@ -367,5 +373,7 @@ export default {
     getGoodiesColors,
     getGoodiesSizes,
     addGoodie,
-    updateGoodie
+    updateGoodie,
+    getGoodies,
+    getTicketsPrice
 }

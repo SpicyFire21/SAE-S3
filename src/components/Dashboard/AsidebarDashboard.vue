@@ -18,11 +18,11 @@
         class="flex items-center"
         v-if="locale === 'en'"
     >
-      <img src="@/assets/lang/fr.webp" alt="fr" class="w-[30px] aspect-[480/320]">
       <button
           @click="changeLanguage('fr')"
-          :class="['rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
-      >
+          :class="['rounded-md px-3 py-2 text-[19px] flex gap-2 items-center font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
+      >      <img src="@/assets/lang/fr.webp" alt="fr" class="w-[30px] aspect-[480/320]">
+
         FRANÇAIS
       </button>
     </div>
@@ -33,13 +33,14 @@
 
         v-if="locale === 'fr'"
     >
-      <img src="@/assets/lang/en.webp" alt="en" class="w-[30px] aspect-[480/320]">
 
       <button
           @click="changeLanguage('en')"
 
-          :class="['rounded-md px-3 py-2 text-[19px] font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
+          :class="['rounded-md px-3 py-2 text-[19px] flex gap-2 items-center font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
       >
+        <img src="@/assets/lang/en.webp" alt="en" class="w-[30px] aspect-[480/320]">
+
         ENGLISH
       </button>
     </div>
@@ -84,17 +85,19 @@ const changeLanguage = (lan) => {
 }
 
 // Définition simple des entrées du menu
-const admin = ref([
+const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
   { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' }
 ])
 
-const provider = ref([
-
+const provider = computed(() => [
   { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
+  { label: t("asidebarDashboard.4.3"), to: '/provider-dashboard/dedication' },
+  { label: t("asidebarDashboard.4.4"), to: '/provider-dashboard/food' },
+  { label: t("asidebarDashboard.4.5"), to: '/provider-dashboard/reservation' },
+
   { label: t("asidebarDashboard.4.2"), to: '/provider-dashboard/stats' }
 ])
-
 function go(to) {
   router.push(to)
 }

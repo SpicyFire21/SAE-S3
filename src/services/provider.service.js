@@ -76,10 +76,26 @@ async function updateGoodie(d,userid){
     return response;
 }
 
+async function getGoodiesFromLocalSource(d,userid){
+    return LocalSource.getGoodies(d,userid);
+}
+
+async function getGoodies(d,userid){
+    let response = null;
+    try {
+        response = await getGoodiesFromLocalSource(d,userid);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le goodies'}
+    }
+    return response;
+}
+
 export default {
     getGoodiesByProviderId,
     getGoodiesColors,
     getGoodiesSizes,
     addGoodie,
-    updateGoodie
+    updateGoodie,
+    getGoodies
+
 }
