@@ -222,6 +222,67 @@ let users = [
     }
 ]
 
+let goodies = [
+    { id: "1", name: "T-shirt", price: "20" },
+    { id: "2", name: "Tasse", price: "15" },
+    { id: "3", name: "Casquette", price: "12" },
+    { id: "4", name: "Sweat", price: "35" },
+];
+
+
+let size = [
+    { id: "1", label: "XS" },
+    { id: "2", label: "S" },
+    { id: "3", label: "M" },
+    { id: "4", label: "L" },
+    { id: "5", label: "XL" },
+];
+
+let color = [
+    { id: "1", label: "Rouge" },
+    { id: "2", label: "Bleu" },
+    { id: "3", label: "Vert" },
+    { id: "4", label: "Noir" },
+    { id: "5", label: "Blanc" },
+];
+
+let goodies_size = [
+    { idgoodie: "1", idsize: "1" },
+    { idgoodie: "1", idsize: "2" },
+    { idgoodie: "1", idsize: "3" },
+    { idgoodie: "1", idsize: "4" },
+    { idgoodie: "2", idsize: "1" },
+    { idgoodie: "3", idsize: "4" },
+    { idgoodie: "4", idsize: "5" },
+
+
+];
+
+let goodies_color = [
+    { idgoodie: "1", idcolor: "1" },
+    { idgoodie: "1", idcolor: "2" },
+    { idgoodie: "2", idcolor: "3" },
+    { idgoodie: "3", idcolor: "4" },
+    { idgoodie: "4", idcolor: "5" },
+
+];
+
+let basket = [
+    {
+        id: "0f8fad5b-d9cb-469f-a165-70867728950e",
+        iduser: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        date: "2025-03-18",
+        state: "0",
+        is_order: true }
+];
+
+let basket_items = [
+    { idbasket: "0f8fad5b-d9cb-469f-a165-70867728950e", idgoodie: "1",idcolor: "2",idsize: "3", count: "1" }
+];
+
+
+
+
 let tickets = [
     {
         "idticket": "4c3bfa40-79f0-4f27-9af0-8bc4f606e0c4",
@@ -308,24 +369,6 @@ let comments_golden_book = [
 ]
 
 
-let basket = [
-    {
-        "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
-        "iduser":"c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "date": "2025-03-18",
-        "state": "0",
-        "is_order": true,
-
-    }
-];
-
-let basket_items = [
-    {
-        "idbasket":"0f8fad5b-d9cb-469f-a165-70867728950e",
-        "idgoodies":"1",
-        "count":"5"
-    }
-];
 
 let films = [
     {
@@ -552,49 +595,6 @@ let provider_requests = [
     }
 ]
 
-
-let goodies = [
-    {
-        "id": "1",
-        "user_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "service_id": "1",
-        "goodies_size_id":"1",
-        "goodies_color_id":"1",
-        "name": "T-shirt",
-        "price": 25,
-        "quantity": 3,
-        "date": "2025-05-01"
-    },
-    {
-        "id": "2",
-        "user_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "service_id": "1",
-        "goodies_size_id":"1",
-        "goodies_color_id":"1",
-        "name": "Tasse",
-        "price": 25,
-        "quantity": 31,
-        "date": "2025-05-01"
-    },
-
-];
-
-let goodies_size = [
-    { "id":"1", "label":"XS" },
-    { "id":"2", "label":"S" },
-    { "id":"3", "label":"M" },
-    { "id":"4", "label":"L" },
-    { "id":"5", "label":"XL" }
-];
-let goodies_color = [
-    { "id":"1", "label":"Rouge" },
-    { "id":"2", "label":"Bleu" },
-    { "id":"3", "label":"Vert" },
-    { "id":"4", "label":"Noir" },
-    { "id":"5", "label":"Blanc" }
-];
-
-
 // Association entre prestataires et services avec état spécifique
 let provider_services_associations = [
     {
@@ -645,6 +645,7 @@ export {
     goodies,
     goodies_size,
     goodies_color,
+    color,size,
     basket,
     basket_items,
     film_tickets,

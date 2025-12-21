@@ -17,14 +17,14 @@ async function getGoodiesByProviderId(data){
 
 
 
-async function getGoodiesColorsFromLocalSource(){
-    return LocalSource.getGoodiesColors();
+async function getColorsFromLocalSource(){
+    return LocalSource.getColors();
 }
 
-async function getGoodiesColors(){
+async function getColors(){
     let response = null;
     try {
-        response = await getGoodiesColorsFromLocalSource();
+        response = await getColorsFromLocalSource();
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les couleurs de goodies'}
     }
@@ -32,14 +32,14 @@ async function getGoodiesColors(){
 }
 
 
-async function getGoodiesSizesFromLocalSource(){
-    return LocalSource.getGoodiesSizes();
+async function getSizesFromLocalSource(){
+    return LocalSource.getSizes();
 }
 
-async function getGoodiesSizes(){
+async function getSizes(){
     let response = null;
     try {
-        response = await getGoodiesSizesFromLocalSource();
+        response = await getSizesFromLocalSource();
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les tailles de goodies'}
     }
@@ -90,13 +90,44 @@ async function getGoodies(d,userid){
     return response;
 }
 
+async function getGoodiesSizesFromLocalSource(d,userid){
+    return LocalSource.getGoodiesSizes(d,userid);
+}
+
+async function getGoodiesSizes(d,userid){
+    let response = null;
+    try {
+        response = await getGoodiesSizesFromLocalSource(d,userid);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le goodies'}
+    }
+    return response;
+}
+
+
+async function getGoodiesColorsFromLocalSource(d,userid){
+    return LocalSource.getGoodiesColors(d,userid);
+}
+
+async function getGoodiesColors(d,userid){
+    let response = null;
+    try {
+        response = await getGoodiesColorsFromLocalSource(d,userid);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le goodies'}
+    }
+    return response;
+}
+
 
 export default {
     getGoodiesByProviderId,
-    getGoodiesColors,
-    getGoodiesSizes,
+    getColors,
+    getSizes,
     addGoodie,
     updateGoodie,
-    getGoodies
+    getGoodies,
+    getGoodiesSizes,
+    getGoodiesColors
 
 }

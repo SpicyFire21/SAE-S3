@@ -8,14 +8,17 @@
         <h1 class="text-5xl font-extrabold tracking-wide mb-4">
           Boutique
         </h1>
-        <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+        <p class="text-[var(--gris)] text-lg max-w-2xl mx-auto">
           Produits exclusifs inspirés du cinéma. Éditions limitées !
+        </p>
+        <p v-if="!userStore.currentUser" class="text-[var(--rouge)] text-lg max-w-2xl mx-auto">
+          Connecter vous pour acheter vos goodies !
         </p>
       </header>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         <article
-            v-for="(goodie, index) in providerStore.goodies"
+            v-for="(goodie, index) in providerStore.goodiesWithOptions"
             :key="index"
             class="group bg-[var(--grisf)] border border-[var(--grisf)] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition"
         >
@@ -35,21 +38,55 @@
             <div class="flex items-center justify-between mt-4">
               <span class="text-xl font-bold text-[var(--jaune)]">{{ goodie.price }} €</span>
               <span
-                  class="text-xs px-3 py-1 rounded-full"
-                  :class="goodie.active
-                  ? 'bg-emerald-500/20 text-emerald-400'
-                  : 'bg-red-500/20 text-red-400'"
+                  class="text-s px-3 py-1 rounded-full"
               >
-                {{ goodie.active ? 'En vente' : 'Indisponible' }}
+                {{ goodie.quantity }} en stock
               </span>
             </div>
-            <button
-                class="mt-4 w-full py-3 rounded-xl font-semibold tracking-wide bg-[var(--jaune)] text-[var(--noir)] hover:bg-[var(--jaune)] transition disabled:opacity-40 disabled:cursor-not-allowed"
-                :disabled="!userStore.currentUser "
-                @click="addBasket(goodie)"
-            >
-              Ajouter au panier
-            </button>
+
+            <div class="flex text-[var(--noir)]">
+              <!-- Couleur -->
+              <select v-model="selectedColors[goodie.id]">
+                <option
+                    v-for="(item, index) in goodie.colors"
+                    :key="index"
+                    :value="item.id"
+                >
+                  {{ item.label }}
+                </option>
+              </select>
+
+              <!-- Taille -->
+              <select v-model="selectedSizes[goodie.id]">
+                <option
+                    v-for="(item, index) in goodie.sizes"
+                    :key="index"
+                    :value="item.id"
+                >
+                  {{ item.label }}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="flex">
+              <button
+                  class="mt-4 w-full py-3 rounded-xl font-semibold tracking-wide bg-[var(--jaune)] text-[var(--noir)] hover:bg-[var(--jaune)] transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  :disabled="!userStore.currentUser "
+                  @click="addBasket(goodie,quantities[goodie.id])"
+              >
+                Ajouter au panier
+              </button>
+              <input
+                  type="number"
+                  min="1"
+                  :max="goodie.quantity"
+                  v-model.number="quantities[goodie.id]"
+                  class="w-16 ml-2 text-black bg-[var(--blanc)]"
+              />
+
+            </div>
+
           </div>
         </article>
       </div>
@@ -59,27 +96,36 @@
     <aside class="w-96 bg-[var(--grisf)] p-6 rounded-2xl shadow-xl sticky top-16 h-[calc(100vh-4rem)] flex flex-col ml-8">
       <h2 class="text-2xl font-bold mb-4">Votre Panier</h2>
 
-      <div v-if="currentBasket.length === 0" class="text-zinc-400 mb-4">Votre panier est vide</div>
+      <div v-if="goodiesStore.basketItems.length === 0" class="text-zinc-400 mb-4">Votre panier est vide</div>
 
       <ul class="flex-1 overflow-y-auto mb-4">
         <li
-            v-for="(item, index) in currentBasket"
+            v-for="(item, index) in groupedBasketItems"
             :key="index"
-            class="flex justify-between items-center py-2 border-b border-zinc-700"
+            class="flex flex-col gap-1 py-2 border-b border-zinc-700"
         >
-          <span>{{ item.name }}</span>
-          <span>{{ item.price }} €</span>
+          <div class="flex justify-between">
+            <span class="font-semibold">{{ providerStore.getName(item.idgoodie) }}</span>
+            <span>{{ item.count }} × {{ providerStore.getPrice(item.idgoodie) }} €</span>
+          </div>
+          <div class="flex justify-between text-sm text-[var(--gris)]">
+            <span>Couleur : {{ providerStore.getColor(item.idcolor) }}</span>
+            <span>Taille : {{ providerStore.getSize(item.idsize) }}</span>
+          </div>
+          <div class="flex justify-end font-bold text-[var(--jaune)]">
+            Total : {{ (providerStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
+          </div>
         </li>
       </ul>
 
       <div class="flex justify-between font-bold text-[var(--jaune)] mb-4">
-        <span>Total</span>
-        <span>{{ total }} €</span>
+        <span>Total général</span>
+        <span>{{ total.toFixed(2) }} €</span>
       </div>
 
       <button
           class="w-full py-3 rounded-xl font-semibold tracking-wide bg-[var(--jaune)] text-[var(--noir)] hover:bg-[var(--jaune)] transition disabled:opacity-40 disabled:cursor-not-allowed"
-          :disabled="basket.length === 0"
+          :disabled="goodiesStore.basket.length === 0"
       >
         Commander
       </button>
@@ -92,38 +138,79 @@
 import {useGoodiesStore, useProviderStore, useUserStore} from "@/stores/index.js"
 import { ref, computed, onMounted } from "vue"
 
+const quantities = ref({})
+const selectedColors = ref({})
+const selectedSizes = ref({})
+
 const providerStore = useProviderStore()
 const userStore = useUserStore()
 const goodiesStore = useGoodiesStore();
-const basket = ref([])
+
 
 const getImg = (img) => new URL(`../assets/goodies/${img}.png`, import.meta.url).href
 
-function addBasket(item) {
-   basket.value.push(item)
+async function addBasket(goodie, count) {
+  const idcolor = selectedColors.value[goodie.id]
+  const idsize = selectedSizes.value[goodie.id]
+
+  if (!idcolor || !idsize || count <= 0) return
+
+  const item = {
+    idgoodie: goodie.id,
+    idcolor,
+    idsize,
+    count,
+    price: goodie.price
+  }
+
+  goodiesStore.addBasketItems(item)
 }
 
-const total = computed(() =>
-    basket.value.reduce((sum, item) => sum + item.price, 0)
-)
 
-const currentBasket = computed(() => {
-  return providerStore.goodies
-      .map(goodie => {
-        const inBasket = goodiesStore.basketItems.find(b => b.idgoodies === goodie.id)
-        if (inBasket) {
-          return {
-            ...goodie,
-            count: inBasket.count
-          }
-        }
-      })
-      .filter(Boolean) // supprimer les undefined
+const total = computed(() => {
+  return goodiesStore.basketItems.reduce((sum, item) => {
+    return sum + (providerStore.getPrice(item.idgoodie) || 0) * Number(item.count)
+  }, 0)
+})
+
+
+
+
+const groupedBasketItems = computed(() => {
+  const map = {}
+
+  goodiesStore.basketItems.forEach(item => {
+    const key = `${item.idgoodie}-${item.idcolor}-${item.idsize}`
+    if (!map[key]) {
+      map[key] = { ...item, count: Number(item.count) }
+    } else {
+      map[key].count += Number(item.count)
+    }
+  })
+
+  return Object.values(map)
 })
 
 onMounted(async () => {
   await providerStore.getGoodies()
-  await goodiesStore.getBasketByUserId(userStore.currentUser.id)
-  await goodiesStore.getBasketItems(goodiesStore.basket.id)
+  await providerStore.getSizes()
+  await providerStore.getColors()
+  await providerStore.getGoodiesSizes()
+  await providerStore.getGoodiesColors()
+
+  if (userStore.currentUser){
+    await goodiesStore.getBasketByUserId(userStore.currentUser.id)
+    await goodiesStore.getBasketItems(goodiesStore.basket.id)
+  }
+
+  providerStore.goodiesWithOptions.forEach(goodie => {
+    const firstColorRelation = providerStore.goodiesColors.find(gc => gc.idgoodie === goodie.id)
+    const firstSizeRelation = providerStore.goodiesSizes.find(gs => gs.idgoodie === goodie.id)
+    selectedColors.value[goodie.id] = firstColorRelation?.idcolor ?? null
+    selectedSizes.value[goodie.id] = firstSizeRelation?.idsize ?? null
+    quantities.value[goodie.id] = 1
+  })
+
+
 })
 </script>

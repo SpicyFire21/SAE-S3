@@ -13,16 +13,13 @@ export const useGoodiesStore = defineStore('goodies', () => {
     // mutations
     const setBasket = (data) =>{
         basket.value = data
-
-
     }
     const setBasketItems = (data) =>{
         basketItems.value = data
-        console.log(basketItems.value)
     }
-
-
-
+    const addBasketItems = (data) =>{
+        basketItems.value.push(data)
+    }
 
     //action
     const getBasketByUserId = async (id) =>{
@@ -46,6 +43,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.log(response)
             if (response.error === 0){
                 setBasketItems(response.data)
+                console.log(basketItems.value)
             } else {
                 console.error(response.data)
             }
@@ -54,6 +52,8 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.error(e)
         }
     }
+
+
 
 
 
@@ -70,6 +70,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
 
         //mutation
         setBasket,
+        addBasketItems,
 
         //action
         getBasketByUserId,

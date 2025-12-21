@@ -5,19 +5,70 @@ import providerService from "@/services/provider.service.js"
 export const useProviderStore = defineStore('provider', () => {
     // state
     const goodies = ref([])
+    const colors = ref([])
+    const sizes = ref([])
     const goodiesColors = ref([])
     const goodiesSizes = ref([])
+
     //getter
+    const getName = (id) => {
+
+        return goodies.value.find(c => c.id === id).name
+    }
+    const getPrice = (id) => {
+
+        return goodies.value.find(c => c.id === id).price
+    }
     const getColor = (id) => {
-        return goodiesColors.value.find(c => c.id === id)
+
+        return colors.value.find(c => c.id === id).label
     }
     const getSize = (id) => {
-        return goodiesSizes.value.find(c => c.id === id)
+        return sizes.value.find(c => c.id === id).label
     }
+    const getSizesByGoodieId = (idgoodie) => {
+        const sizeIds = goodiesSizes.value
+            .filter(gs => gs.idgoodie === idgoodie)
+            .map(gs => gs.idsize)
+
+        return sizes.value.filter(s => sizeIds.includes(s.id))
+    }
+    const getColorsByGoodieId = (idgoodie) => {
+        const colorIds = goodiesColors.value
+            .filter(gc => gc.idgoodie === idgoodie)
+            .map(gc => gc.idcolor)
+
+        return colors.value.filter(c => colorIds.includes(c.id))
+    }
+    const goodiesWithOptions = computed(() => {
+        return goodies.value.map(g => ({
+            ...g,
+            sizes: getSizesByGoodieId(g.id),
+            colors: getColorsByGoodieId(g.id)
+        }))
+    })
+
+
+
     // mutations
     const updateGoodies = (data) =>{
         goodies.value = data
 
+    }
+
+    const setGoodiesColors = (data) =>{
+        goodiesColors.value = data
+    }
+    const setGoodiesSizes = (data) =>{
+        goodiesSizes.value = data
+    }
+
+    const updateColors = (data) =>{
+        colors.value = data;
+    }
+
+    const updateSizes = (data) =>{
+        sizes.value = data;
     }
 
     const updateGoodiesColors = (data) =>{
@@ -38,7 +89,6 @@ export const useProviderStore = defineStore('provider', () => {
     const editGoodies = (updatedGoodie) => {
         const index = goodies.value.findIndex(g => g.id === updatedGoodie.id)
         if (index !== -1) {
-            // remplace l'ancien goodie par le nouveau
             goodies.value.splice(index, 1, updatedGoodie)
         } else {
             console.warn("Goodie non trouvé :", updatedGoodie.id)
@@ -76,12 +126,26 @@ export const useProviderStore = defineStore('provider', () => {
         }
     }
 
-    const getGoodiesColors = async () => {
+    const getColors = async () => {
         try {
-            const response = await providerService.getGoodiesColors();
+            const response = await providerService.getColors();
 
             if (response.error === 0){
-                updateGoodiesColors(response.data)
+                updateColors(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const getSizes = async () => {
+        try {
+            const response = await providerService.getSizes();
+
+            if (response.error === 0){
+                updateSizes(response.data)
             } else {
                 console.error(response.data)
             }
@@ -104,7 +168,24 @@ export const useProviderStore = defineStore('provider', () => {
             console.error(e)
         }
     }
+    const getGoodiesColors = async () =>{
+        try {
+            const response = await providerService.getGoodiesColors();
 
+            if (response.error === 0){
+                updateGoodiesColors(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
+
+    // a modifier !!!!!!!
     const addGoodie = async(data) =>{
         try {
             const response = await providerService.addGoodie(data);
@@ -142,11 +223,19 @@ export const useProviderStore = defineStore('provider', () => {
     return {
         //state
         goodies,
+        colors,
+        sizes,
         goodiesColors,
         goodiesSizes,
         //getter
         getSize,
         getColor,
+        getName,
+        getPrice,
+        getSizesByGoodieId,
+        getColorsByGoodieId,
+        goodiesWithOptions,
+
         //mutation
         updateGoodies,
         removeGoodie,
@@ -154,6 +243,8 @@ export const useProviderStore = defineStore('provider', () => {
         //action
         getGoodiesByProviderId,
         getGoodiesSizes,
+        getSizes,
+        getColors,
         getGoodiesColors,
         addGoodie,
         updateGoodie,

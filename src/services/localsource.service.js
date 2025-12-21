@@ -6,7 +6,7 @@ import {
     provider_requests,
     goodies,
     goodies_color,
-    goodies_size, tickets_price, basket, basket_items
+    goodies_size, tickets_price, basket, basket_items, color, size
 } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
@@ -283,12 +283,12 @@ async function getGoodiesByProviderId(id){
 }
 
 
-async function getGoodiesColors(){
-    return { error: 0, status: 200, data: goodies_color };
+async function getColors(){
+    return { error: 0, status: 200, data: color };
 }
 
-async function getGoodiesSizes(){
-    return { error: 0, status: 200, data: goodies_size };
+async function getSizes(){
+    return { error: 0, status: 200, data: size };
 }
 
 async function addGoodie(data){
@@ -389,7 +389,15 @@ async function getBasketItems(idbasket){
     return { error: 0, status: 200, data: items };
 }
 
+async function getGoodiesSizes(){
+    return { error: 0, status: 200, data: goodies_size };
 
+}
+
+async function getGoodiesColors(){
+    return { error: 0, status: 200, data: goodies_color };
+
+}
 
 export default {
     getUsers,
@@ -406,12 +414,14 @@ export default {
     registerProvider,
     deleteProviderRequests,
     getGoodiesByProviderId,
-    getGoodiesColors,
-    getGoodiesSizes,
+    getColors,
+    getSizes,
     addGoodie,
     updateGoodie,
     getGoodies,
     getTicketsPrice,
     getBasketByUserId,
-    getBasketItems
+    getBasketItems,
+    getGoodiesSizes,
+    getGoodiesColors
 }
