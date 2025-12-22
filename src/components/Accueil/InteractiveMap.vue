@@ -387,13 +387,23 @@
 <script setup>
 import panzoom from "panzoom";
 import {useStandsStore} from "@/stores/modules/stands.js";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 
 const standsStore = useStandsStore()
 
 onMounted(async () => {
   await standsStore.getStands();
+
+  if (svgMap.value) {
+    panzoom(svgMap.value, {
+      smoothScroll: false,
+      zoomSpeed: 0.065,
+      maxZoom: 3,
+      minZoom: 0.5,
+    });
+  }
 });
+const svgMap = ref(null);
 
 const getFontSize = (h, type) => {
   switch (type) {
