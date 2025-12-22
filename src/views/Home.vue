@@ -2,14 +2,16 @@
   <Hero/>
   <div class="bg-[var(--blanc)] flex flex-col items-center px-10 py-5">
 
-    <h2 class="justify-center text-center items-center text-justify left-0 tracking-wider max-w-200 mx-auto mt-10 mb-10 text-2xl">
-      {{ t('home.description1') }}<br>{{ t('home.description2') }}</h2>
-
     <div class="flex flex-row bg-[var(--gris)] justify-center w-fit py-3 px-2 gap-15 scale-125 m-5">
       <button class="bg-[var(--jaune)] px-2 py-1">{{ t('home.takeTicket') }}</button>
       <div class="relative w-80">
-        <select class="appearance-none shadow-lg w-full rounded px-5 py-1 text-[var(--grisf)] bg-[var(--blanc)]">
-          <option>{{ t('home.listTicket') }}</option>
+        <select v-model="selectedTicket"
+                @change="goToTicketPage"
+                class="appearance-none shadow-lg w-full rounded px-5 py-1 text-[var(--grisf)] bg-[var(--blanc)]">
+          <option value="">{{ t('home.listTicket') }}</option>
+          <option v-for="ticket in ticketsStore.ticketsPrice" :key="ticket.id">
+            {{ ticket.name }} - {{ ticket.price }}€
+          </option>
         </select>
         <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--grisf)] pointer-events-none"
              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -88,6 +90,7 @@
       </div>
     </div>
   </div>
+  <Footer/>
 </template>
 
 <script setup>
@@ -103,6 +106,7 @@ import {useFilmsStore} from "@/stores/modules/films.js";
 import {useUserStore} from "@/stores/index.js";
 import {useTicketsStore} from "@/stores/modules/tickets.js";
 import router from "@/router/index.js";
+import Footer from "@/components/Footer.vue";
 
 const {t, tm} = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))
@@ -115,11 +119,19 @@ const userStore = useUserStore()
 const ticketsStore = useTicketsStore()
 const activeTab = ref('news')
 
+const selectedTicket = ref('')
+const goToTicketPage = () => {
+  if (selectedTicket.value) {
+    router.push('/ticket')
+  }
+}
+
 
 onMounted(async () => {
   await filmsStore.getFilms();
   await userStore.getProviders();
   await ticketsStore.getTickets();
+  await ticketsStore.getTicketsPrice();
 });
 
 const getDirectorName = (director_id) => {
