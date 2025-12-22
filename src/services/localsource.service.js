@@ -148,7 +148,6 @@ async function registerUser(data){
     }
     users.push(r); // Ajouter l'utilisateur à la base
 
-    console.log("users",users)
 
 
     return { error: 0, status: 201, data: r };
@@ -200,7 +199,6 @@ async function addProviderRequest(data){
     }
     provider_requests.push(r);
 
-    console.log(provider_requests)
 
 
     return { error: 0, status: 201, data: r };
@@ -245,7 +243,6 @@ async function registerProvider(data){
     }
     users.push(r); // Ajouter l'utilisateur à la base
 
-    console.log("users",users)
 
     if (data.droit === "1"){
         const index = provider_requests.findIndex(obj => obj.id === data.id)
@@ -280,7 +277,7 @@ async function getGoodiesByProviderId(id){
     if (!id) {
         return { error: 1, status: 404, data: 'id manquant' };
     }
-    let g = goodies.filter(g => g.user_id === id)
+    let g = goodies.filter(g => g.iduser=== id)
     return { error: 0, status: 200, data: g };
 
 
@@ -299,12 +296,7 @@ async function addGoodie(data){
     if (!data.user_id) {
         return { error: 1, status: 404, data: 'user_id manquant' };
     }
-    if (!data.goodies_size_id) {
-        return { error: 1, status: 404, data: 'goodies_size_id manquant' };
-    }
-    if (!data.goodies_color_id) {
-        return { error: 1, status: 404, data: 'goodies_color_id manquant' };
-    }
+
     if (!data.name) {
         return { error: 1, status: 404, data: 'name manquant' };
     }
@@ -320,15 +312,13 @@ async function addGoodie(data){
 
     const g = {
         id: uuidv4(),
-        user_id: data.user_id,
-        service_id: "1",
-        goodies_size_id:data.goodies_size_id,
-        goodies_color_id:data.goodies_color_id,
+        iduser: data.user_id,
         name: data.name,
         price: data.price,
-        quantity: data.quantity,
-        date:new Date().toISOString()
+        quantity: data.quantity
     }
+
+    goodies.push(g)
     return { error: 0, status: 201, data: g };
 
 
@@ -337,7 +327,7 @@ async function addGoodie(data){
 
 async function updateGoodie(item, userid) {
     // Cherche l'index du goodie
-    const index = goodies.findIndex(g => g.id === item.id && g.user_id === userid)
+    const index = goodies.findIndex(g => g.id === item.id && g.iduser === userid)
 
     if (index !== -1) {
         // Supprime l'ancien
@@ -403,6 +393,62 @@ async function getGoodiesColors(){
 
 }
 
+async function addColor(c){
+    const nameExist = color.find(co => co.label === c.label)
+    if (nameExist){
+        return { error: 1, status: 400, data: "couleur deja existante" };
+    }
+    const newColor = {
+        id:uuidv4(),
+        ...c
+
+    }
+
+    // color.push(newColor)
+
+    return { error: 0, status: 201, data: newColor };
+}
+
+async function addSize(s){
+    const nameExist = size.find(si => si.label === s.label)
+    if (nameExist){
+        return { error: 1, status: 400, data: "taille deja existante" };
+    }
+    const newSize = {
+        id:uuidv4(),
+        ...s
+
+    }
+    // size.push(newSize)
+    return { error: 0, status: 201, data: newSize };
+}
+
+async function addGoodieColor(data){
+    goodies_color.push(data)
+    return { error: 0, status: 201, data: data };
+
+}
+async function addGoodieSize(data){
+    goodies_size.push(data)
+    return { error: 0, status: 201, data: data };
+
+}
+
+async function deleteAllColors(id){
+    const gc = goodies_color.filter(gc => gc.idgoodie !== id)
+    // goodies_color = gc
+    return { error: 0, status: 204, data: gc };
+}
+
+async function deleteAllSizes(id){
+
+    const gs = goodies_size.filter(gs => gs.idgoodie !== id)
+
+
+    return { error: 0, status: 204, data: gs };
+}
+
+
 export default {
     getUsers,
     login,
@@ -428,5 +474,9 @@ export default {
     getBasketItems,
     getGoodiesSizes,
     getGoodiesColors,
-    getStands
+    getStands,
+    addSize,addColor,
+    addGoodieColor, addGoodieSize,
+    deleteAllColors,
+    deleteAllSizes
 }

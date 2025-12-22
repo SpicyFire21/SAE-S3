@@ -26,6 +26,7 @@ export const useProviderStore = defineStore('provider', () => {
     const getSize = (id) => {
         return sizes.value.find(c => c.id === id).label
     }
+
     const getSizesByGoodieId = (idgoodie) => {
         const sizeIds = goodiesSizes.value
             .filter(gs => gs.idgoodie === idgoodie)
@@ -55,34 +56,33 @@ export const useProviderStore = defineStore('provider', () => {
         goodies.value = data
 
     }
-
-    const setGoodiesColors = (data) =>{
-        goodiesColors.value = data
+    const addGoodiesColors = (data) =>{
+        goodiesColors.value.push(data)
     }
-    const setGoodiesSizes = (data) =>{
-        goodiesSizes.value = data
+    const addGoodiesSizes = (data) =>{
+        goodiesSizes.value.push(data)
     }
-
     const updateColors = (data) =>{
         colors.value = data;
     }
-
     const updateSizes = (data) =>{
         sizes.value = data;
     }
-
     const updateGoodiesColors = (data) =>{
         goodiesColors.value = data;
     }
-
     const updateGoodiesSizes = (data) =>{
         goodiesSizes.value = data;
     }
-
     const addGoodies = (data) =>{
         goodies.value.push(data);
     }
-
+    const pushSize = (data) =>{
+        sizes.value.push(data);
+    }
+    const pushColor = (data) =>{
+        colors.value.push(data);
+    }
     const removeGoodie = (data) => {
         goodies.value = goodies.value.filter(obj => obj.id !== data.id)
     }
@@ -110,11 +110,9 @@ export const useProviderStore = defineStore('provider', () => {
             console.error(e)
         }
     }
-
     const getGoodiesByProviderId = async (id) => {
         try {
             const response = await providerService.getGoodiesByProviderId(id);
-
             if (response.error === 0){
                 updateGoodies(response.data)
             } else {
@@ -125,7 +123,6 @@ export const useProviderStore = defineStore('provider', () => {
             console.error(e)
         }
     }
-
     const getColors = async () => {
         try {
             const response = await providerService.getColors();
@@ -183,15 +180,65 @@ export const useProviderStore = defineStore('provider', () => {
         }
     }
 
+    const addColor = async (data) =>{
+        try {
+            const response = await providerService.addColor(data);
+            if (response.error === 0){
+                pushColor(response.data)
+            } else {
+                console.error(response.data)
+            }
 
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const addSize = async (data) =>{
+        try {
+            const response = await providerService.addSize(data);
+            if (response.error === 0){
+                pushSize(response.data)
+            } else {
+                console.error(response.data)
+            }
 
-    // a modifier !!!!!!!
+        } catch (e) {
+            console.error(e)
+        }
+    }
     const addGoodie = async(data) =>{
         try {
             const response = await providerService.addGoodie(data);
-
             if (response.error === 0){
                 addGoodies(response.data)
+                return response.data
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const addGoodieColor = async(data) =>{
+        try {
+            const response = await providerService.addGoodieColor(data);
+            if (response.error === 0){
+                addGoodiesColors(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const addGoodieSize = async(data) =>{
+        try {
+            const response = await providerService.addGoodieSize(data);
+            if (response.error === 0){
+                addGoodiesSizes(response.data)
+
             } else {
                 console.error(response.data)
             }
@@ -207,6 +254,33 @@ export const useProviderStore = defineStore('provider', () => {
 
             if (response.error === 0){
                 editGoodies(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const deleteAllColors = async(id) =>{
+        try {
+            const response = await providerService.deleteAllColors(id);
+            if (response.error === 0){
+                updateGoodiesColors(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const deleteAllSizes = async(id) =>{
+        try {
+            const response = await providerService.deleteAllSizes(id);
+            if (response.error === 0){
+                updateGoodiesSizes(response.data)
             } else {
                 console.error(response.data)
             }
@@ -248,7 +322,14 @@ export const useProviderStore = defineStore('provider', () => {
         getGoodiesColors,
         addGoodie,
         updateGoodie,
-        getGoodies
+        getGoodies,
+        addColor,
+        addSize,
+        addGoodieSize,
+        addGoodieColor,
+        deleteAllColors,
+        deleteAllSizes,
+
 
     }
 })

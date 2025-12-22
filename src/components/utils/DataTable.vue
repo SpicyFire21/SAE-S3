@@ -28,8 +28,14 @@
           :key="header + idx"
           class="border border-[var(--noir)] px-3 py-2"
       >
-        {{ item[header] }}
+        <slot
+            :name="header"
+            :item="item"
+        >
+          {{ item[header] }}
+        </slot>
       </td>
+
 
       <!-- Colonne actions -->
       <td class="border border-[var(--noir)] px-3 py-2">

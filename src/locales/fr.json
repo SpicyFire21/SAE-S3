@@ -95,7 +95,9 @@
     "4": {
       "1": "Goodies",
       "2": "Statistiques",
-      "3": "Dédicace"
+      "3": "Dédicace",
+      "4": "Nourriture",
+      "5": "Reservations"
     }
   },
   "GoodiesBoard": {

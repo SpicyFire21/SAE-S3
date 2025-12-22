@@ -223,10 +223,10 @@ let users = [
 ]
 
 let goodies = [
-    {id: "1", name: "T-shirt", price: "20"},
-    {id: "2", name: "Tasse", price: "15"},
-    {id: "3", name: "Casquette", price: "12"},
-    {id: "4", name: "Sweat", price: "35"},
+    {id: "1",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"37", name: "T-shirt", price: "20"},
+    {id: "2",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"40", name: "Tasse", price: "15"},
+    {id: "3",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"12", name: "Casquette", price: "12"},
+    {id: "4",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"66", name: "Sweat", price: "35"},
 ];
 
 

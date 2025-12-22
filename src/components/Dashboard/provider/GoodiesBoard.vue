@@ -5,82 +5,126 @@
     <!-- Activer/désactiver la vente -->
     <div class="mb-6 flex items-center gap-4">
       <label class="font-semibold">{{ t("GoodiesBoard.11") }}</label>
-      <input type="checkbox" v-model="sellingActive" @change="toggleSelling" />
+      <input type="checkbox" v-model="sellingActive" @change="toggleSelling"/>
     </div>
 
     <!-- Formulaire création -->
-    <div class="mb-6 border p-4 rounded bg-white shadow" :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
-      <h2 class="text-xl font-semibold mb-2">{{ t("GoodiesBoard.8") }}</h2>
-      <div class="flex flex-col md:flex-row gap-4 items-start">
+    <div class="flex">
+      <div class="mb-6 border p-4 rounded bg-white shadow"
+           :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
+        <h2 class="text-xl font-semibold mb-2">{{ t("GoodiesBoard.8") }}</h2>
+        <div class="flex flex-col md:flex-row gap-4 items-start">
+
+          <label for="name">{{ t("GoodiesBoard.7") }}</label><input
+            id="name"
+            v-model="newGoodieBase.name"
+            type="text"
+            placeholder="Nom du goodie"
+            class="border p-2 rounded flex-1"
+        />
+          <label for="price">{{ t("GoodiesBoard.6") }}</label><input
+            id="price"
+            v-model.number="newGoodieBase.price"
+            type="number"
+            placeholder="Prix"
+            class="border p-2 rounded w-32"
+        />
+          <label for="quantity">{{ t("GoodiesBoard.5") }}</label><input
+            id="quantity"
+            v-model.number="newGoodieBase.quantity"
+            type="number"
+            placeholder="Quantité"
+            class="border p-2 rounded w-32"
+        />
+
+
+          <button
+              @click="addGoodieVariants()"
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            {{ t("GoodiesBoard.4") }}
+          </button>
+
+
+        </div>
+        <div class="flex-col">
+          <label class="font-semibold">{{ t("GoodiesBoard.10") }}</label>
+          <div class="flex  gap-2">
+            <label v-for="s in providerStore.sizes" :key="s.id" class="flex items-center gap-1">
+              <input
+                  type="checkbox"
+                  :value="s.id"
+                  v-model="selectedSizes"
+              />
+              {{ s.label }}
+            </label>
+          </div>
+          <label class="font-semibold">{{ t("GoodiesBoard.3") }}</label>
+          <div class="flex gap-2">
+            <label v-for="c in providerStore.colors" :key="c.id" class="flex items-center gap-1">
+
+              <input
+                  type="checkbox"
+                  :value="c.id"
+                  v-model="selectedColors"
+              />
+              {{ c.label }}
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="mb-6 border p-4 rounded bg-white shadow"
+           :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
+        <h2 class="text-xl font-semibold mb-2">ajouter une couleur</h2>
 
         <label for="name">{{ t("GoodiesBoard.7") }}</label><input
           id="name"
-          v-model="newGoodieBase.name"
+          v-model="newColor.label"
           type="text"
           placeholder="Nom du goodie"
           class="border p-2 rounded flex-1"
       />
-        <label for="price">{{ t("GoodiesBoard.6") }}</label><input
-          id="price"
-          v-model.number="newGoodieBase.price"
-          type="number"
-          placeholder="Prix"
-          class="border p-2 rounded w-32"
-      />
-        <label for="quantity">{{ t("GoodiesBoard.5") }}</label><input
-          id="quantity"
-          v-model.number="newGoodieBase.quantity"
-          type="number"
-          placeholder="Quantité"
-          class="border p-2 rounded w-32"
-      />
-
-
-
 
         <button
-            @click="addGoodieVariants()"
+            @click="addColor()"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          {{ t("GoodiesBoard.4") }}
+        </button>
+
+      </div>
+
+      <div class="mb-6 border p-4 rounded bg-white shadow"
+           :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
+        <h2 class="text-xl font-semibold mb-2">ajouter une taille</h2>
+
+        <label for="name">{{ t("GoodiesBoard.7") }}</label><input
+          id="name"
+          v-model="newSize.label"
+          type="text"
+          placeholder="Nom du goodie"
+          class="border p-2 rounded flex-1"
+      />
+
+        <button
+            @click="addSize()"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           {{ t("GoodiesBoard.4") }}
         </button>
 
 
-
-
       </div>
-      <div class="flex-col">
-        <label class="font-semibold">{{ t("GoodiesBoard.10") }}</label>
-        <div class="flex  gap-2">
-          <label v-for="s in providerStore.goodiesSizes" :key="s.id" class="flex items-center gap-1">
-            <input
-                type="checkbox"
-                :value="s.id"
-                v-model="selectedSizes"
-            />
-            {{ s.label }}
-          </label>
-        </div>
-        <label class="font-semibold">{{ t("GoodiesBoard.3") }}</label>
-        <div class="flex gap-2">
-          <label v-for="c in providerStore.goodiesColors" :key="c.id" class="flex items-center gap-1">
-            <input
-                type="checkbox"
-                :value="c.id"
-                v-model="selectedColors"
-            />
-            {{ c.label }}
-          </label>
-        </div>
-      </div>
-
-
-
     </div>
+
 
     <div v-if="editingGoodie" class="mb-6 border p-4 rounded bg-gray-50 shadow">
       <h2 class="text-xl font-semibold mb-2">Modifier le Goodie</h2>
-      <div class="flex flex-col md:flex-row gap-4 items-start">
+
+      <div class="flex flex-col md:flex-row gap-4 items-start mb-4">
         <input
             v-model="editingGoodie.name"
             type="text"
@@ -113,28 +157,49 @@
         </button>
       </div>
 
-      <div class="mt-2">
-        <label class="font-semibold">Tailles :</label>
-        <div class="flex gap-2">
-          <label v-for="s in providerStore.goodiesSizes" :key="s.id" class="flex items-center gap-1">
-            <input type="radio" :value="s.id" v-model="editingGoodie.goodies_size_id" /> {{ s.label }}
-          </label>
+      <div class="flex flex-col md:flex-row gap-6">
+        <div>
+          <label class="font-semibold">Tailles :</label>
+          <div class="flex gap-2 flex-wrap">
+            <label v-for="s in providerStore.sizes" :key="s.id" class="flex items-center gap-1">
+              <input
+                  type="checkbox"
+                  :value="s.id"
+                  v-model="editingSizes"
+              />
+              {{ s.label }}
+            </label>
+          </div>
         </div>
 
-        <label class="font-semibold mt-2">Couleurs :</label>
-        <div class="flex gap-2">
-          <label v-for="c in providerStore.goodiesColors" :key="c.id" class="flex items-center gap-1">
-            <input type="radio" :value="c.id" v-model="editingGoodie.goodies_color_id" /> {{ c.label }}
-          </label>
+        <div>
+          <label class="font-semibold">Couleurs :</label>
+          <div class="flex gap-2 flex-wrap">
+            <label v-for="c in providerStore.colors" :key="c.id" class="flex items-center gap-1">
+              <input
+                  type="checkbox"
+                  :value="c.id"
+                  v-model="editingColors"
+              />
+              {{ c.label }}
+            </label>
+          </div>
         </div>
       </div>
     </div>
 
 
+
     <!-- Table des goodies -->
     <div class="overflow-x-auto bg-white rounded shadow">
       <DataTable :headers="headers" :items="displayGoodies">
+        <template #sizes="{ item }">
+          {{ item.sizes.map(s => s.label).join(", ") }}
+        </template>
 
+        <template #colors="{ item }">
+          {{ item.colors.map(c => c.label).join(", ") }}
+        </template>
         <template #actions="{ item }">
           <button
               class="px-2 py-1 bg-[var(--vert)] text-[var(--noir)] rounded "
@@ -157,65 +222,106 @@
       La vente de goodies est désactivée.
     </p>
 
-    <!-- Formulaire édition -->
+    <div class="flex gap-5 mt-5 mx-25">
+
+      <DataTable :headers="['id','label']" :items="providerStore.colors"/>
+      <DataTable :headers="['id','label']" :items="providerStore.sizes"/>
+    </div>
+
+
 
   </div>
 </template>
 
 <script setup>
 import {computed, onMounted, ref} from 'vue'
-import { v4 as uuidv4 } from 'uuid'
 import {useProviderStore, useUserStore} from "@/stores/index.js";
 import DataTable from "@/components/utils/DataTable.vue";
 import {useI18n} from "vue-i18n";
 
-const { t } = useI18n()
+const {t} = useI18n()
 const providerStore = useProviderStore()
 const userStore = useUserStore()
 
 const sellingActive = ref(true)
-
-const headers = [
-  "id","name", "price","quantity","size","color", "date"
-]
-
 const selectedSizes = ref([])
 const selectedColors = ref([])
-
 const newGoodieBase = ref({
   user_id: userStore.currentUser.id,
-  service_id: "1",
   name: "",
   price: 0,
   quantity: 0,
-  date: new Date().toISOString().split("T")[0]
 })
+const editingGoodie = ref(null)
+const editingSizes = ref([])
+const editingColors = ref([])
+const newColor = ref({
+  label: ""
+})
+const newSize = ref({
+  label: ""
+})
+
+const headers = [
+  "id", "name", "price", "quantity", "sizes", "colors"
+]
+
+
 
 const displayGoodies = computed(() => {
-  return providerStore.goodies.map(g => ({
-    ...g,
-    size: providerStore.getSize(g.goodies_size_id)?.label || "—",
-    color: providerStore.getColor(g.goodies_color_id)?.label || "—"
-  }))
+  return providerStore.goodies.map(goodie => {
+    const sizeIds = providerStore.goodiesSizes
+        .filter(gs => gs.idgoodie === goodie.id)
+        .map(gs => gs.idsize)
+
+    const colorIds = providerStore.goodiesColors
+        .filter(gc => gc.idgoodie === goodie.id)
+        .map(gc => gc.idcolor)
+
+    return {
+      ...goodie,
+      sizes: providerStore.sizes.filter(s => sizeIds.includes(s.id)),
+      colors: providerStore.colors.filter(c => colorIds.includes(c.id)),
+    }
+  })
 })
 
-function addGoodieVariants() {
+async function addColor() {
+  await providerStore.addColor(newColor.value)
+  console.log(providerStore.colors)
+}
+
+async function addSize() {
+  await providerStore.addSize(newSize.value)
+
+
+}
+
+async function addGoodieVariants() {
   if (!sellingActive.value) return
+
   if (!newGoodieBase.value.name || newGoodieBase.value.price <= 0) return
+
   if (selectedSizes.value.length === 0) return
   if (selectedColors.value.length === 0) return
+
+  const newGoodie = await providerStore.addGoodie(newGoodieBase.value)
+  console.log(newGoodie)
+
   selectedSizes.value.forEach(sizeId => {
-    selectedColors.value.forEach(colorId => {
-      let data = {
-        id: uuidv4(),
-        ...newGoodieBase.value,
-        goodies_size_id: sizeId,
-        goodies_color_id: colorId
-      }
-      providerStore.addGoodie(data)
-
-
+    providerStore.addGoodieSize({
+      idgoodie:newGoodie.id,
+      idsize:sizeId
     })
+  })
+  selectedColors.value.forEach(colorId => {
+    providerStore.addGoodieColor({
+      idgoodie:newGoodie.id,
+      idcolor:colorId
+    })
+
+
+
   })
 
   selectedSizes.value = []
@@ -226,44 +332,74 @@ function addGoodieVariants() {
 }
 
 
-function removeGoodie(item) {
+async function removeGoodie(item) {
   if (!sellingActive.value) return
   providerStore.removeGoodie(item)
 }
 
-function toggleSelling() {
-  // ici tu peux appeler l'API pour sauvegarder l'état global
+async function toggleSelling() {
   console.log('Vente active:', sellingActive.value)
 }
 
 
-onMounted(async()=>{
-  await providerStore.getGoodiesByProviderId(userStore.currentUser.id)
 
+
+
+async function cancelEdit() {
+  editingGoodie.value = null
+}
+
+async function editGoodie(item) {
+  editingGoodie.value = { ...item }
+
+  // récupérer les tailles et couleurs existantes du goodie
+  editingSizes.value = providerStore.getSizesByGoodieId(item.id).map(s => s.id)
+  editingColors.value = providerStore.getColorsByGoodieId(item.id).map(c => c.id)
+}
+
+async function saveEdit() {
+  if (!editingGoodie.value) return
+  console.log(editingGoodie.value.id)
+  await providerStore.updateGoodie(editingGoodie.value, userStore.currentUser.id)
+
+
+  await providerStore.deleteAllColors(editingGoodie.value.id)
+  for (const color of editingColors.value) {
+
+    let data = {
+      idgoodie: editingGoodie.value.id,
+      idcolor: color
+    }
+    await providerStore.addGoodieColor(data)
+
+  }
+
+
+  await providerStore.deleteAllSizes(editingGoodie.value.id)
+  for (const size of editingColors.value) {
+
+    let data = {
+      idgoodie: editingGoodie.value.id,
+      idsize: size
+    }
+    await providerStore.addGoodieSize(data)
+
+  }
+
+
+
+  editingGoodie.value = null
+  editingSizes.value = []
+  editingColors.value = []
+}
+
+onMounted(async () => {
+  await providerStore.getGoodiesByProviderId(userStore.currentUser.id)
+  await providerStore.getSizes()
+  await providerStore.getColors()
   await providerStore.getGoodiesSizes()
   await providerStore.getGoodiesColors()
 
 
 })
-
-
-
-
-const editingGoodie = ref(null)
-
-function editGoodie(item) {
-  // créer une copie pour ne pas modifier l'objet directement avant validation
-  editingGoodie.value = { ...item }
-}
-
-function saveEdit() {
-  if (editingGoodie.value) {
-    providerStore.updateGoodie(editingGoodie.value,userStore.currentUser.id)
-    editingGoodie.value = null
-  }
-}
-
-function cancelEdit() {
-  editingGoodie.value = null
-}
 </script>
