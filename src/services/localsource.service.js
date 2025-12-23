@@ -6,7 +6,7 @@ import {
     provider_requests,
     goodies,
     goodies_color,
-    goodies_size, tickets_price, basket, basket_items, color, size, stands
+    goodies_size, tickets_price, basket, basket_items, color, size, stands, standTypes, reservations
 } from '@/datasource/data.js'
 import {v4 as uuidv4} from 'uuid'
 
@@ -18,6 +18,14 @@ async function getUsers() {
 
 async function getStands() {
     return {error:0, status:200, data:stands}
+}
+
+async function getStandsTypes() {
+    return {error:0, status:200, data:standTypes}
+}
+
+async function getReservations() {
+    return {error:0, status:200, data:reservations}
 }
 
 async function getTickets() {
@@ -478,5 +486,5 @@ export default {
     addSize,addColor,
     addGoodieColor, addGoodieSize,
     deleteAllColors,
-    deleteAllSizes
+    deleteAllSizes,getStandsTypes, getReservations
 }

@@ -11,6 +11,7 @@ import goodies from "@/views/GoodiesSell.vue"
 
 import providerRoutes from "@/router/provider.router.js"
 import adminRoutes from "@/router/admin.router.js";
+import StandDetails from "@/views/StandDetails.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,12 @@ const router = createRouter({
             path: '/film/:id',
             name: 'FilmDetails',
             component: FilmDetails,
+            props: true
+        },
+        {
+            path: '/stand/:id',
+            name: 'StandDetails',
+            component: StandDetails,
             props: true
         },
         {

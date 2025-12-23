@@ -78,6 +78,19 @@ let users = [
         "description": "Génie des films à intrigue complexe et effets visuels innovants"
     },
     {
+        "id": "f68ab44a-557b-4d44-b1df-a34f891c2dza",
+        "name": "Johan Lançon",
+        "login": "goat",
+        "password": "goat",
+        "email": "goat@gmail.com",
+        "droit": "1",
+        "session": "",
+        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "type": "Réalisateur",
+        "nom_photo": "null.jpg",
+        "description": "L'honoré en personne"
+    },
+    {
         "id": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
         "name": "Leonardo DiCaprio",
         "login": "cityxl",
@@ -332,48 +345,57 @@ let tickets_price = [
 ]
 
 let stands = [
-    {name: "cinema 1", x: 25, y: 32, width: 481, height: 620, type: 'cinema', reservedBy: null},
-    {name: "cinema 2", x: 25, y: 670, width: 481, height: 620, type: 'cinema', reservedBy: null},
-    {name: "cinema 3", x: 25, y: 1303, width: 481, height: 620, type: 'cinema', reservedBy: null},
+    {"idstand": "1", "name": "cinema 1", "x": 25, "y": 32, "width": 481, "height": 620, "type": "1", "owner": "f68ab44a-557b-4d44-b1df-a34f891c2dza"},
+    {"idstand": "2", "name": "cinema 2", "x": 25, "y": 670, "width": 481, "height": 620, "type": "1", "owner": null},
+    {"idstand": "3", "name": "cinema 3", "x": 25, "y": 1303, "width": 481, "height": 620, "type": "1", "owner": null},
 
-    {name: "stand-big-1", x: 886, y: 348, width: 65, height: 164, type: 'standXL', reservedBy: null},
-    {name: "stand-big-2", x: 781, y: 348, width: 65, height: 164, type: 'standXL', reservedBy: null},
-    {name: "stand-big-3", x: 886, y: 1002, width: 65, height: 164, type: 'standXL', reservedBy: null},
-    {name: "stand-big-4", x: 781, y: 1002, width: 65, height: 164, type: 'standXL', reservedBy: null},
-    {name: "stand-big-5", x: 1892, y: 1230, width: 65, height: 164, type: 'standXL', reservedBy: null},
-    {name: "stand-big-6", x: 1892, y: 1427, width: 65, height: 164, type: 'standXL', reservedBy: null},
+    {"idstand": "4", "name": "adamdedicace1", "x": 886, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "9", "name": "adamdedicace6", "x": 1892, "y": 1427, "width": 65, "height": 164, "type": "2", "owner": null},
 
-    // colonne central
-    {name: "stand-1", x: 781, y: 202, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-2", x: 886, y: 202, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-3", x: 781, y: 563, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-4", x: 886, y: 563, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-10", x: 781, y: 860, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-11", x: 886, y: 860, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-17", x: 787, y: 1220, width: 65, height: 92, type: 'stand', reservedBy: null},
-    {name: "stand-18", x: 893, y: 1221, width: 65, height: 92, type: 'stand', reservedBy: null},
+    // {"idstand": "10", "name": "stand-1", "x": 781, "y": 202, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "11", "name": "stand-2", "x": 886, "y": 202, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "12", "name": "stand-3", "x": 781, "y": 563, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "13", "name": "stand-4", "x": 886, "y": 563, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "14", "name": "stand-10", "x": 781, "y": 860, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "15", "name": "stand-11", "x": 886, "y": 860, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "16", "name": "stand-17", "x": 787, "y": 1220, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "17", "name": "stand-18", "x": 893, "y": 1221, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
+    //
+    // {"idstand": "18", "name": "stand-5", "x": 1729, "y": 842, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "19", "name": "stand-6", "x": 1595, "y": 842, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "20", "name": "stand-7", "x": 1860, "y": 842, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "21", "name": "stand-8", "x": 1458, "y": 842, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "22", "name": "stand-9", "x": 1311, "y": 842, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    //
+    // {"idstand": "23", "name": "stand-12", "x": 1720, "y": 1038, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "24", "name": "stand-13", "x": 1586, "y": 1038, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "25", "name": "stand-14", "x": 1851, "y": 1038, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "26", "name": "stand-15", "x": 1449, "y": 1038, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "27", "name": "stand-16", "x": 1302, "y": 1038, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    //
+    // {"idstand": "28", "name": "stand-19", "x": 1724, "y": 1784, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "29", "name": "stand-20", "x": 1591, "y": 1784, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "30", "name": "stand-21", "x": 1855, "y": 1784, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "31", "name": "stand-22", "x": 1453, "y": 1784, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+    // {"idstand": "32", "name": "stand-23", "x": 1306, "y": 1784, "width": 92, "height": 65, "type": "stand", "owner": null, "reservedBy": []},
+];
 
-    // haut
-    {name: "stand-5", x: 1729, y: 842, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-6", x: 1595, y: 842, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-7", x: 1860, y: 842, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-8", x: 1458, y: 842, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-9", x: 1311, y: 842, width: 92, height: 65, type: 'stand', reservedBy: null},
+let standTypes = [
+    { "id": "1", "type": "cinema", "action": "reserveMovie", "contentType": "movies" },
+    { "id": "2", "type": "autograph", "action": "takeAutograph", "contentType": "guests" },
+];
 
-    // median
-    {name: "stand-12", x: 1720, y: 1038, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-13", x: 1586, y: 1038, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-14", x: 1851, y: 1038, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-15", x: 1449, y: 1038, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-16", x: 1302, y: 1038, width: 92, height: 65, type: 'stand', reservedBy: null},
+let reservations = [
+    { id: "1", userId: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414", standId: "1", contentId: "6f207e95-5400-471f-a933-d01d817b0608", date: "2025-12-23T14:00:00" },
+    { id: "2", userId: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa", standId: "2", contentId: "6f207e95-5400-471f-a933-d01d817b0608", date: "2025-12-23T15:00:00" }
+];
 
-    // bas
-    {name: "stand-19", x: 1724, y: 1784, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-20", x: 1591, y: 1784, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-21", x: 1855, y: 1784, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-22", x: 1453, y: 1784, width: 92, height: 65, type: 'stand', reservedBy: null},
-    {name: "stand-23", x: 1306, y: 1784, width: 92, height: 65, type: 'stand', reservedBy: null},
-]
+
+
 
 let comments_golden_book = [
     {
@@ -407,7 +429,8 @@ let films = [
         "release_date": "2023-10-20",
         "poster": "killers_moon.jpg",
         "description": "Une sombre histoire de meurtres dans la nation Osage dans les années 1920",
-        "duration": 206
+        "duration": 206,
+        "standId": ["1", "2"]
     },
     {
         "id": "b58b41e4-7f5d-452b-af72-9301dafa7896",
@@ -418,7 +441,8 @@ let films = [
         "release_date": "1994-10-14",
         "poster": "pulp_fiction.jpg",
         "description": "Histoires entrelacées de gangsters à Los Angeles",
-        "duration": 154
+        "duration": 154,
+        "standId": []
     },
     {
         "id": "6cec5c18-d60b-4372-916a-482bb4facaa0",
@@ -429,7 +453,8 @@ let films = [
         "release_date": "2023-07-21",
         "poster": "oppenheimer.jpg",
         "description": "L'histoire du père de la bombe atomique",
-        "duration": 180
+        "duration": 180,
+        "standId": []
     },
     {
         "id": "9b4ced38-53ef-4a87-89f3-a791ce326093",
@@ -440,7 +465,8 @@ let films = [
         "release_date": "2010-07-16",
         "poster": "inception.jpg",
         "description": "Un voleur qui s'infiltre dans les rêves",
-        "duration": 148
+        "duration": 148,
+        "standId": []
     },
     {
         "id": "e0f3b1c2-16b9-4504-8593-872d92b6f892",
@@ -451,7 +477,8 @@ let films = [
         "release_date": "2021-09-15",
         "poster": "dune.jpg",
         "description": "L'épopée de Paul Atréides sur la planète désertique Arrakis",
-        "duration": 155
+        "duration": 155,
+        "standId": []
     },
     {
         "id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913",
@@ -462,7 +489,8 @@ let films = [
         "release_date": "2021-11-17",
         "poster": "power_dog.jpg",
         "description": "Un rancher cruel dont la vie bascule avec l'arrivée de sa belle-soeur",
-        "duration": 126
+        "duration": 126,
+        "standId": []
     },
     {
         "id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44",
@@ -473,7 +501,8 @@ let films = [
         "release_date": "1982-06-11",
         "poster": "et.jpg",
         "description": "Un enfant aide un extraterrestre à rentrer chez lui",
-        "duration": 115
+        "duration": 115,
+        "standId": []
     },
     {
         "id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77",
@@ -484,7 +513,8 @@ let films = [
         "release_date": "2007-02-14",
         "poster": "lavieenrose.jpg",
         "description": "La vie tumultueuse d'Édith Piaf",
-        "duration": 140
+        "duration": 140,
+        "standId": []
     },
     {
         "id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22",
@@ -495,7 +525,8 @@ let films = [
         "release_date": "1972-03-24",
         "poster": "godfather.jpg",
         "description": "L'histoire de la famille mafieuse Corleone",
-        "duration": 175
+        "duration": 175,
+        "standId": []
     },
     {
         "id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f",
@@ -506,7 +537,8 @@ let films = [
         "release_date": "2023-07-21",
         "poster": "barbie.jpg",
         "description": "Barbie quitte Barbie Land pour le monde réel",
-        "duration": 114
+        "duration": 114,
+        "standId": []
     },
     {
         "id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c",
@@ -517,7 +549,8 @@ let films = [
         "release_date": "2019-10-04",
         "poster": "joker.jpg",
         "description": "La transformation d'Arthur Fleck en célèbre vilain",
-        "duration": 122
+        "duration": 122,
+        "standId": []
     },
     {
         "id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e",
@@ -528,7 +561,8 @@ let films = [
         "release_date": "1994-07-06",
         "poster": "forrestgump.jpg",
         "description": "L'histoire extraordinaire d'un homme simple au grand coeur",
-        "duration": 142
+        "duration": 142,
+        "standId": []
     },
     {
         "id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
@@ -539,7 +573,8 @@ let films = [
         "release_date": "2008-07-18",
         "poster": "darkknight.jpg",
         "description": "Batman affronte le chaos du Joker à Gotham City",
-        "duration": 152
+        "duration": 152,
+        "standId": []
     },
     {
         "id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a",
@@ -550,7 +585,8 @@ let films = [
         "release_date": "1997-12-19",
         "poster": "titanic.jpg",
         "description": "Histoire d'amour à bord du paquebot maudit",
-        "duration": 195
+        "duration": 195,
+        "standId": []
     },
     {
         "id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b",
@@ -561,7 +597,8 @@ let films = [
         "release_date": "1991-02-14",
         "poster": "silence_lambs.jpg",
         "description": "Une jeune agent du FBI consulte un tueur en série emprisonné",
-        "duration": 118
+        "duration": 118,
+        "standId": []
     },
     {
         "id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c",
@@ -572,7 +609,8 @@ let films = [
         "release_date": "1994-10-14",
         "poster": "shawshank.jpg",
         "description": "L'histoire de l'amitié entre deux prisonniers",
-        "duration": 142
+        "duration": 142,
+        "standId": []
     },
     {
         "id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d",
@@ -583,7 +621,8 @@ let films = [
         "release_date": "2003-12-17",
         "poster": "lotr_return.jpg",
         "description": "La conclusion de l'épopée de la Terre du Milieu",
-        "duration": 201
+        "duration": 201,
+        "standId": []
     }
 ];
 
@@ -808,6 +847,8 @@ export {
     provider_services_state,
     provider_services_categories,
     provider_services_associations,
-    provider_services
+    provider_services,
+    standTypes,
+    reservations
 
 }
