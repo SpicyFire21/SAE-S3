@@ -1,7 +1,7 @@
-import LocalSource from "@/services/localsource.service.js";
+import ticketController from "@/datasource/controller/tickets.controller.js"
 
 async function getFilmTicketsFromLocalSource(){
-    return LocalSource.getFilmTickets();
+    return ticketController.getFilmTickets();
 }
 
 export async function getFilmTickets(){
@@ -15,7 +15,7 @@ export async function getFilmTickets(){
 }
 
 async function createTicketFromLocalSource(data){
-    return LocalSource.createTicket(data);
+    return ticketController.createTicket(data);
 }
 
 export async function createTicket(data){
@@ -30,7 +30,7 @@ export async function createTicket(data){
 
 
 async function getBilletsByUserIdFromLocalSource(id){
-    return LocalSource.getBilletsByUserId(id);
+    return ticketController.getBilletsByUserId(id);
 }
 
 export async function getBilletsByUserId(id){
@@ -44,7 +44,7 @@ export async function getBilletsByUserId(id){
 }
 
 async function getTicketsPriceFromLocalSource(){
-    return LocalSource.getTicketsPrice();
+    return ticketController.getTicketsPrice();
 }
 
 export async function getTicketsPrice(){

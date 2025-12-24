@@ -1,27 +1,27 @@
-import LocalSource from "@/services/localsource.service.js";
+import reservationController from "@/datasource/controller/reservations.controller.js"
 
 async function getReservationsFromLocalSource(){
-    return LocalSource.getReservations();
+    return reservationController.getReservations();
 }
 
 async function getFilmsReservationsFromLocalSource(){
-    return LocalSource.getFilmsReservations();
+    return reservationController.getFilmsReservations();
 }
 
 async function getAutographsReservationsFromLocalSource(){
-    return LocalSource.getAutographReservations();
+    return reservationController.getAutographReservations();
 }
 
 async function addFilmReservationFromLocalSource(data) {
-    return LocalSource.addFilmReservation(data);
+    return reservationController.addFilmReservation(data);
 }
 
 async function getReservationByIdUserFromLocalSource(id) {
-    return LocalSource.getReservationByIdUser(id)
+    return reservationController.getReservationByIdUser(id)
 }
 
 async function getFilmFromReservationFromLocalSource(reservation) {
-    return LocalSource.getFilmFromReservation(reservation)
+    return reservationController.getFilmFromReservation(reservation)
 }
 
 export async function getFilmFromReservation(reservation){

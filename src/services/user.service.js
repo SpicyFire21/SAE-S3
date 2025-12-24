@@ -1,7 +1,7 @@
-import LocalSource from "@/services/localsource.service.js";
+import userController from "@/datasource/controller/user.controller.js"
 
 async function getUserFromLocalSource(){
-    return LocalSource.getUsers();
+    return userController.getUsers();
 }
 
 export async function getUsers(){
@@ -15,7 +15,7 @@ export async function getUsers(){
 }
 
 async function getProvidersFromLocalSource() {
-    return LocalSource.getProviders();
+    return userController.getProviders();
 }
 
 export async function getProviders() {
@@ -29,7 +29,7 @@ export async function getProviders() {
 }
 
 async function loginFromLocalSource(data){
-    return LocalSource.login(data);
+    return userController.login(data);
 }
 
 async function login(data){
@@ -37,13 +37,14 @@ async function login(data){
     try {
         response = await loginFromLocalSource(data);
     } catch (err){
+        console.log(err)
         response = {error:1, status:404,data:'erreur réseau, impossible de se connecter'}
     }
     return response;
 }
 
 async function registerUserFromLocalSource(data){
-    return LocalSource.registerUser(data);
+    return userController.registerUser(data);
 }
 
 async function registerUser(data){
@@ -57,7 +58,7 @@ async function registerUser(data){
 }
 
 async function registerProviderFromLocalSource(data){
-    return LocalSource.registerProvider(data);
+    return userController.registerProvider(data);
 }
 
 async function registerProvider(data){

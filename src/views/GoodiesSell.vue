@@ -20,7 +20,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         <article
-            v-for="(goodie, index) in providerStore.goodiesWithOptions"
+            v-for="(goodie, index) in goodiesStore.goodiesWithOptions"
             :key="index"
             class="group bg-white border border-neutral-200 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all"
         >
@@ -118,20 +118,20 @@
         >
           <div class="flex justify-between">
             <span>
-              {{ providerStore.getName(item.idgoodie) }}
+              {{ goodiesStore.getName(item.idgoodie) }}
             </span>
             <span>
-              {{ item.count }} × {{ providerStore.getPrice(item.idgoodie) }} €
+              {{ item.count }} × {{ goodiesStore.getPrice(item.idgoodie) }} €
             </span>
           </div>
 
           <div class="flex justify-between text-sm text-neutral-500">
-            <span>Couleur : {{ providerStore.getColor(item.idcolor) }}</span>
-            <span>Taille : {{ providerStore.getSize(item.idsize) }}</span>
+            <span>Couleur : {{ goodiesStore.getColor(item.idcolor) }}</span>
+            <span>Taille : {{ goodiesStore.getSize(item.idsize) }}</span>
           </div>
 
           <div class="flex justify-end text-yellow-500">
-            Total : {{ (providerStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
+            Total : {{ (goodiesStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
           </div>
         </li>
       </ul>
@@ -154,14 +154,13 @@
 
 
 <script setup>
-import {useGoodiesStore, useProviderStore, useUserStore} from "@/stores/index.js"
+import {useGoodiesStore, useUserStore} from "@/stores/index.js"
 import { ref, computed, onMounted } from "vue"
 
 const quantities = ref({})
 const selectedColors = ref({})
 const selectedSizes = ref({})
 
-const providerStore = useProviderStore()
 const userStore = useUserStore()
 const goodiesStore = useGoodiesStore();
 
@@ -188,7 +187,7 @@ async function addBasket(goodie, count) {
 
 const total = computed(() => {
   return goodiesStore.basketItems.reduce((sum, item) => {
-    return sum + (providerStore.getPrice(item.idgoodie) || 0) * Number(item.count)
+    return sum + (goodiesStore.getPrice(item.idgoodie) || 0) * Number(item.count)
   }, 0)
 })
 
@@ -211,20 +210,20 @@ const groupedBasketItems = computed(() => {
 })
 
 onMounted(async () => {
-  await providerStore.getGoodies()
-  await providerStore.getSizes()
-  await providerStore.getColors()
-  await providerStore.getGoodiesSizes()
-  await providerStore.getGoodiesColors()
+  await goodiesStore.getGoodies()
+  await goodiesStore.getSizes()
+  await goodiesStore.getColors()
+  await goodiesStore.getGoodiesSizes()
+  await goodiesStore.getGoodiesColors()
 
   if (userStore.currentUser){
     await goodiesStore.getBasketByUserId(userStore.currentUser.id)
     await goodiesStore.getBasketItems(goodiesStore.basket.id)
   }
 
-  providerStore.goodiesWithOptions.forEach(goodie => {
-    const firstColorRelation = providerStore.goodiesColors.find(gc => gc.idgoodie === goodie.id)
-    const firstSizeRelation = providerStore.goodiesSizes.find(gs => gs.idgoodie === goodie.id)
+  goodiesStore.goodiesWithOptions.forEach(goodie => {
+    const firstColorRelation = goodiesStore.goodiesColors.find(gc => gc.idgoodie === goodie.id)
+    const firstSizeRelation = goodiesStore.goodiesSizes.find(gs => gs.idgoodie === goodie.id)
     selectedColors.value[goodie.id] = firstColorRelation?.idcolor ?? null
     selectedSizes.value[goodie.id] = firstSizeRelation?.idsize ?? null
     quantities.value[goodie.id] = 1

@@ -1,9 +1,8 @@
-import LocalSource from "@/services/localsource.service.js";
+import adminController from "@/datasource/controller/admin.controller.js"
 
 async function getProvidersRequestsFromLocalSource(){
-    return LocalSource.getProvidersRequests();
+    return adminController.getProvidersRequests();
 }
-
 export async function getProvidersRequests(){
     let response = null;
     try {
@@ -15,9 +14,8 @@ export async function getProvidersRequests(){
 }
 
 async function addProviderRequestFromLocalSource(data){
-    return LocalSource.addProviderRequest(data);
+    return adminController.addProviderRequest(data);
 }
-
 async function addProviderRequest(data){
     let response = null;
     try {
@@ -29,9 +27,8 @@ async function addProviderRequest(data){
 }
 
 async function deleteProviderRequestsFromLocalSource(data){
-    return LocalSource.deleteProviderRequests(data);
+    return adminController.deleteProviderRequests(data);
 }
-
 async function deleteProviderRequests(data){
     let response = null;
     try {

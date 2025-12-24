@@ -1,15 +1,15 @@
-import LocalSource from "@/services/localsource.service.js";
+import standController from "@/datasource/controller/stands.controller.js"
 
 async function getStandsFromLocalSource(){
-    return LocalSource.getStands();
+    return standController.getStands();
 }
 
 async function getStandsTypesFromLocalSource() {
-    return LocalSource.getStandsTypes();
+    return standController.getStandsTypes();
 }
 
 async function getStandByIdFromLocalSource(id) {
-    return LocalSource.getStandById(id)
+    return standController.getStandById(id)
 }
 
 export async function getStandById(id){

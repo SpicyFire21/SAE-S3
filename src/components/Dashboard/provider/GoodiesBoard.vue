@@ -50,7 +50,7 @@
         <div class="flex-col">
           <label class="font-semibold">{{ t("GoodiesBoard.10") }}</label>
           <div class="flex  gap-2">
-            <label v-for="s in providerStore.sizes" :key="s.id" class="flex items-center gap-1">
+            <label v-for="s in goodiesStore.sizes" :key="s.id" class="flex items-center gap-1">
               <input
                   type="checkbox"
                   :value="s.id"
@@ -61,7 +61,7 @@
           </div>
           <label class="font-semibold">{{ t("GoodiesBoard.3") }}</label>
           <div class="flex gap-2">
-            <label v-for="c in providerStore.colors" :key="c.id" class="flex items-center gap-1">
+            <label v-for="c in goodiesStore.colors" :key="c.id" class="flex items-center gap-1">
 
               <input
                   type="checkbox"
@@ -161,7 +161,7 @@
         <div>
           <label class="font-semibold">Tailles :</label>
           <div class="flex gap-2 flex-wrap">
-            <label v-for="s in providerStore.sizes" :key="s.id" class="flex items-center gap-1">
+            <label v-for="s in goodiesStore.sizes" :key="s.id" class="flex items-center gap-1">
               <input
                   type="checkbox"
                   :value="s.id"
@@ -175,7 +175,7 @@
         <div>
           <label class="font-semibold">Couleurs :</label>
           <div class="flex gap-2 flex-wrap">
-            <label v-for="c in providerStore.colors" :key="c.id" class="flex items-center gap-1">
+            <label v-for="c in goodiesStore.colors" :key="c.id" class="flex items-center gap-1">
               <input
                   type="checkbox"
                   :value="c.id"
@@ -224,8 +224,8 @@
 
     <div class="flex gap-5 mt-5 mx-25">
 
-      <DataTable :headers="['id','label']" :items="providerStore.colors"/>
-      <DataTable :headers="['id','label']" :items="providerStore.sizes"/>
+      <DataTable :headers="['id','label']" :items="goodiesStore.colors"/>
+      <DataTable :headers="['id','label']" :items="goodiesStore.sizes"/>
     </div>
 
 
@@ -235,12 +235,12 @@
 
 <script setup>
 import {computed, onMounted, ref} from 'vue'
-import {useProviderStore, useUserStore} from "@/stores/index.js";
+import {useGoodiesStore, useUserStore} from "@/stores/index.js";
 import DataTable from "@/components/utils/DataTable.vue";
 import {useI18n} from "vue-i18n";
 
 const {t} = useI18n()
-const providerStore = useProviderStore()
+const goodiesStore = useGoodiesStore()
 const userStore = useUserStore()
 
 const sellingActive = ref(true)
@@ -269,30 +269,30 @@ const headers = [
 
 
 const displayGoodies = computed(() => {
-  return providerStore.goodies.map(goodie => {
-    const sizeIds = providerStore.goodiesSizes
+  return goodiesStore.goodies.map(goodie => {
+    const sizeIds = goodiesStore.goodiesSizes
         .filter(gs => gs.idgoodie === goodie.id)
         .map(gs => gs.idsize)
 
-    const colorIds = providerStore.goodiesColors
+    const colorIds = goodiesStore.goodiesColors
         .filter(gc => gc.idgoodie === goodie.id)
         .map(gc => gc.idcolor)
 
     return {
       ...goodie,
-      sizes: providerStore.sizes.filter(s => sizeIds.includes(s.id)),
-      colors: providerStore.colors.filter(c => colorIds.includes(c.id)),
+      sizes: goodiesStore.sizes.filter(s => sizeIds.includes(s.id)),
+      colors: goodiesStore.colors.filter(c => colorIds.includes(c.id)),
     }
   })
 })
 
 async function addColor() {
-  await providerStore.addColor(newColor.value)
-  console.log(providerStore.colors)
+  await goodiesStore.addColor(newColor.value)
+  console.log(goodiesStore.colors)
 }
 
 async function addSize() {
-  await providerStore.addSize(newSize.value)
+  await goodiesStore.addSize(newSize.value)
 
 
 }
@@ -305,17 +305,17 @@ async function addGoodieVariants() {
   if (selectedSizes.value.length === 0) return
   if (selectedColors.value.length === 0) return
 
-  const newGoodie = await providerStore.addGoodie(newGoodieBase.value)
+  const newGoodie = await goodiesStore.addGoodie(newGoodieBase.value)
   console.log(newGoodie)
 
   selectedSizes.value.forEach(sizeId => {
-    providerStore.addGoodieSize({
+    goodiesStore.addGoodieSize({
       idgoodie:newGoodie.id,
       idsize:sizeId
     })
   })
   selectedColors.value.forEach(colorId => {
-    providerStore.addGoodieColor({
+    goodiesStore.addGoodieColor({
       idgoodie:newGoodie.id,
       idcolor:colorId
     })
@@ -334,7 +334,7 @@ async function addGoodieVariants() {
 
 async function removeGoodie(item) {
   if (!sellingActive.value) return
-  providerStore.removeGoodie(item)
+  goodiesStore.removeGoodie(item)
 }
 
 async function toggleSelling() {
@@ -353,36 +353,36 @@ async function editGoodie(item) {
   editingGoodie.value = { ...item }
 
   // récupérer les tailles et couleurs existantes du goodie
-  editingSizes.value = providerStore.getSizesByGoodieId(item.id).map(s => s.id)
-  editingColors.value = providerStore.getColorsByGoodieId(item.id).map(c => c.id)
+  editingSizes.value = goodiesStore.getSizesByGoodieId(item.id).map(s => s.id)
+  editingColors.value = goodiesStore.getColorsByGoodieId(item.id).map(c => c.id)
 }
 
 async function saveEdit() {
   if (!editingGoodie.value) return
   console.log(editingGoodie.value.id)
-  await providerStore.updateGoodie(editingGoodie.value, userStore.currentUser.id)
+  await goodiesStore.updateGoodie(editingGoodie.value, userStore.currentUser.id)
 
 
-  await providerStore.deleteAllColors(editingGoodie.value.id)
+  await goodiesStore.deleteAllColors(editingGoodie.value.id)
   for (const color of editingColors.value) {
 
     let data = {
       idgoodie: editingGoodie.value.id,
       idcolor: color
     }
-    await providerStore.addGoodieColor(data)
+    await goodiesStore.addGoodieColor(data)
 
   }
 
 
-  await providerStore.deleteAllSizes(editingGoodie.value.id)
+  await goodiesStore.deleteAllSizes(editingGoodie.value.id)
   for (const size of editingColors.value) {
 
     let data = {
       idgoodie: editingGoodie.value.id,
       idsize: size
     }
-    await providerStore.addGoodieSize(data)
+    await goodiesStore.addGoodieSize(data)
 
   }
 
@@ -394,11 +394,11 @@ async function saveEdit() {
 }
 
 onMounted(async () => {
-  await providerStore.getGoodiesByProviderId(userStore.currentUser.id)
-  await providerStore.getSizes()
-  await providerStore.getColors()
-  await providerStore.getGoodiesSizes()
-  await providerStore.getGoodiesColors()
+  await goodiesStore.getGoodiesByProviderId(userStore.currentUser.id)
+  await goodiesStore.getSizes()
+  await goodiesStore.getColors()
+  await goodiesStore.getGoodiesSizes()
+  await goodiesStore.getGoodiesColors()
 
 
 })

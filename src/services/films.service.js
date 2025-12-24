@@ -1,7 +1,7 @@
-import LocalSource from "@/services/localsource.service.js";
+import filmsController from "@/datasource/controller/films.controller.js"
 
 async function getProjectionsFromLocalSource() {
-    return LocalSource.getProjections();
+    return filmsController.getProjections();
 }
 
 export async function getProjections(){
@@ -15,7 +15,7 @@ export async function getProjections(){
 }
 
 async function getFilmsFromLocalSource(){
-    return LocalSource.getFilms();
+    return filmsController.getFilms();
 }
 
 export async function getFilms(){
@@ -29,7 +29,7 @@ export async function getFilms(){
 }
 
 async function getFilmDirectorFromLocalSource(director_id) {
-    return LocalSource.getFilmDirector(director_id)
+    return filmsController.getFilmDirector(director_id)
 }
 
 export async function getFilmDirector(director_id) {
