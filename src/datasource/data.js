@@ -285,8 +285,7 @@ let basket = [
         id: "0f8fad5b-d9cb-469f-a165-70867728950e",
         iduser: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
         date: "2025-03-18",
-        state: "0",
-        is_order: true
+        state:"wait" //wait/payed
     }
 ];
 

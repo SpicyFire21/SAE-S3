@@ -166,6 +166,52 @@ async function getBasketItems(idbasket){
     return { error: 0, status: 200, data: items };
 }
 
+function payOrder(idorder) {
+    const index = basket.findIndex(b => b.id === idorder);
+
+    if (index === -1) {
+        return { error: 1, status: 404, message: "Basket not found" };
+    }
+
+    const b = basket[index]; //permet d'avoir les données du panier a modifier
+
+    if (b.state === "payed") {
+        return { error: 2, status: 409, message: "Basket already paid" };
+    }
+
+    b.state = "payed";
+
+    // Move basket to the end
+    basket.splice(index, 1);
+    basket.push(b);
+
+    return { error: 0, status: 202, data: b };
+}
+
+async function addBasketItems(item) {
+    // Cherche si l'item existe déjà
+    const index = basket_items.findIndex(b =>
+        b.idgoodie === item.idgoodie &&
+        b.idcolor === item.idcolor &&
+        b.idsize === item.idsize
+    );
+
+    let updatedItem;
+
+    if (index !== -1) {
+        // Si existe, incrémente le count
+        basket_items[index].count = String(Number(basket_items[index].count) + Number(item.count));
+        updatedItem = basket_items[index];
+    } else {
+        // Sinon ajoute un nouvel item
+        updatedItem = { ...item };
+        basket_items.push(updatedItem);
+    }
+    console.log(basket_items)
+    return { error: 0, status: 201, data: updatedItem };
+}
+
+
 export default {
     getGoodiesByProviderId,
     addGoodie,
@@ -183,5 +229,7 @@ export default {
     getSizes,
     getBasketByUserId,
     getBasketItems,
+    payOrder,
+    addBasketItems
 
 }
