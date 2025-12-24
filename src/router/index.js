@@ -8,6 +8,7 @@ import Films from "@/views/Films.vue"
 import FilmDetails from "@/views/FilmDetails.vue";
 import account from "@/views/Account.vue";
 import goodies from "@/views/GoodiesSell.vue"
+import scene from "@/views/ScenePage.vue";
 
 import providerRoutes from "@/router/provider.router.js"
 import adminRoutes from "@/router/admin.router.js";
@@ -67,6 +68,12 @@ const router = createRouter({
             name: 'pay-goodies',
             props: true,
             component:GoodiesBuy
+        },
+        {
+            path: '/scene',
+            name: 'ScenePage',
+            component: scene
+            // Pas de requiresAuth pour le moment
         },
         {
             path: '/account',

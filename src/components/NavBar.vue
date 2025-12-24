@@ -177,7 +177,8 @@ const navigation = [
   {name: 'nav.accueil', href: '/'},
   {name: 'nav.billeterie', href: '/ticket'},
   {name: 'nav.film', href: '/films'},
-  {name:'nav.goodies',href:'/goodies'}
+  {name:'nav.goodies',href:'/goodies'},
+  {name: 'nav.scenePrincipale', href: '/scene'}
 
 ]
 
