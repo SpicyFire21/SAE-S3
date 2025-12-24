@@ -60,7 +60,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const setBasketItems = (data) =>{
         basketItems.value = data
     }
-    const addBasketItems = (data) =>{
+    const pushBasketItems = (data) =>{
         basketItems.value.push(data)
     }
 
@@ -105,6 +105,9 @@ export const useGoodiesStore = defineStore('goodies', () => {
         } else {
             console.warn("Goodie non trouvé :", updatedGoodie.id)
         }
+    }
+    const updateBasket = (data) => {
+        basket.value = data
     }
 
 
@@ -331,8 +334,36 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.error(e)
         }
     }
+    const payOrder = async(id) =>{
+        try {
+            const response = await goodiesService.payOrder(id);
+            console.log(response)
+            if (response.error === 0){
+                updateBasket(response.data)
+            } else {
+                console.error(response.data)
+            }
 
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const addBasketItems = async (data) =>{
+        try {
+            const response = await goodiesService.addBasketItems(data);
+            console.log(response)
+            if (response.error === 0){
+                pushBasketItems(response.data)
+            } else {
+                console.error(response.data)
+            }
+            console.log(basket.value)
+            console.log(basketItems.value)
 
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
 
 
@@ -358,7 +389,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
 
         //mutation
         setBasket,
-        addBasketItems,
+        pushBasketItems,
         updateGoodies,
         removeGoodie,
 
@@ -379,6 +410,8 @@ export const useGoodiesStore = defineStore('goodies', () => {
         addGoodieColor,
         deleteAllColors,
         deleteAllSizes,
+        payOrder,
+        addBasketItems
 
 
     }

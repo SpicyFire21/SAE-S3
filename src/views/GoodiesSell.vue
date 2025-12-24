@@ -144,6 +144,7 @@
       <button
           class="w-full py-3 rounded-xl tracking-wide bg-black text-white hover:bg-neutral-900 transition disabled:opacity-40 disabled:cursor-not-allowed"
           :disabled="goodiesStore.basket.length === 0"
+          @click="command()"
       >
         Commander
       </button>
@@ -156,10 +157,12 @@
 <script setup>
 import {useGoodiesStore, useUserStore} from "@/stores/index.js"
 import { ref, computed, onMounted } from "vue"
+import {useRouter} from "vue-router";
 
 const quantities = ref({})
 const selectedColors = ref({})
 const selectedSizes = ref({})
+const route = useRouter()
 
 const userStore = useUserStore()
 const goodiesStore = useGoodiesStore();
@@ -181,7 +184,7 @@ async function addBasket(goodie, count) {
     price: goodie.price
   }
 
-  goodiesStore.addBasketItems(item)
+  await goodiesStore.addBasketItems(item)
 }
 
 
@@ -191,6 +194,10 @@ const total = computed(() => {
   }, 0)
 })
 
+async function command(){
+  await route.push({path: `/goodies/${goodiesStore.basket.id}`})
+
+}
 
 
 
@@ -201,8 +208,6 @@ const groupedBasketItems = computed(() => {
     const key = `${item.idgoodie}-${item.idcolor}-${item.idsize}`
     if (!map[key]) {
       map[key] = { ...item, count: Number(item.count) }
-    } else {
-      map[key].count += Number(item.count)
     }
   })
 

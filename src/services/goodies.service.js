@@ -210,6 +210,32 @@ async function deleteAllSizes(data){
 }
 
 
+async function payOrderFromLocalSource(data){
+    return goodiesController.payOrder(data);
+}
+async function payOrder(data){
+    let response = null;
+    try {
+        response = await payOrderFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de payer la commande'}
+    }
+    return response;
+}
+
+async function addBasketItemsFromLocalSource(data){
+    return goodiesController.addBasketItems(data);
+}
+async function addBasketItems(data){
+    let response = null;
+    try {
+        response = await addBasketItemsFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible d\'ajouter des goodies dans le panier'}
+    }
+    return response;
+}
+
 export default {
     getBasketByUserId,
     getBasketItems,
@@ -226,5 +252,7 @@ export default {
     addGoodieSize,
     addGoodieColor,
     deleteAllColors,
-    deleteAllSizes
+    deleteAllSizes,
+    payOrder,
+    addBasketItems
 }
