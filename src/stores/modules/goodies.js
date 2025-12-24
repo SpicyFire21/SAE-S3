@@ -129,10 +129,8 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getBasketItems = async (id) =>{
         try {
             const response = await goodiesService.getBasketItems(id);
-            console.log(response)
             if (response.error === 0){
                 setBasketItems(response.data)
-                console.log(basketItems.value)
             } else {
                 console.error(response.data)
             }
@@ -337,7 +335,6 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const payOrder = async(id) =>{
         try {
             const response = await goodiesService.payOrder(id);
-            console.log(response)
             if (response.error === 0){
                 updateBasket(response.data)
             } else {
@@ -351,14 +348,12 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const addBasketItems = async (data) =>{
         try {
             const response = await goodiesService.addBasketItems(data);
-            console.log(response)
             if (response.error === 0){
                 pushBasketItems(response.data)
             } else {
                 console.error(response.data)
             }
-            console.log(basket.value)
-            console.log(basketItems.value)
+
 
         } catch (e) {
             console.error(e)

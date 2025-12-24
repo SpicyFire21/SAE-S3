@@ -170,13 +170,13 @@ function payOrder(idorder) {
     const index = basket.findIndex(b => b.id === idorder);
 
     if (index === -1) {
-        return { error: 1, status: 404, message: "Basket not found" };
+        return { error: 1, status: 404, data: "Basket not found" };
     }
 
     const b = basket[index]; //permet d'avoir les données du panier a modifier
 
     if (b.state === "payed") {
-        return { error: 2, status: 409, message: "Basket already paid" };
+        return { error: 1, status: 409, data: "Basket already paid" };
     }
 
     b.state = "payed";

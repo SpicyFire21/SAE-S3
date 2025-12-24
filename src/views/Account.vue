@@ -79,6 +79,18 @@
       </div>
     </div>
 
+    <!-- commandes de goodies -->
+    <div v-if="paidBasketItems.length">
+      <div v-for="item in paidBasketItems" :key="item.idgoodie + '-' + item.idcolor + '-' + item.idsize">
+        <div>{{ item.name }} ({{ item.color }} / {{ item.size }}) × {{ item.count }}</div>
+        <div>Prix unitaire : {{ item.price }} €</div>
+        <div>Total : {{ (item.count * item.price).toFixed(2) }} €</div>
+      </div>
+    </div>
+    <div v-else>
+      Aucun goodies payé.
+    </div>
+
   </div>
 
   <div v-else class="text-center text-[var(--gris)] mt-10">
@@ -88,13 +100,12 @@
 
 <script setup>
 import { computed, onMounted } from 'vue';
-import { useUserStore } from '@/stores/index.js';
-import { useTicketsStore } from '@/stores/modules/tickets.js';
-import {useReservationsStore} from "@/stores/modules/reservations.js";
-import {useStandsStore} from "@/stores/modules/stands.js";
+import {useGoodiesStore,useTicketsStore, useUserStore,useReservationsStore,useStandsStore} from '@/stores/index.js';
+
 import {getFilmFromReservation} from "@/services/reservations.service.js";
 
 const userStore = useUserStore();
+const goodiesStore = useGoodiesStore();
 const ticketStore = useTicketsStore();
 const reservationStore = useReservationsStore();
 const standStore = useStandsStore();
@@ -102,7 +113,28 @@ const standStore = useStandsStore();
 const img = (u) =>
     new URL(`../assets/img/${u.nom_photo}`, import.meta.url).href;
 
+const currentUserId = userStore.currentUser.id;
 
+
+const paidBaskets = computed(() => {
+  return goodiesStore.basket
+      ? goodiesStore.basket.state === "payed" && goodiesStore.basket.iduser === currentUserId
+          ? [goodiesStore.basket]
+          : []
+      : [];
+});
+const paidBasketItems = computed(() => {
+  const paidIds = paidBaskets.value.map(b => b.id);
+  return goodiesStore.basketItems
+      .filter(item => paidIds.includes(item.idbasket))
+      .map(item => ({
+        ...item,
+        name: goodiesStore.getName(item.idgoodie),
+        price: goodiesStore.getPrice(item.idgoodie),
+        color: goodiesStore.getColor(item.idcolor),
+        size: goodiesStore.getSize(item.idsize),
+      }));
+});
 const user = computed(() => userStore.currentUser);
 
 const tickets = computed(() => ticketStore.billets || []);
