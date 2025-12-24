@@ -1,4 +1,3 @@
-
 import DashboardView from "@/views/DashboardView.vue";
 import goodies from "@/components/Dashboard/provider/GoodiesBoard.vue";
 import ProviderStats from "@/components/Dashboard/provider/ProviderStats.vue";
@@ -8,6 +7,7 @@ const router = [
     {
         path: '/provider-dashboard',
         name: 'provider-dashboard',
+        meta: { requiresAuth: true, droit: '1' },
         component: DashboardView,
         children:[
             {

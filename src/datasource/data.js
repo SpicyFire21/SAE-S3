@@ -350,11 +350,11 @@ let stands = [
     {"idstand": "3", "name": "cinema 3", "x": 25, "y": 1303, "width": 481, "height": 620, "type": "1", "owner": null},
 
     {"idstand": "4", "name": "adamdedicace1", "x": 886, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "9", "name": "adamdedicace6", "x": 1892, "y": 1427, "width": 65, "height": 164, "type": "2", "owner": null},
+    // {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
+    // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
+    // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
+    // {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
+    // {"idstand": "9", "name": "adamdedicace6", "x": 1892, "y": 1427, "width": 65, "height": 164, "type": "2", "owner": null},
 
     // {"idstand": "10", "name": "stand-1", "x": 781, "y": 202, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
     // {"idstand": "11", "name": "stand-2", "x": 886, "y": 202, "width": 65, "height": 92, "type": "stand", "owner": null, "reservedBy": []},
@@ -385,13 +385,40 @@ let stands = [
 ];
 
 let standTypes = [
-    { "id": "1", "type": "cinema", "action": "reserveMovie", "contentType": "movies" },
-    { "id": "2", "type": "autograph", "action": "takeAutograph", "contentType": "guests" },
+    { "id": "1", "type": "cinema"},
+    { "id": "2", "type": "autograph"},
 ];
 
 let reservations = [
-    { id: "1", userId: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414", standId: "1", contentId: "6f207e95-5400-471f-a933-d01d817b0608", date: "2025-12-23T14:00:00" },
-    { id: "2", userId: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa", standId: "2", contentId: "6f207e95-5400-471f-a933-d01d817b0608", date: "2025-12-23T15:00:00" }
+    {
+        "id": "1",
+        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        "type": "film",
+        "date": "2025-12-23T14:00:00",
+        "standId": "1"
+    },
+];
+
+let films_reservations = [
+    {
+        reservationId: "1",
+        projectionId: "1"
+    }
+];
+
+let autographs_reservations = [
+    {
+        reservationId: "2",
+        artistId: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414"
+    }
+];
+
+let projections = [
+    { "id": "1", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T14:00:00" },
+    { "id": "2", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-24T17:00:00" },
+    { "id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00" },
+    { "id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00" },
+    { "id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00" }
 ];
 
 
@@ -454,7 +481,7 @@ let films = [
         "poster": "oppenheimer.jpg",
         "description": "L'histoire du père de la bombe atomique",
         "duration": 180,
-        "standId": []
+        "standId": ["1"]
     },
     {
         "id": "9b4ced38-53ef-4a87-89f3-a791ce326093",
@@ -849,6 +876,9 @@ export {
     provider_services_associations,
     provider_services,
     standTypes,
-    reservations
+    reservations,
+    projections,
+    films_reservations,
+    autographs_reservations
 
 }

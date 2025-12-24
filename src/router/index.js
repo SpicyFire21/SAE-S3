@@ -12,6 +12,7 @@ import goodies from "@/views/GoodiesSell.vue"
 import providerRoutes from "@/router/provider.router.js"
 import adminRoutes from "@/router/admin.router.js";
 import StandDetails from "@/views/StandDetails.vue";
+import {useUserStore} from "@/stores/index.js";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,7 +64,9 @@ const router = createRouter({
         {
             path: '/account',
             name: 'account',
-            component:account
+            component:account,
+            meta: { requiresAuth: true },
+
         },
 
         ...providerRoutes,
@@ -72,6 +75,30 @@ const router = createRouter({
 
 
 
+})
+
+router.beforeEach((to) => {
+    const userStore = useUserStore()
+    const isLogged = !!userStore.currentUser
+    const userRole = userStore.currentUser?.droit
+
+    if (to.meta.requiresAuth && !isLogged) {
+        return { name: 'LoginPage' }
+    }
+
+
+    if (to.meta.droit && to.meta.droit !== userRole) {
+
+        if(userRole === "2"){
+            return { name: 'admin-dashboard' }
+        } else if(userRole === "1"){
+            return { name: 'provider-dashboard' }
+        } else {
+            return { name: 'HomePage' }
+        }
+
+
+    }
 })
 
 export default router

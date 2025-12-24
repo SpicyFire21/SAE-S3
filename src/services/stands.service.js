@@ -8,6 +8,21 @@ async function getStandsTypesFromLocalSource() {
     return LocalSource.getStandsTypes();
 }
 
+async function getStandByIdFromLocalSource(id) {
+    return LocalSource.getStandById(id)
+}
+
+export async function getStandById(id){
+    let response = null;
+    try {
+        response = await getStandByIdFromLocalSource(id);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le stand'}
+    }
+    return response;
+}
+
+
 export async function getStands(){
     let response = null;
     try {
@@ -29,5 +44,5 @@ export async function getStandsTypes(){
 }
 
 export default {
-    getStands, getStandsTypes
+    getStands, getStandsTypes, getStandById
 }

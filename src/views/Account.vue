@@ -53,6 +53,32 @@
       </div>
     </div>
 
+    <div class="mt-4">
+      <span class="font-medium text-[var(--noir)]">Reservations :</span>
+
+      <div v-if="reservations.length" class="mt-2 space-y-2">
+        <div
+            v-for="r in reservations"
+            :key="r.id"
+            class="p-3 border border-[var(--grisf)] rounded-lg"
+        >
+          <div class="font-medium">Pour : {{ r.filmTitle }}</div>
+          {{
+            new Date(r.date).toLocaleString('fr-FR', {
+              weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+              hour: '2-digit', minute: '2-digit'
+            })
+          }}
+          <div class="font-medium">Type : {{ r.type }}</div>
+          <div class="font-medium">Stand : {{ r.standTitle }}</div>
+        </div>
+      </div>
+
+      <div v-else class="text-[var(--gris)] text-sm mt-2">
+        Aucune reservations.
+      </div>
+    </div>
+
   </div>
 
   <div v-else class="text-center text-[var(--gris)] mt-10">
@@ -64,9 +90,14 @@
 import { computed, onMounted } from 'vue';
 import { useUserStore } from '@/stores/index.js';
 import { useTicketsStore } from '@/stores/modules/tickets.js';
+import {useReservationsStore} from "@/stores/modules/reservations.js";
+import {useStandsStore} from "@/stores/modules/stands.js";
+import {getFilmFromReservation} from "@/services/reservations.service.js";
 
 const userStore = useUserStore();
 const ticketStore = useTicketsStore();
+const reservationStore = useReservationsStore();
+const standStore = useStandsStore();
 
 const img = (u) =>
     new URL(`../assets/img/${u.nom_photo}`, import.meta.url).href;
@@ -75,6 +106,8 @@ const img = (u) =>
 const user = computed(() => userStore.currentUser);
 
 const tickets = computed(() => ticketStore.billets || []);
+const reservations = computed(() => reservationStore.reservations);
+
 
 const droitLabel = computed(() => {
   if (!user.value) return '';
@@ -91,9 +124,20 @@ const moyenneNotes = computed(() => {
   return (n.reduce((a, b) => a + b, 0) / n.length).toFixed(1);
 });
 
-onMounted(() => {
+onMounted(async () => {
   if (user.value?.id) {
-    ticketStore.getBilletsByUserId(user.value.id);
+    await ticketStore.getBilletsByUserId(user.value.id);
+    await reservationStore.getReservationByIdUser(user.value.id)
+    await standStore.getStands();
+
+    // on boucle sur toutes les reservations
+    for (const r of reservations.value) {
+      const film = await reservationStore.getFilmFromReservation(r);
+      r.filmTitle = film?.title || 'Titre inconnu';
+      const stand = await standStore.getStandById(r.standId)
+      r.standTitle = stand?.name || 'Titre inconnu';
+    }
   }
 });
 </script>
+

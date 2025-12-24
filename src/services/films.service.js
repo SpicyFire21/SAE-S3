@@ -1,5 +1,19 @@
 import LocalSource from "@/services/localsource.service.js";
 
+async function getProjectionsFromLocalSource() {
+    return LocalSource.getProjections();
+}
+
+export async function getProjections(){
+    let response = null;
+    try {
+        response = await getProjectionsFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les projections'}
+    }
+    return response;
+}
+
 async function getFilmsFromLocalSource(){
     return LocalSource.getFilms();
 }
@@ -30,5 +44,6 @@ export async function getFilmDirector(director_id) {
 
 export default {
     getFilms,
-    getFilmDirector
+    getFilmDirector,
+    getProjections
 }
