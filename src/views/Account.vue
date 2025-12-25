@@ -1,79 +1,163 @@
 <template>
-  <div v-if="user" class="max-w-lg mx-auto pt-50 min-h-screen flex flex-col gap-6 p-6 bg-[var(--blanc)] rounded-xl shadow-md">
+  <div v-if="user" class="max-w-3xl mx-auto pt-32 min-h-screen p-6">
 
-    <!-- Infos utilisateur -->
-    <div class="flex items-center gap-4">
-      <img v-if="user.nom_photo" :src="img(user)" class="w-20 h-20 rounded-full object-cover" />
-      <div>
-        <h1 class="text-2xl font-bold">{{ user.name || user.login }}</h1>
-        <p class="text-[var(--grisf)]">{{ user.type || 'Utilisateur' }}</p>
-      </div>
-    </div>
+    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
 
-    <div class="space-y-1 text-[var(--grisf)]">
-      <p><span class="font-medium text-[var(--noir)]">Email :</span> {{ user.email }}</p>
-      <p><span class="font-medium text-[var(--noir)]">Droit :</span> {{ droitLabel }}</p>
-      <p v-if="user.description"><span class="font-medium text-[var(--noir)]">Description :</span> {{ user.description }}</p>
-    </div>
+      <div class="flex flex-col md:flex-row md:items-center gap-6 border-b pb-6">
 
-    <!-- Notes -->
-    <div v-if="user.note?.length" class="text-[var(--grisf)]">
-      <span class="font-medium">Moyenne des notes :</span> {{ moyenneNotes }} / 5
-    </div>
+        <img
+            v-if="user.nom_photo"
+            :src="img(user)"
+            class="w-24 h-24 rounded-full object-cover ring-4 ring-[var(--jaune)] shadow-md"
+        />
 
-    <!-- Tickets -->
-    <div class="mt-4">
-      <span class="font-medium text-[var(--noir)]">Tickets :</span>
-      <div v-if="tickets.length" class="mt-2 space-y-2">
-        <div v-for="t in tickets" :key="t.idticket" class="p-3 border border-[var(--grisf)] rounded-lg">
-          <div class="font-medium">#{{ t.idticket }}</div>
-          <div class="text-[var(--grisf)]">{{ t.datefrom }} → {{ t.dateto }}</div>
+        <div>
+          <h1 class="text-3xl font-extrabold text-gray-900">
+            {{ user.name || user.login }}
+          </h1>
+          <p class="text-gray-500 text-sm">
+            {{ user.type || 'Utilisateur' }}
+          </p>
+
+          <div
+              class="inline-block mt-3 px-4 py-1 text-sm rounded-full font-medium
+            bg-[var(--jaune)] text-black shadow-sm"
+          >
+            {{ droitLabel }}
+          </div>
         </div>
       </div>
-      <div v-else class="text-[var(--gris)] text-sm mt-2">Aucun ticket.</div>
-    </div>
 
-    <!-- Reservations -->
-    <div class="mt-4">
-      <span class="font-medium text-[var(--noir)]">Reservations :</span>
-      <div v-if="reservations.length" class="mt-2 space-y-2">
-        <div v-for="r in reservations" :key="r.id" class="p-3 border border-[var(--grisf)] rounded-lg">
-          <div class="font-medium">Pour : {{ r.filmTitle }}</div>
-          {{
-            new Date(r.date).toLocaleString('fr-FR', {
-              weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
-              hour: '2-digit', minute: '2-digit'
-            })
-          }}
-          <div class="font-medium">Type : {{ r.type }}</div>
-          <div class="font-medium">Stand : {{ r.standTitle }}</div>
+      <div class="grid md:grid-cols-2 gap-6 mt-6">
+        <div class="space-y-2">
+          <p><span class="font-semibold text-gray-900">Email :</span> {{ user.email }}</p>
+          <p><span class="font-semibold text-gray-900">Droit :</span> {{ droitLabel }}</p>
+
+          <p v-if="user.description">
+            <span class="font-semibold text-gray-900">Description :</span>
+            {{ user.description }}
+          </p>
+        </div>
+
+        <div v-if="user.note?.length" class="bg-gray-50 border rounded-xl p-4">
+          <p class="font-semibold text-gray-900">Moyenne des notes</p>
+          <p class="text-3xl font-extrabold text-yellow-500">
+            {{ moyenneNotes }} <span class="text-gray-600 text-lg">/ 5</span>
+          </p>
         </div>
       </div>
-      <div v-else class="text-[var(--gris)] text-sm mt-2">Aucune reservations.</div>
-    </div>
 
-    <!-- Paniers payés -->
-    <div class="mt-4">
-      <span class="font-medium text-[var(--noir)]">Commandes goodies :</span>
-      <div v-if="paidBaskets.length" class="mt-2 space-y-4">
-        <div v-for="basket in paidBaskets" :key="basket.id" class="p-4 border border-[var(--grisf)] rounded-lg">
-          <div class="font-medium">Panier du {{ basket.date }}</div>
-          <ul class="mt-2 space-y-1">
-            <li v-for="item in paidBasketItemsForBasket(basket.id)" :key="item.idgoodie + '-' + item.idcolor + '-' + item.idsize">
-              {{ item.name }} ({{ item.color }} / {{ item.size }}) × {{ item.count }} — {{ (item.count * item.price).toFixed(2) }} €
-            </li>
-          </ul>
-        </div>
+      <div class="mt-10 space-y-10">
+
+        <section>
+          <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            🎟️ Tickets
+          </h2>
+
+          <div v-if="tickets.length" class="mt-4 grid md:grid-cols-2 gap-4">
+            <div
+                v-for="t in tickets"
+                :key="t.idticket"
+                class="p-4 bg-gray-50 border rounded-xl shadow-sm"
+            >
+              <div class="font-bold">#{{ t.idticket }}</div>
+              <div class="text-gray-500 text-sm">
+                {{ t.datefrom }} → {{ t.dateto }}
+              </div>
+            </div>
+          </div>
+
+          <p v-else class="text-gray-400 mt-2">Aucun ticket.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            🎬 Réservations
+          </h2>
+
+          <div v-if="reservations.length" class="mt-4 grid md:grid-cols-2 gap-4">
+            <div
+                v-for="r in reservations"
+                :key="r.id"
+                class="p-4 bg-gray-50 border rounded-xl shadow-sm"
+            >
+              <p class="font-semibold">{{ r.filmTitle }}</p>
+              <p class="text-gray-500 text-sm">
+                {{
+                  new Date(r.date).toLocaleString('fr-FR', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })
+                }}
+              </p>
+
+              <p class="mt-1 text-sm">
+                <span class="font-medium">Type :</span> {{ r.type }}
+              </p>
+
+              <p class="text-sm">
+                <span class="font-medium">Stand :</span> {{ r.standTitle }}
+              </p>
+            </div>
+          </div>
+
+          <p v-else class="text-gray-400 mt-2">Aucune réservation.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            🛍️ Commandes Goodies
+          </h2>
+
+          <div v-if="paidBaskets.length" class="mt-4 space-y-4">
+            <div
+                v-for="basket in paidBaskets"
+                :key="basket.id"
+                class="p-5 border rounded-xl bg-gray-50 shadow-sm"
+            >
+              <p class="font-semibold text-gray-900">
+                Panier du {{ basket.date }}
+              </p>
+
+              <ul class="mt-2 space-y-1 text-sm">
+                <li
+                    v-for="item in paidBasketItemsForBasket(basket.id)"
+                    :key="item.idgoodie + '-' + item.idcolor + '-' + item.idsize"
+                    class="flex justify-between"
+                >
+                  <span>
+                    {{ item.name }} —
+                    <span class="text-gray-500">
+                      {{ item.color }} / {{ item.size }}
+                    </span>
+                    × {{ item.count }}
+                  </span>
+
+                  <span class="font-semibold">
+                    {{ (item.count * item.price).toFixed(2) }} €
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p v-else class="text-gray-400 mt-2">Aucun panier payé.</p>
+        </section>
+
       </div>
-      <div v-else class="text-[var(--gris)] text-sm mt-2">Aucun panier payé.</div>
     </div>
 
   </div>
 
-  <div v-else class="text-center text-[var(--gris)] mt-10">
+  <div v-else class="text-center text-gray-400 mt-10">
     Utilisateur non connecté.
   </div>
 </template>
+
 
 <script setup>
 import { computed, onMounted } from 'vue';
@@ -122,7 +206,11 @@ const paidBasketItemsForBasket = (idbasket) => {
 
 onMounted(async () => {
   if (!user.value?.id) return;
-
+  await goodiesStore.getGoodies()
+  await goodiesStore.getSizes()
+  await goodiesStore.getColors()
+  await goodiesStore.getGoodiesSizes()
+  await goodiesStore.getGoodiesColors()
   await goodiesStore.getAllBasketByUserId(user.value.id);
 
   // récupère les items pour chaque panier

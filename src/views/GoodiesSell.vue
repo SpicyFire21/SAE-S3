@@ -105,7 +105,6 @@
       <h2 class="text-2xl mb-4">
         Votre Panier
       </h2>
-      {{goodiesStore.basketItems}}
       <div v-if="goodiesStore.basketItems.length === 0" class="text-neutral-400 mb-4">
         Votre panier est vide
       </div>

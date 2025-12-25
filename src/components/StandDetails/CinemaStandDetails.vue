@@ -73,6 +73,15 @@
 
     </div>
   </div>
+  <div v-if="showSuccessPopup"
+       class="fixed top-1/10 left-1/2 -translate-x-1/2
+            bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl
+            z-50 text-center">
+    🎉 Réservation confirmée !
+  </div>
+
+
+
 
 </template>
 
@@ -87,6 +96,8 @@ import {useReservationsStore} from "@/stores/modules/reservations.js"
 
 const isModalOpen = ref(false);
 const selectedFilm = ref(null);
+const showSuccessPopup = ref(false);
+
 
 const openModal = (film) => {
   selectedFilm.value = film;
@@ -127,9 +138,15 @@ const confirmFilmReservation = async () => {
     standId: props.stand.idstand
   });
 
-  console.log("reservations total: " + JSON.stringify(reservationsStore.reservations));
   closeModal();
+
+  showSuccessPopup.value = true;
+
+  setTimeout(() => {
+    showSuccessPopup.value = false;
+  }, 2250);
 }
+
 
 const props = defineProps({
   stand: {
