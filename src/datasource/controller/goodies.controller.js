@@ -138,15 +138,15 @@ async function getBasketByUserId(userid){
         return { error: 1, status: 404, data: "Impossible de trouver l'utilisateur" };
     }
 
-    const currentBasket = basket.find(b => b.iduser === userid);
+    const currentBasket = basket.find(b => b.iduser === userid && b.state === "wait");
     if (!currentBasket) {
         const newBasket = {
             "id": uuidv4(),
             "iduser":userid,
             "date": new Date().toISOString(),
-            "state": "0",
-            "is_order": false,
+            "state": "wait",
         }
+
 
         basket.push(newBasket);
         return { error: 0, status: 201, data: newBasket };
@@ -160,9 +160,7 @@ async function getBasketItems(idbasket){
     if (!basketExist) {
         return { error: 1, status: 404, data: "Impossible de trouver le panier" };
     }
-
     const items = basket_items.filter(i => i.idbasket === idbasket)
-
     return { error: 0, status: 200, data: items };
 }
 
@@ -189,8 +187,9 @@ function payOrder(idorder) {
 }
 
 async function addBasketItems(item) {
-    // Cherche si l'item existe déjà
+    // Cherche si l'item existe déjà dans le même panier
     const index = basket_items.findIndex(b =>
+        b.idbasket === item.idbasket &&
         b.idgoodie === item.idgoodie &&
         b.idcolor === item.idcolor &&
         b.idsize === item.idsize
@@ -207,10 +206,20 @@ async function addBasketItems(item) {
         updatedItem = { ...item };
         basket_items.push(updatedItem);
     }
-    console.log(basket_items)
+
     return { error: 0, status: 201, data: updatedItem };
 }
 
+
+async function getAllBasketByUserId(id){
+    const b = basket.filter(b => b.iduser === id)
+    return { error: 0, status: 201, data: b };
+
+}
+
+async function getAllBasketItems(id){
+    return { error: 0, status: 201, data: basket_items };
+}
 
 export default {
     getGoodiesByProviderId,
@@ -230,6 +239,8 @@ export default {
     getBasketByUserId,
     getBasketItems,
     payOrder,
-    addBasketItems
+    addBasketItems,
+    getAllBasketByUserId,
+    getAllBasketItems
 
 }

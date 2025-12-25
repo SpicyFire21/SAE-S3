@@ -5,7 +5,8 @@ import goodiesService from "@/services/goodies.service.js"
 
 export const useGoodiesStore = defineStore('goodies', () => {
     // state
-    const basket = ref([]) // contient l'id du panier et celui de l'utilisateur
+    const baskets = ref([])
+    const basket = ref({}) // contient l'id du panier et celui de l'utilisateur
     const basketItems = ref([]) // contient l'id du panier et les id des items
 
     const goodies = ref([])
@@ -55,6 +56,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
 
     // mutations
     const setBasket = (data) =>{
+        console.log(data)
         basket.value = data
     }
     const setBasketItems = (data) =>{
@@ -62,6 +64,9 @@ export const useGoodiesStore = defineStore('goodies', () => {
     }
     const pushBasketItems = (data) =>{
         basketItems.value.push(data)
+    }
+    const setBaskets = (data) =>{
+        baskets.value = data
     }
 
     const updateGoodies = (data) =>{
@@ -106,9 +111,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.warn("Goodie non trouvé :", updatedGoodie.id)
         }
     }
-    const updateBasket = (data) => {
-        basket.value = data
-    }
+
 
 
     //action
@@ -129,6 +132,32 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getBasketItems = async (id) =>{
         try {
             const response = await goodiesService.getBasketItems(id);
+            if (response.error === 0){
+                setBasketItems(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const getAllBasketByUserId = async (id) =>{
+        try {
+            const response = await goodiesService.getAllBasketByUserId(id);
+            if (response.error === 0){
+                setBaskets(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const getAllBasketItems = async (userid) =>{
+        try {
+            const response = await goodiesService.getAllBasketItems(userid);
             if (response.error === 0){
                 setBasketItems(response.data)
             } else {
@@ -336,7 +365,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
         try {
             const response = await goodiesService.payOrder(id);
             if (response.error === 0){
-                updateBasket(response.data)
+                setBasket(response.data)
             } else {
                 console.error(response.data)
             }
@@ -367,6 +396,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     return {
         //state
         basket,
+        baskets,
         basketItems,
         goodies,
         colors,
@@ -387,6 +417,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
         pushBasketItems,
         updateGoodies,
         removeGoodie,
+        setBaskets,
 
         //action
         getBasketByUserId,
@@ -406,7 +437,9 @@ export const useGoodiesStore = defineStore('goodies', () => {
         deleteAllColors,
         deleteAllSizes,
         payOrder,
-        addBasketItems
+        addBasketItems,
+        getAllBasketByUserId,
+        getAllBasketItems
 
 
     }

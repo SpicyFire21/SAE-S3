@@ -205,20 +205,6 @@ async function pay() {
 
   }
   if (!isValid.value) {
-    console.log("--")
-    console.log(firstname.value)
-    console.log(lastname.value)
-    console.log(email.value.includes("@"))
-    console.log(cardNumber.value.length=== 16)
-    console.log(expiry.value.length=== 4)
-    console.log(cvv.value.length=== 3)
-
-
-
-
-
-
-
 
     message.value = "❌ Veuillez remplir correctement tous les champs."
     return

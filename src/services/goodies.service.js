@@ -236,6 +236,35 @@ async function addBasketItems(data){
     return response;
 }
 
+
+
+async function getAllBasketByUserIdFromLocalSource(data){
+    return goodiesController.getAllBasketByUserId(data);
+}
+async function getAllBasketByUserId(data){
+    let response = null;
+    try {
+        response = await getAllBasketByUserIdFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récuperer l\'historique des paniers'}
+    }
+    return response;
+}
+
+async function getAllBasketItemsFromLocalSource(data){
+    return goodiesController.getAllBasketItems(data);
+}
+async function getAllBasketItems(data){
+    let response = null;
+    try {
+        response = await getAllBasketItemsFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récuperer les goodies des paniers'}
+    }
+    return response;
+}
+
+
 export default {
     getBasketByUserId,
     getBasketItems,
@@ -254,5 +283,7 @@ export default {
     deleteAllColors,
     deleteAllSizes,
     payOrder,
-    addBasketItems
+    addBasketItems,
+    getAllBasketByUserId,
+    getAllBasketItems
 }

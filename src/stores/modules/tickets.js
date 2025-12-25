@@ -35,7 +35,6 @@ export const useTicketsStore = defineStore('tickets', () => {
         try {
             const response = await ticketService.getTicketsPrice();
             updateTicketsPrice(response.data)
-            console.log(billets.value)
         } catch (e) {
             console.error(e)
         }
@@ -45,7 +44,6 @@ export const useTicketsStore = defineStore('tickets', () => {
         try {
             const response = await ticketService.getBilletsByUserId(id);
             updateBillets(response.data)
-            console.log(billets.value)
         } catch (e) {
             console.error(e)
         }
@@ -54,7 +52,6 @@ export const useTicketsStore = defineStore('tickets', () => {
     const createTicket = async (data) =>{
         try {
             const response = await ticketService.createTicket(data)
-            console.log(response)
             if(response.error === 0){
                 addBillets(response.data);
                 return response.data;
