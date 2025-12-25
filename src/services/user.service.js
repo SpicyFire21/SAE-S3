@@ -3,7 +3,6 @@ import userController from "@/datasource/controller/user.controller.js"
 async function getUserFromLocalSource(){
     return userController.getUsers();
 }
-
 export async function getUsers(){
     let response = null;
     try {
@@ -17,7 +16,6 @@ export async function getUsers(){
 async function getProvidersFromLocalSource() {
     return userController.getProviders();
 }
-
 export async function getProviders() {
     let response = null;
     try {
@@ -31,7 +29,6 @@ export async function getProviders() {
 async function loginFromLocalSource(data){
     return userController.login(data);
 }
-
 async function login(data){
     let response = null;
     try {
@@ -46,7 +43,6 @@ async function login(data){
 async function registerUserFromLocalSource(data){
     return userController.registerUser(data);
 }
-
 async function registerUser(data){
     let response = null;
     try {
@@ -60,7 +56,6 @@ async function registerUser(data){
 async function registerProviderFromLocalSource(data){
     return userController.registerProvider(data);
 }
-
 async function registerProvider(data){
     let response = null;
     try {
