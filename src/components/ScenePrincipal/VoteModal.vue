@@ -1,70 +1,135 @@
 <template>
-  <div class="fixed inset-0 bg-black/50 flex justify-center items-center p-4">
-    <div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-6">
-      <h2 class="text-xl font-bold mb-4">Voter pour : {{ film.title }}</h2>
+  <div class="vote-modal-overlay">
+    <div class="vote-modal">
+      <h2 class="text-xl font-bold mb-4">{{ film.title }}</h2>
 
-      <label class="block mb-2 font-medium">Catégorie</label>
-      <select v-model="selectedCategory" class="w-full border p-2 rounded-lg mb-4">
-        <option disabled value="">Choisir une catégorie</option>
-        <option v-for="cat in categories" :key="cat">{{ cat }}</option>
-      </select>
-
-      <label class="block mb-2 font-medium">Note (1 vote = 1 point)</label>
-      <div class="flex gap-2 mb-6">
-        <button
-            v-for="s in 5"
-            :key="s"
-            @click="score = s"
-            class="px-3 py-1 border rounded-lg"
-            :class="{ 'bg-black text-white': score === s }"
-        >
-          {{ s }}
-        </button>
+      <div class="mb-4">
+        <label class="block font-medium mb-2">Choisir la catégorie :</label>
+        <select v-model="selectedCategory" class="border rounded px-2 py-1 w-full">
+          <option disabled value="">-- Sélectionner une catégorie --</option>
+          <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+        </select>
       </div>
 
-      <div class="flex justify-end gap-3">
-        <button @click="$emit('close')" class="px-4 py-2 border rounded-lg">Annuler</button>
-        <button @click="submit" class="px-4 py-2 bg-black text-white rounded-lg">Valider le vote</button>
+      <div v-if="selectedCategory" class="mb-4">
+        <p>
+          <span v-if="existingVote">Vous avez déjà voté pour : <strong>{{ existingVoteFilmTitle }}</strong></span>
+          <span v-else>Vous n'avez pas encore voté dans cette catégorie.</span>
+        </p>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50"
+            :disabled="!existingVote"
+            @click="deleteVote"
+        >
+          Retirer mon vote
+        </button>
+
+        <button
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+            :disabled="!selectedCategory || existingVote"
+            @click="submitVote"
+        >
+          Voter
+        </button>
+
+        <button
+            class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+            @click="closeModal"
+        >
+          Annuler
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useVotesStore } from '@/stores/modules/votes.js'
+import { ref, computed } from "vue"
+import { useUserStore } from "@/stores/index.js"
+import { useVotesStore } from "@/stores/modules/votes.js"
 
 const props = defineProps({
-  film: Object,
-  categories: Array
+  film: { type: Object, required: true },
+  categories: { type: Array, required: true }
 })
 
-const emit = defineEmits(['close', 'submitVote'])
+const emit = defineEmits(['close'])
 
+const userStore = useUserStore()
 const votesStore = useVotesStore()
 
 const selectedCategory = ref("")
-const score = ref(1)
 
-const submit = () => {
-  if (!selectedCategory.value) {
-    alert("Veuillez choisir une catégorie")
-    return
+const existingVote = computed(() => {
+  if (!userStore.currentUser) return null
+  return votesStore.votes[userStore.currentUser.id]?.[selectedCategory.value] || null
+})
+
+const existingVoteFilmTitle = computed(() => {
+  if (!existingVote.value) return ""
+  const filmId = existingVote.value
+  return props.film.id === filmId ? props.film.title : "un autre film"
+})
+
+const deleteVote = () => {
+  try {
+    votesStore.removeVote({
+      userId: userStore.currentUser.id,
+      category: selectedCategory.value
+    })
+    selectedCategory.value = ""
+    emit("close")
+  } catch (e) {
+    alert("⚠️ " + e.message)
   }
+}
 
-  const userId = localStorage.getItem("session_user") // mock session
-  if (!userId) {
-    alert("Vous devez être connecté pour voter")
-    return
-  }
-
-  const vote = {
-    userId,
+const submitVote = () => {
+  if (!selectedCategory.value) return
+  votesStore.addOrUpdateVote({
     filmId: props.film.id,
-    category: selectedCategory.value,
-    score: score.value
-  }
+    userId: userStore.currentUser.id,
+    category: selectedCategory.value
+  })
+  selectedCategory.value = ""
+  emit("close")
+}
 
-  emit('submitVote', vote)
+const closeModal = () => {
+  selectedCategory.value = ""
+  emit("close")
 }
 </script>
+
+<style scoped>
+.vote-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.vote-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.vote-modal select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+</style>

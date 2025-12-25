@@ -4,7 +4,6 @@
       Scène principale — Cérémonie des Pablos
     </h1>
 
-    <!-- Liste des films -->
     <section class="max-w-screen-xl mx-auto grid md:grid-cols-3 gap-6">
       <div
           v-for="film in filmsStore.films"
@@ -22,7 +21,7 @@
         </h2>
 
         <p class="text-sm text-center text-[var(--grisf)]">
-          🎭 Genres : {{ film.genres.join(', ') }}
+          🎭 Genres : {{ film.genres?.join(', ') || 'Non spécifié' }}
         </p>
 
         <button
@@ -34,7 +33,6 @@
       </div>
     </section>
 
-    <!-- Modal de vote -->
     <VoteModal
         v-if="showModal"
         :film="selectedFilm"
@@ -43,7 +41,6 @@
         @submitVote="submitVote"
     />
 
-    <!-- Classement -->
     <section class="mt-15 max-w-3xl mx-auto">
       <h2 class="text-2xl font-bold text-center underline mb-6">
         🏆 Classement des votes
@@ -58,9 +55,9 @@
           {{ cat }}
         </h3>
 
-        <ul v-if="classement(cat).length">
+        <ul v-if="ranking(cat).length">
           <li
-              v-for="item in classement(cat)"
+              v-for="item in ranking(cat)"
               :key="item.filmId"
               class="flex justify-between border-b py-2 tracking-wide"
           >
@@ -78,46 +75,53 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import { useFilmsStore } from "@/stores/modules/films.js"
-import { useUserStore } from "@/stores/index.js"
-import { useTicketsStore } from "@/stores/modules/tickets.js"
-import { useVotesStore } from "@/stores/modules/votes.js"
+import {ref, computed, onMounted} from "vue"
+import {useFilmsStore} from "@/stores/modules/films.js"
+import {useVotesStore} from "@/stores/modules/votes.js"
+import {useUserStore} from "@/stores/index.js"
 import VoteModal from "@/components/ScenePrincipal/VoteModal.vue"
+import router from "@/router/index.js"
 
 const filmsStore = useFilmsStore()
 const votesStore = useVotesStore()
+const userStore = useUserStore()
 
 const showModal = ref(false)
 const selectedFilm = ref(null)
 
 const categories = ["Meilleur scénario", "Meilleurs effets visuels", "Prix du public"]
 
+onMounted(async () => {
+  await filmsStore.getFilms()
+})
+
 const openVoteModal = (film) => {
   selectedFilm.value = film
   showModal.value = true
 }
 
-const submitVote = async (vote) => {
-  try {
-    await votesStore.addVote(vote)
-    alert("✅ Vote enregistré !")
-  } catch (e) {
-    alert("⚠️ " + e.message)
-  } finally {
-    showModal.value = false
-  }
+const submitVote = (vote) => {
+  const userId = userStore.currentUser.id
+  vote.userId = userId
+
+  votesStore.addOrUpdateVote(vote)
+  showModal.value = false
 }
 
-const classement = (category) => {
-  const rows = []
+const ranking = (category) => {
+  const list = []
   for (const filmId in votesStore.filmsScore) {
     const score = votesStore.filmsScore[filmId][category] || 0
     const film = filmsStore.films.find(f => f.id === filmId)
-    if (film) rows.push({ filmId, title: film.title, score })
+    if (film) list.push({filmId, title: film.title, score})
   }
-  return rows.sort((a, b) => b.score - a.score)
+  return list.sort((a, b) => b.score - a.score)
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.scene-container {
+  margin-top: 90px; /* pousse le contenu sans toucher à la navbar */
+  padding-bottom: 40px;
+}
+</style>

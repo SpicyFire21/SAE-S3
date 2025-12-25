@@ -1,68 +1,65 @@
-import { ref } from "vue"
+import { reactive } from "vue"
 import { defineStore } from "pinia"
-import { useUserStore } from "@/stores/index.js"
 
 export const useVotesStore = defineStore('votes', () => {
 
     // --- STATE ---
-    const filmsScore = ref({}) // { filmId: { categorie: score } }
-    const votes = ref([]) // [{ filmId, userId, category }]
-
-    const userStore = useUserStore();
+    const filmsScore = reactive({}) // { filmId: { category: score } }
+    const votes = reactive({}) // { userId: { category: filmId } }
 
     // --- INIT depuis localStorage ---
     const savedScore = localStorage.getItem("filmsScore")
     const savedVotes = localStorage.getItem("votes")
 
-    if (savedScore) {
-        filmsScore.value = JSON.parse(savedScore)
-    }
-
-    if (savedVotes) {
-        votes.value = JSON.parse(savedVotes)
-    }
+    if (savedScore) Object.assign(filmsScore, JSON.parse(savedScore))
+    if (savedVotes) Object.assign(votes, JSON.parse(savedVotes))
 
     // --- ACTIONS ---
-    const addVote = (vote) => {
-        // Vérifier si l'utilisateur est connecté
-        if (!userStore.currentUser) {
-            throw new Error("Vous devez être connecté pour voter.")
+    const addOrUpdateVote = ({ filmId, userId, category }) => {
+        if (!userId || !category || !filmId) return
+
+        if (!votes[userId]) votes[userId] = {}
+
+        // Si déjà voté dans cette catégorie → retirer ancien film du score
+        const oldFilm = votes[userId][category]
+        if (oldFilm && filmsScore[oldFilm]?.[category]) {
+            filmsScore[oldFilm][category]--
         }
 
-        const { filmId, category } = vote
-        const userId = userStore.currentUser.id // récupérer l'ID depuis le store
+        // Ajouter 1 point au nouveau film
+        if (!filmsScore[filmId]) filmsScore[filmId] = {}
+        if (!filmsScore[filmId][category]) filmsScore[filmId][category] = 0
+        filmsScore[filmId][category]++
 
-        // Vérifier si l'utilisateur a déjà voté pour ce film dans cette catégorie
-        const alreadyVoted = votes.value.find(
-            v => v.filmId === filmId && v.userId === userId && v.category === category
-        )
+        // Enregistrer le vote
+        votes[userId][category] = filmId
 
-        if (alreadyVoted) {
-            throw new Error("Tu as déjà voté pour ce film dans cette catégorie.")
+        // Sauvegarder
+        localStorage.setItem("filmsScore", JSON.stringify(filmsScore))
+        localStorage.setItem("votes", JSON.stringify(votes))
+    }
+
+    const removeVote = ({ userId, category }) => {
+        if (!votes[userId] || !votes[userId][category]) {
+            throw new Error("Aucun vote trouvé dans cette catégorie.")
         }
 
-        // Ajouter le vote
-        votes.value.push({ filmId, userId, category })
+        const filmId = votes[userId][category]
 
-        // Initialiser score si nécessaire
-        if (!filmsScore.value[filmId]) {
-            filmsScore.value[filmId] = {}
+        if (filmsScore[filmId]?.[category]) {
+            filmsScore[filmId][category]--
         }
 
-        if (!filmsScore.value[filmId][category]) {
-            filmsScore.value[filmId][category] = 0
-        }
+        delete votes[userId][category]
+        if (Object.keys(votes[userId]).length === 0) delete votes[userId]
 
-        filmsScore.value[filmId][category]++
-
-        // Sauvegarder dans localStorage
-        localStorage.setItem("filmsScore", JSON.stringify(filmsScore.value))
-        localStorage.setItem("votes", JSON.stringify(votes.value))
+        localStorage.setItem("filmsScore", JSON.stringify(filmsScore))
+        localStorage.setItem("votes", JSON.stringify(votes))
     }
 
     const resetVotes = () => {
-        votes.value = []
-        filmsScore.value = {}
+        for (const k in votes) delete votes[k]
+        for (const k in filmsScore) delete filmsScore[k]
         localStorage.removeItem("filmsScore")
         localStorage.removeItem("votes")
     }
@@ -70,7 +67,8 @@ export const useVotesStore = defineStore('votes', () => {
     return {
         filmsScore,
         votes,
-        addVote,
+        addOrUpdateVote,
+        removeVote,
         resetVotes
     }
 })
