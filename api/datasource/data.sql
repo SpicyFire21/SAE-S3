@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS colors CASCADE;
 DROP TABLE IF EXISTS sizes CASCADE;
 DROP TABLE IF EXISTS goodies CASCADE;
 DROP TABLE IF EXISTS notes CASCADE;
+DROP TABLE IF EXISTS provider_requests CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 
@@ -27,14 +28,27 @@ CREATE TABLE IF NOT EXISTS users
 (
     id          UUID PRIMARY KEY,
     name        VARCHAR(255),
-    login       VARCHAR(100) UNIQUE                                        NOT NULL,
-    password    VARCHAR(255)                                               NOT NULL,
-    email       VARCHAR(255) UNIQUE                                        NOT NULL,
+    login       VARCHAR(100) UNIQUE               NOT NULL,
+    password    VARCHAR(255)                      NOT NULL,
+    email       VARCHAR(255) UNIQUE               NOT NULL,
     droit       INT CHECK (droit BETWEEN 0 AND 2) NOT NULL,
     session     TEXT,
     type        VARCHAR(100),
     nom_photo   VARCHAR(255),
     description TEXT
+);
+
+-- DEMANDES DE PRESTATAIRES
+CREATE TABLE IF NOT EXISTS provider_requests
+(
+    id          UUID PRIMARY KEY,
+    name        VARCHAR(255),
+    login       VARCHAR(100) UNIQUE               NOT NULL,
+    password    VARCHAR(255)                      NOT NULL,
+    email       VARCHAR(255) UNIQUE               NOT NULL,
+    email2       VARCHAR(255) UNIQUE               NOT NULL,
+    droit       INT CHECK (droit BETWEEN 0 AND 1) NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 

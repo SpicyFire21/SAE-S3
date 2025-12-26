@@ -222,25 +222,28 @@ async function getAllBasketItems(id){
 }
 
 export default {
-    getGoodiesByProviderId,
-    addGoodie,
-    updateGoodie,
     getGoodies ,
-    getGoodiesSizes,
-    getGoodiesColors,
-    addGoodieColor,
-    addGoodieSize,
-    deleteAllColors,
-    deleteAllSizes,
-    addSize,
-    addColor,
     getColors,
     getSizes,
-    getBasketByUserId,
-    getBasketItems,
-    payOrder,
-    addBasketItems,
+    getGoodiesByProviderId,
+    getGoodiesSizes,
+    getGoodiesColors,
+    getAllBasketItems,
     getAllBasketByUserId,
-    getAllBasketItems
+    getBasketItems, //ByBasketId
+    getBasketByUserId,
+    addBasketItems,
+    payOrder,
+    addGoodie,
+    addSize,
+    addColor,
+    updateGoodie,
+    deleteAllColors,
+    deleteAllSizes,
+    addGoodieColor,
+    addGoodieSize,
+
+
+
 
 }

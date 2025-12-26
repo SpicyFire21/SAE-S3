@@ -11,6 +11,16 @@ export const getUsers = async (req,res) => {
         return res.status(500).send("Erreur lors de la récupération des utilisateurs");
     }
 }
+export const getUsersById = async (req,res) => {
+    try {
+        let data = await userService.getUsersById(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération de l\'utilisateur");
+    }
+}
 
 export const addUser = async (req,res) => {
     const { droit } = req.body;

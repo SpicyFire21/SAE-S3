@@ -4,6 +4,8 @@ import cors from 'cors'
 import bodyParser from "body-parser";
 import http from "http";
 
+import swaggerUi from "swagger-ui-express"
+import swaggerConfig from './config/swaggerConfig.js'
 const app = express();
 
 const PORT = 3000
@@ -13,14 +15,25 @@ const server = http.createServer(app);
 
 import userRoute from './routes/user.router.js';
 import providerRoute from './routes/provider.router.js';
-
+import goodieRoute from './routes/goodie.router.js';
+import colorRoute from './routes/color.router.js';
+import sizeRoute from './routes/size.router.js';
+import basketRoute from './routes/basket.router.js'
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: 'http://localhost:5173' }));
 
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerDocs));
+
 app.use('/users',userRoute);
 app.use('/providers',providerRoute);
+app.use('/goodies',goodieRoute);
+app.use('/colors',colorRoute);
+app.use('/sizes',sizeRoute);
+app.use('/baskets',basketRoute)
 
 
 
