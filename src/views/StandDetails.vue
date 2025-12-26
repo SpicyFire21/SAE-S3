@@ -5,10 +5,11 @@
 
         <div class="flex flex-col gap-2">
           <h1 class="text-[var(--jaune)] font-bold">
-            Nom du stand: {{ stand.name }}
+            Nom du stand: {{ stand?.name }}
           </h1>
-          <h1>Type: {{ stand.typeName }}</h1>
-          <h1>Propriétaire: {{ stand.ownerName }}</h1>
+          <h1>Type: {{ typeStand?.type }}</h1>
+          <h1>Propriétaire: {{ user?.name || 'Aucun propriétaire' }}</h1>
+<!--          si pas de nom == aucun propriétaire-->
         </div>
       </div>
       <component
@@ -20,28 +21,35 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import {computed, onMounted, ref} from "vue";
 import { useRoute } from "vue-router";
 import { useStandsStore } from "@/stores/modules/stands.js";
 
 import CinemaStandDetails from "@/components/StandDetails/CinemaStandDetails.vue";
 import AutographStandDetails from "@/components/StandDetails/AutographStandDetails.vue";
+import {useUserStore} from "@/stores/index.js";
 
 
 const standsStore = useStandsStore();
+const userStore = useUserStore();
 const route = useRoute();
 const id = route.params.id;
 
+const stand = ref(null)
+const typeStand = ref(null)
+const user = ref(null)
+
 onMounted(async () => {
   await standsStore.init();
-});
+  stand.value = await standsStore.getStandById(id);
+  typeStand.value = await standsStore.getStandTypeById(stand.value.type);
+  user.value = await userStore.getUserById(stand.value.owner);
+})
 
 const componentMap = { // faut bien faire attention a se referer aux ids dans data
   1: CinemaStandDetails,
   2: AutographStandDetails,
 };
 
-const stand = computed(() =>
-    standsStore.enrichedStands.find(f => f.idstand === id)
-);
+
 </script>

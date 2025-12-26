@@ -13,6 +13,11 @@ async function getProviders() {
     return { error: 0, status: 200, data: providers }
 }
 
+async function getUserById(id) {
+    const user = users.find(u => u.id === id);
+    return { error: 0, status: 200, data: user}
+}
+
 
 async function login(data){
     console.log(data)
@@ -149,4 +154,5 @@ export default {
     getProviders,
     registerUser,
     registerProvider,
+    getUserById
 }

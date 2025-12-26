@@ -1,8 +1,23 @@
 import userController from "@/datasource/controller/user.controller.js"
 
+
+async function getUserByIdFromLocalSource(id) {
+    return userController.getUserById(id);
+}
 async function getUserFromLocalSource(){
     return userController.getUsers();
 }
+
+export async function getUserById(id){
+    let response = null;
+    try {
+        response = await getUserByIdFromLocalSource(id);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le user'}
+    }
+    return response;
+}
+
 export async function getUsers(){
     let response = null;
     try {
@@ -73,5 +88,6 @@ export default {
     login,
     getProviders,
     registerUser,
-    registerProvider
+    registerProvider,
+    getUserById
 }

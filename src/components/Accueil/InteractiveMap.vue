@@ -11,7 +11,7 @@
       <rect class="non-interactive" id="hall1" x="1226" y="25" width="797" height="931" />
       <rect class="non-interactive" id="hall2" x="1226" y="989" width="797" height="931" />
 
-      <template v-for="stand in standsStore.enrichedStands" :key="stand.id">
+      <template v-for="stand in standsStore.stands" :key="stand.id">
         <rect
             :class="['interactive', getStandStyle(stand.type)]"
             :x="stand.x"
@@ -37,9 +37,9 @@
         class="fixed bg-[var(--noir)]/90 p-4 rounded-lg shadow-xl max-w-xs w-64 z-50 pointer-events-auto transform transition duration-200"
         :style="{ top: popup.y + 'px', left: popup.x + 'px' }"
     >
-      <h3 class="text-[var(--jaune)] mb-2">{{ popup.stand.name }}</h3>
-      <p class="text-white mb-1">Type: {{ popup.stand.typeName }}</p>
-      <p class="text-white mb-2">Propriétaire: {{ popup.stand.ownerName }}</p>
+      <h3 class="text-[var(--jaune)] mb-2">{{ popup.stand?.name }}</h3>
+      <p class="text-white mb-1">Type: {{ popup.standType?.type }}</p>
+      <p class="text-white mb-2">Propriétaire: {{ popup.owner?.name || 'Aucun propriétaire' }}</p>
       <div class="gap-3">
       <button
           class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded"
@@ -92,7 +92,9 @@ const popup = reactive({
   visible: false,
   x: 0,
   y: 0,
-  stand: null
+  stand: null,
+  standType: null,
+  owner: null
 });
 
 const hidePopup = () => {
@@ -100,11 +102,13 @@ const hidePopup = () => {
 };
 
 
-const showPopup = (event, stand) => {
+const showPopup = async (event, stand) => {
   popup.stand = stand;
   popup.x = event.clientX; // position souris
   popup.y = event.clientY;
   popup.visible = true;
+  popup.standType = await standsStore.getStandTypeById(stand.type)
+  popup.owner = await userStore.getUserById(stand.owner);
 };
 
 
@@ -112,7 +116,6 @@ const goToStand = (id) => {
   if (userStore.currentUser) {
     const selectedStand = standsStore.stands.find(stand => stand.idstand === id)
     standsStore.setSelectedStand(selectedStand)
-    console.log("stand selectionné:" + JSON.stringify(selectedStand));
     router.push({name: 'StandDetails', params: {id}})
   } else {
     router.push({name: 'LoginPage'})

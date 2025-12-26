@@ -132,7 +132,7 @@ onMounted(async () => {
 const confirmFilmReservation = async () => {
   await reservationsStore.addFilmReservation({
     userId: usersStore.currentUser.id,
-    type: "film",
+    type: props.stand.type,
     date: filmsStore.selectedProjection.date,
     projectionId: filmsStore.selectedProjection.id,
     standId: props.stand.idstand

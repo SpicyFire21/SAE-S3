@@ -4,8 +4,7 @@ import filmsService from "@/services/films.service.js"
 import {getUsers} from "@/services/user.service.js";
 import standsService from "@/services/stands.service.js";
 import reservationsService, {
-    addFilmReservation,
-    getFilmFromReservation
+    addFilmReservation, getEventFromReservation,
 } from "@/services/reservations.service.js";
 import {projections, reservations} from "@/datasource/data.js";
 
@@ -34,6 +33,10 @@ export const useReservationsStore = defineStore('reservations', () => {
         reservations.value.push(data)
     }
 
+    const pushAutographReservation = (data) => {
+        autographsReservations.value.push(data);
+    }
+
 
 
 
@@ -46,9 +49,9 @@ export const useReservationsStore = defineStore('reservations', () => {
         }
     }
 
-    const getFilmFromReservation = async (reservation) => {
+    const getEventFromReservation = async (reservation) => {
         try {
-            const response = await reservationsService.getFilmFromReservation(reservation)
+            const response = await reservationsService.getEventFromReservation(reservation)
             return response.data
         } catch (e) {
             console.error(e)
@@ -59,6 +62,16 @@ export const useReservationsStore = defineStore('reservations', () => {
         try {
             const response = await reservationsService.addFilmReservation(data);
             pushFilmReservation(response.data.filmReservation)
+            pushReservation(response.data.reservation)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const addAutographReservation = async (data) => {
+        try {
+            const response = await reservationsService.addAutographReservation(data);
+            pushAutographReservation(response.data.autographReservation)
             pushReservation(response.data.reservation)
         } catch (e) {
             console.error(e)
@@ -101,6 +114,6 @@ export const useReservationsStore = defineStore('reservations', () => {
         getAutographsReservations,
         getFilmsReservations,
         addFilmReservation,
-        getReservationByIdUser, getFilmFromReservation
+        getReservationByIdUser, getEventFromReservation, addAutographReservation
     }
 })

@@ -72,7 +72,7 @@
 
         <section>
           <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            🎬 Réservations
+            📅 Réservations
           </h2>
 
           <div v-if="reservations.length" class="mt-4 grid md:grid-cols-2 gap-4">
@@ -81,7 +81,12 @@
                 :key="r.id"
                 class="p-4 bg-gray-50 border rounded-xl shadow-sm"
             >
-              <p class="font-semibold">{{ r.filmTitle }}</p>
+              <div v-if="r.type === '1'">
+                <h2 class="text-xl font-bold text-gray-900 flex items-center justify-center gap-2 pb-5">
+                  Film
+                </h2>
+<!--                absolute cinema-->
+                <p class="font-semibold">Film: {{ r.filmTitle }}</p>
               <p class="text-gray-500 text-sm">
                 {{
                   new Date(r.date).toLocaleString('fr-FR', {
@@ -96,13 +101,34 @@
               </p>
 
               <p class="mt-1 text-sm">
-                <span class="font-medium">Type :</span> {{ r.type }}
+                <span class="font-medium">Type :</span> {{ r.typeTitle }}
               </p>
 
               <p class="text-sm">
                 <span class="font-medium">Stand :</span> {{ r.standTitle }}
               </p>
             </div>
+              <div v-else-if="r.type === '2'">
+                <h2 class="text-xl font-bold text-gray-900 flex items-center justify-center gap-2 pb-5">
+                  Dédicace
+                </h2>
+                <!-- star extremement importante du cinema et a notre festival bien sur -->
+                <p class="font-semibold">Star: {{ r.starName }}</p>
+                <p class="text-gray-500 text-sm">
+                  {{ formatDate(r.date) }}
+                </p>
+
+
+                <p class="mt-1 text-sm">
+                  <span class="font-medium">Type :</span> {{ r.typeTitle }}
+                </p>
+
+                <p class="text-sm">
+                  <span class="font-medium">Stand :</span> {{ r.standTitle }}
+                </p>
+              </div>
+          </div>
+
           </div>
 
           <p v-else class="text-gray-400 mt-2">Aucune réservation.</p>
@@ -162,6 +188,7 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useGoodiesStore, useTicketsStore, useUserStore, useReservationsStore, useStandsStore } from '@/stores/index.js';
+import {getEventFromReservation} from "@/services/reservations.service.js";
 
 const userStore = useUserStore();
 const goodiesStore = useGoodiesStore();
@@ -221,12 +248,33 @@ onMounted(async () => {
   await ticketStore.getBilletsByUserId(user.value.id);
   await reservationStore.getReservationByIdUser(user.value.id);
   await standStore.getStands();
+  await userStore.getUsers();
 
+
+  // pour affichage d'infos
   for (const r of reservations.value) {
-    const film = await reservationStore.getFilmFromReservation(r);
+    const film = await reservationStore.getEventFromReservation(r);
     r.filmTitle = film?.title || 'Titre inconnu';
+    const autograph = await reservationStore.getEventFromReservation(r);
+    const userOfAutograph = await userStore.getUserById(autograph.userId);
+    r.starName = userOfAutograph?.name || 'Nom de la star inconnu';
     const stand = await standStore.getStandById(r.standId);
     r.standTitle = stand?.name || 'Titre inconnu';
+    const typeStand = await standStore.getStandTypeById(r.type);
+    r.typeTitle = typeStand?.type || 'Type inconnu';
   }
 });
+
+const formatDate = (date) => {
+  if (!date) return 'Date inconnue';
+  return new Date(date).toLocaleString('fr-FR', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
 </script>

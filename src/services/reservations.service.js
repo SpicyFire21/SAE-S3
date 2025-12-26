@@ -16,18 +16,22 @@ async function addFilmReservationFromLocalSource(data) {
     return reservationController.addFilmReservation(data);
 }
 
+async function addAutographReservationFromLocalSource(data) {
+    return reservationController.addAutographReservation(data);
+}
+
 async function getReservationByIdUserFromLocalSource(id) {
     return reservationController.getReservationByIdUser(id)
 }
 
-async function getFilmFromReservationFromLocalSource(reservation) {
-    return reservationController.getFilmFromReservation(reservation)
+async function getEventFromReservationFromLocalSource(reservation) {
+    return reservationController.getEventFromReservation(reservation)
 }
 
-export async function getFilmFromReservation(reservation){
+export async function getEventFromReservation(reservation){
     let response = null;
     try {
-        response = await getFilmFromReservationFromLocalSource(reservation);
+        response = await getEventFromReservationFromLocalSource(reservation);
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de recuperer le nom de ce film'}
     }
@@ -40,6 +44,16 @@ export async function getReservationByIdUser(id){
         response = await getReservationByIdUserFromLocalSource(id);
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de recuperer des reservations pour cet utilisateur'}
+    }
+    return response;
+}
+
+export async function addAutographReservation(data){
+    let response = null;
+    try {
+        response = await addAutographReservationFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible dajouter un film'}
     }
     return response;
 }
@@ -86,5 +100,6 @@ export async function getAutographsReservations(){
 
 
 export default {
-    getReservations, getAutographsReservations, getFilmsReservations, addFilmReservation, getReservationByIdUser, getFilmFromReservation
+    getReservations, getAutographsReservations, getFilmsReservations, addFilmReservation, getReservationByIdUser, getEventFromReservation,
+    addAutographReservation
 }

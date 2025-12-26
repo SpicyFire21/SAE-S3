@@ -1,6 +1,7 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import userService from "@/services/user.service.js"
+import standsService from "@/services/stands.service.js";
 
 export const useUserStore = defineStore('user', () => {
     // state
@@ -51,6 +52,19 @@ export const useUserStore = defineStore('user', () => {
             console.error(e)
         }
     }
+
+    const getUserById = (id) => {
+        return users.value.find(u => u.id === id);
+    };
+
+    // const getUserById = async (id) => {
+    //     try {
+    //         const response = await userService.getUserById(id);
+    //         return response.data
+    //     } catch (e) {
+    //         console.error(e)
+    //     }
+    // }
 
     const getProviders = async () => {
         try {
@@ -136,6 +150,7 @@ export const useUserStore = defineStore('user', () => {
         Login,
         registerUser,
         logout,
-        registerProvider
+        registerProvider,
+        getUserById
     }
 })

@@ -10,7 +10,7 @@ let users = [
         "note": [],
         "type": "",
         "nom_photo": "",
-        "description": ""
+        "description": "",
     },
     {
         "id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
@@ -349,7 +349,7 @@ let stands = [
     {"idstand": "3", "name": "cinema 3", "x": 25, "y": 1303, "width": 481, "height": 620, "type": "1", "owner": null},
 
     {"idstand": "4", "name": "adamdedicace1", "x": 886, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
-    // {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
+    {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
@@ -392,9 +392,16 @@ let reservations = [
     {
         "id": "1",
         "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "type": "film",
+        "type": "1",
         "date": "2025-12-23T14:00:00",
         "standId": "1"
+    },
+    {
+        "id": "2",
+        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        "type": "2",
+        "date": "2025-12-23T14:00:00",
+        "standId": "4"
     },
 ];
 
@@ -408,7 +415,7 @@ let films_reservations = [
 let autographs_reservations = [
     {
         reservationId: "2",
-        artistId: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414"
+        autographId: "1"
     }
 ];
 
@@ -418,6 +425,12 @@ let projections = [
     { "id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00" },
     { "id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00" },
     { "id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00" }
+];
+
+let autographs = [
+    { "id": "1", "standId": "4", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-23T18:00:00", "duration": "120"}, // minutes (pomme)
+    { "id": "2", "standId": "4", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-23T21:00:00", "duration": "60"},
+    { "id": "3", "standId": "5", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-27T21:00:00", "duration": "120"}
 ];
 
 
@@ -878,6 +891,7 @@ export {
     reservations,
     projections,
     films_reservations,
-    autographs_reservations
+    autographs_reservations,
+    autographs
 
 }

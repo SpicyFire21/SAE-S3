@@ -18,20 +18,6 @@ export const useStandsStore = defineStore('stands', () => {
 
 
 
-    // A ENLEVER DEMAIN
-    const enrichedStands = computed(() => { // ici on va utiliser cela pour l'affichage dans le front
-        // comme on a pas les données en dur (par exemple le nom, le nom du type etc...) au lieu de faire la liaison dans chaque
-        // composant
-        return stands.value.map(stand => {
-            const owner = userStore.users.find(u => u.id === stand.owner);
-            const type = standsTypes.value.find(t => t.id === stand.type);
-            return {
-                ...stand,
-                ownerName: owner ? owner.name : "Stand sans propriétaire",
-                typeName: type ? type.type : "Stand sans type"
-            };
-        });
-    });
 
     const getProjectionsByStandAndFilm = (standId, filmId) => {
         return filmStore.projections.filter(
@@ -39,10 +25,7 @@ export const useStandsStore = defineStore('stands', () => {
         );
     }
 
-    const getNameStandById = (standId) => {
-        const stand = stands.value.find(s => s.idStand === standId);
-        return stand ? stand.name : null;
-    }
+
 
 
 
@@ -101,11 +84,20 @@ export const useStandsStore = defineStore('stands', () => {
         }
     }
 
+    const getStandTypeById = async (id) => {
+        try {
+            const response = await standsService.getStandTypeById(id);
+            return response.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
 
     return {
         stands, selectedStand, getStands, setSelectedStand,
-        clearSelectedStand, getStandsTypes, standsTypes, enrichedStands, init,
-        getProjectionsByStandAndFilm, getNameStandById, getStandById
+        clearSelectedStand, getStandsTypes, standsTypes, init,
+        getProjectionsByStandAndFilm, getStandById, getStandTypeById
     }
 })

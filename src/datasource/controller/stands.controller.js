@@ -12,8 +12,14 @@ async function getStandById(id) {
     return { error: 0, status: 200, data: stand }
 }
 
+async function getStandTypeById(id) {
+    const typeStand = standTypes.find(ts => ts.id === id)
+    return { error: 0, status: 200, data: typeStand }
+}
+
 export default {
     getStands,
     getStandsTypes,
-    getStandById
+    getStandById,
+    getStandTypeById
 }
