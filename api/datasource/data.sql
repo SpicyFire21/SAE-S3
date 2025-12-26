@@ -1,3 +1,4 @@
+DROP TABLE IF  EXISTS autographs CASCADE;
 DROP TABLE IF EXISTS comments_golden_book CASCADE;
 DROP TABLE IF EXISTS autograph_reservations CASCADE;
 DROP TABLE IF EXISTS film_reservations CASCADE;
@@ -178,7 +179,7 @@ CREATE TABLE IF NOT EXISTS stands
     FOREIGN KEY (owner_id) REFERENCES users (id)
 );
 
-CREATE TABLE autographs
+CREATE TABLE IF NOT EXISTS autographs
 (
     id         SERIAL PRIMARY KEY,
     stand_id   INT       NOT NULL REFERENCES stands (id) ON DELETE CASCADE,
@@ -200,17 +201,6 @@ CREATE TABLE IF NOT EXISTS films
     poster       VARCHAR(255),
     FOREIGN KEY (director_id) REFERENCES users (id)
 );
-
--- CREATE TABLE IF NOT EXISTS film_tickets
--- (
---     id         UUID PRIMARY KEY,
---     user_id    UUID      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
---     film_id    UUID      NOT NULL REFERENCES films (id) ON DELETE CASCADE,
---     ticket_id  UUID      NOT NULL REFERENCES tickets (id) ON DELETE CASCADE,
---     date_from  TIMESTAMP NOT NULL,
---     date_to    TIMESTAMP NOT NULL,
---     price_id   INT       NOT NULL
--- );
 
 CREATE TABLE IF NOT EXISTS genres
 (
