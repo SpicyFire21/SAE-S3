@@ -19,6 +19,12 @@ import goodieRoute from './routes/goodie.router.js';
 import colorRoute from './routes/color.router.js';
 import sizeRoute from './routes/size.router.js';
 import basketRoute from './routes/basket.router.js'
+import autographRoute from './routes/autographs.router.js'
+import filmRoute from './routes/film.router.js'
+import projectionRoute from './routes/projection.router.js'
+import standRoute from './routes/stand.router.js'
+import ticketRoute from './routes/ticket.router.js'
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +39,13 @@ app.use('/providers',providerRoute);
 app.use('/goodies',goodieRoute);
 app.use('/colors',colorRoute);
 app.use('/sizes',sizeRoute);
-app.use('/baskets',basketRoute)
+app.use('/baskets',basketRoute);
+app.use('/autographs',autographRoute);
+app.use('/films',filmRoute);
+app.use('/projections',projectionRoute);
+app.use('/stands',standRoute);
+app.use('/tickets',ticketRoute);
+
 
 
 

@@ -428,7 +428,12 @@ let projections = [
 ];
 
 let autographs = [
-    { "id": "1", "standId": "4", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-23T18:00:00", "duration": "120"}, // minutes (pomme)
+    {
+        "id": "1",
+        "standId": "4",
+        "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
+        "beginDate": "2025-12-23T18:00:00",
+        "duration": "120"},
     { "id": "2", "standId": "4", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-23T21:00:00", "duration": "60"},
     { "id": "3", "standId": "5", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-27T21:00:00", "duration": "120"}
 ];

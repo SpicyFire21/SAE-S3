@@ -23,6 +23,8 @@ DROP TABLE IF EXISTS provider_requests CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 
+
+
 -- UTILISATEURS
 CREATE TABLE IF NOT EXISTS users
 (
@@ -41,14 +43,14 @@ CREATE TABLE IF NOT EXISTS users
 -- DEMANDES DE PRESTATAIRES
 CREATE TABLE IF NOT EXISTS provider_requests
 (
-    id          UUID PRIMARY KEY,
-    name        VARCHAR(255),
-    login       VARCHAR(100) UNIQUE               NOT NULL,
-    password    VARCHAR(255)                      NOT NULL,
-    email       VARCHAR(255) UNIQUE               NOT NULL,
-    email2       VARCHAR(255) UNIQUE               NOT NULL,
-    droit       INT CHECK (droit BETWEEN 0 AND 1) NOT NULL,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id       UUID PRIMARY KEY,
+    name     VARCHAR(255),
+    login    VARCHAR(100) UNIQUE               NOT NULL,
+    password VARCHAR(255)                      NOT NULL,
+    email    VARCHAR(255) UNIQUE               NOT NULL,
+    email2   VARCHAR(255) UNIQUE               NOT NULL,
+    droit    INT CHECK (droit BETWEEN 0 AND 1) NOT NULL,
+    date     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -176,9 +178,17 @@ CREATE TABLE IF NOT EXISTS stands
     FOREIGN KEY (owner_id) REFERENCES users (id)
 );
 
+CREATE TABLE autographs
+(
+    id         SERIAL PRIMARY KEY,
+    stand_id   INT       NOT NULL REFERENCES stands (id) ON DELETE CASCADE,
+    user_id    UUID      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    begin_date TIMESTAMP NOT NULL,
+    duration   INT       NOT NULL
+);
+
 
 -- FILMS
-
 CREATE TABLE IF NOT EXISTS films
 (
     id           UUID PRIMARY KEY,
@@ -190,6 +200,17 @@ CREATE TABLE IF NOT EXISTS films
     poster       VARCHAR(255),
     FOREIGN KEY (director_id) REFERENCES users (id)
 );
+
+-- CREATE TABLE IF NOT EXISTS film_tickets
+-- (
+--     id         UUID PRIMARY KEY,
+--     user_id    UUID      NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+--     film_id    UUID      NOT NULL REFERENCES films (id) ON DELETE CASCADE,
+--     ticket_id  UUID      NOT NULL REFERENCES tickets (id) ON DELETE CASCADE,
+--     date_from  TIMESTAMP NOT NULL,
+--     date_to    TIMESTAMP NOT NULL,
+--     price_id   INT       NOT NULL
+-- );
 
 CREATE TABLE IF NOT EXISTS genres
 (
@@ -249,6 +270,7 @@ CREATE TABLE IF NOT EXISTS film_reservations
     FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE CASCADE,
     FOREIGN KEY (projection_id) REFERENCES projections (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS autograph_reservations
 (
