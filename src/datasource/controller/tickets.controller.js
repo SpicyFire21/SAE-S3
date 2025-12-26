@@ -38,12 +38,14 @@ async function getBilletsByUserId(id){
 
     return { error: 0, status: 200, data: billets };
 }
+
 async function getFilmTickets() {
     return {error:0, status:200, data:film_tickets}
 }
 
 export default {
     getFilmTickets,
+
     createTicket,
     getBilletsByUserId,
     getTicketsPrice
