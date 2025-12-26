@@ -1,26 +1,42 @@
-import { film_tickets } from "@/datasource/data.js"
+import votesController from "@/datasource/controller/votes.controller.js"
+
+export async function addOrUpdateVote(data) {
+    try {
+        return await votesController.addOrUpdateVote(data)
+    } catch (err) {
+        console.error("Controller votes error:", err)
+        return { error: 1, status: 500, data: "Erreur réseau, impossible d’ajouter un vote." }
+    }
+}
+
+export async function removeVote(data) {
+    try {
+        return await votesController.removeVote(data)
+    } catch (err) {
+        console.error("Controller votes error:", err)
+        return { error: 1, status: 500, data: "Erreur réseau, impossible de supprimer le vote." }
+    }
+}
 
 export async function getVotes() {
-    // Simule un appel API
-    const stored = localStorage.getItem("pablos_votes")
-    return { error: 0, status: 200, data: stored ? JSON.parse(stored) : [] }
-}
-
-export async function addVote(vote) {
-    const stored = localStorage.getItem("pablos_votes")
-    const votes = stored ? JSON.parse(stored) : []
-
-    // Empêche double vote même user/film/catégorie
-    const already = votes.find(
-        v => v.userId === vote.userId && v.filmId === vote.filmId && v.category === vote.category
-    )
-    if (already) {
-        throw new Error("Vote déjà enregistré pour cette catégorie")
+    try {
+        return await votesController.getVotes()
+    } catch {
+        return { error: 1, status: 500, data: "Erreur réseau, impossible de charger les votes." }
     }
-
-    votes.push(vote)
-    localStorage.setItem("pablos_votes", JSON.stringify(votes))
-    return { error: 0, status: 201, data: "vote enregistré" }
 }
 
-export default { getVotes, addVote }
+export async function resetVotes() {
+    try {
+        return await votesController.resetVotes()
+    } catch {
+        return { error: 1, status: 500, data: "Erreur réseau, impossible de réinitialiser les votes." }
+    }
+}
+
+export default {
+    addOrUpdateVote,
+    removeVote,
+    getVotes,
+    resetVotes
+}
