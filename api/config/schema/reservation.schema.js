@@ -2,21 +2,27 @@
  * @openapi
  * components:
  *   schemas:
- *     Projection:
+ *      Reservation:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
- *         stand_id:
- *           type: integer
- *         film_id:
+ *         user_id:
  *           type: string
  *           format: uuid
  *         date:
  *           type: string
  *           format: date-time
+ *         stand_id:
+ *           type: integer
+ *         type:
+ *           type: string
+ *           enum:
+ *             - film
+ *             - autograph
  *       required:
- *         - stand_id
- *         - film_id
+ *         - user_id
  *         - date
+ *         - stand_id
+ *         - type
  */

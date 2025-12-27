@@ -2,21 +2,16 @@
  * @openapi
  * components:
  *   schemas:
- *     Projection:
+ *      FilmCast:
  *       type: object
  *       properties:
- *         id:
- *           type: integer
- *         stand_id:
- *           type: integer
  *         film_id:
  *           type: string
  *           format: uuid
- *         date:
+ *         actor_id:
  *           type: string
- *           format: date-time
+ *           format: uuid
  *       required:
- *         - stand_id
  *         - film_id
- *         - date
+ *         - actor_id
  */

@@ -2,21 +2,22 @@
  * @openapi
  * components:
  *   schemas:
- *     Projection:
+ *      CommentGoldenBook:
  *       type: object
  *       properties:
  *         id:
- *           type: integer
- *         stand_id:
- *           type: integer
- *         film_id:
  *           type: string
  *           format: uuid
+ *         user_id:
+ *           type: string
+ *           format: uuid
+ *         commentaire:
+ *           type: string
  *         date:
  *           type: string
  *           format: date-time
  *       required:
- *         - stand_id
- *         - film_id
+ *         - user_id
+ *         - commentaire
  *         - date
  */

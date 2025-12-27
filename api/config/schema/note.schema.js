@@ -2,21 +2,23 @@
  * @openapi
  * components:
  *   schemas:
- *     Projection:
+ *      Note:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
- *         stand_id:
- *           type: integer
- *         film_id:
+ *         user_id:
  *           type: string
  *           format: uuid
- *         date:
+ *         value:
+ *           type: number
+ *           format: float
+ *           minimum: 0
+ *           maximum: 5
+ *         created_at:
  *           type: string
  *           format: date-time
  *       required:
- *         - stand_id
- *         - film_id
- *         - date
+ *         - user_id
+ *         - value
  */

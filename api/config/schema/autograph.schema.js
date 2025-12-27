@@ -2,21 +2,24 @@
  * @openapi
  * components:
  *   schemas:
- *     Projection:
+ *      Autograph:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
  *         stand_id:
  *           type: integer
- *         film_id:
+ *         user_id:
  *           type: string
  *           format: uuid
- *         date:
+ *         begin_date:
  *           type: string
  *           format: date-time
+ *         duration:
+ *           type: integer
  *       required:
  *         - stand_id
- *         - film_id
- *         - date
+ *         - user_id
+ *         - begin_date
+ *         - duration
  */
