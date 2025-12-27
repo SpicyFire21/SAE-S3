@@ -68,6 +68,17 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const setBaskets = (data) =>{
         baskets.value = data
     }
+    const removeBasketItem = (data) => {
+        basketItems.value = basketItems.value.filter(b =>
+            !(
+                b.idbasket === data.idbasket &&
+                b.idgoodie === data.idgoodie &&
+                b.idcolor === data.idcolor &&
+                b.idsize === data.idsize
+            )
+        )
+    }
+
 
     const updateGoodies = (data) =>{
         goodies.value = data
@@ -163,6 +174,35 @@ export const useGoodiesStore = defineStore('goodies', () => {
             } else {
                 console.error(response.data)
             }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const addBasketItems = async (data) =>{
+        try {
+            const response = await goodiesService.addBasketItems(data);
+            if (response.error === 0){
+                pushBasketItems(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const removeFromBasket = async (data) =>{
+        try {
+            const response = await goodiesService.removeFromBasket(data);
+            console.log(response)
+            if (response.error === 0){
+                removeBasketItem(response.data)
+            } else {
+                console.error(response.data)
+            }
+
 
         } catch (e) {
             console.error(e)
@@ -374,20 +414,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.error(e)
         }
     }
-    const addBasketItems = async (data) =>{
-        try {
-            const response = await goodiesService.addBasketItems(data);
-            if (response.error === 0){
-                pushBasketItems(response.data)
-            } else {
-                console.error(response.data)
-            }
 
-
-        } catch (e) {
-            console.error(e)
-        }
-    }
 
 
 
@@ -439,7 +466,8 @@ export const useGoodiesStore = defineStore('goodies', () => {
         payOrder,
         addBasketItems,
         getAllBasketByUserId,
-        getAllBasketItems
+        getAllBasketItems,
+        removeFromBasket
 
 
     }

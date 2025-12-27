@@ -265,6 +265,21 @@ async function getAllBasketItems(data){
 }
 
 
+async function removeFromBasketFromLocalSource(data){
+    return goodiesController.removeFromBasket(data);
+}
+async function removeFromBasket(data){
+    let response = null;
+    try {
+        response = await removeFromBasketFromLocalSource(data);
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer le goodie du panier'}
+    }
+    return response;
+}
+
+
 export default {
     getBasketByUserId,
     getBasketItems,
@@ -285,5 +300,6 @@ export default {
     payOrder,
     addBasketItems,
     getAllBasketByUserId,
-    getAllBasketItems
+    getAllBasketItems,
+    removeFromBasket
 }

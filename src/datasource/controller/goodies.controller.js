@@ -221,6 +221,24 @@ async function getAllBasketItems(id){
     return { error: 0, status: 201, data: basket_items };
 }
 
+async function removeFromBasket(data) {
+    const index = basket_items.findIndex(b =>
+        b.idbasket === data.idbasket &&
+        b.idgoodie === data.idgoodie &&
+        b.idcolor === data.idcolor &&
+        b.idsize === data.idsize
+    )
+
+    if (index === -1) {
+        return { error: 1, status: 404, data: "item inexistant dans le panier" }
+    }
+
+    const removedItem = basket_items.splice(index, 1)[0]
+
+    return {error: 0, status: 200, data: removedItem}
+}
+
+
 export default {
     getGoodies ,
     getColors,
@@ -242,6 +260,7 @@ export default {
     deleteAllSizes,
     addGoodieColor,
     addGoodieSize,
+    removeFromBasket
 
 
 

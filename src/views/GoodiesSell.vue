@@ -113,26 +113,37 @@
         <li
             v-for="(item, index) in groupedBasketItems"
             :key="index"
-            class="flex flex-col gap-1 py-2 border-b border-neutral-200"
+            class="py-3 border-b border-neutral-200"
         >
-          <div class="flex justify-between">
-            <span>
-              {{ goodiesStore.getName(item.idgoodie) }}
-            </span>
-            <span>
-              {{ item.count }} × {{ goodiesStore.getPrice(item.idgoodie) }} €
-            </span>
-          </div>
+          <div class="flex justify-between items-start gap-4">
+            <div class="flex flex-col gap-1">
+      <span>
+        {{ goodiesStore.getName(item.idgoodie) }}
+      </span>
 
-          <div class="flex justify-between text-sm text-neutral-500">
-            <span>Couleur : {{ goodiesStore.getColor(item.idcolor) }}</span>
-            <span>Taille : {{ goodiesStore.getSize(item.idsize) }}</span>
-          </div>
+              <div class="text-sm text-neutral-500">
+                Couleur : {{ goodiesStore.getColor(item.idcolor) }} ·
+                Taille : {{ goodiesStore.getSize(item.idsize) }}
+              </div>
 
-          <div class="flex justify-end text-yellow-500">
-            Total : {{ (goodiesStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
+              <div class="text-sm">
+                {{ item.count }} × {{ goodiesStore.getPrice(item.idgoodie) }} €
+              </div>
+
+              <div class="text-yellow-500 text-sm">
+                Total : {{ (goodiesStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
+              </div>
+            </div>
+
+            <button
+                class="h-fit px-3 py-2 rounded-lg bg-[var(--rouge)] text-[var(--noir)] hover:bg-[var(--jaune)] transition"
+                @click="removeFromBasket(item)"
+            >
+              Retirer
+            </button>
           </div>
         </li>
+
       </ul>
 
       <div class="flex justify-between text-yellow-500 mb-4 text-lg">
@@ -198,6 +209,10 @@ async function command(){
 
 }
 
+async function removeFromBasket(item){
+  console.log(item)
+  await goodiesStore.removeFromBasket(item);
+}
 
 
 const groupedBasketItems = computed(() => {
