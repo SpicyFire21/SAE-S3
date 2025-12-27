@@ -2,12 +2,16 @@
  * @openapi
  * components:
  *   schemas:
- * ProviderRequest:
+ *     ProviderRequestInput:
  *       type: object
+ *       required:
+ *         - name
+ *         - login
+ *         - password
+ *         - email
+ *         - email2
+ *         - droit
  *       properties:
- *         id:
- *           type: string
- *           format: uuid
  *         name:
  *           type: string
  *         login:
@@ -20,15 +24,5 @@
  *           type: string
  *         droit:
  *           type: integer
- *           minimum: 0
- *           maximum: 1
- *         date:
- *           type: string
- *           format: date-time
- *       required:
- *         - login
- *         - password
- *         - email
- *         - email2
- *         - droit
+ *           enum: [0, 1]
  */

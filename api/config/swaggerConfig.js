@@ -20,7 +20,8 @@ const swaggerOptions = {
 
     apis: [
         path.join(__dirname, "../routes/*.js"),
-        path.join(__dirname, "./schema/*.js"),   // ← schémas
+        path.join(__dirname, "./schema/Outputs/*.js"),   // ← schémas
+        path.join(__dirname, "./schema/Inputs/*.js"),
     ],};
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

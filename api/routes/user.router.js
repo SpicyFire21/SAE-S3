@@ -1,8 +1,7 @@
 import express from 'express'
-import * as userController from "../controller/user.controller.js";
+import * as userController from "../controller/user.controller.js"
 
-
-let router = express.Router();
+let router = express.Router()
 
 /**
  * @openapi
@@ -23,10 +22,7 @@ let router = express.Router();
  *       500:
  *         description: Erreur serveur
  */
-router.get("/", userController.getUsers);
-
-
-
+router.get("/", userController.getUsers)
 
 /**
  * @openapi
@@ -57,7 +53,7 @@ router.get("/", userController.getUsers);
  *       401:
  *         description: Identifiants invalides
  */
-router.post("/login", userController.login);
+router.post("/login", userController.login)
 
 /**
  * @openapi
@@ -92,11 +88,33 @@ router.post("/login", userController.login);
  *       400:
  *         description: Données invalides
  */
-router.post("/register", userController.addUser);
+router.post("/register", userController.addUser)
 
+/**
+ * @openapi
+ * /users/{id}:
+ *   get:
+ *     summary: Récupérer un utilisateur par ID
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de l’utilisateur
+ *     responses:
+ *       200:
+ *         description: Utilisateur trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Utilisateur non trouvé
+ */
+router.get("/:id", userController.getUsersById)
 
-
-
-router.get("/:id", userController.getUsersById);
-
-export default router;
+export default router

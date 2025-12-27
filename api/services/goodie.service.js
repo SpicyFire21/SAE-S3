@@ -88,10 +88,24 @@ async function editGoodies(data,iduser){
     if (!iduser) {
         return { error: 1, status: 400, data: 'iduser manquant' };
     }
+    if (!data.id) {
+        return { error: 1, status: 400, data: 'id manquant' };
+    }
+    if (!data.name) {
+        return { error: 1, status: 400, data: 'name manquant' };
+    }if (!data.price) {
+        return { error: 1, status: 400, data: 'price manquant' };
+    }
+    if (!data.quantity) {
+        return { error: 1, status: 400, data: 'quantity manquant' };
+    }
+
+
+
 
     try {
         const res = await db.query('UPDATE goodies SET name = $3,price = $4,quantity = $5 WHERE id = $1 and owner_id = $2 RETURNING *'
-            ,[uuidv4(),data.iduser,data.name,data.price,data.quantity]);
+            ,[uuidv4(),iduser,data.name,data.price,data.quantity]);
         return { error: 0, status: 200, data:res.rows[0] };
     } catch (error){
         console.error(error);
