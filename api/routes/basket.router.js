@@ -8,8 +8,11 @@ router.get("/items",basketController.getAllBasketItems);
 router.post("/items",basketController.addBasketItems)
 router.get("/current/:iduser",basketController.getBasketByUserId);
 router.get("/:idbasket/items",basketController.getBasketItems);
+router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize",basketController.removeFromBasket); // besoin de choisir l'item a supprimer via un id unique
+
 router.get("/:iduser",basketController.getAllBasketByUserId);
 router.patch("/:idbasket",basketController.payOrder)
+
 
 
 

@@ -66,3 +66,17 @@ export const payOrder = async (req,res)=>{
         return res.status(500).send("Erreur lors du payement du panier")
     }
 }
+
+
+export const removeFromBasket = async (req,res)=>{
+    try {
+        const { idbasket, idgoodie, idcolor, idsize } = req.params
+
+        let data = await basketService.removeFromBasket(idbasket, idgoodie, idcolor, idsize);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send("Erreur lors de la suppression d'un item du panier")
+    }
+}

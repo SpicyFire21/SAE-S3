@@ -153,6 +153,38 @@ async function payOrder(idbasket){
     }
 }
 
+async function removeFromBasket(idbasket, idgoodie, idcolor, idsize){
+    const db = await pool.connect();
+    if(!idbasket ){
+        return { error: 1, status: 400, data: 'idbasket manquant' }
+    }
+    if(!idgoodie ){
+        return { error: 1, status: 400, data: 'idgoodie manquant' }
+    }
+    if(!idcolor ){
+        return { error: 1, status: 400, data: 'idcolor manquant' }
+    }
+    if(!idsize ){
+        return { error: 1, status: 400, data: 'idsize manquant' }
+    }
+
+
+
+    try {
+        const res = await db.query('SELECT * FROM baskets where id=$1',[idbasket]);
+        if (res.rows.length === 0){
+            return { error: 1, status: 404, data:"panier inexistant" };
+        }
+        const del = await db.query('DELETE FROM basket_items where basket_id =$1 and goodie_id = $2 and color_id = $3 and size_id =$4 RETURNING *',[idbasket, idgoodie, idcolor, idsize])
+        return { error: 0, status: 200, data:del.rows[0] };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression de l\'items du panier' };
+    } finally {
+        db.release();
+    }
+}
+
 export default {
     getAllBasketItems,
     getAllBasketByUserId,
@@ -160,7 +192,7 @@ export default {
     getBasketByUserId,
     addBasketItems,
     payOrder,
-
+    removeFromBasket
 
 
 }
