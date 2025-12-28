@@ -26,7 +26,7 @@ export const addUser = async (req,res) => {
     const { droit } = req.body;
     try {
         let data;
-        if (droit === "0" || droit === "1") {
+        if (droit === 0 || droit === 1) {
             data = await userService.addUser(req.body);
         } else {
             return res.status(400).send("Veuillez rentrer un droit valide (0 ou 1)");

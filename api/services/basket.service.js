@@ -23,7 +23,7 @@ async function getAllBasketByUserId(iduser) {
     }
 
     try {
-        const res = await db.query('SELECT * FROM basket_items where user_id = $1',[iduser]);
+        const res = await db.query('SELECT * FROM baskets where user_id = $1',[iduser]);
         return { error: 0, status: 200, data:res.rows };
     } catch (error) {
         console.error(error);
@@ -102,6 +102,15 @@ async function addBasketItems(data) {
 
 
     try {
+        const basketCheck = await db.query(
+            'SELECT id FROM baskets WHERE id = $1',
+            [data.idbasket]
+        );
+
+        if (basketCheck.rowCount === 0) {
+            return { error: 1, status: 404, data: 'Panier inexistant' };
+        }
+
         const res = await db.query('SELECT * FROM basket_items where basket_id =$1 and goodie_id = $2 and color_id = $3 and size_id = $4',
             [data.idbasket,data.idgoodie,data.idcolor,data.idsize]);
 

@@ -72,8 +72,12 @@ async function addGoodies(data){
         return { error: 1, status: 400, data: 'quantity manquant' };
     }
     try {
+        const newid = await db.query('SELECT MAX(id) FROM goodies');
+        const newId = newid.rows[0].max +1;
+
+
         const res = await db.query('INSERT INTO goodies (id,owner_id,name,price,quantity) values ($1,$2,$3,$4,$5) RETURNING *'
-            ,[uuidv4(),data.iduser,data.name,data.price,data.quantity]);
+            ,[newId,data.iduser,data.name,data.price,data.quantity]);
         return { error: 0, status: 201, data:res.rows };
     } catch (error){
         console.error(error);
@@ -105,7 +109,7 @@ async function editGoodies(data,iduser){
 
     try {
         const res = await db.query('UPDATE goodies SET name = $3,price = $4,quantity = $5 WHERE id = $1 and owner_id = $2 RETURNING *'
-            ,[uuidv4(),iduser,data.name,data.price,data.quantity]);
+            ,[data.id,iduser,data.name,data.price,data.quantity]);
         return { error: 0, status: 200, data:res.rows[0] };
     } catch (error){
         console.error(error);
@@ -124,7 +128,7 @@ async function removeGoodiesColors(idgoodie){
     try {
         const res = await db.query('DELETE FROM goodies_colors where goodie_id = $1 RETURNING *'
             ,[idgoodie]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 204, data:res.rows };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la suppression des couleurs du goodie' };
@@ -142,7 +146,7 @@ async function removeGoodiesSizes(idgoodie){
     try {
         const res = await db.query('DELETE FROM goodies_sizes where goodie_id = $1 RETURNING *'
             ,[idgoodie]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 204, data:res.rows };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la suppression des tailles du goodie' };
@@ -153,6 +157,7 @@ async function removeGoodiesSizes(idgoodie){
 
 async function addGoodiesColors(data){
     const db = await pool.connect();
+    console.log(data)
     if (!data.idgoodie) {
         return { error: 1, status: 400, data: 'idgoodie manquant' };
     }
@@ -172,9 +177,15 @@ async function addGoodiesColors(data){
         }
 
 
+        const check3 = await db.query('SELECT * FROM goodies_colors where goodie_id=$1 and color_id=$2',[data.idgoodie,data.idcolor]);
+        if (check3.rows.length > 0){
+            return { error: 1, status: 400, data:"le goodie existe déjà avec cette couleur" };
+        }
+
+
         const res = await db.query('INSERT INTO goodies_colors(goodie_id,color_id) values ($1,$2) RETURNING *'
             ,[data.idgoodie,data.idcolor]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 201, data:res.rows };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de l\'ajout de la couleur du goodie' };
@@ -203,10 +214,14 @@ async function addGoodiesSizes(data){
             return { error: 1, status: 404, data:"taille inexistante" };
         }
 
+        const check3 = await db.query('SELECT * FROM goodies_sizes where goodie_id=$1 and size_id=$2',[data.idgoodie,data.idsize]);
+        if (check3.rows.length > 0){
+            return { error: 1, status: 400, data:"le goodie existe déjà avec cette taille" };
+        }
 
         const res = await db.query('INSERT INTO goodies_sizes(goodie_id,size_id) values ($1,$2) RETURNING *'
             ,[data.idgoodie,data.idsize]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 201, data:res.rows };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de l\'ajout de la taille du goodie' };

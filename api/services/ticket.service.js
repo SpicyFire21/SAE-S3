@@ -43,13 +43,22 @@ async function createTicket(data){
     if (!data.to){
         return { error: 1, status: 400, data: "date de fin manquant" };
     }
-    if (!data.priceid){
+    if (!data.idprice){
         return { error: 1, status: 400, data: "idprice manquant" };
     }
 
     try {
+        const priceCheck = await db.query(
+            'SELECT * FROM ticket_prices WHERE id = $1',
+            [data.idprice]
+        );
+        if (priceCheck.rowCount === 0) {
+            return { error: 1, status: 404, data: 'Tarif inexistant' };
+        }
+
+
         const res = await db.query('INSERT INTO tickets (id,user_id,date_from,date_to,price_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [uuidv4(),data.iduser,data.from,data.to,data.priceid]);
+            [uuidv4(),data.iduser,data.from,data.to,data.idprice]);
         return { error: 0, status: 201, data:res.rows[0] };
     } catch (error) {
         console.error(error);

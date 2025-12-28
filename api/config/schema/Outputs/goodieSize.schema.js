@@ -5,11 +5,11 @@
  *      GoodieSize:
  *       type: object
  *       properties:
- *         goodie_id:
+ *         idgoodie:
  *           type: integer
- *         size_id:
+ *         idsize:
  *           type: integer
  *       required:
- *         - goodie_id
- *         - size_id
+ *         - idgoodie
+ *         - idsize
  */

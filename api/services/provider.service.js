@@ -28,37 +28,43 @@ async function getProviderRequests() {
     }
 }
 
-async function addProviderRequests(data){
+async function addProviderRequests(data) {
     const db = await pool.connect();
 
-    if (!data.login){
-        return { error: 1, status: 400, data: 'login manquant' };
-    }
-    if (!data.password){
-        return { error: 1, status: 400, data: 'password manquant' };
-    }
-    if (!data.email){
-        return { error: 1, status: 400, data: 'email manquant' };
-    }
-    if (!data.email2){
-        return { error: 1, status: 400, data: 'confirmez votre email' };
-    }
-
-    if (data.email !== data.email2){
-        return { error: 1, status: 400, data: 'email différents' };
-    }
-    const currentDate = new Date().toISOString();
     try {
-        const check = await db.query('SELECT * FROM users where email=$1',[data.email])
-        if(check){
-            return {error:1,status:403,data:"email dejà utilisé"}
-        }
-        const res = await db.query('INSERT INTO providers_requests (id,name,login,password,email,email2,droit,date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
-            [uuidv4(),data.name,data.login,data.password,data.email,data.email2,data.droit,currentDate]);
-        return { error: 0, status: 201, data:res.rows[0] };
+        if (!data.login || !data.password || !data.email || !data.email2)
+            return { error: 1, status: 400, data: 'champs manquants' };
+
+        if (data.email !== data.email2)
+            return { error: 1, status: 400, data: 'emails différents' };
+
+        const emailUser = await db.query(
+            'SELECT 1 FROM users WHERE email = $1',
+            [data.email]
+        );
+        if (emailUser.rowCount > 0)
+            return { error: 1, status: 403, data: 'email déjà utilisé' };
+
+        const emailRequest = await db.query(
+            'SELECT 1 FROM provider_requests WHERE email = $1',
+            [data.email]
+        );
+        if (emailRequest.rowCount > 0)
+            return { error: 1, status: 409, data: 'demande déjà existante' };
+
+        const res = await db.query(
+            `INSERT INTO provider_requests
+             (id, name, login, password, email, email2, droit)
+             VALUES ($1,$2,$3,$4,$5,$6,$7)
+             RETURNING *`,
+            [uuidv4(), data.name, data.login, data.password, data.email, data.email2, data.droit]
+        );
+
+        return { error: 0, status: 201, data: res.rows[0] };
+
     } catch (error) {
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de la création de la demande de prestataire' };
+        return { error: 1, status: 500, data: 'Erreur création demande prestataire' };
     } finally {
         db.release();
     }
@@ -71,7 +77,7 @@ async function deleteProviderRequests(id) {
         return { error: 1, status: 400, data: 'id manquant' };
     }
     try {
-        const res = await db.query('DELETE FROM providers_requests WHERE id = $1 RETURNING *', [id]);
+        const res = await db.query('DELETE FROM provider_requests WHERE id = $1 RETURNING *', [id]);
 
         return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {

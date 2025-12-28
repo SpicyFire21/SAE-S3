@@ -17,16 +17,19 @@ async function getSizes() {
 
 async function addSize(data){
     const db = await pool.connect();
-    if (!data.name){
-        return { error: 1, status: 400, data: 'name manquant' };
+    if (!data.label){
+        return { error: 1, status: 400, data: 'label manquant' };
     }
     try {
-        const check = await db.query('SELECT * FROM sizes where label=$1',[data.name]);
+        const check = await db.query('SELECT * FROM sizes where label=$1',[data.label]);
         if (check.rows.length >0){
             return { error: 1, status: 400, data:"Couleur deja existante" };
         }
-        const add = await db.query('INSERT INTO sizes (id,label) values ($1,$2) RETURNING *',[uuidv4(),data.name]);
-        return { error: 0, status: 200, data:add.rows[0] };
+
+        const newid = await db.query('SELECT MAX(id) FROM sizes');
+        const newId = newid.rows[0].max +1;
+        const add = await db.query('INSERT INTO sizes (id,label) values ($1,$2) RETURNING *',[newId,data.label]);
+        return { error: 0, status: 201, data:add.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de l\'ajout de la taille' };

@@ -126,10 +126,7 @@ router.get("/:idbasket/items", basketController.getBasketItems)
  *       404:
  *         description: Item non trouvé
  */
-router.delete(
-    "/:idbasket/items/:idgoodie/:idcolor/:idsize",
-    basketController.removeFromBasket
-)
+router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize", basketController.removeFromBasket)
 
 /**
  * @swagger

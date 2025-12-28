@@ -48,6 +48,15 @@ router.post("/", goodieController.addGoodies)
  *     summary: Récupérer les associations goodies-couleurs
  *     tags:
  *       - Goodies
+ *     responses:
+ *       200:
+ *         description: Liste des associations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/GoodieColor'
  */
 router.get("/colors", goodieController.getGoodiesColors)
 
@@ -58,6 +67,15 @@ router.get("/colors", goodieController.getGoodiesColors)
  *     summary: Récupérer les associations goodies-tailles
  *     tags:
  *       - Goodies
+ *     responses:
+ *       200:
+ *         description: Liste des associations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/SizesColor'
  */
 router.get("/sizes", goodieController.getGoodiesSizes)
 
@@ -74,6 +92,11 @@ router.get("/sizes", goodieController.getGoodiesSizes)
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/GoodieColor'
+ *     responses:
+ *       201:
+ *         description: Association créée
+ *       400:
+ *         description: Données invalides
  */
 router.post("/colors", goodieController.addGoodiesColors)
 
@@ -90,6 +113,11 @@ router.post("/colors", goodieController.addGoodiesColors)
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/GoodieSize'
+ *     responses:
+ *       201:
+ *         description: Association créée
+ *       400:
+ *         description: Données invalides
  */
 router.post("/sizes", goodieController.addGoodiesSizes)
 
@@ -106,6 +134,11 @@ router.post("/sizes", goodieController.addGoodiesSizes)
  *         required: true
  *         schema:
  *           type: integer
+ *     responses:
+ *       204:
+ *         description: Suppression réussie
+ *       404:
+ *         description: Goodie introuvable
  */
 router.delete("/:idgoodie/colors", goodieController.removeGoodiesColors)
 
@@ -122,6 +155,11 @@ router.delete("/:idgoodie/colors", goodieController.removeGoodiesColors)
  *         required: true
  *         schema:
  *           type: integer
+ *     responses:
+ *       204:
+ *         description: Suppression réussie
+ *       404:
+ *         description: Goodie introuvable
  */
 router.delete("/:idgoodie/sizes", goodieController.removeGoodiesSizes)
 
@@ -145,6 +183,11 @@ router.delete("/:idgoodie/sizes", goodieController.removeGoodiesSizes)
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/GoodieInput'
+ *     responses:
+ *       200:
+ *         description: Goodie modifié
+ *       404:
+ *         description: Goodie introuvable
  */
 router.put("/:iduser", goodieController.editGoodies)
 
@@ -162,6 +205,15 @@ router.put("/:iduser", goodieController.editGoodies)
  *         schema:
  *           type: string
  *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Liste des goodies d'un prestataire
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Goodie'
  */
 router.get("/:idprovider", goodieController.getGoodiesByProviderId)
 

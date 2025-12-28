@@ -81,7 +81,7 @@ router.get("/:id",autographsController.getAutographsById);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:idstand",autographsController.getAutographsByStandId);
+router.get("/stand/:idstand",autographsController.getAutographsByStandId);
 
 
 

@@ -25,6 +25,8 @@ let router = express.Router()
  *               $ref: '#/components/schemas/Ticket'
  *       400:
  *         description: Données invalides
+ *       404:
+ *         description: Données inexistante
  */
 router.post("/", ticketController.createTicket)
 

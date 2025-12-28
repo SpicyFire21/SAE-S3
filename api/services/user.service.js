@@ -36,8 +36,9 @@ async function addUser(data){
     const db = await pool.connect();
     if ((!data.login) || (!data.password)) return { error: 1, status: 400, data: 'login et/ou mot de passe manquant' };
     if (!data.email) return { error: 1, status: 400, data: 'email manquant' };
-    if (!data.droit) return { error: 1, status: 400, data: 'droit manquant' };
-    if (data.droit === "1" && !data.type) {
+    if (data.droit === undefined || data.droit === null) {
+        return { error: 1, status: 400, data: 'droit manquant' };
+    }    if (data.droit === "1" && !data.type) {
         return {error: 1, status: 400, data: 'type manquant'};
     }
 
@@ -79,7 +80,7 @@ async function login(data){
             return { error: 1, status: 404, data: 'login et/ou mot de passe incorrect' };
         }
 
-        return { error: 0, status: 201, data: check };
+        return { error: 0, status: 200, data: check.rows[0] };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: "erreur lors de la création d'un utilisateur" };

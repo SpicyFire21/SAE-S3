@@ -57,30 +57,31 @@ router.get("/requests", providerController.getProviderRequests)
  *     responses:
  *       201:
  *         description: Demande créée
+ *       403:
+ *         description: email deja utilisé
  */
 router.post("/requests", providerController.addProviderRequests)
 
 /**
  * @swagger
- * /providers/requests:
+ * /providers/requests/{id}:
  *   delete:
  *     summary: Supprimer une demande de prestataire
  *     tags:
  *       - Providers
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
- *                 format: uuid
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
  *     responses:
  *       200:
  *         description: Demande supprimée
+ *       404:
+ *         description: Demande introuvable
  */
-router.delete("/requests", providerController.deleteProviderRequests)
+router.delete("/requests/:id", providerController.deleteProviderRequests)
 
 export default router

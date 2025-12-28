@@ -5,21 +5,21 @@
  *      BasketItem:
  *       type: object
  *       properties:
- *         basket_id:
+ *         idbasket:
  *           type: string
  *           format: uuid
- *         goodie_id:
+ *         idgoodie:
  *           type: integer
- *         color_id:
+ *         idcolor:
  *           type: integer
- *         size_id:
+ *         idsize:
  *           type: integer
  *         count:
  *           type: integer
  *       required:
- *         - basket_id
- *         - goodie_id
- *         - color_id
- *         - size_id
+ *         - idbasket
+ *         - idgoodie
+ *         - idcolor
+ *         - idsize
  *         - count
  */

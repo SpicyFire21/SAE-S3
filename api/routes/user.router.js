@@ -38,12 +38,12 @@ router.get("/", userController.getUsers)
  *           schema:
  *             type: object
  *             required:
- *               - email
+ *               - login
  *               - password
  *             properties:
- *               email:
+ *               login:
  *                 type: string
- *                 example: user@mail.com
+ *                 example: john
  *               password:
  *                 type: string
  *                 example: password123
@@ -69,16 +69,20 @@ router.post("/login", userController.login)
  *           schema:
  *             type: object
  *             required:
+ *               - login
+ *               - droit
  *               - email
  *               - password
- *               - username
  *             properties:
- *               username:
+ *               login:
  *                 type: string
- *                 example: johndoe
+ *                 example: john
+ *               droit:
+ *                 type: number
+ *                 example: 0
  *               email:
  *                 type: string
- *                 example: johndoe@mail.com
+ *                 example: user@mail.com
  *               password:
  *                 type: string
  *                 example: password123

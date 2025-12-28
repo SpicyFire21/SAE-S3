@@ -5,11 +5,11 @@
  *      GoodieColor:
  *       type: object
  *       properties:
- *         goodie_id:
+ *         idgoodie:
  *           type: integer
- *         color_id:
+ *         idcolor:
  *           type: integer
  *       required:
- *         - goodie_id
- *         - color_id
+ *         - idgoodie
+ *         - idcolor
  */

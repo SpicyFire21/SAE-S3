@@ -17,15 +17,19 @@ async function getColors() {
 
 async function addColor(data){
     const db = await pool.connect();
-    if (!data.name){
-        return { error: 1, status: 400, data: 'name manquant' };
+    if (!data.label){
+        return { error: 1, status: 400, data: 'label manquant' };
     }
     try {
-        const check = await db.query('SELECT * FROM colors where label=$1',[data.name]);
+        const check = await db.query('SELECT * FROM colors where label=$1',[data.label]);
         if (check.rows.length >0){
             return { error: 1, status: 400, data:"Couleur deja existante" };
         }
-        const add = await db.query('INSERT INTO colors (id,label) values ($1,$2) RETURNING *',[uuidv4(),data.name]);
+
+        const newid = await db.query('SELECT MAX(id) FROM colors');
+        const newId = newid.rows[0].max +1;
+
+        const add = await db.query('INSERT INTO colors (id,label) values ($1,$2) RETURNING *',[newId,data.label]);
         return { error: 0, status: 200, data:add.rows[0] };
     } catch (error) {
         console.error(error);
