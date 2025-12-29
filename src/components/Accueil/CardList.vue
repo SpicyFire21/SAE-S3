@@ -56,36 +56,44 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import router from "../../router/index.js";
 
 const { t } = useI18n()
 
-
 defineProps({
   films: { type: Array, required: true },
   getDirectorName: { type: Function, required: true }
 })
 
-const carousel = ref<HTMLDivElement | null>(null)
+const carousel = ref(null)
 
 // Récupère l'image du film
-const getFilmImage = (fileName: string) =>
+const getFilmImage = (fileName) =>
     new URL(`../../assets/img/${fileName}`, import.meta.url).href
 
-// Scroll amount basé sur la largeur du carousel
 const scrollAmount = () => carousel.value ? carousel.value.offsetWidth / 5 : 0
 
-const scrollLeft = () => carousel.value?.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
-const scrollRight = () => carousel.value?.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+const scrollLeft = () => {
+  if (carousel.value) {
+    carousel.value.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
+  }
+}
+
+const scrollRight = () => {
+  if (carousel.value) {
+    carousel.value.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+  }
+}
 
 function goToDetails(id) {
   router.push({ name: 'FilmDetails', params: { id } })
   console.log("test id: " + id)
 }
 </script>
+
 
 <style scoped>
 /* Cache totalement la scrollbar */

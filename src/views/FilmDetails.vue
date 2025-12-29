@@ -11,7 +11,7 @@
         </div>
         <div class="flex flex-col justify-right align-right ml-5 gap-2">
       <h1 class="text-[var(--jaune)] font-bold">Nom : {{ film.title }}</h1>
-      <h1>Genre : {{ formatGenre(film.genres) }}</h1>
+      <h1>Genre : {{ formatGenre(genres) }}</h1>
       <h1>Durée : {{ formatDuration(film.duration) }}</h1>
         </div>
       </div>
@@ -31,16 +31,21 @@ const id = route.params.id;
 onMounted(async () => {
   if (!filmsStore.films.length) {
     await filmsStore.getFilms();
+    await filmsStore.getFilmGenres();
+    await filmsStore.getGenres();
+    await filmsStore.getFilmCast();
   }
 });
 
 const getFilmImage = (fileName) =>
     new URL(`../assets/img/${fileName}`, import.meta.url).href;
 
-
 const film = computed(() =>
     filmsStore.films.find(f => f.id === id)
 );
+
+const genres = computed(() => filmsStore.getGenresOfFilm(id))
+
 
 const formatDuration = (minutes) => {
   if (!minutes) return "0h 0min";

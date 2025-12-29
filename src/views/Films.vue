@@ -24,7 +24,7 @@
             </h2>
             <div class="flex gap-2 my-2">
               <span
-                  v-for="genre in film.genres"
+                  v-for="genre in filmsStore.getGenresOfFilm(film.id)"
                   :key="genre"
                   class="text-[var(--noir)] bg-[var(--jaune)] px-2 py-0.5 rounded-full text-xs font-medium">
                 {{ genre }}
@@ -58,11 +58,11 @@
       </button>
     </div>
 
-    <div v-for="category in categories" :key="category" class="pt-10">
+    <div v-for="genre in categories" :key="genre.id" class="pt-10">
       <FilmCarousel
           :get-director-name="getDirectorName"
-          :category="category"
-          :films="filmsStore.films"
+          :category="genre.name"
+          :films="filmsStore.getFilmsOfGenre(genre.id)"
       />
     </div>
   </div>
@@ -73,7 +73,6 @@ import FilmCarousel from "@/components/FilmCarousel.vue";
 import { onMounted, computed, ref } from "vue";
 import { useFilmsStore } from "@/stores/modules/films.js";
 import { useUserStore } from "@/stores/index.js";
-import { useTicketsStore } from "@/stores/modules/tickets.js";
 import { useI18n } from 'vue-i18n'
 import router from "@/router/index.js";
 
@@ -81,12 +80,22 @@ const { t } = useI18n()
 
 const filmsStore = useFilmsStore();
 const userStore = useUserStore();
-const ticketsStore = useTicketsStore();
 
 const getDirectorName = (director_id) => {
   const director = userStore.providers.find((user) => user.id === director_id);
   return director ? director.name : "Directeur inconnu";
 };
+
+onMounted(async () => {
+  await filmsStore.getFilms();
+  await filmsStore.getFilmGenres();
+  await filmsStore.getGenres();
+  await filmsStore.getFilmCast();
+  await userStore.getProviders();
+  setInterval(() => {
+    nextSlide();
+  }, 4000);
+});
 
 const threeMostRecentFilms = computed(() => {
   if (!filmsStore.films.length) return [];
@@ -95,21 +104,7 @@ const threeMostRecentFilms = computed(() => {
       .slice(0, 3);
 });
 
-onMounted(async () => {
-  await filmsStore.getFilms();
-  await userStore.getProviders();
-  await ticketsStore.getTickets();
-  setInterval(() => {
-    nextSlide();
-  }, 4000);
-});
-
-const categories = computed(() => {
-  const allGenres = filmsStore.films.reduce((acc, film) => {
-    return acc.concat(film.genres);
-  }, []);
-  return [...new Set(allGenres)];
-});
+const categories = computed(() => filmsStore.genres);
 
 const getFilmImage = (fileName) =>
     new URL(`../assets/img/${fileName}`, import.meta.url).href;
@@ -129,7 +124,6 @@ const prevSlide = () => {
 
 function goToDetails(id) {
   router.push({ name: 'FilmDetails', params: { id } })
-  console.log("test id: " + id)
 }
 
 </script>

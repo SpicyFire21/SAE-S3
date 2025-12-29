@@ -236,10 +236,10 @@ let users = [
 ]
 
 let goodies = [
-    {id: "1",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"37", name: "T-shirt", price: "20"},
-    {id: "2",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"40", name: "Tasse", price: "15"},
-    {id: "3",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"12", name: "Casquette", price: "12"},
-    {id: "4",iduser:"bb4b684c-0c67-4d19-ac21-b225b3e5c018",quantity:"66", name: "Sweat", price: "35"},
+    {id: "1", iduser: "bb4b684c-0c67-4d19-ac21-b225b3e5c018", quantity: "37", name: "T-shirt", price: "20"},
+    {id: "2", iduser: "bb4b684c-0c67-4d19-ac21-b225b3e5c018", quantity: "40", name: "Tasse", price: "15"},
+    {id: "3", iduser: "bb4b684c-0c67-4d19-ac21-b225b3e5c018", quantity: "12", name: "Casquette", price: "12"},
+    {id: "4", iduser: "bb4b684c-0c67-4d19-ac21-b225b3e5c018", quantity: "66", name: "Sweat", price: "35"},
 ];
 
 
@@ -285,7 +285,7 @@ let basket = [
         id: "0f8fad5b-d9cb-469f-a165-70867728950e",
         iduser: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
         date: "2025-03-18",
-        state:"wait" //wait/payed
+        state: "wait" //wait/payed
     }
 ];
 
@@ -344,12 +344,39 @@ let tickets_price = [
 ]
 
 let stands = [
-    {"idstand": "1", "name": "cinema 1", "x": 25, "y": 32, "width": 481, "height": 620, "type": "1", "owner": "f68ab44a-557b-4d44-b1df-a34f891c2dza"},
+    {
+        "idstand": "1",
+        "name": "cinema 1",
+        "x": 25,
+        "y": 32,
+        "width": 481,
+        "height": 620,
+        "type": "1",
+        "owner": "f68ab44a-557b-4d44-b1df-a34f891c2dza"
+    },
     {"idstand": "2", "name": "cinema 2", "x": 25, "y": 670, "width": 481, "height": 620, "type": "1", "owner": null},
     {"idstand": "3", "name": "cinema 3", "x": 25, "y": 1303, "width": 481, "height": 620, "type": "1", "owner": null},
 
-    {"idstand": "4", "name": "adamdedicace1", "x": 886, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
-    {"idstand": "5", "name": "adamdedicace2", "x": 781, "y": 348, "width": 65, "height": 164, "type": "2", "owner": null},
+    {
+        "idstand": "4",
+        "name": "adamdedicace1",
+        "x": 886,
+        "y": 348,
+        "width": 65,
+        "height": 164,
+        "type": "2",
+        "owner": null
+    },
+    {
+        "idstand": "5",
+        "name": "adamdedicace2",
+        "x": 781,
+        "y": 348,
+        "width": 65,
+        "height": 164,
+        "type": "2",
+        "owner": null
+    },
     // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
@@ -384,8 +411,8 @@ let stands = [
 ];
 
 let standTypes = [
-    { "id": "1", "type": "cinema"},
-    { "id": "2", "type": "autograph"},
+    {"id": "1", "type": "cinema"},
+    {"id": "2", "type": "autograph"},
 ];
 
 let reservations = [
@@ -420,11 +447,11 @@ let autographs_reservations = [
 ];
 
 let projections = [
-    { "id": "1", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T14:00:00" },
-    { "id": "2", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-24T17:00:00" },
-    { "id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00" },
-    { "id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00" },
-    { "id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00" }
+    {"id": "1", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T14:00:00"},
+    {"id": "2", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-24T17:00:00"},
+    {"id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00"},
+    {"id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00"},
+    {"id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00"}
 ];
 
 let autographs = [
@@ -433,12 +460,23 @@ let autographs = [
         "standId": "4",
         "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
         "beginDate": "2025-12-23T18:00:00",
-        "duration": "120"},
-    { "id": "2", "standId": "4", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-23T21:00:00", "duration": "60"},
-    { "id": "3", "standId": "5", "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5", "beginDate": "2025-12-27T21:00:00", "duration": "120"}
+        "duration": "120"
+    },
+    {
+        "id": "2",
+        "standId": "4",
+        "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
+        "beginDate": "2025-12-23T21:00:00",
+        "duration": "60"
+    },
+    {
+        "id": "3",
+        "standId": "5",
+        "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
+        "beginDate": "2025-12-27T21:00:00",
+        "duration": "120"
+    }
 ];
-
-
 
 
 let comments_golden_book = [
@@ -462,211 +500,250 @@ let comments_golden_book = [
     }
 ]
 
+let genres = [
+    {"id": 1, "name": "Drame"},
+    {"id": 2, "name": "Crime"},
+    {"id": 3, "name": "Thriller"},
+    {"id": 4, "name": "Biographie"},
+    {"id": 5, "name": "Science-Fiction"},
+    {"id": 6, "name": "Aventure"},
+    {"id": 7, "name": "Western"},
+    {"id": 8, "name": "Musical"},
+    {"id": 9, "name": "Famille"},
+    {"id": 10, "name": "Romance"},
+    {"id": 11, "name": "Action"},
+    {"id": 12, "name": "Fantasy"},
+    {"id": 13, "name": "Comédie"}
+]
+
+let film_genres = [
+    {"filmId": "6f207e95-5400-471f-a933-d01d817b0608", "genreId": 1},
+    {"filmId": "6f207e95-5400-471f-a933-d01d817b0608", "genreId": 2},
+    {"filmId": "b58b41e4-7f5d-452b-af72-9301dafa7896", "genreId": 2},
+    {"filmId": "b58b41e4-7f5d-452b-af72-9301dafa7896", "genreId": 3},
+    {"filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "genreId": 4},
+    {"filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "genreId": 1},
+    {"filmId": "9b4ced38-53ef-4a87-89f3-a791ce326093", "genreId": 5},
+    {"filmId": "9b4ced38-53ef-4a87-89f3-a791ce326093", "genreId": 3},
+    {"filmId": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "genreId": 5},
+    {"filmId": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "genreId": 6},
+    {"filmId": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "genreId": 7},
+    {"filmId": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "genreId": 1},
+    {"filmId": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "genreId": 5},
+    {"filmId": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "genreId": 9},
+    {"filmId": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "genreId": 4},
+    {"filmId": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "genreId": 8},
+    {"filmId": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "genreId": 2},
+    {"filmId": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "genreId": 1},
+    {"filmId": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "genreId": 13},
+    {"filmId": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "genreId": 9},
+    {"filmId": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "genreId": 3},
+    {"filmId": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "genreId": 1},
+    {"filmId": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "genreId": 1},
+    {"filmId": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "genreId": 10},
+    {"filmId": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "genreId": 11},
+    {"filmId": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "genreId": 3},
+    {"filmId": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "genreId": 10},
+    {"filmId": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "genreId": 1},
+    {"filmId": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "genreId": 3},
+    {"filmId": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "genreId": 2},
+    {"filmId": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "genreId": 1},
+    {"filmId": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "genreId": 2},
+    {"filmId": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "genreId": 12},
+    {"filmId": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "genreId": 6}
+];
+
+let film_cast = [
+    { "film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
+    { "film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
+    { "film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
+    { "film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
+    { "film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
+    { "film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
+    { "film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01" },
+    { "film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
+    { "film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
+    { "film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
+    { "film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
+    { "film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01" },
+    { "film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
+    { "film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
+    { "film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
+    { "film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
+    { "film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
+    { "film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
+    { "film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" }
+];
+
 
 let films = [
     {
         "id": "6f207e95-5400-471f-a933-d01d817b0608",
         "title": "Killers of the Flower Moon",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["003f7a03-fbc7-48d3-a9a7-6fa949e88cdd", "3952f2aa-8d02-4306-b814-f5b4405ed2a3"],
-        "genres": ["Drame", "Crime"],
         "release_date": "2023-10-20",
         "poster": "killers_moon.jpg",
         "description": "Une sombre histoire de meurtres dans la nation Osage dans les années 1920",
         "duration": 206,
-        "standId": ["1", "2"]
     },
     {
         "id": "b58b41e4-7f5d-452b-af72-9301dafa7896",
         "title": "Pulp Fiction",
         "director_id": "e55733ef-f3d2-447d-94db-9e3aaef624c1",
-        "cast_ids": ["3952f2aa-8d02-4306-b814-f5b4405ed2a3", "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"],
-        "genres": ["Crime", "Thriller"],
         "release_date": "1994-10-14",
         "poster": "pulp_fiction.jpg",
         "description": "Histoires entrelacées de gangsters à Los Angeles",
         "duration": 154,
-        "standId": []
     },
     {
         "id": "6cec5c18-d60b-4372-916a-482bb4facaa0",
         "title": "Oppenheimer",
         "director_id": "f68ab44a-557b-4d44-b1df-a38f894c2dca",
-        "cast_ids": ["4287f507-81a0-4c98-9b50-5df6bc60aa89", "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"],
-        "genres": ["Biographie", "Drame"],
         "release_date": "2023-07-21",
         "poster": "oppenheimer.jpg",
         "description": "L'histoire du père de la bombe atomique",
         "duration": 180,
-        "standId": ["1"]
     },
     {
         "id": "9b4ced38-53ef-4a87-89f3-a791ce326093",
         "title": "Inception",
         "director_id": "f68ab44a-557b-4d44-b1df-a38f894c2dca",
-        "cast_ids": ["003f7a03-fbc7-48d3-a9a7-6fa949e88cdd", "83830343-26a0-400d-b491-8fd6c4d4bc80"],
-        "genres": ["Science-Fiction", "Thriller"],
         "release_date": "2010-07-16",
         "poster": "inception.jpg",
         "description": "Un voleur qui s'infiltre dans les rêves",
         "duration": 148,
-        "standId": []
     },
     {
         "id": "e0f3b1c2-16b9-4504-8593-872d92b6f892",
         "title": "Dune",
         "director_id": "c92c742a-baf6-4cc0-9a50-941ddfe55f8c",
-        "cast_ids": ["4287f507-81a0-4c98-9b50-5df6bc60aa89", "83830343-26a0-400d-b491-8fd6c4d4bc80"],
-        "genres": ["Science-Fiction", "Aventure"],
         "release_date": "2021-09-15",
         "poster": "dune.jpg",
         "description": "L'épopée de Paul Atréides sur la planète désertique Arrakis",
         "duration": 155,
-        "standId": []
     },
     {
         "id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913",
         "title": "The Power of the Dog",
         "director_id": "f68ab44a-557b-4d44-b1df-a38f894c2dca",
-        "cast_ids": ["4287f507-81a0-4c98-9b50-5df6bc60aa89", "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"],
-        "genres": ["Western", "Drame"],
         "release_date": "2021-11-17",
         "poster": "power_dog.jpg",
         "description": "Un rancher cruel dont la vie bascule avec l'arrivée de sa belle-soeur",
         "duration": 126,
-        "standId": []
     },
     {
         "id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44",
         "title": "E.T. l'extra-terrestre",
         "director_id": "e1fbdadd-fd8f-4a6d-b0cb-f8c77b3e7238",
-        "cast_ids": ["9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66", "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"],
-        "genres": ["Science-Fiction", "Famille"],
         "release_date": "1982-06-11",
         "poster": "et.jpg",
         "description": "Un enfant aide un extraterrestre à rentrer chez lui",
         "duration": 115,
-        "standId": []
     },
     {
         "id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77",
         "title": "La Vie en Rose",
         "director_id": "a34ad28d-e276-4b8e-8bdf-aa162f6d4df1",
-        "cast_ids": ["7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01", "83830343-26a0-400d-b491-8fd6c4d4bc80"],
-        "genres": ["Biographie", "Musical"],
         "release_date": "2007-02-14",
         "poster": "lavieenrose.jpg",
         "description": "La vie tumultueuse d'Édith Piaf",
         "duration": 140,
-        "standId": []
     },
     {
         "id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22",
         "title": "The Godfather",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["3952f2aa-8d02-4306-b814-f5b4405ed2a3", "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"],
-        "genres": ["Crime", "Drame"],
         "release_date": "1972-03-24",
         "poster": "godfather.jpg",
         "description": "L'histoire de la famille mafieuse Corleone",
         "duration": 175,
-        "standId": []
     },
     {
         "id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f",
         "title": "Barbie",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["83830343-26a0-400d-b491-8fd6c4d4bc80", "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66"],
-        "genres": ["Comédie", "Famille"],
         "release_date": "2023-07-21",
         "poster": "barbie.jpg",
         "description": "Barbie quitte Barbie Land pour le monde réel",
         "duration": 114,
-        "standId": []
     },
     {
         "id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c",
         "title": "Joker",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["4287f507-81a0-4c98-9b50-5df6bc60aa89", "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01"],
-        "genres": ["Thriller", "Drame"],
         "release_date": "2019-10-04",
         "poster": "joker.jpg",
         "description": "La transformation d'Arthur Fleck en célèbre vilain",
         "duration": 122,
-        "standId": []
     },
     {
         "id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e",
         "title": "Forrest Gump",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66", "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"],
-        "genres": ["Drame", "Romance"],
         "release_date": "1994-07-06",
         "poster": "forrestgump.jpg",
         "description": "L'histoire extraordinaire d'un homme simple au grand coeur",
         "duration": 142,
-        "standId": []
     },
     {
         "id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
         "title": "The Dark Knight",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["003f7a03-fbc7-48d3-a9a7-6fa949e88cdd", "3952f2aa-8d02-4306-b814-f5b4405ed2a3"],
-        "genres": ["Action", "Thriller"],
         "release_date": "2008-07-18",
         "poster": "darkknight.jpg",
         "description": "Batman affronte le chaos du Joker à Gotham City",
         "duration": 152,
-        "standId": []
     },
     {
         "id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a",
         "title": "Titanic",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["003f7a03-fbc7-48d3-a9a7-6fa949e88cdd", "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"],
-        "genres": ["Romance", "Drame"],
         "release_date": "1997-12-19",
         "poster": "titanic.jpg",
         "description": "Histoire d'amour à bord du paquebot maudit",
         "duration": 195,
-        "standId": []
     },
     {
         "id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b",
         "title": "The Silence of the Lambs",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["cf64a893-fe05-44ea-bf3a-d86e6f39dc55", "3952f2aa-8d02-4306-b814-f5b4405ed2a3"],
-        "genres": ["Thriller", "Crime"],
         "release_date": "1991-02-14",
         "poster": "silence_lambs.jpg",
         "description": "Une jeune agent du FBI consulte un tueur en série emprisonné",
         "duration": 118,
-        "standId": []
     },
     {
         "id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c",
         "title": "The Shawshank Redemption",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66", "3952f2aa-8d02-4306-b814-f5b4405ed2a3"],
-        "genres": ["Drame", "Crime"],
         "release_date": "1994-10-14",
         "poster": "shawshank.jpg",
         "description": "L'histoire de l'amitié entre deux prisonniers",
         "duration": 142,
-        "standId": []
     },
     {
         "id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d",
         "title": "The Lord of the Rings: The Return of the King",
         "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "cast_ids": ["4287f507-81a0-4c98-9b50-5df6bc60aa89", "83830343-26a0-400d-b491-8fd6c4d4bc80"],
-        "genres": ["Fantasy", "Aventure"],
         "release_date": "2003-12-17",
         "poster": "lotr_return.jpg",
         "description": "La conclusion de l'épopée de la Terre du Milieu",
         "duration": 201,
-        "standId": []
     }
 ];
 
@@ -897,6 +974,6 @@ export {
     projections,
     films_reservations,
     autographs_reservations,
-    autographs
+    autographs, genres, film_genres, film_cast
 
 }

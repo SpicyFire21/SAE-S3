@@ -120,10 +120,10 @@ const standsStore = useStandsStore();
 const reservationsStore = useReservationsStore();
 
 onMounted(async () => {
+  await filmsStore.getProjections();
   await filmsStore.getFilmsByStand(props.stand.idstand);
   await usersStore.getUsers();
   await standsStore.getStands();
-  await filmsStore.getProjections();
   await reservationsStore.getReservations();
   await reservationsStore.getFilmsReservations();
 })

@@ -25,14 +25,6 @@ export const useStandsStore = defineStore('stands', () => {
         );
     }
 
-
-
-
-
-
-
-
-
     const init = async () => {
         await Promise.all([
             getStands(),

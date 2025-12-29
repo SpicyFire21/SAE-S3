@@ -103,10 +103,11 @@ import PrestataireCard from "@/components/Accueil/PrestataireCard.vue";
 import {ref, onMounted, computed} from "vue";
 import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
 import {useFilmsStore} from "@/stores/modules/films.js";
-import {useUserStore} from "@/stores/index.js";
+import {useReservationsStore, useUserStore} from "@/stores/index.js";
 import {useTicketsStore} from "@/stores/modules/tickets.js";
 import router from "@/router/index.js";
 import Footer from "@/components/Footer.vue";
+import {films_reservations} from "@/datasource/data.js";
 
 const {t, tm} = useI18n()
 const tabCheckbox = computed(() => tm('checkboxfilter'))
@@ -117,6 +118,7 @@ const filterTypes = ref([]);
 const filmsStore = useFilmsStore()
 const userStore = useUserStore()
 const ticketsStore = useTicketsStore()
+const reservationStore = useReservationsStore()
 const activeTab = ref('news')
 
 const selectedTicket = ref('')
@@ -129,6 +131,8 @@ const goToTicketPage = () => {
 
 onMounted(async () => {
   await filmsStore.getFilms();
+  await filmsStore.getProjections();
+  await reservationStore.getFilmsReservations()
   await userStore.getProviders();
   await ticketsStore.getTickets();
   await ticketsStore.getTicketsPrice();
@@ -166,21 +170,33 @@ const filteredNewFilms = computed(() => {
   })
 })
 
-const filteredFamousFilms = computed(() => {
-  console.log("test tickets:" + ticketsStore.tickets)
-  if (!filmsStore.films || !ticketsStore.tickets) return []
-  const ticketCount = {}
+const filteredFamousFilms = computed(() => { // récupere les 7 films les plus reservés du site
 
+  const projectionCount = {}
 
-  ticketsStore.tickets.forEach(ticket => {
-    if (!ticketCount[ticket.idfilm]) ticketCount[ticket.idfilm] = 0
-    ticketCount[ticket.idfilm]++
+  reservationStore.filmsReservations.forEach(r => {
+    const pid = String(r.projectionId)
+
+    projectionCount[pid] = (projectionCount[pid] || 0) + 1
   })
+  const filmCount = {}
 
-  return [...filmsStore.films]
-      .sort((a, b) => (ticketCount[b.id] || 0) - (ticketCount[a.id] || 0))
-      .slice(0, 7) // top 7 des films les plus populaires des données
+  filmsStore.projections.forEach(p => {
+    const fid = String(p.filmId)
+    const pid = String(p.id)
+
+    filmCount[fid] = (filmCount[fid] || 0) + (projectionCount[pid] || 0)
+  })
+  const filmsWithCount = filmsStore.films.map(f => ({
+    ...f,
+    reservationsCount: filmCount[String(f.id)] || 0
+  }))
+  return filmsWithCount
+      .sort((a, b) => b.reservationsCount - a.reservationsCount)
+      .slice(0, 7)
 })
+
+
 
 
 </script>

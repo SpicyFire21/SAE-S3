@@ -20,7 +20,7 @@
           class="flex overflow-x-auto gap-6 scroll-smooth snap-x scrollbar-hide px-12"
       >
         <div
-            v-for="(slide, index) in films.filter(film => film.genres.includes(category))"
+            v-for="(slide, index) in films"
             :key="index"
             class="snap-center flex-shrink-0 w-1/5 h-full shadow-xl rounded-xl overflow-hidden flex flex-col relative"
         >
@@ -60,29 +60,37 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import router from "@/router/index.js";
+import router from "@/router/index.js"
 
 const { t } = useI18n()
 
 defineProps({
   films: { type: Array, required: true },
-  category: { type: Array, required: true},
+  category: { type: String, required: true },
   getDirectorName: { type: Function, required: true }
 })
 
-const carousel = ref<HTMLDivElement | null>(null)
+const carousel = ref(null)
 
 const getFilmImage = (fileName) =>
     new URL(`../assets/img/${fileName}`, import.meta.url).href
 
 const scrollAmount = () => carousel.value ? carousel.value.offsetWidth / 5 : 0
 
-const scrollLeft = () => carousel.value?.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
-const scrollRight = () => carousel.value?.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+const scrollLeft = () => {
+  if (carousel.value) {
+    carousel.value.scrollBy({ left: -scrollAmount(), behavior: 'smooth' })
+  }
+}
+
+const scrollRight = () => {
+  if (carousel.value) {
+    carousel.value.scrollBy({ left: scrollAmount(), behavior: 'smooth' })
+  }
+}
 
 function goToDetails(id) {
   router.push({ name: 'FilmDetails', params: { id } })
-  console.log("test id: " + id)
 }
 </script>
 
