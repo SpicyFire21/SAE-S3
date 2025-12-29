@@ -16,25 +16,54 @@ async function getFilms() {
     }
 }
 
-async function getFilmDirector(iddirector){
+async function getFilmsById(id){
     const db = await pool.connect();
-    if (!iddirector){
-        return { error: 1, status: 400, data: 'iddirector manquant' };
+    if (!id){
+        return { error: 1, status: 400, data: 'id manquant' };
     }
     try {
-        const res = await db.query('SELECT * FROM users where id =$1',[iddirector]);
+        const res = await db.query('SELECT * FROM films where id =$1',[id]);
         return { error: 0, status: 200, data:res.rows };
     } catch (error) {
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de la récupération du directeur du film' };
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération du film par id' };
+    } finally {
+        db.release();
+    }
+}
+
+async function getFilmsCasts() {
+    const db = await pool.connect();
+    try {
+        const res = await db.query('SELECT * FROM films_cast');
+        return { error: 0, status: 200, data:res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des casts des films' };
+    } finally {
+        db.release();
+    }
+}
+
+async function getFilmsGenres() {
+    const db = await pool.connect();
+    try {
+        const res = await db.query('SELECT * FROM films_genres');
+        return { error: 0, status: 200, data:res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des genres des films' };
     } finally {
         db.release();
     }
 }
 
 
+
 export default {
     getFilms,
-    getFilmDirector
+    getFilmsById,
+    getFilmsCasts,
+    getFilmsGenres
 
 }

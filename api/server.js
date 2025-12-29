@@ -24,6 +24,9 @@ import filmRoute from './routes/film.router.js'
 import projectionRoute from './routes/projection.router.js'
 import standRoute from './routes/stand.router.js'
 import ticketRoute from './routes/ticket.router.js'
+import GenreRoute from './routes/genres.router.js'
+
+
 
 
 app.use(bodyParser.json());
@@ -45,6 +48,7 @@ app.use('/films',filmRoute);
 app.use('/projections',projectionRoute);
 app.use('/stands',standRoute);
 app.use('/tickets',ticketRoute);
+app.use('/genres',GenreRoute);
 
 
 
@@ -55,7 +59,7 @@ server.listen( PORT,() => {
         if (err) {
             console.error('Erreur de connexion à la base de données :', err);
         } else {
-            console.log('Connexion à la base de données réussie 😏😏  ');
+            console.log('Connexion à la base de données réussie  ');
         }
     });
 });

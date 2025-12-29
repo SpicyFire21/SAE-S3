@@ -34,10 +34,15 @@ async function getProjections() {
 export default {
 
     getFilms,
+    getFilmById,
+
+
     getGenres,
+    getGenreById,
+
     getFilmGenres,
     getFilmCast,
+
     getProjections,
-    getFilmById,
-    getGenreById
+
 }
