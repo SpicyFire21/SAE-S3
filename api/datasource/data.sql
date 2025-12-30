@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS notes
     id         SERIAL PRIMARY KEY,
     user_id    UUID NOT NULL,
     value      DECIMAL(2, 1) CHECK (value BETWEEN 0 AND 5),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 

@@ -25,6 +25,7 @@ import projectionRoute from './routes/projection.router.js'
 import standRoute from './routes/stand.router.js'
 import ticketRoute from './routes/ticket.router.js'
 import GenreRoute from './routes/genres.router.js'
+import NoteRoute from './routes/notes.router.js'
 
 
 
@@ -49,6 +50,7 @@ app.use('/projections',projectionRoute);
 app.use('/stands',standRoute);
 app.use('/tickets',ticketRoute);
 app.use('/genres',GenreRoute);
+app.use('/notes',NoteRoute);
 
 
 
