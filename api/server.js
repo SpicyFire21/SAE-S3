@@ -6,12 +6,6 @@ import http from "http";
 
 import swaggerUi from "swagger-ui-express"
 import swaggerConfig from './config/swaggerConfig.js'
-const app = express();
-
-const PORT = 3000
-const apiURL = `http://localhost:${PORT}`
-
-const server = http.createServer(app);
 
 import userRoute from './routes/user.router.js';
 import providerRoute from './routes/provider.router.js';
@@ -25,9 +19,12 @@ import projectionRoute from './routes/projection.router.js'
 import standRoute from './routes/stand.router.js'
 import ticketRoute from './routes/ticket.router.js'
 import GenreRoute from './routes/genres.router.js'
+import NoteRoute from './routes/notes.router.js'
 
-
-
+const app = express();
+const PORT = 3000
+const apiURL = `http://localhost:${PORT}`
+const server = http.createServer(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,6 +46,7 @@ app.use('/projections',projectionRoute);
 app.use('/stands',standRoute);
 app.use('/tickets',ticketRoute);
 app.use('/genres',GenreRoute);
+app.use('/notes',NoteRoute);
 
 
 

@@ -7,12 +7,11 @@ async function getFilms() {
 
 async function getFilmById(id) {
     const film = films.find(f => f.id === id)
-    return {error:0, status:200, data:films}
+    return {error:0, status:200, data:film}
 }
 
 async function getGenreById(id) {
     const filmGenres = genres.filter(g => g.id === id)
-    console.log("AEEZ" + JSON.stringify(filmGenres))
     return {error:0, status:200, data:filmGenres}
 }
 

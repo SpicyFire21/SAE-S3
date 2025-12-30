@@ -5,6 +5,8 @@ import {getUsers} from "@/services/user.service.js";
 import standsService, {getStandById} from "@/services/stands.service.js";
 import {useUserStore} from "@/stores/index.js";
 import {useFilmsStore} from "@/stores/index.js";
+import reservationsService from "@/services/reservations.service.js";
+import goodiesService from "@/services/goodies.service.js";
 
 export const useStandsStore = defineStore('stands', () => {
     // state
@@ -13,25 +15,7 @@ export const useStandsStore = defineStore('stands', () => {
     const selectedStand = ref(null)
     const userStore = useUserStore();
     const filmStore = useFilmsStore();
-
-
-
-
-
-
-    const getProjectionsByStandAndFilm = (standId, filmId) => {
-        return filmStore.projections.filter(
-            p => p.standId === standId && p.filmId === filmId
-        );
-    }
-
-    const init = async () => {
-        await Promise.all([
-            getStands(),
-            getStandsTypes(),
-            userStore.getUsers()
-        ])
-    } // ca évite de mettre 3 lignes a chaque fichiers
+    const standReservationsRequests = ref([])
 
     const updateStands = (data) => {
         stands.value = data;
@@ -48,6 +32,29 @@ export const useStandsStore = defineStore('stands', () => {
     const updateStandsTypes = (data) => {
         standsTypes.value = data;
     }
+
+    const updateStandReservationsRequests = (data) => {
+        standReservationsRequests.value = data;
+    }
+
+    const pushStandReservationsRequests = (data) => {
+        standReservationsRequests.value.push(data);
+    }
+
+
+    const getProjectionsByStandAndFilm = (standId, filmId) => {
+        return filmStore.projections.filter(
+            p => p.standId === standId && p.filmId === filmId
+        );
+    }
+
+    const init = async () => {
+        await Promise.all([
+            getStands(),
+            getStandsTypes(),
+            userStore.getUsers()
+        ])
+    } // ca évite de mettre 3 lignes a chaque fichiers
 
     const getStands = async () => {
         try {
@@ -67,6 +74,30 @@ export const useStandsStore = defineStore('stands', () => {
         }
     }
 
+    const getStandsReservationsRequests = async () => {
+        try {
+            const response = await standsService.getStandsReservationsRequests();
+            updateStandReservationsRequests(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const addStandRequest = async(data) =>{
+        try {
+            const response = await standsService.addStandRequest(data);
+            if (response.error === 0){
+                updateStandReservationsRequests(data)
+                return response.data
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const getStandById = async (id) => {
         try {
             const response = await standsService.getStandById(id);
@@ -75,6 +106,7 @@ export const useStandsStore = defineStore('stands', () => {
             console.error(e)
         }
     }
+
 
     const getStandTypeById = async (id) => {
         try {
@@ -85,11 +117,20 @@ export const useStandsStore = defineStore('stands', () => {
         }
     }
 
+    const getStandTypeByIdForProvider = (typeId) => {
+        return standsTypes.value.find(st => st.id === typeId)
+    }
+
+    const getStandByIdForAdmin = (id) => {
+        return stands.value.find(s => s.idstand === id);
+    }
+
 
 
     return {
         stands, selectedStand, getStands, setSelectedStand,
         clearSelectedStand, getStandsTypes, standsTypes, init,
-        getProjectionsByStandAndFilm, getStandById, getStandTypeById
+        getProjectionsByStandAndFilm, getStandById, getStandTypeById, getStandsReservationsRequests, addStandRequest, standReservationsRequests,
+        getStandByIdForAdmin, getStandTypeByIdForProvider
     }
 })

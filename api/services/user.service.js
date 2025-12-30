@@ -89,12 +89,27 @@ async function login(data){
     }
 }
 
+async function getNotesByUserId(id){
+    const db = await pool.connect();
+    if (!id) return { error: 1, status: 400, data: 'id manquant' };
+
+    try {
+        const res = await db.query('SELECT * FROM notes where user_id=$1',[id]);
+        return { error: 0, status: 200, data:res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des notes de l\'utilisateur' };
+    } finally {
+        db.release();
+    }
+}
 
 
 export default {
     getUsers,
     addUser,
     login,
-    getUsersById
+    getUsersById,
+    getNotesByUserId
 
 }

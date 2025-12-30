@@ -17,7 +17,9 @@
           {{ autograph.userName }}
         </span>
         <button @click="openModal(autograph)"
-                class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full">
+                class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
+                disabled:opacity-50 disabled:cursor-not-allowed"
+                :disabled="!userStore.currentUser || userStore.currentUser.droit === '1'">
           Réserver
         </button>
       </div>

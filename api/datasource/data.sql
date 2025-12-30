@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS goodies CASCADE;
 DROP TABLE IF EXISTS notes CASCADE;
 DROP TABLE IF EXISTS provider_requests CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-
+DROP TABLE IF EXISTS stand_reservation_requests;
 
 
 
@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS notes
     id         SERIAL PRIMARY KEY,
     user_id    UUID NOT NULL,
     value      DECIMAL(2, 1) CHECK (value BETWEEN 0 AND 5),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
@@ -271,6 +270,19 @@ CREATE TABLE IF NOT EXISTS comments_golden_book
     date        TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS stand_reservation_requests
+(
+    id            SERIAL PRIMARY KEY,
+    request_date  TIMESTAMP NOT NULL,
+    stand_id      INT       NOT NULL,
+    user_id       UUID      NOT NULL,
+    status        VARCHAR(20) CHECK (status IN ('pending', 'accepted', 'rejected')) NOT NULL DEFAULT 'pending',
+    FOREIGN KEY (stand_id) REFERENCES stands (id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
 
 
 

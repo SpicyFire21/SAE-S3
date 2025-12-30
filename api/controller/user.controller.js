@@ -48,6 +48,15 @@ export const login = async (req,res) =>{
     }
 }
 
+export const getNotesByUserId = async (req,res) => {
+    try {
+        let data = await userService.getNotesByUserId(req.params.id);
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des note de l\'utilisateur");
+    }
+}
 
 

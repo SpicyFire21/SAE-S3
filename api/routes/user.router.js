@@ -95,6 +95,36 @@ router.post("/login", userController.login)
 router.post("/register", userController.addUser)
 
 /**
+ * @swagger
+ * /users/{id}/notes:
+ *   get:
+ *     tags: [Users, Notes]
+ *     summary: Récupérer les notes d’un utilisateur
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de l’utilisateur
+ *     responses:
+ *       200:
+ *         description: Liste des notes de l’utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Note'
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/:id/notes", userController.getNotesByUserId)
+
+/**
  * @openapi
  * /users/{id}:
  *   get:

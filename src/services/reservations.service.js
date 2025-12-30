@@ -28,6 +28,7 @@ async function getEventFromReservationFromLocalSource(reservation) {
     return reservationController.getEventFromReservation(reservation)
 }
 
+
 export async function getEventFromReservation(reservation){
     let response = null;
     try {

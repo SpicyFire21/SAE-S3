@@ -162,11 +162,11 @@ const filteredProviders = computed(() => {
 
 const filteredNewFilms = computed(() => {
   const now = new Date() // aujd
-  const oneMonthAgo = new Date() // il y a 1 mois
-  oneMonthAgo.setMonth(now.getMonth() - 1)
+  const sixMonthsAgo = new Date() // il y a 6 mois
+  sixMonthsAgo.setMonth(now.getMonth() - 6)
   return filmsStore.films.filter(film => {
     const releaseDate = new Date(film.release_date)
-    return releaseDate >= oneMonthAgo && releaseDate <= now
+    return releaseDate >= sixMonthsAgo && releaseDate <= now
   })
 })
 
