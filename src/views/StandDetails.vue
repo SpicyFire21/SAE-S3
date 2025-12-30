@@ -2,8 +2,13 @@
   <div v-if="stand">
     <div class="pt-30">
       <div class="flex flex-row justify-center items-center text-center text-[21px]">
-
         <div class="flex flex-col gap-2">
+          <h1
+              v-if="!userStore.currentUser"
+              class="flex items-center gap-3 px-4 py-3 rounded-xl border border-red-500/40 bg-red-500/10 text-red-600 font-semibold text-lg shadow-sm backdrop-blur-sm animate-pulse"
+          >
+            🔔 Connectez-vous pour réserver votre place à ce stand. 🔔
+          </h1>
           <h1 class="text-[var(--jaune)] font-bold">
             Nom du stand: {{ stand?.name }}
           </h1>

@@ -16,6 +16,34 @@ async function getTypeStandByIdFromLocalSource(id) {
     return standController.getStandTypeById(id)
 }
 
+async function getStandsReservationsRequestsFromLocalSource() {
+    return standController.getStandsReservationsRequests();
+}
+
+async function addStandRequestFromLocalSource(data) {
+    return standController.addStandRequest(data)
+}
+
+export async function addStandRequest(data){
+    let response = null;
+    try {
+        response = await addStandRequestFromLocalSource(data);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible dajouter une requete pour ce stand'}
+    }
+    return response;
+}
+
+export async function getStandsReservationsRequests(){
+    let response = null;
+    try {
+        response = await getStandsReservationsRequestsFromLocalSource();
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les requests des stands'}
+    }
+    return response;
+}
+
 export async function getStandTypeById(id){
     let response = null;
     try {
@@ -59,5 +87,5 @@ export async function getStandsTypes(){
 }
 
 export default {
-    getStands, getStandsTypes, getStandById, getStandTypeById
+    getStands, getStandsTypes, getStandById, getStandTypeById, addStandRequest, getStandsReservationsRequests
 }

@@ -354,7 +354,7 @@ let stands = [
         "type": "1",
         "owner": "f68ab44a-557b-4d44-b1df-a34f891c2dza"
     },
-    {"idstand": "2", "name": "cinema 2", "x": 25, "y": 670, "width": 481, "height": 620, "type": "1", "owner": null},
+    {"idstand": "2", "name": "cinema 2", "x": 25, "y": 670, "width": 481, "height": 620, "type": "1", "owner": "bb4b684c-0c67-4d19-ac21-b225b3e5c018"},
     {"idstand": "3", "name": "cinema 3", "x": 25, "y": 1303, "width": 481, "height": 620, "type": "1", "owner": null},
 
     {
@@ -415,6 +415,23 @@ let standTypes = [
     {"id": "2", "type": "autograph"},
 ];
 
+
+let stand_reservations_requests = [
+    {
+        "id": "1",
+        "requestDate": "2025-12-23T14:00:00",
+        "standId": "4",
+        "userId": "f1b92326-1e85-49af-8cf7-2270e2e725e8",
+        "status": "pending",
+    },
+    {
+        "id": "2",
+        "requestDate": "2025-12-23T17:00:00",
+        "standId": "3",
+        "userId": "f1b92326-1e85-49af-8cf7-2270e2e725e8",
+        "status": "pending",
+    }
+]
 let reservations = [
     {
         "id": "1",
@@ -554,40 +571,40 @@ let film_genres = [
 ];
 
 let film_cast = [
-    { "film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
-    { "film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
-    { "film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
-    { "film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
-    { "film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
-    { "film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
-    { "film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01" },
-    { "film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
-    { "film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" },
-    { "film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
-    { "film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
-    { "film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01" },
-    { "film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
-    { "film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd" },
-    { "film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55" },
-    { "film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66" },
-    { "film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3" },
-    { "film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89" },
-    { "film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80" }
+    {"film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "6f207e95-5400-471f-a933-d01d817b0608", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "b58b41e4-7f5d-452b-af72-9301dafa7896", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89"},
+    {"film_id": "6cec5c18-d60b-4372-916a-482bb4facaa0", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "9b4ced38-53ef-4a87-89f3-a791ce326093", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80"},
+    {"film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89"},
+    {"film_id": "e0f3b1c2-16b9-4504-8593-872d92b6f892", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80"},
+    {"film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89"},
+    {"film_id": "2a4d9a5f-fd9c-4d26-a65a-0ef0f1b2a913", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66"},
+    {"film_id": "f1b1c4d9-5e3f-4d4a-bc85-9c8e1a5b0d44", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01"},
+    {"film_id": "c1d4f2b3-4e7a-42a9-bf3d-0a9f5b3c6e77", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80"},
+    {"film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "e8f2d3c1-5b6a-4f3d-9c7f-2d8e5a6b7c22", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80"},
+    {"film_id": "f3b1c2d4-5e6f-4d7a-b8c9-1a2b3c4d5e6f", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66"},
+    {"film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89"},
+    {"film_id": "a1b2c3d4-5e6f-4f7a-8b9c-0d1e2f3a4b5c", "user_id": "7b8c9d0e-1a2b-4c3d-8f4a-5b6c7d8e9f01"},
+    {"film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66"},
+    {"film_id": "b2c3d4e5-6f7a-4b8c-9d0e-1f2a3b4c5d6e", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "c3d4e5f6-7a8b-4c9d-0e1f-2a3b4c5d6e7f", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "003f7a03-fbc7-48d3-a9a7-6fa949e88cdd"},
+    {"film_id": "d4e5f6a7-8b9c-4d0e-1f2a-3b4c5d6e7f8a", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "cf64a893-fe05-44ea-bf3a-d86e6f39dc55"},
+    {"film_id": "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "9a8b7c6d-5e4f-4a3b-8c2d-1f0e9d8c7b66"},
+    {"film_id": "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c", "user_id": "3952f2aa-8d02-4306-b814-f5b4405ed2a3"},
+    {"film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "4287f507-81a0-4c98-9b50-5df6bc60aa89"},
+    {"film_id": "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", "user_id": "83830343-26a0-400d-b491-8fd6c4d4bc80"}
 ];
 
 
@@ -974,6 +991,6 @@ export {
     projections,
     films_reservations,
     autographs_reservations,
-    autographs, genres, film_genres, film_cast
+    autographs, genres, film_genres, film_cast, stand_reservations_requests
 
 }

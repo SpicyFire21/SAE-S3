@@ -1,65 +1,77 @@
 <template>
-  <aside class="w-60 h-screen bg-[var(--gris)] flex flex-col p-5  border-r border-[var(--noir)]">
-    <button
-        @click="logout()"
-        class="w-full text-xl text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
-    >
-      {{ t("asidebarDashboard.1") }}
+  <aside class="w-64 h-screen bg-white shadow-xl border-r flex flex-col p-6 fixed">
 
-    </button>
-    <button
-        @click="go('/')"
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 tracking-wide">
+        Dashboard
+      </h2>
+      <div class="w-12 h-1 bg-yellow-400 rounded mt-2"></div>
+    </div>
 
-        class="w-full text-xl text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
-    >
-      {{ t("asidebarDashboard.2") }}
-    </button>
-    <div
-        class="flex items-center"
-        v-if="locale === 'en'"
-    >
+    <div class="space-y-3 mb-6">
       <button
-          @click="changeLanguage('fr')"
-          :class="['rounded-md px-3 py-2 text-[19px] flex gap-2 items-center font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
-      >      <img src="@/assets/lang/fr.webp" alt="fr" class="w-[30px] aspect-[480/320]">
+          @click="logout()"
+          class="w-full text-lg text-left px-4 py-2 rounded-lg text-gray-800 bg-gray-100
+                 hover:bg-yellow-300 hover:shadow transition font-semibold">
+        {{ t("asidebarDashboard.1") }}
+      </button>
 
-        FRANÇAIS
+      <button
+          @click="go('/')"
+          class="w-full text-lg text-left px-4 py-2 rounded-lg text-gray-800 bg-gray-100
+                 hover:bg-yellow-300 hover:shadow transition font-semibold">
+        {{ t("asidebarDashboard.2") }}
       </button>
     </div>
 
+    <div class="mb-8">
+      <div v-if="locale === 'en'" class="flex items-center">
+        <button
+            @click="changeLanguage('fr')"
+            class="w-full flex items-center gap-3 rounded-lg px-4 py-2 text-lg font-semibold
+                   bg-gray-100 hover:bg-yellow-300 transition shadow-sm">
+          <img src="@/assets/lang/fr.webp" alt="fr" class="w-[32px] rounded">
+          FRANÇAIS
+        </button>
+      </div>
 
-    <div
-        class="flex items-center"
-
-        v-if="locale === 'fr'"
-    >
-
-      <button
-          @click="changeLanguage('en')"
-
-          :class="['rounded-md px-3 py-2 text-[19px] flex gap-2 items-center font-medium transition-colors duration-300 hover:bg-[var(--jaune)]']"
-      >
-        <img src="@/assets/lang/en.webp" alt="en" class="w-[30px] aspect-[480/320]">
-
-        ENGLISH
-      </button>
+      <div v-if="locale === 'fr'" class="flex items-center">
+        <button
+            @click="changeLanguage('en')"
+            class="w-full flex items-center gap-3 rounded-lg px-4 py-2 text-lg font-semibold
+                   bg-gray-100 hover:bg-yellow-300 transition shadow-sm">
+          <img src="@/assets/lang/en.webp" alt="en" class="w-[32px] rounded">
+          ENGLISH
+        </button>
+      </div>
     </div>
 
+    <div class="text-xl font-bold text-gray-700 mb-4">
+      Menu
+    </div>
 
-
-    <div class="text-xl font-semibold mb-6">Menu</div>
-    <nav class="flex flex-col space-y-3">
+    <nav class="flex flex-col gap-3">
       <button
           v-for="(item, i) in dash"
           :key="i"
           @click="go(item.to)"
-          class="w-full text-left px-4 py-2 rounded-md text-[var(--noir)] bg-[var(--gris)] hover:bg-[var(--jaune)] transition"
-      >
+          class="w-full text-left px-4 py-2 rounded-lg
+                 bg-gray-100 text-gray-800 font-semibold
+                 hover:bg-yellow-300 hover:shadow transition">
         {{ item.label }}
       </button>
     </nav>
+
+    <div class="mt-auto pt-6">
+      <div class="w-full h-[2px] bg-gray-200 mb-4"></div>
+      <p class="text-sm text-gray-500 text-center">
+        Le Grand Focus
+      </p>
+    </div>
+
   </aside>
 </template>
+
 
 <script setup>
 import {computed, ref} from 'vue'
@@ -91,6 +103,7 @@ const admin = computed(() => [
 ])
 
 const provider = computed(() => [
+  { label: "Stands", to: '/provider-dashboard/stands' },
   { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
   { label: t("asidebarDashboard.4.3"), to: '/provider-dashboard/dedication' },
   { label: t("asidebarDashboard.4.4"), to: '/provider-dashboard/food' },

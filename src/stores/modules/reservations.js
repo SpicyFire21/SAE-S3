@@ -61,8 +61,9 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addFilmReservation = async (data) => {
         try {
             const response = await reservationsService.addFilmReservation(data);
-            pushFilmReservation(response.data.filmReservation)
-            pushReservation(response.data.reservation)
+            updateFilmsReservations(response.data.filmReservation)
+            updateReservations(response.data.reservation)
+            return response.data
         } catch (e) {
             console.error(e)
         }
@@ -71,8 +72,9 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addAutographReservation = async (data) => {
         try {
             const response = await reservationsService.addAutographReservation(data);
-            pushAutographReservation(response.data.autographReservation)
-            pushReservation(response.data.reservation)
+            updateAutographsReservations(response.data.autographReservation)
+            updateReservations(response.data.reservation)
+            return response.data
         } catch (e) {
             console.error(e)
         }

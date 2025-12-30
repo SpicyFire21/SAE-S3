@@ -52,11 +52,51 @@
           class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded ml-4"
           @click="goToStand(popup.stand.idstand)"
       >
-        Réserver
+        <span v-if="userStore.currentUser?.droit !== '1'">Réserver sa place</span>
+        <span v-else>Consulter ce stand</span>
       </button>
+        <button
+            class="bg-[var(--bleu)] hover:bg-[var(--bleu)]/70 text-white text-sm px-3 py-1 rounded mr-3 mt-3 mb-3"
+            @click="providerReservationRequest(popup.stand.idstand)"
+            v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null"
+        >
+          Demande de réservation du stand
+        </button>
     </div>
     </div>
   </div>
+
+  <div v-if="isModalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
+
+      <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+        ✕
+      </button>
+
+      <h2 class="text-xl font-bold mb-4">Réserver le stand</h2>
+      <p class="mb-4">
+        Vous êtes sur le point de réserver :
+        <strong>{{ standsStore.selectedStand.name }}</strong>
+      </p>
+
+      <div class="flex justify-center gap-3">
+        <button
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-xl"
+            @click="closeModal"
+        >
+          Annuler
+        </button>
+        <button
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl"
+            @click="confirmReservation"
+        >
+          Confirmer
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </template>
 
 
@@ -73,9 +113,11 @@ const standsStore = useStandsStore()
 const userStore = useUserStore()
 
 onMounted(async () => {
+  await standsStore.getStandsReservationsRequests()
   await standsStore.getStands();
   await userStore.getUsers();
   await standsStore.getStandsTypes();
+
 
   if (svgMap.value) {
     panzoom(svgMap.value, {
@@ -87,6 +129,26 @@ onMounted(async () => {
   }
 });
 const svgMap = ref(null);
+const isModalOpen = ref(false);
+
+const openModal = () => {
+  isModalOpen.value = true;
+}
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  standsStore.setSelectedStand(null)
+}
+
+const confirmReservation = async () => {
+  await standsStore.addStandRequest({
+    standId: standsStore.selectedStand.idstand,
+    userId: userStore.currentUser.id,
+    status: "pending",
+  });
+  closeModal();
+}
+
 
 const popup = reactive({
   visible: false,
@@ -113,13 +175,15 @@ const showPopup = async (event, stand) => {
 
 
 const goToStand = (id) => {
-  if (userStore.currentUser) {
     const selectedStand = standsStore.stands.find(stand => stand.idstand === id)
     standsStore.setSelectedStand(selectedStand)
     router.push({name: 'StandDetails', params: {id}})
-  } else {
-    router.push({name: 'LoginPage'})
-  }
+}
+
+const providerReservationRequest = (id) => {
+  const selectedStand = standsStore.stands.find(stand => stand.idstand === id);
+  standsStore.setSelectedStand(selectedStand);
+  openModal();
 }
 
 const getFontSize = (h, type) => {
