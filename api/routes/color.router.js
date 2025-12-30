@@ -36,7 +36,7 @@ router.get("/", colorController.getColors)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Color'
+ *             $ref: '#/components/schemas/ColorInput'
  *     responses:
  *       201:
  *         description: Couleur créée

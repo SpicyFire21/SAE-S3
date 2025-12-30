@@ -69,6 +69,55 @@ router.get("/types/:idtype", standController.getStandTypeById)
 
 /**
  * @swagger
+ * /stands/reservations:
+ *   get:
+ *     tags: [Stands]
+ *     summary: Récupérer les demandes de réservation de stand
+ *     description: Retourne la liste des demandes de réservation de stands.
+ *     responses:
+ *       200:
+ *         description: Liste des demandes de réservation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/StandReservationRequest'
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/reservations",standController.getStandsReservationsRequests)
+
+/**
+ * @swagger
+ * /stands/reservations:
+ *   post:
+ *     tags: [Stands]
+ *     summary: Créer une demande de réservation de stand
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/StandReservationRequestInput'
+ *     responses:
+ *       201:
+ *         description: Demande créée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/StandReservationRequest'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ */
+
+router.post("/reservations",standController.addStandRequest)
+
+
+/**
+ * @swagger
  * /stands/{id}:
  *   get:
  *     summary: Récupérer un stand par ID

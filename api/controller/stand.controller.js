@@ -46,7 +46,27 @@ export const getStandTypeById = async (req,res) => {
 }
 
 
+export const getStandsReservationsRequests = async (req,res) => {
+    try {
+        let data = await standService.getStandsReservationsRequests();
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des requêtes de stands");
+    }
+}
+
+export const addStandRequest = async (req,res) => {
+    try {
+        let data = await standService.addStandRequest(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de l'ajout d'un requête de stands");
+    }
+}
 
 
 
