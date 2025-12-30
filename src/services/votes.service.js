@@ -1,42 +1,21 @@
-import votesController from "@/datasource/controller/votes.controller.js"
-
-export async function addOrUpdateVote(data) {
-    try {
-        return await votesController.addOrUpdateVote(data)
-    } catch (err) {
-        console.error("Controller votes error:", err)
-        return { error: 1, status: 500, data: "Erreur réseau, impossible d’ajouter un vote." }
-    }
-}
-
-export async function removeVote(data) {
-    try {
-        return await votesController.removeVote(data)
-    } catch (err) {
-        console.error("Controller votes error:", err)
-        return { error: 1, status: 500, data: "Erreur réseau, impossible de supprimer le vote." }
-    }
-}
-
-export async function getVotes() {
-    try {
-        return await votesController.getVotes()
-    } catch {
-        return { error: 1, status: 500, data: "Erreur réseau, impossible de charger les votes." }
-    }
-}
-
-export async function resetVotes() {
-    try {
-        return await votesController.resetVotes()
-    } catch {
-        return { error: 1, status: 500, data: "Erreur réseau, impossible de réinitialiser les votes." }
-    }
-}
+import votesController from '@/datasource/controller/votes.controller.js'
 
 export default {
-    addOrUpdateVote,
-    removeVote,
-    getVotes,
-    resetVotes
+    async getVotes() {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(votesController.getVotes()), 100)
+        })
+    },
+
+    async addOrUpdateVote(filmId, category) {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(votesController.addOrUpdateVote(filmId, category)), 100)
+        })
+    },
+
+    async removeVote(filmId, category) {
+        return new Promise(resolve => {
+            setTimeout(() => resolve(votesController.removeVote(filmId, category)), 100)
+        })
+    }
 }

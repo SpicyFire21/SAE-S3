@@ -747,6 +747,37 @@ let films = [
     }
 ];
 
+//Votes des utilisateurs : 1 vote max par catégorie
+let votes = [
+    { id: "vote-1", userId: "922ea3e9-2921-46b0-a4e9-73eb06baa45d", filmId: "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", category: "Meilleur scénario" },
+    { id: "vote-2", userId: "922ea3e9-2921-46b0-a4e9-73eb06baa45d", filmId: "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", category: "Meilleurs effets visuels" },
+    { id: "vote-3", userId: "e41f5d21-1c7d-4f3b-8a9c-3b12a44cd001", filmId: "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d", category: "Prix du public" }
+];// Format : { id, userId, filmId, category }
+
+
+//Scores des films par catégorie
+let votes_score = {
+    "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d": {
+        "Meilleur scenario": 1,
+        "Meilleurs effets visuels": 1,
+        "Prix du public": 1
+    },
+
+    // On initialise aussi les autres films existants avec 0 point
+    // ⚠ Mets bien leurs vrais IDs ici (copie-colle depuis TON data.js)
+    "f6a7b8c9-0d1e-4f2a-3b4c-5d6e7f8a9b0c": {
+        "Meilleur scenario": 0,
+        "Meilleurs effets visuels": 0,
+        "Prix du public": 0
+    },
+    "e5f6a7b8-9c0d-4e1f-2a3b-4c5d6e7f8a9b": {
+        "Meilleur scenario": 0,
+        "Meilleurs effets visuels": 0,
+        "Prix du public": 0
+    }
+}// Format : { filmId: { "Meilleur scénario": 0, "Meilleurs effets visuels": 0, "Prix du public": 1 } }
+
+
 
 let film_tickets = [
     {
@@ -963,6 +994,8 @@ export {
     basket_items,
     film_tickets,
     films,
+    votes,
+    votes_score,
     provider_requests,
 
     provider_services_state,

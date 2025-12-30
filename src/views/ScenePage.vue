@@ -10,18 +10,15 @@
           :key="film.id"
           class="bg-[var(--gris)] rounded-2xl shadow-lg p-5 flex flex-col gap-3"
       >
-        <img
-            :src="`/images/${film.poster}`"
-            :alt="film.title"
-            class="rounded-xl w-full h-80 object-cover shadow-md"
-        />
+        <img :src="getFilmImage(film.poster)" :alt="film.title" class="rounded-xl w-full h-80 object-cover shadow-md" />
+
 
         <h2 class="text-xl font-semibold text-center tracking-wide">
           {{ film.title }}
         </h2>
 
         <p class="text-sm text-center text-[var(--grisf)]">
-          🎭 Genres : {{ film.genres?.join(', ') || 'Non spécifié' }}
+          🎭 Genres : {{ filmsStore.getGenresOfFilm(film.id).join(', ') || 'Non spécifié' }}
         </p>
 
         <button
@@ -30,6 +27,9 @@
         >
           🗳 Voter
         </button>
+        <div v-if="!userStore.currentUser" class="text-center text-red-600 font-semibold mt-6">
+          Connectez-vous pour voter
+        </div>
       </div>
     </section>
 
@@ -37,8 +37,9 @@
         v-if="showModal"
         :film="selectedFilm"
         :categories="categories"
-        @close="showModal = false"
         @submitVote="submitVote"
+        @removeVote="removeVote"
+        @close="showModal = false"
     />
 
     <section class="mt-15 max-w-3xl mx-auto">
@@ -55,9 +56,9 @@
           {{ cat }}
         </h3>
 
-        <ul v-if="ranking(cat).length">
+        <ul v-if="votesStore.getRanking(cat).length">
           <li
-              v-for="item in ranking(cat)"
+              v-for="item in votesStore.getRanking(cat)"
               :key="item.filmId"
               class="flex justify-between border-b py-2 tracking-wide"
           >
@@ -75,12 +76,11 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from "vue"
-import {useFilmsStore} from "@/stores/modules/films.js"
-import {useVotesStore} from "@/stores/modules/votes.js"
-import {useUserStore} from "@/stores/index.js"
-import VoteModal from "@/components/ScenePrincipal/VoteModal.vue"
-import router from "@/router/index.js"
+import { ref, onMounted } from 'vue'
+import { useFilmsStore } from '@/stores/modules/films.js'
+import { useVotesStore } from '@/stores/modules/votes.js'
+import { useUserStore } from '@/stores/index.js'
+import VoteModal from '@/components/ScenePrincipal/VoteModal.vue'
 
 const filmsStore = useFilmsStore()
 const votesStore = useVotesStore()
@@ -88,40 +88,30 @@ const userStore = useUserStore()
 
 const showModal = ref(false)
 const selectedFilm = ref(null)
-
 const categories = ["Meilleur scénario", "Meilleurs effets visuels", "Prix du public"]
 
 onMounted(async () => {
-  await filmsStore.getFilms()
+  await filmsStore.init()
 })
 
+const getFilmImage = (fileName) =>
+    new URL(`../assets/img/${fileName}`, import.meta.url).href
+
 const openVoteModal = (film) => {
+  if (!userStore.currentUser) return
   selectedFilm.value = film
   showModal.value = true
 }
 
-const submitVote = (vote) => {
-  const userId = userStore.currentUser.id
-  vote.userId = userId
-
-  votesStore.addOrUpdateVote(vote)
-  showModal.value = false
+const submitVote = ({ filmId, category, userId }) => {
+  votesStore.addOrUpdateVote({ filmId, category, userId })
+  //showModal.value = false
 }
 
-const ranking = (category) => {
-  const list = []
-  for (const filmId in votesStore.filmsScore) {
-    const score = votesStore.filmsScore[filmId][category] || 0
-    const film = filmsStore.films.find(f => f.id === filmId)
-    if (film) list.push({filmId, title: film.title, score})
-  }
-  return list.sort((a, b) => b.score - a.score)
+const removeVote = ({ category, filmId, userId }) => {
+  votesStore.removeVote({ category, userId })
+  //showModal.value = false
 }
+
+
 </script>
-
-<style scoped>
-.scene-container {
-  margin-top: 90px; /* pousse le contenu sans toucher à la navbar */
-  padding-bottom: 40px;
-}
-</style>

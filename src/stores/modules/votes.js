@@ -1,109 +1,70 @@
-import { ref } from "vue"
-import { defineStore } from "pinia"
-import votesService from "@/services/votes.service.js"
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import { useFilmsStore } from './films.js'
 
 export const useVotesStore = defineStore('votes', () => {
+    const filmsStore = useFilmsStore()
 
-    // --- STATE ---
-    const filmsScore = ref({}) // { filmId: { category: score } }
-    const votes = ref({}) // { userId: { category: filmId } }
+    // votes : { category: { userId: filmId } }
+    const votes = ref({})
 
-    // --- INIT depuis localStorage ---
-    const savedScore = localStorage.getItem("filmsScore")
-    const savedVotes = localStorage.getItem("votes")
+    // --- Ajouter ou mettre à jour un vote ---
+    const addOrUpdateVote = ({ filmId, category, userId }) => {
+        if (!votes.value[category]) votes.value[category] = {}
 
-    if (savedScore) filmsScore.value = JSON.parse(savedScore)
-    if (savedVotes) votes.value = JSON.parse(savedVotes)
+        // Empêche de voter plusieurs fois dans la même catégorie
+        if (votes.value[category][userId]) return false
 
-    // --- ACTIONS ---
-    const addOrUpdateVote = async ({ filmId, userId, category }) => {
-        if (!userId || !filmId || !category) return
+        votes.value[category][userId] = filmId
+        return true
+    }
 
-        try {
-            // init safe score
-            if (!filmsScore.value[filmId]) filmsScore.value[filmId] = {}
-            if (!filmsScore.value[filmId][category]) filmsScore.value[filmId][category] = 0
-
-            // call service
-            const res = await votesService.addOrUpdateVote({ filmId, userId, category })
-
-            if (res.error) throw new Error(res.data)
-
-            // mettre à jour le score local
-            const userVotes = votes.value[userId] || {}
-
-            // retirer ancien vote du score si existant
-            if (userVotes[category]) {
-                const oldFilm = userVotes[category]
-                if (filmsScore.value[oldFilm]?.[category]) {
-                    filmsScore.value[oldFilm][category]--
-                }
-            }
-
-            // ajouter 1 point au nouveau film
-            filmsScore.value[filmId][category]++
-
-            // enregistrer le vote
-            votes.value[userId] = { ...userVotes, [category]: filmId }
-
-            // save
-            localStorage.setItem("filmsScore", JSON.stringify(filmsScore.value))
-            localStorage.setItem("votes", JSON.stringify(votes.value))
-
-            return res.data
-
-        } catch (e) {
-            console.error("Store votes error:", e)
-            throw new Error("Erreur réseau, impossible d’ajouter un vote.")
+    // --- Supprimer le vote d'un utilisateur pour une catégorie ---
+    const removeVote = ({ category, userId }) => {
+        if (votes.value[category]?.[userId]) {
+            delete votes.value[category][userId]
         }
     }
 
-    const removeVote = async ({ userId, category }) => {
-        if (!votes.value[userId]?.[category]) {
-            throw new Error("Aucun vote trouvé dans cette catégorie.")
-        }
-
-        try {
-            const filmId = votes.value[userId][category]
-
-            // retirer 1 point du score
-            if (filmsScore.value[filmId]?.[category]) {
-                filmsScore.value[filmId][category]--
-            }
-
-            // supprimer le vote dans l'objet
-            const updatedUserVotes = { ...votes.value[userId] }
-            delete updatedUserVotes[category]
-            votes.value[userId] = updatedUserVotes
-
-            // call service
-            const res = await votesService.removeVote({ userId, category })
-            if (res.error) throw new Error(res.data)
-
-            // save
-            localStorage.setItem("filmsScore", JSON.stringify(filmsScore.value))
-            localStorage.setItem("votes", JSON.stringify(votes.value))
-
-            return true
-
-        } catch (e) {
-            console.error("Store removeVote error:", e)
-            throw new Error("Erreur réseau, impossible de supprimer le vote.")
-        }
+    // --- Vérifie si l'utilisateur a déjà voté pour une catégorie ---
+    const hasVotedCategory = (category, userId) => {
+        return !!votes.value[category]?.[userId]
     }
 
-    const resetVotes = () => {
-        votes.value = {}
-        filmsScore.value = {}
-        localStorage.removeItem("filmsScore")
-        localStorage.removeItem("votes")
+    // --- Retourne le film sur lequel l'utilisateur a voté pour une catégorie ---
+    const getVotedFilmIdForCategory = (category, userId) => {
+        return votes.value[category]?.[userId] || null
+    }
+
+    // --- Calculer le classement pour une catégorie ---
+    const getRanking = (category) => {
+        const rankingMap = {}
+        const catVotes = votes.value[category] || {}
+
+        // Compter les votes par film
+        for (const userId in catVotes) {
+            const filmId = catVotes[userId]
+            if (!rankingMap[filmId]) rankingMap[filmId] = 0
+            rankingMap[filmId]++
+        }
+
+        // Transformer en tableau et ajouter le titre du film
+        return Object.entries(rankingMap)
+            .map(([filmId, score]) => {
+                const film = filmsStore.films.find(f => f.id === filmId)
+                if (!film) return null
+                return { filmId, title: film.title, score }
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score)
     }
 
     return {
-        filmsScore,
         votes,
         addOrUpdateVote,
         removeVote,
-        resetVotes
+        hasVotedCategory,
+        getVotedFilmIdForCategory,
+        getRanking
     }
 })
