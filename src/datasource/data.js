@@ -447,6 +447,7 @@ let reservations = [
         "date": "2025-12-23T14:00:00",
         "standId": "4"
     },
+
 ];
 
 let films_reservations = [

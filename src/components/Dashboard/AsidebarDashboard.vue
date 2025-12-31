@@ -106,7 +106,6 @@ const admin = computed(() => [
 const provider = computed(() => [
   { label: "Stands", to: '/provider-dashboard/stands' },
   { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
-  { label: t("asidebarDashboard.4.3"), to: '/provider-dashboard/dedication' },
   { label: t("asidebarDashboard.4.4"), to: '/provider-dashboard/food' },
   { label: t("asidebarDashboard.4.5"), to: '/provider-dashboard/reservation' },
 

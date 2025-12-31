@@ -27,7 +27,7 @@ const router = [
                 path:'standsRequests',
                 name:'standsRequests',
                 components: {dashboard:StandsRequests}
-            },
+            }
 
         ]
     }

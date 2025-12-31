@@ -20,6 +20,7 @@ import standRoute from './routes/stand.router.js'
 import ticketRoute from './routes/ticket.router.js'
 import GenreRoute from './routes/genres.router.js'
 import NoteRoute from './routes/notes.router.js'
+import VoteRoute from './routes/votes.router.js'
 
 const app = express();
 const PORT = 3000
@@ -47,7 +48,7 @@ app.use('/stands',standRoute);
 app.use('/tickets',ticketRoute);
 app.use('/genres',GenreRoute);
 app.use('/notes',NoteRoute);
-
+app.use('/votes',VoteRoute);
 
 
 
