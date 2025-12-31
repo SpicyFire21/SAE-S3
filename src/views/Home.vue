@@ -134,6 +134,7 @@ onMounted(async () => {
   await filmsStore.getProjections();
   await reservationStore.getFilmsReservations()
   await userStore.getProviders();
+  await userStore.getNotes();
   await ticketsStore.getTickets();
   await ticketsStore.getTicketsPrice();
 });
@@ -143,21 +144,35 @@ const getDirectorName = (director_id) => {
   return director ? director.name : 'Directeur inconnu'
 }
 
-const averageNote = (notes) => {
-  if (!notes || notes.length === 0) return 0;
-  const sum = notes.reduce((acc, val) => acc + val, 0);
-  return sum / notes.length;
-};
+const averageNoteByUser = (userId) => {
+  const userNotes = userStore.notes.filter(n => n.userId === userId)
+  if (userNotes.length === 0) return 0
+
+  const sum = userNotes.reduce((acc, n) => acc + Number(n.value), 0)
+  return sum / userNotes.length
+}
+
 
 const filteredProviders = computed(() => {
-  return userStore.providers.filter(provider => {
-    const matchName = provider.name.toLowerCase().includes(filterName.value.toLowerCase());
-    const matchNote = averageNote(provider.note) >= filterNote.value; // ici, averageNote renvoie directement un nombre
-    const matchType = filterTypes.value.length ? filterTypes.value.includes(provider.type) : true;
-    const matchDroit = Number(provider.droit) === 1;
-    return matchName && matchNote && matchType && matchDroit;
-  });
-});
+      return userStore.providers.filter(provider => {
+        const matchName =
+            !filterName.value ||
+            provider.name?.toLowerCase().includes(filterName.value.toLowerCase())
+
+        const matchNote =
+            averageNoteByUser(provider.id) >= filterNote.value
+
+        const matchType =
+            filterTypes.value.length
+                ? filterTypes.value.includes(provider.type)
+                : true
+
+        const matchDroit = Number(provider.droit) === 1
+
+        return matchName && matchNote && matchType && matchDroit
+      })
+    })
+;
 
 
 const filteredNewFilms = computed(() => {

@@ -82,6 +82,19 @@ async function registerProvider(data){
     return response;
 }
 
+async function getNotesFromLocalSource(){
+    return userController.getNotes();
+}
+async function getNotes(){
+    let response = null;
+    try {
+        response = await getNotesFromLocalSource();
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les notes'}
+    }
+    return response;
+}
 
 export default {
     getUsers,
@@ -89,5 +102,6 @@ export default {
     getProviders,
     registerUser,
     registerProvider,
-    getUserById
+    getUserById,
+    getNotes
 }

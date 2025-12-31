@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', () => {
     const users = ref([])
     const currentUser = ref(null)
     const providers = ref([])
+    const notes = ref([])
 
     //hydratation
     const storedUser = sessionStorage.getItem('currentUser');
@@ -17,6 +18,8 @@ export const useUserStore = defineStore('user', () => {
 
 
     //getter
+
+
 
     //mutation
     const updateCurrentUser = (data) => {
@@ -28,9 +31,11 @@ export const useUserStore = defineStore('user', () => {
             sessionStorage.removeItem('currentUser');
         }
     };
+    const updateNotes = (data) =>{
+        notes.value = data;
+    }
 
 
-    // mutations
     const updateUsers = (data) =>{
         users.value = data;
     }
@@ -47,6 +52,15 @@ export const useUserStore = defineStore('user', () => {
         try {
             const response = await userService.getUsers();
             updateUsers(response.data)
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const getNotes = async () => {
+        try {
+            const response = await userService.getNotes();
+            updateNotes(response.data)
 
         } catch (e) {
             console.error(e)
@@ -139,6 +153,7 @@ export const useUserStore = defineStore('user', () => {
         providers,
         users,
         currentUser,
+        notes,
 
         //getter
 
@@ -151,6 +166,7 @@ export const useUserStore = defineStore('user', () => {
         registerUser,
         logout,
         registerProvider,
-        getUserById
+        getUserById,
+        getNotes
     }
 })

@@ -1,7 +1,10 @@
-import {film_tickets, provider_requests, users} from "@/datasource/data.js";
+import {film_tickets, notes, provider_requests, users} from "@/datasource/data.js";
 import {v4 as uuidv4} from 'uuid'
 async function getUsers() {
     return {error:0,status:200,data:users}
+}
+async function getNotes() {
+    return {error:0,status:200,data:notes}
 }
 
 async function getTickets() {
@@ -154,5 +157,6 @@ export default {
     getProviders,
     registerUser,
     registerProvider,
-    getUserById
+    getUserById,
+    getNotes
 }
