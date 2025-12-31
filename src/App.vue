@@ -13,7 +13,8 @@ const show = computed(() => {
   const p = route.path
   return !(
       p.startsWith('/admin-dashboard') ||
-      p.startsWith('/provider-dashboard')
+      p.startsWith('/provider-dashboard') ||
+      p.startsWith('/providerstand')
   )
 })
 

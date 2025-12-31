@@ -35,6 +35,10 @@ export const useFilmsStore = defineStore('films', () => {
         selectedProjection.value = projection
     }
 
+    const removeProjection = (projection) => {
+        projections.value = projections.value.filter(p => p.id !== projection.id);
+    };
+
     const getProjections = async () => {
         try {
             const response = await filmsService.getProjections();
@@ -93,6 +97,10 @@ export const useFilmsStore = defineStore('films', () => {
         }
     }
 
+    const getFilmByIdForProvider = (id) => {
+        return films.value.find(f => f.id === id);
+    }
+
     const getGenreById = async (id) => {
         try {
             const response = await filmsService.getGenreById(id);
@@ -101,6 +109,16 @@ export const useFilmsStore = defineStore('films', () => {
             console.error(e)
         }
     }
+
+    const deleteProjection = async (projection) => {
+        try {
+            await filmsService.deleteProjection(projection);
+            removeProjection(projection);
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
 
     const getFilmsByStand = async (standId) => {
         try {
@@ -166,6 +184,8 @@ export const useFilmsStore = defineStore('films', () => {
         filmGenres,
         getGenresOfFilm,
         getFilmsOfGenre,
-        genres
+        genres,
+        getFilmByIdForProvider,
+        deleteProjection
     }
 })

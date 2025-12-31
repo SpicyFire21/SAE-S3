@@ -1,6 +1,9 @@
 import DashboardView from "@/views/DashboardView.vue";
 import ProviderRequests from "@/components/Dashboard/admin/ProviderRequests.vue";
 import AdminStats from "@/components/Dashboard/admin/AdminStats.vue";
+import StandsRequests from "@/components/Dashboard/admin/StandsRequests.vue";
+
+
 
 
 const router = [
@@ -12,14 +15,19 @@ const router = [
         children:[
             {
                 path:'requests',
-                name:'requets',
+                name:'requests',
                 components: {dashboard:ProviderRequests}
             },
             {
                 path:'stats',
                 name:'AdminStats',
                 components: {dashboard:AdminStats}
-            }
+            },
+            {
+                path:'standsRequests',
+                name:'standsRequests',
+                components: {dashboard:StandsRequests}
+            },
 
         ]
     }

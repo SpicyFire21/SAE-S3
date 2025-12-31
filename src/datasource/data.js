@@ -375,7 +375,7 @@ let stands = [
         "width": 65,
         "height": 164,
         "type": "2",
-        "owner": null
+        "owner": "bb4b684c-0c67-4d19-ac21-b225b3e5c018"
     },
     // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
@@ -468,7 +468,8 @@ let projections = [
     {"id": "2", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-24T17:00:00"},
     {"id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00"},
     {"id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00"},
-    {"id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00"}
+    {"id": "5", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00"},
+    {"id": "6", "standId": "2", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-23T16:00:00"}
 ];
 
 let autographs = [

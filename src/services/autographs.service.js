@@ -12,12 +12,26 @@ async function getAutographByStandIdFromLocalSource(id) {
     return autographController.getAutographsByStandId(id)
 }
 
+async function deleteAutographFromLocalSource(autograph) {
+    return autographController.deleteAutograph(autograph);
+}
+
 export async function getAutographsByStandId(id){
     let response = null;
     try {
         response = await getAutographByStandIdFromLocalSource(id);
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de recuperer les autographs depuis ce stand'}
+    }
+    return response;
+}
+
+export async function deleteAutograph(projection){
+    let response = null;
+    try {
+        response = await deleteAutographFromLocalSource(projection);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de delete cette autograph'}
     }
     return response;
 }
@@ -46,5 +60,5 @@ export async function getAutographById(id){
 
 
 export default {
-    getAutographs, getAutographById, getAutographsByStandId
+    getAutographs, getAutographById, getAutographsByStandId, deleteAutograph
 }

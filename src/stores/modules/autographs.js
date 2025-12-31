@@ -1,6 +1,7 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import autographsService from "@/services/autographs.service.js";
+import filmsService from "@/services/films.service.js";
 
 export const useAutographsStore = defineStore('autographs', () => {
     const autographs = ref([])
@@ -17,6 +18,10 @@ export const useAutographsStore = defineStore('autographs', () => {
     const pushAutographs = (data) => {
         autographs.value.push(data)
     }
+
+    const removeAutograph = (autograph) => {
+        autographs.value = autographs.value.filter(a => a.id !== autograph.id);
+    };
 
 
     const getAutographsByStandId = async (id) => {
@@ -46,9 +51,18 @@ export const useAutographsStore = defineStore('autographs', () => {
         }
     }
 
+    const deleteAutograph = async (autograph) => {
+        try {
+            await autographsService.deleteAutograph(autograph);
+            removeAutograph(autograph);
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
 
 
     return {
-        getAutograph, getAutographById, getAutographsByStandId, autographs, selectedAutograph
+        getAutograph, getAutographById, getAutographsByStandId, autographs, selectedAutograph, deleteAutograph
     }
 })

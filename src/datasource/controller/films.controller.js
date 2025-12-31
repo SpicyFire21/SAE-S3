@@ -1,4 +1,4 @@
-import {films, projections, users, genres, film_genres, film_cast} from "@/datasource/data.js";
+import {films, projections, users, genres, film_genres, film_cast, goodies} from "@/datasource/data.js";
 
 
 async function getFilms() {
@@ -30,6 +30,31 @@ async function getProjections() {
     return {error:0, status:200, data:projections}
 }
 
+async function updateProjection(projection) {
+    const index = projections.findIndex(p => p.id === projection.id);
+
+    if (index !== -1) {
+        // remplace la projection
+        projections.splice(index, 1, projection);
+
+        return { error: 0, status: 200, data: projection };
+    } else {
+        return { error: 1, status: 404, data: "Projection inexistante" };
+    }
+}
+
+export async function deleteProjection(projection) {
+    const index = projections.findIndex(p => p.id === projection.id);
+
+    if (index === -1) {
+        return { error: 1, status: 404, data: "Projection inexistante" };
+    }
+
+    const removed = projections.splice(index, 1)[0]; // on supprime et on recupere l'objet (le [0] sert a renvoyé l'objet supprimé)
+    return { error: 0, status: 200, data: removed };
+}
+
+
 export default {
 
     getFilms,
@@ -43,5 +68,7 @@ export default {
     getFilmCast,
 
     getProjections,
+    updateProjection,
+    deleteProjection
 
 }

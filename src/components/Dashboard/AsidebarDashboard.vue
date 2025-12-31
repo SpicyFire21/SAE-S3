@@ -99,7 +99,8 @@ const changeLanguage = (lan) => {
 // Définition simple des entrées du menu
 const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
-  { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' }
+  { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' },
+  { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' }
 ])
 
 const provider = computed(() => [

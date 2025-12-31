@@ -103,9 +103,37 @@ export async function getFilmById(id) {
     return response;
 }
 
+async function updateProjectionFromLocalSource(projection) {
+    return filmsController.updateProjection(projection)
+}
+
+export async function updateProjection(projection) {
+    let response = null;
+    try {
+        response = await updateProjectionFromLocalSource(projection);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de modifier la projection'}
+    }
+    return response;
+}
+
+async function deleteProjectionFromLocalSource(projection) {
+    return filmsController.deleteProjection(projection)
+}
+
+export async function deleteProjection(projection) {
+    let response = null;
+    try {
+        response = await deleteProjectionFromLocalSource(projection);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer la projection'}
+    }
+    return response;
+}
+
 
 export default {
     getFilms,
     getProjections,
-    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById
+    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection
 }
