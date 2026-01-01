@@ -6,7 +6,6 @@ import standsService from "@/services/stands.service.js";
 import reservationsService, {
     addFilmReservation, getEventFromReservation,
 } from "@/services/reservations.service.js";
-import {projections, reservations} from "@/datasource/data.js";
 
 export const useReservationsStore = defineStore('reservations', () => {
     const reservations = ref([])
@@ -62,7 +61,7 @@ export const useReservationsStore = defineStore('reservations', () => {
         try {
             const response = await reservationsService.addFilmReservation(data);
             updateFilmsReservations(response.data.filmReservation)
-            updateReservations(response.data.reservation)
+            updateReservations(response.data.reservation) // des updates au lieu de push car sinon ca rajoute 2 fois, AUCUNE IDEE comment fix
             return response.data
         } catch (e) {
             console.error(e)

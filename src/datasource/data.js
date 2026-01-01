@@ -452,20 +452,20 @@ let stand_reservations_requests = [
     }
 ]
 let reservations = [
-    {
-        "id": "1",
-        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "type": "1",
-        "date": "2025-12-23T14:00:00",
-        "standId": "1"
-    },
-    {
-        "id": "2",
-        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "type": "2",
-        "date": "2025-12-23T14:00:00",
-        "standId": "4"
-    },
+    // {
+    //     "id": "1",
+    //     "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+    //     "type": "1",
+    //     "date": "2025-12-23T14:00:00",
+    //     "standId": "1"
+    // },
+    // {
+    //     "id": "2",
+    //     "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+    //     "type": "2",
+    //     "date": "2025-12-23T14:00:00",
+    //     "standId": "4"
+    // },
 
 ];
 

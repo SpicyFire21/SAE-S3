@@ -7,5 +7,6 @@ import { useAdminStore } from './modules/admin'
 import { useGoodiesStore } from './modules/goodies'
 import { useReservationsStore } from './modules/reservations.js'
 import { useStandsStore } from './modules/stands.js'
+import { useAutographsStore } from './modules/autographs.js'
 
-export { useUserStore,useAdminStore,useFilmsStore,useTicketsStore,useGoodiesStore,useReservationsStore,useStandsStore }
+export { useUserStore,useAdminStore,useFilmsStore,useTicketsStore,useGoodiesStore,useReservationsStore,useStandsStore, useAutographsStore }

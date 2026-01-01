@@ -55,7 +55,7 @@ async function addAutographReservation(data) {
     }
 
     reservations.push(reservation)
-    films_reservations.push(autographs_reservations)
+    autographs_reservations.push(autographReservation)
 
     return {error: 0, status: 201, data: {reservation, autographReservation}}
 }

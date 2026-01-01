@@ -131,9 +131,25 @@ export async function deleteProjection(projection) {
     return response;
 }
 
+async function addProjectionFromLocalSource(projection) {
+    return filmsController.addProjection(projection)
+}
+
+export async function addProjection(projection) {
+    let response = null;
+    try {
+        response = await addProjectionFromLocalSource(projection);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible dajouter la projection'}
+    }
+    return response;
+}
+
+
+
 
 export default {
     getFilms,
     getProjections,
-    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection
+    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection, addProjection
 }

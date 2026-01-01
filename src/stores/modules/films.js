@@ -1,6 +1,7 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import filmsService from "@/services/films.service.js"
+import goodiesService from "@/services/goodies.service.js";
 
 export const useFilmsStore = defineStore('films', () => {
     // state
@@ -39,10 +40,51 @@ export const useFilmsStore = defineStore('films', () => {
         projections.value = projections.value.filter(p => p.id !== projection.id);
     };
 
+    const pushProjection = (projection) => {
+        projections.value.push(projection);
+    }
+
+    const editProjection = (projection) => {
+        projections.value = projections.value.map(p => {
+            if (p.id === projection.id) {
+                return projection; // on remplace l'objet correspondant
+            }
+            return p; // sinon on le garde si l'id de la projection séléctionné n'est pas trouvé
+        });
+    }
+
+
+
+    const addProjection = async(projection) =>{
+        try {
+            const response = await filmsService.addProjection(projection);
+            if (response.error === 0){
+                pushProjection(response.data)
+                return response.data
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
+
     const getProjections = async () => {
         try {
             const response = await filmsService.getProjections();
             updateProjections(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const updateProjection = async(projection) =>{
+        try {
+             const response = await filmsService.updateProjection(projection);
+             editProjection(response.data)
         } catch (e) {
             console.error(e)
         }
@@ -186,6 +228,6 @@ export const useFilmsStore = defineStore('films', () => {
         getFilmsOfGenre,
         genres,
         getFilmByIdForProvider,
-        deleteProjection
+        deleteProjection, updateProjection, addProjection
     }
 })
