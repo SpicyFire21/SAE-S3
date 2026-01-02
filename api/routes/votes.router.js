@@ -9,7 +9,8 @@ let router = express.Router();
  * /votes:
  *   get:
  *     summary: Récupérer tous les votes
- *     tags: [Votes]
+ *     tags:
+ *       - Votes
  *     responses:
  *       200:
  *         description: Liste des votes
@@ -29,7 +30,8 @@ router.get("/", voteController.getVotes);
  * /votes/{id}:
  *   get:
  *     summary: Récupérer un vote par ID
- *     tags: [Votes]
+ *     tags:
+ *       - Votes
  *     parameters:
  *       - in: path
  *         name: id
@@ -55,7 +57,8 @@ router.get("/:id", voteController.getVotesById);
  * /votes:
  *   post:
  *     summary: Ajouter un vote
- *     tags: [Votes]
+ *     tags:
+ *       - Votes
  *     requestBody:
  *       required: true
  *       content:
@@ -83,7 +86,8 @@ router.post("/", voteController.addVote);
  * /votes:
  *   put:
  *     summary: Modifier le score d'un vote existant ou créer la ligne si elle n'existe pas
- *     tags: [Votes]
+ *     tags:
+ *       - Votes
  *     requestBody:
  *       required: true
  *       content:
@@ -109,7 +113,8 @@ router.put("/", voteController.editVote);
  * /votes/{iduser}/{idcategory}:
  *   delete:
  *     summary: Supprimer un vote par utilisateur et catégorie
- *     tags: [Votes]
+ *     tags:
+ *       - Votes
  *     parameters:
  *       - in: path
  *         name: iduser

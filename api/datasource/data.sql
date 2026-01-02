@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS comments_golden_book
 (
     id          UUID PRIMARY KEY,
     user_id     UUID      NOT NULL,
-    commentaire TEXT      NOT NULL,
+    content TEXT      NOT NULL,
     date        TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
@@ -408,6 +408,6 @@ INSERT INTO film_reservations
 VALUES (1, 1);
 INSERT INTO autographs (id, stand_id, user_id, begin_date, duration)
 VALUES (1, 4, 'a81699b9-94d1-4f72-9df4-1588dc1b2cc5', '2025-12-23 18:00:00', 120);
-INSERT INTO comments_golden_book (id, user_id, commentaire, date)
+INSERT INTO comments_golden_book (id, user_id, content, date)
 VALUES ('1a8d8f63-3ef8-4c5f-a482-97afaa1c3d93', 'c38acd4c-d6fc-4a19-bd24-98a7c18fa414',
         'Super festival, j’ai adoré les projections.', '2023-05-05 14:32:00');
