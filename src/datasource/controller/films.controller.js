@@ -42,6 +42,8 @@ async function getProjections() {
 }
 
 async function updateProjection(projection) {
+    console.log(projections)
+
     return { error: 0, status: 200, data: projection };
 }
 
@@ -56,7 +58,7 @@ async function addProjection(data) {
         filmId: data.filmId,
         date: data.date,
     }
-
+    console.log(projections)
     // projections.push(projection)
     return {error: 0, status: 201, data: projection}
 }

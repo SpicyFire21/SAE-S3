@@ -89,7 +89,7 @@ async function registerUser(data){
         nom_photo:"",
         description:""
     }
-    users.push(r); // Ajouter l'utilisateur à la base
+    // users.push(r); // Ajouter l'utilisateur à la base
 
 
 

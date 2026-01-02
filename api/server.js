@@ -21,6 +21,8 @@ import ticketRoute from './routes/ticket.router.js'
 import GenreRoute from './routes/genres.router.js'
 import NoteRoute from './routes/notes.router.js'
 import VoteRoute from './routes/votes.router.js'
+import ScoreRoute from './routes/scores.router.js'
+import CategoryRoute from './routes/categories.router.js'
 
 const app = express();
 const PORT = 3000
@@ -49,11 +51,14 @@ app.use('/tickets',ticketRoute);
 app.use('/genres',GenreRoute);
 app.use('/notes',NoteRoute);
 app.use('/votes',VoteRoute);
+app.use('/scores',ScoreRoute);
+app.use('/categories',CategoryRoute);
 
 
 
 server.listen( PORT,() => {
     console.log(`API lancé sur ${apiURL}`);
+    console.log(`Swagger lancé sur ${apiURL}/api-docs/`);
     pool.connect((err) => {
         if (err) {
             console.error('Erreur de connexion à la base de données :', err);

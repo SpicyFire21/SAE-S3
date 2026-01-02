@@ -25,11 +25,34 @@ export const addVote = async (req,res) => {
 
 export const deleteVote = async (req,res) => {
     try {
-        let data = await voteService.deleteVote(req.params.id);
+        let data = await voteService.deleteVote(req.params.iduser,req.params.idcategory);
 
         return res.status(data.status).json(data);
     } catch (error) {
         console.error(error);
         return res.status(500).send("Erreur lors de la suppression du vote");
+    }
+}
+
+
+export const getVotesById = async (req,res) => {
+    try {
+        let data = await voteService.getVotesById(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération du vote par id");
+    }
+}
+
+export const editVote = async  (req,res) =>{
+    try {
+        let data = await voteService.editVote(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la modification du vote");
     }
 }
