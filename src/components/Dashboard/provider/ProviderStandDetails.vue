@@ -42,8 +42,7 @@ const typeStand = ref(null);
 
 onMounted(async () => {
   await userStore.getUsers();
-  await standStore.getStands();
-  await standStore.getStandsTypes();
+  await userStore.getProviders();
   await filmStore.getGenres();
   await filmStore.getFilmGenres();
   await filmStore.getFilms();

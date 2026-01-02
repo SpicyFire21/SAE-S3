@@ -1,4 +1,5 @@
 import autographController from "@/datasource/controller/autographs.controller.js"
+import filmsController from "@/datasource/controller/films.controller.js";
 
 async function getAutographsFromLocalSource() {
     return autographController.getAutographs()
@@ -57,8 +58,36 @@ export async function getAutographById(id){
     return response;
 }
 
+async function addAutographFromLocalSource(autograph) {
+    return autographController.addAutograph(autograph)
+}
+
+export async function addAutograph(autograph) {
+    let response = null;
+    try {
+        response = await addAutographFromLocalSource(autograph);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible dajouter lautograph'}
+    }
+    return response;
+}
+
+async function updateAutographFromLocalSource(autograph) {
+    return autographController.updateAutograph(autograph)
+}
+
+export async function updateAutograph(autograph) {
+    let response = null;
+    try {
+        response = await updateAutographFromLocalSource(autograph);
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible dajouter lautograph'}
+    }
+    return response;
+}
+
 
 
 export default {
-    getAutographs, getAutographById, getAutographsByStandId, deleteAutograph
+    getAutographs, getAutographById, getAutographsByStandId, deleteAutograph, updateAutograph, addAutograph
 }

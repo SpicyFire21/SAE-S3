@@ -18,20 +18,35 @@ async function getAutographsByStandId(id) {
 }
 
 export async function deleteAutograph(autograph) {
-    const index = autographs.findIndex(p => p.id === autograph.id);
+    return { error: 0, status: 200, data: autograph };
+}
 
-    if (index === -1) {
-        return { error: 1, status: 404, data: "Autograph inexistante" };
+async function updateAutograph(autograph) {
+    return { error: 0, status: 200, data: autograph };
+}
+
+async function addAutograph(data) {
+    const autograph = {
+        id: uuidv4(),
+        standId: data.standId,
+        userId: data.userId,
+        beginDate: data.beginDate,
+        duration: data.duration
     }
 
-    const removed = autographs.splice(index, 1)[0]; // on supprime et on recupere l'objet (le [0] sert a renvoyé l'objet supprimé)
-    return { error: 0, status: 200, data: removed };
+    return {error: 0, status: 201, data: autograph}
 }
+
+//         "id": "1",
+//         "standId": "4",
+//         "userId": "a81699b9-94d1-4f72-9df4-1588dc1b2cc5",
+//         "beginDate": "2025-12-23T18:00:00",
+//         "duration": "120"
 
 
 export default {
     getAutographById,
     getAutographs,
     getAutographsByStandId,
-    deleteAutograph
+    deleteAutograph, updateAutograph, addAutograph
 }

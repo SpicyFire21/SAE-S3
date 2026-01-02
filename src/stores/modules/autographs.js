@@ -11,6 +11,10 @@ export const useAutographsStore = defineStore('autographs', () => {
         autographs.value = data;
     }
 
+    const setSelectedAutograph = (data) => {
+        selectedAutograph.value = data;
+    }
+
     const updateSelectedAutograph = (data) => {
         selectedAutograph.value = data;
     }
@@ -20,8 +24,22 @@ export const useAutographsStore = defineStore('autographs', () => {
     }
 
     const removeAutograph = (autograph) => {
-        autographs.value = autographs.value.filter(a => a.id !== autograph.id);
+        const index = autographs.value.findIndex(a => a.id === autograph.id);
+        if (index !== -1) {
+            autographs.value.splice(index, 1);
+        } else {
+            console.warn("Autograph non trouvé :", autograph.id);
+        }
     };
+
+    const editAutograph = (autograph) => {
+        const index = autographs.value.findIndex(a => a.id === autograph.id)
+        if (index !== -1) {
+            autographs.value.splice(index, 1, autograph)
+        } else {
+            console.warn("autograph non trouvé :", autograph.id)
+        }
+    }
 
 
     const getAutographsByStandId = async (id) => {
@@ -60,9 +78,30 @@ export const useAutographsStore = defineStore('autographs', () => {
         }
     };
 
+    const addAutograph = async(autograph) =>{
+        try {
+            const response = await autographsService.addAutograph(autograph);
+            pushAutographs(response.data)
+            return response.data;
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const updateAutograph = async(autograph) =>{
+        try {
+            const response = await autographsService.updateAutograph(autograph);
+            editAutograph(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
+
 
 
     return {
-        getAutograph, getAutographById, getAutographsByStandId, autographs, selectedAutograph, deleteAutograph
+        getAutograph, getAutographById, getAutographsByStandId, autographs, selectedAutograph, deleteAutograph, addAutograph, updateAutograph, setSelectedAutograph
     }
 })

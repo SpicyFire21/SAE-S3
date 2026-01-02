@@ -8,6 +8,13 @@
       <div class="w-12 h-1 bg-yellow-400 rounded mt-2"></div>
     </div>
 
+    <button
+        @click="go('/provider-dashboard/profile')"
+        class="w-full text-lg text-left px-4 py-2 rounded-lg text-gray-800 bg-gray-100
+                 hover:bg-yellow-300 hover:shadow transition font-semibold space-y-3 mb-3">
+      {{ t("asidebarDashboard.0") }}
+    </button>
+
     <div class="space-y-3 mb-6">
       <button
           @click="logout()"
@@ -15,6 +22,7 @@
                  hover:bg-yellow-300 hover:shadow transition font-semibold">
         {{ t("asidebarDashboard.1") }}
       </button>
+
 
       <button
           @click="go('/')"

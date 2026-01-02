@@ -452,21 +452,20 @@ let stand_reservations_requests = [
     }
 ]
 let reservations = [
-    // {
-    //     "id": "1",
-    //     "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-    //     "type": "1",
-    //     "date": "2025-12-23T14:00:00",
-    //     "standId": "1"
-    // },
-    // {
-    //     "id": "2",
-    //     "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-    //     "type": "2",
-    //     "date": "2025-12-23T14:00:00",
-    //     "standId": "4"
-    // },
-
+    {
+        "id": "1",
+        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        "type": "1",
+        "date": "2025-12-23T14:00:00",
+        "standId": "1"
+    },
+    {
+        "id": "2",
+        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        "type": "2",
+        "date": "2025-12-23T14:00:00",
+        "standId": "4"
+    },
 ];
 
 let films_reservations = [
@@ -517,26 +516,26 @@ let autographs = [
 ];
 
 
-let comments_golden_book = [
+let comments = [
     {
         "id": "1a8d8f63-3ef8-4c5f-a482-97afaa1c3d93",
-        "iduser": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "commentaire": "Super festival, j’ai adoré les projections.",
+        "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+        "content": "Super festival, j’ai adoré les projections.",
         "date": "2023-05-05T14:32:00"
     },
     {
         "id": "c4b708ef-47b2-47c0-a548-4bb9dcbe8b92",
-        "iduser": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "commentaire": "Organisation impeccable et invités prestigieux.",
+        "userId": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        "content": "Organisation impeccable et invités prestigieux.",
         "date": "2023-05-06T10:12:00"
     },
     {
         "id": "f15c8bfa-2e11-4d44-86cf-dbc665bf0d59",
-        "iduser": "fa1b7ea7-c35c-488d-b7e1-7fb893b97590",
-        "commentaire": "Ambiance incroyable, j’ai passé un super moment.",
+        "userId": "fa1b7ea7-c35c-488d-b7e1-7fb893b97590",
+        "content": "Ambiance incroyable, j’ai passé un super moment.",
         "date": "2023-05-07T18:44:00"
     }
-]
+];
 
 let genres = [
     {"id": 1, "name": "Drame"},
@@ -1023,7 +1022,7 @@ export {
     tickets,
     tickets_price,
     stands,
-    comments_golden_book,
+    comments,
     goodies,
     goodies_size,
     goodies_color,

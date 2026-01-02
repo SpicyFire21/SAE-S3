@@ -60,8 +60,8 @@
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
-          <button class="px-4 py-2 bg-gray-400 rounded" @click="closeModal">Annuler</button>
-          <button class="px-4 py-2 bg-yellow-600 text-white rounded" @click="saveEditProjection">Sauvegarder</button>
+          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
+          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveEditProjection">Sauvegarder</button>
         </div>
       </div>
     </div>
@@ -82,8 +82,8 @@
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
-          <button class="px-4 py-2 bg-gray-400 rounded" @click="closeModal">Annuler</button>
-          <button class="px-4 py-2 bg-yellow-600 text-white rounded" @click="saveAddProjection">Ajouter</button>
+          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
+          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveAddProjection">Ajouter</button>
         </div>
       </div>
     </div>
@@ -120,7 +120,7 @@ const projectionsWithFilms = computed(() =>
 );
 
 const editProjection = (projection) => {
-  filmStore.setSelectedProjection({ ...projection });
+  filmStore.setSelectedProjection({ ...projection }); // crée un clone
   showEditModal.value = true;
 };
 
@@ -133,7 +133,7 @@ const saveEditProjection = async () => {
   showEditModal.value = false;
 };
 
-const saveAddProjection = async () => {
+async function saveAddProjection() {
   if (newProjectionBase.value.date === "" || newProjectionBase.value.filmId === "") {
     showAddModal.value = false;
     return;

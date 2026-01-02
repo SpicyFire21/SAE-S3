@@ -37,7 +37,12 @@ export const useFilmsStore = defineStore('films', () => {
     }
 
     const removeProjection = (projection) => {
-        projections.value = projections.value.filter(p => p.id !== projection.id);
+        const index = projections.value.findIndex(p => p.id === projection.id);
+        if (index !== -1) {
+            projections.value.splice(index, 1);
+        } else {
+            console.warn("Projection non trouvé :", projection.id);
+        }
     };
 
     const pushProjection = (projection) => {
@@ -45,12 +50,14 @@ export const useFilmsStore = defineStore('films', () => {
     }
 
     const editProjection = (projection) => {
-        projections.value = projections.value.map(p => {
-            if (p.id === projection.id) {
-                return projection; // on remplace l'objet correspondant
-            }
-            return p; // sinon on le garde si l'id de la projection séléctionné n'est pas trouvé
-        });
+        const index = projections.value.findIndex(a => a.id === projection.id)
+        if (index !== -1) {
+            projections.value.splice(index, 1, projection)
+            console.log("projections actuelles:", projections);
+
+        } else {
+            console.warn("projection non trouvé :", projection.id)
+        }
     }
 
 
@@ -59,8 +66,8 @@ export const useFilmsStore = defineStore('films', () => {
         try {
             const response = await filmsService.addProjection(projection);
             if (response.error === 0){
-                pushProjection(response.data)
-                return response.data
+                pushProjection(response.data);
+                return response.data;
             } else {
                 console.error(response.data)
             }
@@ -72,10 +79,15 @@ export const useFilmsStore = defineStore('films', () => {
 
 
 
-    const getProjections = async () => {
+    const getProjections = async () =>{
         try {
             const response = await filmsService.getProjections();
-            updateProjections(response.data)
+            if (response.error === 0){
+                updateProjections(response.data)
+            } else {
+                console.error(response.data)
+            }
+
         } catch (e) {
             console.error(e)
         }

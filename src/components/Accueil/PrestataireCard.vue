@@ -40,10 +40,12 @@
         </template>
       </div>
 
-      <p class="text-gray-500 mb-4 text-sm font-roboto text-center">{{ provider.description }}</p>
-      <a href="#" class="inline-flex items-center text-white tracking-widest bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-sm px-4 py-2.5">
-        {{ t('prestataireCard.giveOpinion') }}
-      </a>
+        <p v-html="provider.description" class="text-gray-500 mb-4 text-sm text-center"></p>
+        <div class="flex flex-row gap-5">
+        <button @click="goToUser('ProviderProfileForUsers', provider.id)" class="cursor-pointer inline-flex items-center text-white tracking-widest bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-sm px-4 py-2.5">
+          {{ t('prestataireCard.seeProfile') }}
+        </button>
+        </div>
     </div>
   </div>
 
@@ -59,11 +61,18 @@
 import { ref,computed,onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {useUserStore} from "@/stores/index.js";
+import router from "@/router/index.js";
 
 const { t } = useI18n()
 const props = defineProps({ providers: { type: Array, required: true } })
 const carousel = ref(null)
 const userStore = useUserStore()
+
+const goToUser = (name, id) => {
+  if (!id) return
+  router.push({ name, params: { id } })
+}
+
 
 const getProviderImage = (fileName) =>
     new URL(`../../assets/img/${fileName}`, import.meta.url).href

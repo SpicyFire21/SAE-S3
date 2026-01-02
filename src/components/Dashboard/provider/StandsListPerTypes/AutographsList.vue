@@ -1,6 +1,14 @@
 <template>
   <div>
-    <h2 class="text-3xl font-bold mb-6 text-gray-900 border-b-2 border-yellow-500 pb-2">Dédicaces</h2>
+    <div class="flex justify-between items-center mb-6 border-b-2 border-yellow-500 pb-2">
+      <h2 class="text-3xl font-bold text-gray-900">Dédicaces</h2>
+      <button
+          class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-900 transition"
+          @click="addAutograph"
+      >
+        Ajouter une dédicace
+      </button>
+    </div>
 
     <div
         v-for="aut in autographsWithUser"
@@ -38,6 +46,10 @@
       <div class="bg-white p-6 rounded-xl w-[500px]">
         <h2 class="text-2xl font-bold mb-4">Modifier la dédicace</h2>
         <div class="space-y-3">
+          <label class="font-semibold">Prestataire</label>
+          <select v-model="autographStore.selectedAutograph.userId" class="border p-2 rounded w-full">
+            <option v-for="provider in userStore.providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
+          </select>
           <div>
             <label class="font-semibold">Date de début</label>
             <input type="datetime-local" v-model="autographStore.selectedAutograph.beginDate" class="border p-2 rounded w-full">
@@ -48,11 +60,35 @@
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
-          <button class="px-4 py-2 bg-gray-400 rounded" @click="closeModal">Annuler</button>
-          <button class="px-4 py-2 bg-yellow-600 text-white rounded" @click="saveAutograph">Sauvegarder</button>
+          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
+          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveEditAutograph">Sauvegarder</button>
         </div>
       </div>
     </div>
+
+  <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl w-[500px]">
+      <h2 class="text-2xl font-bold mb-4">Ajouter une dédicace</h2>
+      <div class="space-y-3">
+        <label class="font-semibold">Prestataire</label>
+        <select v-model="newAutographBase.userId" class="border p-2 rounded w-full">
+          <option v-for="provider in userStore.providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
+        </select>
+        <div>
+          <label class="font-semibold">Date de début</label>
+          <input type="datetime-local" v-model="newAutographBase.beginDate" class="border p-2 rounded w-full">
+        </div>
+        <div>
+          <label class="font-semibold">Durée (minutes)</label>
+          <input type="number" v-model="newAutographBase.duration" class="border p-2 rounded w-full">
+        </div>
+      </div>
+      <div class="flex justify-end gap-3 mt-6">
+        <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
+        <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveAddAutograph">Ajouter</button>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -64,9 +100,17 @@ const props = defineProps({
   standId: String
 });
 
+const newAutographBase = ref({
+  standId: props.standId,
+  userId: "",
+  beginDate: "",
+  duration: 0
+})
+
 const autographStore = useAutographsStore();
 const userStore = useUserStore();
 const showEditModal = ref(false);
+const showAddModal = ref(false);
 
 const autographsWithUser = computed(() =>
     autographStore.autographs
@@ -82,15 +126,32 @@ const editAutograph = (autograph) => {
   showEditModal.value = true;
 };
 
+const addAutograph = () => {
+  showAddModal.value = true;
+}
+
 const closeModal = () => {
   autographStore.setSelectedAutograph(null);
   showEditModal.value = false;
+  showAddModal.value = false;
 };
 
-const saveAutograph = async () => {
+const saveEditAutograph = async () => {
   await autographStore.updateAutograph(autographStore.selectedAutograph);
   showEditModal.value = false;
 };
+
+async function saveAddAutograph() {
+  if (newAutographBase.value.beginDate === "" || newAutographBase.value.userId === "" || newAutographBase.value.duration === 0) {
+    showAddModal.value = false;
+    return;
+  }
+  await autographStore.addAutograph(newAutographBase.value)
+  showAddModal.value = false;
+  newAutographBase.value.beginDate = ""
+  newAutographBase.value.userId = ""
+  newAutographBase.value.duration = 0
+}
 
 const formatDuration = (minutes) => {
   if (!minutes) return "0h 0min";

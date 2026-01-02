@@ -42,27 +42,11 @@ async function getProjections() {
 }
 
 async function updateProjection(projection) {
-    const index = projections.findIndex(p => p.id === projection.id);
-
-    if (index !== -1) {
-        // remplace la projection
-        projections.splice(index, 1, projection);
-
-        return { error: 0, status: 200, data: projection };
-    } else {
-        return { error: 1, status: 404, data: "Projection inexistante" };
-    }
+    return { error: 0, status: 200, data: projection };
 }
 
-export async function deleteProjection(projection) {
-    const index = projections.findIndex(p => p.id === projection.id);
-
-    if (index === -1) {
-        return { error: 1, status: 404, data: "Projection inexistante" };
-    }
-
-    const removed = projections.splice(index, 1)[0]; // on supprime et on recupere l'objet (le [0] sert a renvoyé l'objet supprimé)
-    return { error: 0, status: 200, data: removed };
+async function deleteProjection(projection) {
+    return { error: 0, status: 200, data: projection };
 }
 
 async function addProjection(data) {
@@ -73,7 +57,7 @@ async function addProjection(data) {
         date: data.date,
     }
 
-    projections.push(projection)
+    // projections.push(projection)
     return {error: 0, status: 201, data: projection}
 }
 
