@@ -7,7 +7,7 @@ let users = [
         "email": "admin@festival.com",
         "droit": "2",
         "session": "",
-        "note": [],
+        "note": "",
         "type": "",
         "nom_photo": "",
         "description": "",
@@ -20,7 +20,7 @@ let users = [
         "email": "scorsese@cinema.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 1, 5, 4, 4.5, 5, 5, 5, 5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "scorsese.jpg",
         "description": "Réalisateur légendaire oscarisé, maître du cinéma américain"
@@ -33,7 +33,7 @@ let users = [
         "email": "client@mail.com",
         "droit": "0",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "",
         "nom_photo": "producteur.jpg",
         "description": ""
@@ -46,7 +46,7 @@ let users = [
         "email": "client2@mail.com",
         "droit": "0",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "",
         "nom_photo": "",
         "description": ""
@@ -59,7 +59,7 @@ let users = [
         "email": "tarantino@pulp.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "tarantino.jpg",
         "description": "Créateur de Pulp Fiction et Kill Bill, style unique et référencé"
@@ -72,7 +72,7 @@ let users = [
         "email": "nolan@inception.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "nolan.jpg",
         "description": "Génie des films à intrigue complexe et effets visuels innovants"
@@ -85,7 +85,7 @@ let users = [
         "email": "goat@gmail.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "null.jpg",
         "description": "L'honoré en personne"
@@ -98,7 +98,7 @@ let users = [
         "email": "dicaprio@actor.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Acteur",
         "nom_photo": "dicaprio.jpg",
         "description": "Acteur oscarisé, star internationale"
@@ -111,7 +111,7 @@ let users = [
         "email": "streep@actress.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Actrice",
         "nom_photo": "streep.jpg",
         "description": "L'actrice la plus nominée aux Oscars"
@@ -124,7 +124,7 @@ let users = [
         "email": "villeneuve@sci-fi.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "villeneuve.jpg",
         "description": "Maître de la science-fiction moderne"
@@ -137,7 +137,7 @@ let users = [
         "email": "blanchett@actress.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Actrice",
         "nom_photo": "blanchett.jpg",
         "description": "Actrice australienne doublement oscarisée"
@@ -150,7 +150,7 @@ let users = [
         "email": "spielberg@films.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisateur",
         "nom_photo": "spielberg.jpg",
         "description": "Légende du cinéma"
@@ -163,7 +163,7 @@ let users = [
         "email": "cotillard@actress.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Actrice",
         "nom_photo": "cotillard.jpg",
         "description": "Actrice française oscarisée"
@@ -176,7 +176,7 @@ let users = [
         "email": "pacino@actor.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Acteur",
         "nom_photo": "pacino.jpg",
         "description": "Icône du cinéma"
@@ -189,7 +189,7 @@ let users = [
         "email": "campion@director.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisatrice",
         "nom_photo": "campion.jpg",
         "description": "Réalisatrice néo-zélandaise"
@@ -202,7 +202,7 @@ let users = [
         "email": "phoenix@actor.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Acteur",
         "nom_photo": "phoenix.jpg",
         "description": "Acteur oscarisé"
@@ -215,7 +215,7 @@ let users = [
         "email": "gerwig@director.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Réalisatrice",
         "nom_photo": "gerwig.jpg",
         "description": "Réalisatrice acclamée"
@@ -228,12 +228,31 @@ let users = [
         "email": "hanks@actor.com",
         "droit": "1",
         "session": "",
-        "note": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+        "note": "",
         "type": "Acteur",
         "nom_photo": "hanks.jpg",
         "description": "Acteur emblématique"
     }
 ]
+
+const notes = [
+    {
+        id: "1",
+        userId: "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        value: "4"
+    },
+    {
+        id: "2",
+        userId: "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        value: "5"
+    },
+    {
+        id: "3",
+        userId: "e55733ef-f3d2-447d-94db-9e3aaef624c1",
+        value: "3"
+    }
+]
+
 
 let goodies = [
     {id: "1", iduser: "bb4b684c-0c67-4d19-ac21-b225b3e5c018", quantity: "37", name: "T-shirt", price: "20"},
@@ -375,7 +394,7 @@ let stands = [
         "width": 65,
         "height": 164,
         "type": "2",
-        "owner": null
+        "owner": "bb4b684c-0c67-4d19-ac21-b225b3e5c018"
     },
     // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
@@ -468,7 +487,8 @@ let projections = [
     {"id": "2", "standId": "1", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-24T17:00:00"},
     {"id": "3", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-01-05T20:00:00"},
     {"id": "4", "standId": "1", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-24T17:00:00"},
-    {"id": "7", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00"}
+    {"id": "5", "standId": "2", "filmId": "6f207e95-5400-471f-a933-d01d817b0608", "date": "2025-12-23T16:00:00"},
+    {"id": "6", "standId": "2", "filmId": "6cec5c18-d60b-4372-916a-482bb4facaa0", "date": "2025-12-23T16:00:00"}
 ];
 
 let autographs = [
@@ -496,26 +516,26 @@ let autographs = [
 ];
 
 
-let comments_golden_book = [
-    {
-        "id": "1a8d8f63-3ef8-4c5f-a482-97afaa1c3d93",
-        "iduser": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
-        "commentaire": "Super festival, j’ai adoré les projections.",
-        "date": "2023-05-05T14:32:00"
-    },
-    {
-        "id": "c4b708ef-47b2-47c0-a548-4bb9dcbe8b92",
-        "iduser": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
-        "commentaire": "Organisation impeccable et invités prestigieux.",
-        "date": "2023-05-06T10:12:00"
-    },
-    {
-        "id": "f15c8bfa-2e11-4d44-86cf-dbc665bf0d59",
-        "iduser": "fa1b7ea7-c35c-488d-b7e1-7fb893b97590",
-        "commentaire": "Ambiance incroyable, j’ai passé un super moment.",
-        "date": "2023-05-07T18:44:00"
-    }
-]
+let comments = [
+    // {
+    //     "id": "1a8d8f63-3ef8-4c5f-a482-97afaa1c3d93",
+    //     "userId": "c38acd4c-d6fc-4a19-bd24-98a7c18fa414",
+    //     "content": "Super festival, j’ai adoré les projections.",
+    //     "date": "2023-05-05T14:32:00"
+    // },
+    // {
+    //     "id": "c4b708ef-47b2-47c0-a548-4bb9dcbe8b92",
+    //     "userId": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+    //     "content": "Organisation impeccable et invités prestigieux.",
+    //     "date": "2023-05-06T10:12:00"
+    // },
+    // {
+    //     "id": "f15c8bfa-2e11-4d44-86cf-dbc665bf0d59",
+    //     "userId": "fa1b7ea7-c35c-488d-b7e1-7fb893b97590",
+    //     "content": "Ambiance incroyable, j’ai passé un super moment.",
+    //     "date": "2023-05-07T18:44:00"
+    // }
+];
 
 let genres = [
     {"id": 1, "name": "Drame"},
@@ -1009,7 +1029,7 @@ export {
     tickets,
     tickets_price,
     stands,
-    comments_golden_book,
+    comments,
     goodies,
     goodies_size,
     goodies_color,
@@ -1032,6 +1052,6 @@ export {
     projections,
     films_reservations,
     autographs_reservations,
-    autographs, genres, film_genres, film_cast, stand_reservations_requests
+    autographs, genres, film_genres, film_cast, stand_reservations_requests,notes
 
 }

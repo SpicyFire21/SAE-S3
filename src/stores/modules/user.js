@@ -2,12 +2,14 @@ import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import userService from "@/services/user.service.js"
 import standsService from "@/services/stands.service.js";
+import reservationsService from "@/services/reservations.service.js";
 
 export const useUserStore = defineStore('user', () => {
     // state
     const users = ref([])
     const currentUser = ref(null)
     const providers = ref([])
+    const notes = ref([])
 
     //hydratation
     const storedUser = sessionStorage.getItem('currentUser');
@@ -17,6 +19,8 @@ export const useUserStore = defineStore('user', () => {
 
 
     //getter
+
+
 
     //mutation
     const updateCurrentUser = (data) => {
@@ -28,9 +32,10 @@ export const useUserStore = defineStore('user', () => {
             sessionStorage.removeItem('currentUser');
         }
     };
+    const updateNotes = (data) =>{
+        notes.value = data;
+    }
 
-
-    // mutations
     const updateUsers = (data) =>{
         users.value = data;
     }
@@ -41,12 +46,25 @@ export const useUserStore = defineStore('user', () => {
         users.value.push(data)
     }
 
+    const pushNote = (data) => {
+        notes.value.push(data)
+    }
+
 
     //action
     const getUsers = async () => {
         try {
             const response = await userService.getUsers();
             updateUsers(response.data)
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    const getNotes = async () => {
+        try {
+            const response = await userService.getNotes();
+            updateNotes(response.data)
 
         } catch (e) {
             console.error(e)
@@ -109,7 +127,6 @@ export const useUserStore = defineStore('user', () => {
 
         } catch(e){
             console.error(e)
-
         }
     }
 
@@ -129,6 +146,16 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    const addNote = async (data) => {
+        try {
+            const response = await userService.addNote(data);
+            pushNote(response.data)
+            return response.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
 
 
@@ -139,6 +166,7 @@ export const useUserStore = defineStore('user', () => {
         providers,
         users,
         currentUser,
+        notes,
 
         //getter
 
@@ -151,6 +179,8 @@ export const useUserStore = defineStore('user', () => {
         registerUser,
         logout,
         registerProvider,
-        getUserById
+        getUserById,
+        getNotes,
+        addNote
     }
 })

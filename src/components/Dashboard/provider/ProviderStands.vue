@@ -1,6 +1,7 @@
 <template>
-  <div class="mt-10 m-auto text-center">
-    <h1 class="text-[32px] font-bold">Carte interactive de l'événement :</h1>
+  <div class="mt-10 m-auto text-center pl-64 pt-10">
+
+  <h1 class="text-[32px] font-bold">Carte interactive de l'événement :</h1>
     <InteractiveMap/>
 
     <div class="mt-10 px-6">
@@ -63,7 +64,7 @@
                transition-all duration-300
                shadow-sm hover:shadow-lg
                flex justify-end cursor-pointer"
-                @click="editStand(stand)"
+                @click="editStand(stand.idstand)"
             >
               📝 Modifier
             </button>
@@ -81,6 +82,7 @@
 import InteractiveMap from "@/components/Accueil/InteractiveMap.vue";
 import {useReservationsStore, useStandsStore, useUserStore} from "@/stores/index.js";
 import {computed, onMounted, ref} from "vue";
+import router from "@/router/index.js";
 
 
 const standStore = useStandsStore()
@@ -92,8 +94,8 @@ onMounted(async () => {
   await standStore.getStands();
 });
 
-async function editStand(stand) {
-  console.log("Modifier :", stand)
+async function editStand(id) {
+  await router.push({name: 'ProviderStandDetails', params: {id}})
 }
 
 const search = ref("");

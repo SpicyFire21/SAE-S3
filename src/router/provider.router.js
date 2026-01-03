@@ -2,6 +2,9 @@ import DashboardView from "@/views/DashboardView.vue";
 import goodies from "@/components/Dashboard/provider/GoodiesBoard.vue";
 import ProviderStats from "@/components/Dashboard/provider/ProviderStats.vue";
 import stands from "@/components/Dashboard/provider/ProviderStands.vue"
+import StandDetails from "@/views/StandDetails.vue";
+import ProviderStandDetails from "@/components/Dashboard/provider/ProviderStandDetails.vue";
+import ProviderProfile from "@/components/Dashboard/provider/ProviderProfile.vue";
 
 
 const router = [
@@ -25,6 +28,17 @@ const router = [
                 path:'stats',
                 name:'providerStats',
                 components: {dashboard:ProviderStats}
+            },
+            {
+                path:'profile',
+                name:'providerProfile',
+                components: {dashboard:ProviderProfile}
+            },
+            {
+                path:'stand/:id',
+                name:'ProviderStandDetails',
+                components:{ dashboard: ProviderStandDetails },
+                props:true
             }
         ]
     }

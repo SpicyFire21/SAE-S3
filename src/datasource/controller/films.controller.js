@@ -1,4 +1,15 @@
-import {films, projections, users, genres, film_genres, film_cast} from "@/datasource/data.js";
+import {
+    films,
+    projections,
+    users,
+    genres,
+    film_genres,
+    film_cast,
+    goodies,
+    reservations,
+    films_reservations
+} from "@/datasource/data.js";
+import {v4 as uuidv4} from 'uuid'
 
 
 async function getFilms() {
@@ -30,6 +41,28 @@ async function getProjections() {
     return {error:0, status:200, data:projections}
 }
 
+async function updateProjection(projection) {
+    console.log(projections)
+
+    return { error: 0, status: 200, data: projection };
+}
+
+async function deleteProjection(projection) {
+    return { error: 0, status: 200, data: projection };
+}
+
+async function addProjection(data) {
+    const projection = {
+        id: uuidv4(),
+        standId: data.standId,
+        filmId: data.filmId,
+        date: data.date,
+    }
+    console.log(projections)
+    // projections.push(projection)
+    return {error: 0, status: 201, data: projection}
+}
+
 export default {
 
     getFilms,
@@ -43,5 +76,8 @@ export default {
     getFilmCast,
 
     getProjections,
+    updateProjection,
+    deleteProjection,
+    addProjection
 
 }

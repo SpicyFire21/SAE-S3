@@ -87,7 +87,7 @@ export const useStandsStore = defineStore('stands', () => {
         try {
             const response = await standsService.addStandRequest(data);
             if (response.error === 0){
-                updateStandReservationsRequests(data)
+                pushStandReservationsRequests(response.data)
                 return response.data
             } else {
                 console.error(response.data)

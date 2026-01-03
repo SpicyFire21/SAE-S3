@@ -71,7 +71,7 @@
     "btn": "Back Home"
   },
   "prestataireCard": {
-    "giveOpinion": "Give An Opinion"
+    "seeProfile": "See profile / Give an opinion"
   },
   "login": {
     "1": "Sign in",
@@ -90,11 +90,13 @@
     "2": "Deny"
   },
   "asidebarDashboard": {
+    "0": "My profile",
     "1": "Logout",
     "2": "Access the website",
     "3": {
       "1": "Request for Providers",
-      "2": "Statistics"
+      "2": "Statistics",
+      "3": "Stands reservations requests"
     },
     "4": {
       "1": "Goodies",

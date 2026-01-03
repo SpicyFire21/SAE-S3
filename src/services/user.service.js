@@ -82,6 +82,33 @@ async function registerProvider(data){
     return response;
 }
 
+async function getNotesFromLocalSource(){
+    return userController.getNotes();
+}
+async function getNotes(){
+    let response = null;
+    try {
+        response = await getNotesFromLocalSource();
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les notes'}
+    }
+    return response;
+}
+
+async function addNoteFromLocalSource(data){
+    return userController.addNote(data);
+}
+async function addNote(data){
+    let response = null;
+    try {
+        response = await addNoteFromLocalSource(data);
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de créer une note'}
+    }
+    return response;
+}
 
 export default {
     getUsers,
@@ -89,5 +116,6 @@ export default {
     getProviders,
     registerUser,
     registerProvider,
-    getUserById
+    getUserById,
+    getNotes, addNote
 }

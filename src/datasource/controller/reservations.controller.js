@@ -34,9 +34,6 @@ async function addFilmReservation(data) {
         projectionId: data.projectionId
     }
 
-    reservations.push(reservation)
-    films_reservations.push(filmReservation)
-
     return {error: 0, status: 201, data: {reservation, filmReservation}}
 }
 
@@ -53,9 +50,6 @@ async function addAutographReservation(data) {
         reservationId: reservation.id,
         autographId: data.autographId
     }
-
-    reservations.push(reservation)
-    films_reservations.push(autographs_reservations)
 
     return {error: 0, status: 201, data: {reservation, autographReservation}}
 }

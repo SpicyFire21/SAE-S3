@@ -68,7 +68,7 @@
   },
 
   "prestataireCard": {
-    "giveOpinion": "Donner un avis"
+    "seeProfile": "Voir le profil / Donner un avis"
   },
   "login": {
     "1": "Se connecter",
@@ -87,11 +87,13 @@
     "2": "Refuser"
   },
   "asidebarDashboard": {
+    "0": "Mon profile",
     "1": "Deconnexion",
     "2": "Accéder aux site",
     "3": {
       "1": "Demande de Prestataires",
-      "2": "Statistiques"
+      "2": "Statistiques",
+      "3": "Requêtes de réservations de stands"
     },
     "4": {
       "1": "Goodies",

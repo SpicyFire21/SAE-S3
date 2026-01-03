@@ -6,7 +6,6 @@ import standsService from "@/services/stands.service.js";
 import reservationsService, {
     addFilmReservation, getEventFromReservation,
 } from "@/services/reservations.service.js";
-import {projections, reservations} from "@/datasource/data.js";
 
 export const useReservationsStore = defineStore('reservations', () => {
     const reservations = ref([])
@@ -61,8 +60,8 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addFilmReservation = async (data) => {
         try {
             const response = await reservationsService.addFilmReservation(data);
-            updateFilmsReservations(response.data.filmReservation)
-            updateReservations(response.data.reservation)
+            pushFilmReservation(response.data.filmReservation)
+            pushReservation(response.data.reservation)
             return response.data
         } catch (e) {
             console.error(e)
@@ -72,8 +71,8 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addAutographReservation = async (data) => {
         try {
             const response = await reservationsService.addAutographReservation(data);
-            updateAutographsReservations(response.data.autographReservation)
-            updateReservations(response.data.reservation)
+            pushAutographReservation(response.data.autographReservation)
+            pushReservation(response.data.reservation)
             return response.data
         } catch (e) {
             console.error(e)

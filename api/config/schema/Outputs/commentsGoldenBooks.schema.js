@@ -11,13 +11,13 @@
  *         user_id:
  *           type: string
  *           format: uuid
- *         commentaire:
+ *         content:
  *           type: string
  *         date:
  *           type: string
  *           format: date-time
  *       required:
  *         - user_id
- *         - commentaire
+ *         - content
  *         - date
  */

@@ -1,6 +1,7 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import filmsService from "@/services/films.service.js"
+import goodiesService from "@/services/goodies.service.js";
 
 export const useFilmsStore = defineStore('films', () => {
     // state
@@ -35,10 +36,67 @@ export const useFilmsStore = defineStore('films', () => {
         selectedProjection.value = projection
     }
 
-    const getProjections = async () => {
+    const removeProjection = (projection) => {
+        const index = projections.value.findIndex(p => p.id === projection.id);
+        if (index !== -1) {
+            projections.value.splice(index, 1);
+        } else {
+            console.warn("Projection non trouvé :", projection.id);
+        }
+    };
+
+    const pushProjection = (projection) => {
+        projections.value.push(projection);
+    }
+
+    const editProjection = (projection) => {
+        const index = projections.value.findIndex(a => a.id === projection.id)
+        if (index !== -1) {
+            projections.value.splice(index, 1, projection)
+            console.log("projections actuelles:", projections);
+
+        } else {
+            console.warn("projection non trouvé :", projection.id)
+        }
+    }
+
+
+
+    const addProjection = async(projection) =>{
+        try {
+            const response = await filmsService.addProjection(projection);
+            if (response.error === 0){
+                pushProjection(response.data);
+                return response.data;
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
+
+    const getProjections = async () =>{
         try {
             const response = await filmsService.getProjections();
-            updateProjections(response.data)
+            if (response.error === 0){
+                updateProjections(response.data)
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const updateProjection = async(projection) =>{
+        try {
+             const response = await filmsService.updateProjection(projection);
+             editProjection(response.data)
         } catch (e) {
             console.error(e)
         }
@@ -93,6 +151,10 @@ export const useFilmsStore = defineStore('films', () => {
         }
     }
 
+    const getFilmByIdForProvider = (id) => {
+        return films.value.find(f => f.id === id);
+    }
+
     const getGenreById = async (id) => {
         try {
             const response = await filmsService.getGenreById(id);
@@ -101,6 +163,16 @@ export const useFilmsStore = defineStore('films', () => {
             console.error(e)
         }
     }
+
+    const deleteProjection = async (projection) => {
+        try {
+            await filmsService.deleteProjection(projection);
+            removeProjection(projection);
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
 
     const getFilmsByStand = async (standId) => {
         try {
@@ -166,6 +238,8 @@ export const useFilmsStore = defineStore('films', () => {
         filmGenres,
         getGenresOfFilm,
         getFilmsOfGenre,
-        genres
+        genres,
+        getFilmByIdForProvider,
+        deleteProjection, updateProjection, addProjection
     }
 })

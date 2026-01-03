@@ -1,7 +1,10 @@
-import {film_tickets, provider_requests, users} from "@/datasource/data.js";
+import {film_tickets, notes, provider_requests, users} from "@/datasource/data.js";
 import {v4 as uuidv4} from 'uuid'
 async function getUsers() {
     return {error:0,status:200,data:users}
+}
+async function getNotes() {
+    return {error:0,status:200,data:notes}
 }
 
 async function getTickets() {
@@ -86,13 +89,23 @@ async function registerUser(data){
         nom_photo:"",
         description:""
     }
-    users.push(r); // Ajouter l'utilisateur à la base
+    // users.push(r); // Ajouter l'utilisateur à la base
 
 
 
     return { error: 0, status: 201, data: r };
 
 
+}
+
+async function addNote(data) {
+    const n = {
+        id: uuidv4(),
+        userId: data.userId,
+        value: data.value
+    }
+    console.log("JA" + JSON.stringify(n))
+    return { error: 0, status: 201, data: n };
 }
 
 async function registerProvider(data){
@@ -142,8 +155,6 @@ async function registerProvider(data){
     }
 
     return { error: 0, status: 201, data: r };
-
-
 }
 
 
@@ -154,5 +165,7 @@ export default {
     getProviders,
     registerUser,
     registerProvider,
-    getUserById
+    getUserById,
+    getNotes,
+    addNote
 }

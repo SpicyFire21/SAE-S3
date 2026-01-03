@@ -15,6 +15,7 @@ import adminRoutes from "@/router/admin.router.js";
 import StandDetails from "@/views/StandDetails.vue";
 import {useUserStore} from "@/stores/index.js";
 import GoodiesBuy from "@/views/GoodiesBuy.vue";
+import ProviderProfileForUsers from "@/views/ProviderProfileForUsers.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,12 @@ const router = createRouter({
             path: '/stand/:id',
             name: 'StandDetails',
             component: StandDetails,
+            props: true
+        },
+        {
+            path: '/provider/:id',
+            name: 'ProviderProfileForUsers',
+            component: ProviderProfileForUsers,
             props: true
         },
         {
