@@ -51,10 +51,17 @@
         Le {{ formatDate(autographStore.selectedAutograph.beginDate) }}<br>ce prestataire y sera présent pendant {{ formatDuration(autographStore.selectedAutograph.duration) }}
       </span>
       </div>
-      <button class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full mt-4"
-      @click="confirmAutographReservation">
+      <button
+          @click="confirmAutographReservation"
+          class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full
+          disabled:opacity-50 mt-3"
+          :disabled="!autographStore.selectedAutograph || hasAlreadyReservedAutograph"
+      >
         Confirmer la réservation
       </button>
+      <p v-if="hasAlreadyReservedAutograph" class="text-red-500 text-sm mt-5">
+        Vous avez déjà réservé cette séance de dédicace
+      </p>
     </div>
   </div>
 
@@ -99,6 +106,19 @@ onMounted(async () => {
   await reservationStore.getAutographsReservations()
 })
 
+const hasAlreadyReservedAutograph = computed(() => {
+  if (!autographStore.selectedAutograph || !userStore.currentUser) return false;
+
+  return reservationStore.reservations.some(r =>
+      r.userId === userStore.currentUser.id &&
+      r.type === "2" &&
+      reservationStore.autographsReservations.some(ar =>
+          ar.reservationId === r.id &&
+          ar.autographId === autographStore.selectedAutograph.id
+      )
+  );
+});
+
 const autographs = computed(() =>
     autographStore.autographs.map(a => {
       const user = userStore.getUserById(a.userId)
@@ -118,8 +138,6 @@ const confirmAutographReservation = async () => {
     autographId: autographStore.selectedAutograph.id,
     standId: props.stand.idstand
   });
-
-  console.log("test:" + JSON.stringify(reservationStore.reservations))
 
   closeModal();
 

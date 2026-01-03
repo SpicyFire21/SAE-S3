@@ -30,8 +30,7 @@
     </div>
   </div>
 
-  <div v-if="isModalOpen"
-       class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
+  <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
     <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
 
       <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
@@ -65,11 +64,15 @@
 
       <button
           @click="confirmFilmReservation"
-          class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full"
-          :disabled="!filmsStore.selectedProjection"
+          class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full
+          disabled:opacity-50"
+          :disabled="!filmsStore.selectedProjection || hasAlreadyReservedProjection"
       >
         Confirmer la réservation
       </button>
+      <p v-if="hasAlreadyReservedProjection" class="text-red-500 text-sm mt-5">
+        Vous avez déjà réservé cette séance
+      </p>
 
     </div>
   </div>
@@ -87,7 +90,7 @@
 
 
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, computed} from 'vue'
 import {useRoute} from 'vue-router'
 import {useFilmsStore} from "@/stores/index.js";
 import {useUserStore} from "@/stores/index.js";
@@ -97,7 +100,6 @@ import {useReservationsStore} from "@/stores/modules/reservations.js"
 const isModalOpen = ref(false);
 const selectedFilm = ref(null);
 const showSuccessPopup = ref(false);
-
 
 const openModal = (film) => {
   selectedFilm.value = film;
@@ -127,6 +129,20 @@ onMounted(async () => {
   await reservationsStore.getReservations();
   await reservationsStore.getFilmsReservations();
 })
+
+const hasAlreadyReservedProjection = computed(() => {
+  if (!filmsStore.selectedProjection || !usersStore.currentUser) return false;
+
+  return reservationsStore.reservations.some(r =>
+      r.userId === usersStore.currentUser.id &&
+      r.type === "1" &&
+      reservationsStore.filmsReservations.some(fr =>
+          fr.reservationId === r.id &&
+          fr.projectionId === filmsStore.selectedProjection.id
+      )
+  );
+});
+
 
 
 const confirmFilmReservation = async () => {

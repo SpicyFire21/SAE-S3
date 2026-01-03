@@ -60,10 +60,8 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addFilmReservation = async (data) => {
         try {
             const response = await reservationsService.addFilmReservation(data);
-            updateFilmsReservations(response.data.filmReservation)
-            updateReservations(response.data.reservation) // des updates au lieu de push car sinon ca rajoute 2 fois, AUCUNE IDEE comment fix
-            // j'ai essayé une variante pour les projections par exemple ou j'ai push dans le front pensant que peut-être la variable du state
-            // pointe sur la même mémoire que le tableau js (ca me parait plutot logique sinon je comprend pas pourquoi ca marche...)
+            pushFilmReservation(response.data.filmReservation)
+            pushReservation(response.data.reservation)
             return response.data
         } catch (e) {
             console.error(e)
@@ -73,8 +71,8 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addAutographReservation = async (data) => {
         try {
             const response = await reservationsService.addAutographReservation(data);
-            updateAutographsReservations(response.data.autographReservation)
-            updateReservations(response.data.reservation)
+            pushAutographReservation(response.data.autographReservation)
+            pushReservation(response.data.reservation)
             return response.data
         } catch (e) {
             console.error(e)
