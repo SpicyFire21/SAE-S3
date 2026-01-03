@@ -8,4 +8,6 @@ import { useGoodiesStore } from './modules/goodies'
 import { useReservationsStore } from './modules/reservations.js'
 import { useStandsStore } from './modules/stands.js'
 
-export { useUserStore,useAdminStore,useFilmsStore,useTicketsStore,useGoodiesStore,useReservationsStore,useStandsStore }
+import { useVotesStore } from './modules/votes.js'
+
+export { useUserStore,useAdminStore,useFilmsStore,useTicketsStore,useGoodiesStore,useReservationsStore,useStandsStore,useVotesStore }

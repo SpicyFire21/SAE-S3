@@ -4,14 +4,18 @@
       Scène principale — Cérémonie des Pablos
     </h1>
 
+    <!-- Liste des films -->
     <section class="max-w-screen-xl mx-auto grid md:grid-cols-3 gap-6">
       <div
           v-for="film in filmsStore.films"
           :key="film.id"
           class="bg-[var(--gris)] rounded-2xl shadow-lg p-5 flex flex-col gap-3"
       >
-        <img :src="getFilmImage(film.poster)" :alt="film.title" class="rounded-xl w-full h-80 object-cover shadow-md" />
-
+        <img
+            :src="getFilmImage(film.poster)"
+            :alt="film.title"
+            class="rounded-xl w-full h-80 object-cover shadow-md"
+        />
 
         <h2 class="text-xl font-semibold text-center tracking-wide">
           {{ film.title }}
@@ -27,21 +31,25 @@
         >
           🗳 Voter
         </button>
+
         <div v-if="!userStore.currentUser" class="text-center text-red-600 font-semibold mt-6">
           Connectez-vous pour voter
         </div>
       </div>
     </section>
 
-    <VoteModal
-        v-if="showModal"
-        :film="selectedFilm"
-        :categories="categories"
-        @submitVote="submitVote"
-        @removeVote="removeVote"
-        @close="showModal = false"
-    />
-
+    <!-- Modal de vote -->
+    <div>
+      <VoteModal
+          v-if="showModal"
+          :film="selectedFilm"
+          :categories="categories"
+          @close="showModal = false"
+          @submitVote="submitVote"
+          @removeVote="removeVote"
+      />
+    </div>
+    <!-- Classement -->
     <section class="mt-15 max-w-3xl mx-auto">
       <h2 class="text-2xl font-bold text-center underline mb-6">
         🏆 Classement des votes
@@ -76,10 +84,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useFilmsStore } from '@/stores/modules/films.js'
-import { useVotesStore } from '@/stores/modules/votes.js'
-import { useUserStore } from '@/stores/index.js'
+import { ref, onMounted, computed } from 'vue'
+import { useFilmsStore, useVotesStore, useUserStore } from "@/stores"
 import VoteModal from '@/components/ScenePrincipal/VoteModal.vue'
 
 const filmsStore = useFilmsStore()
@@ -88,30 +94,62 @@ const userStore = useUserStore()
 
 const showModal = ref(false)
 const selectedFilm = ref(null)
-const categories = ["Meilleur scénario", "Meilleurs effets visuels", "Prix du public"]
 
+// --- Lifecycle ---
 onMounted(async () => {
   await filmsStore.init()
+  await votesStore.getCategories()
+  await votesStore.getVotes()
+  await votesStore.getScores()
 })
 
+const categories = computed(() => votesStore.categories.map(c => c.category_name))
+
+// --- Helpers ---
 const getFilmImage = (fileName) =>
     new URL(`../assets/img/${fileName}`, import.meta.url).href
 
 const openVoteModal = (film) => {
-  if (!userStore.currentUser) return
+  if (!userStore.currentUser) {
+    alert("Connectez-vous pour voter !")
+    return
+  }
+  console.log(" votes au debut :", JSON.parse(JSON.stringify(votesStore.votes)))
   selectedFilm.value = film
   showModal.value = true
 }
 
-const submitVote = ({ filmId, category, userId }) => {
-  votesStore.addOrUpdateVote({ filmId, category, userId })
-  //showModal.value = false
+const submitVote = async ({ filmId, category, userId }) => {
+  const cat = votesStore.categories.find(c => c.category_name === category)
+  if (!cat) {
+    alert("Catégorie introuvable")
+    return
+  }
+
+  const res = await votesStore.AddVote({
+    userId,
+    filmId,
+    category_id: cat.id
+  })
+
+  if (res.error === 0) {
+    await votesStore.updateScore({ film_id: filmId, category_id: cat.id }, 1)
+  } else {
+    alert(res.data)
+  }
 }
 
-const removeVote = ({ category, filmId, userId }) => {
-  votesStore.removeVote({ category, userId })
-  //showModal.value = false
-}
+const removeVote = async ({ filmId, category, userId }) => {
+  const cat = votesStore.categories.find(c => c.category_name === category)
+  if (!cat) return
 
+  const res = await votesStore.removeVote({ userId, category_id: cat.id })
+
+  //console.log("Résultat du store.removeVote :", res)
+
+  if (res.error === 0) {
+    await votesStore.updateScore({ film_id: filmId, category_id: cat.id }, -1)
+  }
+}
 
 </script>
