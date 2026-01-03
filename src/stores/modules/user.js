@@ -2,6 +2,7 @@ import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import userService from "@/services/user.service.js"
 import standsService from "@/services/stands.service.js";
+import reservationsService from "@/services/reservations.service.js";
 
 export const useUserStore = defineStore('user', () => {
     // state
@@ -35,7 +36,6 @@ export const useUserStore = defineStore('user', () => {
         notes.value = data;
     }
 
-
     const updateUsers = (data) =>{
         users.value = data;
     }
@@ -44,6 +44,10 @@ export const useUserStore = defineStore('user', () => {
     }
     const addUser = (data) =>{
         users.value.push(data)
+    }
+
+    const pushNote = (data) => {
+        notes.value.push(data)
     }
 
 
@@ -123,7 +127,6 @@ export const useUserStore = defineStore('user', () => {
 
         } catch(e){
             console.error(e)
-
         }
     }
 
@@ -140,6 +143,16 @@ export const useUserStore = defineStore('user', () => {
         } catch(e){
             console.error(e)
 
+        }
+    }
+
+    const addNote = async (data) => {
+        try {
+            const response = await userService.addNote(data);
+            pushNote(response.data)
+            return response.data
+        } catch (e) {
+            console.error(e)
         }
     }
 
@@ -167,6 +180,7 @@ export const useUserStore = defineStore('user', () => {
         logout,
         registerProvider,
         getUserById,
-        getNotes
+        getNotes,
+        addNote
     }
 })

@@ -98,6 +98,16 @@ async function registerUser(data){
 
 }
 
+async function addNote(data) {
+    const n = {
+        id: uuidv4(),
+        userId: data.userId,
+        value: data.value
+    }
+    console.log("JA" + JSON.stringify(n))
+    return { error: 0, status: 201, data: n };
+}
+
 async function registerProvider(data){
     if (!data.login){
         return { error: 1, status: 404, data: 'login manquant' };
@@ -145,8 +155,6 @@ async function registerProvider(data){
     }
 
     return { error: 0, status: 201, data: r };
-
-
 }
 
 
@@ -158,5 +166,6 @@ export default {
     registerUser,
     registerProvider,
     getUserById,
-    getNotes
+    getNotes,
+    addNote
 }

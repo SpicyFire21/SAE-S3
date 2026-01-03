@@ -30,9 +30,6 @@ async function addStandRequest(data) {
         userId: data.userId,
         status: data.status,
     }
-
-    stand_reservations_requests.push(standReservationRequest)
-
     return { error: 0, status:200, data: standReservationRequest}
 }
 

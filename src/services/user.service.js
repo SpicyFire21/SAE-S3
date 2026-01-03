@@ -96,6 +96,20 @@ async function getNotes(){
     return response;
 }
 
+async function addNoteFromLocalSource(data){
+    return userController.addNote(data);
+}
+async function addNote(data){
+    let response = null;
+    try {
+        response = await addNoteFromLocalSource(data);
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de créer une note'}
+    }
+    return response;
+}
+
 export default {
     getUsers,
     login,
@@ -103,5 +117,5 @@ export default {
     registerUser,
     registerProvider,
     getUserById,
-    getNotes
+    getNotes, addNote
 }

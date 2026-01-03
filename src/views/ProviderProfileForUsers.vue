@@ -124,6 +124,10 @@
         <h2 class="text-2xl font-extrabold text-gray-900 mb-5 text-center">
           Ajouter un commentaire
         </h2>
+        <div class="flex flex-col items-center gap-2 mb-4">
+          <p class="text-gray-700 font-medium">Votre note (optionnel)</p>
+          <RankingStars v-model="newNoteBase.value"/>
+        </div>
         <textarea
             v-model="newCommentBase.content"
             class="w-full min-h-32 p-4 rounded-2xl border border-gray-300 outline-none
@@ -139,7 +143,7 @@
             Annuler
           </button>
           <button
-              @click="addComment"
+              @click="addOpinion"
               class="px-6 py-2 rounded-xl bg-black text-[var(--jaune)]
                  hover:bg-[var(--jaune)] hover:text-black
                  font-semibold shadow-md hover:shadow-lg">
@@ -148,14 +152,6 @@
         </div>
       </div>
     </div>
-
-
-    <!--    <div v-if="showSuccessPopup"-->
-    <!--         class="fixed top-1/10 left-1/2 -translate-x-1/2-->
-    <!--            bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl-->
-    <!--            z-50 text-center">-->
-    <!--      🎉 Réservation confirmée !-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -167,6 +163,7 @@ import ProfileEditor from "@/components/Dashboard/provider/ProviderProfile/Profi
 import {useRoute} from "vue-router";
 import router from "@/router/index.js";
 import {useCommentsStore} from "@/stores/modules/comments.js";
+import RankingStars from "@/components/Accueil/RankingStars.vue";
 
 const userStore = useUserStore();
 const commentStore = useCommentsStore();
@@ -201,7 +198,12 @@ const isModalOpen = ref(false);
 const newCommentBase = ref({
   userId: id,
   content: "",
-  date: ""
+  date: "",
+})
+
+const newNoteBase = ref({
+  userId: id,
+  value: ""
 })
 
 const openCommentModal = async () => {
@@ -212,12 +214,17 @@ const closeCommentModal = async () => {
   isModalOpen.value = false;
 }
 
-const addComment = async () => {
+const addOpinion = async () => {
   if (newCommentBase.value.content !== "") {
     newCommentBase.value.date = new Date().toISOString()
     await commentStore.addComment(newCommentBase.value);
+    if (newNoteBase.value.value !== "") {
+      newNoteBase.value.value = String(newNoteBase.value.value)
+      await userStore.addNote(newNoteBase.value);
+    }
     newCommentBase.value.date = ""
     newCommentBase.value.content = ""
+    newNoteBase.value.value = ""
     isModalOpen.value = false;
   }
 }
@@ -230,7 +237,7 @@ const formatDate = (date) =>
 
 const getProfilePicture = (fileName) => new URL(`../assets/img/${fileName}`, import.meta.url).href;
 
-const commentsSortOrder = ref("newest"); // "newest" ou "oldest"
+const commentsSortOrder = ref("newest"); // "newest" ou "oldest" selon le filtre choisi
 
 const sortedComments = computed(() => {
   const sorted = [...commentsUser.value];

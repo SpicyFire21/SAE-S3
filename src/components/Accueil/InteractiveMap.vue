@@ -58,7 +58,7 @@
         <button
             class="bg-[var(--bleu)] hover:bg-[var(--bleu)]/70 text-white text-sm px-3 py-1 rounded mr-3 mt-3 mb-3"
             @click="providerReservationRequest(popup.stand.idstand)"
-            v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null"
+            v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
         >
           Demande de réservation du stand
         </button>
@@ -104,7 +104,7 @@
 <script setup>
 import panzoom from "panzoom";
 import {useStandsStore} from "@/stores/modules/stands.js";
-import {onMounted, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import {useUserStore} from "@/stores/index.js";
 import router from "@/router/index.js";
 
@@ -148,6 +148,21 @@ const confirmReservation = async () => {
   });
   closeModal();
 }
+
+const hasAlreadyDoneAStandRequest = (stand) => {
+  if (!stand || !userStore.currentUser) return false
+
+  return standsStore.standReservationsRequests.some(
+      request =>
+          request.standId === stand.idstand &&
+          request.userId === userStore.currentUser.id &&
+          request.status === "pending" // comme lorsqu'un admin refuse cela ne supprime pas la demande mais la met en refused,
+      // on va filtrer uniquement sur les demandes en pending sinon meme lorsque la demande se fait refuser, on ne pourra plus jamais
+      // demander pour ce stand
+  )
+}
+
+
 
 
 const popup = reactive({
