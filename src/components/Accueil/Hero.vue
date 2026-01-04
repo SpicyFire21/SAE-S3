@@ -48,7 +48,7 @@
            hover:bg-yellow-500 hover:scale-105
            transition shadow-xl"
       >
-        Découvrir
+        {{ t('home.3') }}
       </button>
     </div>
 

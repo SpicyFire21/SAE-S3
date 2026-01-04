@@ -1,14 +1,14 @@
 <template>
   <div class="text-center pt-10">
     <img :src="cinemaImage" alt="cinema" width="580" height="580" class="m-auto rounded-lg shadow-lg">
-    <h1 class="pt-4 text-[25px] font-bold">Liste des films disponibles à ce stand :</h1>
+    <h1 class="pt-4 text-[25px] font-bold">{{t("CinemaStandDetails.1")}} :</h1>
   </div>
   <div v-if="filmsStore.films.length" class="mt-6 flex flex-col gap-4 max-w-3xl mx-auto">
     <div v-for="film in filmsStore.films" :key="film.id"
          class="items-center p-4 border rounded-lg shadow hover:shadow-lg transition">
       <div class="text-left">
         <h2 class="text-lg font-semibold">{{ film.title }}</h2>
-        <p class="text-gray-500">Durée: {{ film.duration }} min</p>
+        <p class="text-gray-500">{{t("CinemaStandDetails.2")}}: {{ film.duration }} min</p>
       </div>
       <div class="mt-2">
       <span v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.idstand, film.id)" :key="projection.id"
@@ -24,7 +24,7 @@
               class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded
               disabled:opacity-50 disabled:cursor-not-allowed ml-5 rounded-full"
               :disabled="!usersStore.currentUser || usersStore.currentUser.droit === '1'">
-        Réserver
+        {{t("CinemaStandDetails.3")}}
       </button>
       </div>
     </div>
@@ -37,10 +37,10 @@
         ✕
       </button>
 
-      <h2 class="text-xl font-bold mb-4">Réserver le film</h2>
-      <p class="mb-4">Vous êtes sur le point de réserver : <strong>{{ selectedFilm.title }}</strong></p>
+      <h2 class="text-xl font-bold mb-4">{{t("CinemaStandDetails.4")}}</h2>
+      <p class="mb-4">{{t("CinemaStandDetails.5")}} : <strong>{{ selectedFilm.title }}</strong></p>
 
-      <h3 class="font-semibold mb-2">Choisissez une séance :</h3>
+      <h3 class="font-semibold mb-2">{{t("CinemaStandDetails.6")}} :</h3>
       <div class="flex flex-col gap-2 mb-4 max-h-60 overflow-y-auto">
         <button
             v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.idstand, selectedFilm.id)"
@@ -68,10 +68,10 @@
           disabled:opacity-50"
           :disabled="!filmsStore.selectedProjection || hasAlreadyReservedProjection"
       >
-        Confirmer la réservation
+        {{t("CinemaStandDetails.7")}}
       </button>
       <p v-if="hasAlreadyReservedProjection" class="text-red-500 text-sm mt-5">
-        Vous avez déjà réservé cette séance
+        {{t("CinemaStandDetails.8")}}
       </p>
 
     </div>
@@ -80,7 +80,7 @@
        class="fixed top-1/10 left-1/2 -translate-x-1/2
             bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl
             z-50 text-center">
-    🎉 Réservation confirmée !
+    🎉 {{t("CinemaStandDetails.9")}}
   </div>
 
 
@@ -96,7 +96,8 @@ import {useFilmsStore} from "@/stores/index.js";
 import {useUserStore} from "@/stores/index.js";
 import {useStandsStore} from "@/stores/modules/stands.js";
 import {useReservationsStore} from "@/stores/modules/reservations.js"
-
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 const isModalOpen = ref(false);
 const selectedFilm = ref(null);
 const showSuccessPopup = ref(false);

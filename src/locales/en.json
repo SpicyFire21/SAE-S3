@@ -29,9 +29,8 @@
     "fprovider": "Find a Provider",
     "favActor": "Is your favorite actor there? Book an autograph now!",
     "description1": "Welcome to the first edition of Le Grand Focus, the unmissable event dedicated to the world of cinema!",
-    "description2": "Immerse yourself in a unique festival where behind-the-scenes glimpses, innovations, and emotions collide. Between encounters with creators, exclusive previews, and immersive experiences, discover the event that celebrates cinema in all its forms."
-
-
+    "description2": "Immerse yourself in a unique festival where behind-the-scenes glimpses, innovations, and emotions collide. Between encounters with creators, exclusive previews, and immersive experiences, discover the event that celebrates cinema in all its forms.",
+    "3": "Discover"
   },
   "checkboxfilter": [
     {
@@ -87,7 +86,8 @@
   },
   "providerRequests": {
     "1": "Allow",
-    "2": "Deny"
+    "2": "Deny",
+    "3": "Requests from service providers"
   },
   "asidebarDashboard": {
     "0": "My profile",
@@ -179,5 +179,81 @@
     "ranking": "Vote Ranking",
     "points": "pts",
     "noVotesYet": "No votes yet"
+  },
+  "StandsRequests": {
+    "1": "Stand reservation requests",
+    "2": "Allow",
+    "3": "Refuse"
+  },
+  "AdminVotes": {
+    "1": "Manage Votes",
+    "2": "Vote Status",
+    "3": "Disable Votes",
+    "4": "Enable Votes",
+    "5": "Current Status",
+    "6": "Reset",
+    "7": "Reset Votes & Scores",
+    "8": "Manage Categories",
+    "9": "Deleted",
+    "10": "No Categories Saved",
+    "11": "Category Name",
+    "12": "Added"
+  },
+  "Footer": {
+    "1": "Exclusive movie-inspired products and premium services for fans.",
+    "2": "Navigation",
+    "3": "Home",
+    "4": "Tickets",
+    "5": "Movies",
+    "6": "Merchandise",
+    "7": "Contact",
+    "8": "Phone",
+    "9": "Follow us",
+    "10": "© 2025 Le Grand Focus. All rights reserved."
+  },
+  "AutographStandDetails":{
+    "1": "List of autographs available at this booth",
+    "2": "Book",
+    "3": "Start",
+    "4": "End",
+    "5": "No autographs available at this booth.",
+    "6": "Book an autograph",
+    "7": "You are about to book an autograph for",
+    "8": "This vendor will be present during",
+    "9": "You have already booked this autograph session",
+    "10": "Booking confirmed!"
+  },
+  "CinemaStandDetails": {
+    "1": "List of films available at this stand",
+    "2": "Duration",
+    "3": "Book",
+    "4": "Book the film",
+    "5": "You are about to book",
+    "6": "Choose a screening",
+    "7": "Confirm booking",
+    "8": "You have already booked this screening",
+    "9": "Booking confirmed!"
+  },
+  "FilmCard": {
+    "1": "Realisator",
+    "2": "Vote"
+  },
+  "Classement": {
+    "1": "Pablos Ranking",
+    "2": "Film",
+    "3": "Score",
+    "4": "No votes"
+
+  },
+  "InteractiveMap": {
+  "1": "Owner",
+  "2": "No owner",
+  "3": "Close",
+  "4": "Reserve space",
+  "5": "Request stand reservation",
+  "6": "Reserve stand",
+  "7": "You are about to reserve",
+  "8": "Cancel",
+  "9": "Confirm"
   }
 }

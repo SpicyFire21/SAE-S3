@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen pt-24 flex justify-center pl-64">
     <div class="max-w-6xl w-full px-8">
-      <h1 class="text-4xl font-bold text-gray-900 mb-8">Demandes de prestataires</h1>
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">{{ t("providerRequests.3") }}</h1>
       <DataTable
           :items="adminStore.providerRequests"
           :headers="headers"

@@ -1,7 +1,7 @@
 <template>
   <div class="text-center pt-10">
     <img :src="autographImage" alt="cinema" class="m-auto rounded-lg w-150 h-72">
-    <h1 class="pt-4 text-2xl font-bold">Liste des dédicaces disponibles à ce stand :</h1>
+    <h1 class="pt-4 text-2xl font-bold">{{t("AutographStandDetails.1")}} :</h1>
   </div>
 
   <div v-if="autographs.length" class="mt-6 max-w-3xl mx-auto flex flex-col gap-4">
@@ -20,16 +20,16 @@
                 class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
                 disabled:opacity-50 disabled:cursor-not-allowed"
                 :disabled="!userStore.currentUser || userStore.currentUser.droit === '1'">
-          Réserver
+          {{t("AutographStandDetails.2")}}
         </button>
       </div>
       <div class="text-gray-700 text-sm space-y-1">
         <p>
-          <span class="font-medium">Début :</span>
+          <span class="font-medium">{{t("AutographStandDetails.3")}} :</span>
           {{ formatDate(autograph.beginDate) }}
         </p>
         <p>
-          <span class="font-medium">Fin :</span>
+          <span class="font-medium">{{t("AutographStandDetails.4")}} :</span>
           {{ formatDate(new Date(new Date(autograph.beginDate).getTime() + autograph.duration * 60000)) }}
 <!--          date de fin (* 60000 c'est conversion minute en miliseconds)-->
         </p>
@@ -38,17 +38,17 @@
   </div>
 
   <div v-else class="text-center mt-6 text-gray-500">
-    Aucun autographes disponibles pour ce stand.
+    {{t("AutographStandDetails.5")}}
   </div>
 
   <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
     <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
       <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">✕</button>
-      <h2 class="text-xl font-bold mb-4">Réserver une dédicace</h2>
-      <p class="mb-4">Vous êtes sur le point de réserver une dédicace pour : <strong>{{ autographStore.selectedAutograph.userName }}</strong></p>
+      <h2 class="text-xl font-bold mb-4">{{t("AutographStandDetails.6")}}</h2>
+      <p class="mb-4">{{t("AutographStandDetails.7")}} : <strong>{{ autographStore.selectedAutograph.userName }}</strong></p>
       <div class="flex flex-col gap-2 max-h-60 overflow-y-auto items-center">
       <span class="inline-block py-2 px-4 rounded border bg-gray-100 border-gray-300 text-center">
-        Le {{ formatDate(autographStore.selectedAutograph.beginDate) }}<br>ce prestataire y sera présent pendant {{ formatDuration(autographStore.selectedAutograph.duration) }}
+        Le {{ formatDate(autographStore.selectedAutograph.beginDate) }}<br>{{t("AutographStandDetails.8")}} {{ formatDuration(autographStore.selectedAutograph.duration) }}
       </span>
       </div>
       <button
@@ -60,7 +60,7 @@
         Confirmer la réservation
       </button>
       <p v-if="hasAlreadyReservedAutograph" class="text-red-500 text-sm mt-5">
-        Vous avez déjà réservé cette séance de dédicace
+        {{t("AutographStandDetails.9")}}
       </p>
     </div>
   </div>
@@ -69,7 +69,7 @@
        class="fixed top-1/10 left-1/2 -translate-x-1/2
             bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl
             z-50 text-center">
-    🎉 Réservation confirmée !
+    🎉 {{t("AutographStandDetails.10")}}
   </div>
 
 </template>
@@ -78,7 +78,8 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAutographsStore } from '@/stores/modules/autographs.js'
 import {useReservationsStore, useStandsStore, useUserStore} from '@/stores/index.js'
-
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 const autographImage = new URL('@/assets/img/dedicace.png', import.meta.url).href
 const autographStore = useAutographsStore()
 const userStore = useUserStore()

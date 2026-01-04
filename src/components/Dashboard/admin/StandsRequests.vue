@@ -1,7 +1,7 @@
 <template>
   <div class="pl-64 pt-10">
     <div class="max-w-5xl w-full px-8">
-      <h1 class="text-4xl font-bold text-gray-900 mt-16 mb-6 pl-8">Demandes de réservations de stands:</h1>
+      <h1 class="text-4xl font-bold text-gray-900 mt-16 mb-6 pl-8">{{t("StandsRequests.1")}} :</h1>
       <div class="bg-white w-full rounded-2xl shadow-lg p-8 space-y-4">
         <div v-for="sr in standStore.standReservationsRequests" :key="sr.id"
              class="border-b border-gray-200 pb-4 last:border-b-0 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -25,13 +25,13 @@
                   class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-700 transition"
                   @click="acceptReservation(sr)"
               >
-                Accepter
+                {{t("StandsRequests.2")}}
               </button>
               <button
                   class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-900 transition"
                   @click="refuseReservation(sr)"
               >
-                Refuser
+                {{t("StandsRequests.3")}}
               </button>
             </div>
           </div>

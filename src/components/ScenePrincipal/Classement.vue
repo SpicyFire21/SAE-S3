@@ -1,6 +1,6 @@
 <template>
   <div class="mt-10">
-    <h2 class="text-2xl font-bold mb-4">Classement des Pablos</h2>
+    <h2 class="text-2xl font-bold mb-4">{{t("Classement.1")}}</h2>
 
     <div v-for="cat in categories" :key="cat" class="mb-8">
       <h3 class="text-xl font-semibold mb-2">{{ cat }}</h3>
@@ -8,8 +8,8 @@
       <table class="w-full border rounded-lg overflow-hidden">
         <thead>
         <tr class="border-b">
-          <th class="text-left p-3">Film</th>
-          <th class="text-right p-3">Score</th>
+          <th class="text-left p-3">{{t("Classement.2")}}</th>
+          <th class="text-right p-3">{{t("Classement.3")}}</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
           <td class="text-right p-3">{{ row.score }}</td>
         </tr>
         <tr v-if="classementByCategory(cat).length === 0">
-          <td class="p-3 text-gray-500" colspan="2">Aucun vote</td>
+          <td class="p-3 text-gray-500" colspan="2">{{t("Classement.4")}}</td>
         </tr>
         </tbody>
       </table>
@@ -29,6 +29,8 @@
 <script setup>
 import { useVotesStore } from '@/stores/modules/votes.js'
 import { useFilmsStore } from '@/stores/modules/films.js'
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 
 const votesStore = useVotesStore()
 const filmsStore = useFilmsStore()

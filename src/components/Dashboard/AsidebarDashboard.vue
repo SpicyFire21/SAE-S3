@@ -109,8 +109,8 @@ const changeLanguage = (lan) => {
 const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
   { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' },
+  { label: t("asidebarDashboard.3.4"), to: '/admin-dashboard/votes' },
   { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' },
-  { label: t("asidebarDashboard.3.4"), to: '/admin-dashboard/votes' }
 ])
 
 const provider = computed(() => [
