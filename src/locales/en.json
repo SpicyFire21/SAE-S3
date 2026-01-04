@@ -105,7 +105,8 @@
       "3": "Dedication",
       "4": "Food",
       "5": "Reservations"
-    }
+    },
+    "5" : "Dashboard"
   },
   "GoodiesBoard": {
     "1": "Edit",
@@ -118,6 +119,43 @@
     "8": "Add a goodie",
     "9": "Management Goodies",
     "10": "Sizes :",
-    "11": "Goodies Sell active :"
+    "11": "Goodies Sell active :",
+    "12": "Add a color",
+    "13": "Add a size"
+  },
+  "ProviderStands": {
+    "1": "Interactive map of the event",
+    "2": "My Stands",
+    "3": "Find a stand...",
+    "4": "All",
+    "5": "This booth is under your management. You can configure your projections,\n manage your activities, and track its status.",
+    "6": "Edit"
+
+  },
+  "ProjectionsList": {
+    "1": "Add a projection",
+    "2": "Realisator",
+    "3": "Genres",
+    "4": "Projection date",
+    "5": "Edit a projection",
+    "6": "Delete",
+    "7": "Cancel",
+    "8": "Save",
+    "9": "Add"
+  },
+  "AutographsList": {
+    "1": "dedications",
+    "2": "Add a dedications",
+    "3": "Meanwhile",
+    "4": "Date of service provider's presence",
+    "5": "Edit the dedication",
+    "6": "Edit",
+    "7": "Provider",
+    "8": "Start Date",
+    "9": "Duration (minutes)",
+    "10": "Cancel",
+    "11": "Save",
+    "12": "Add"
+
   }
 }
