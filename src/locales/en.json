@@ -29,9 +29,8 @@
     "fprovider": "Find a Provider",
     "favActor": "Is your favorite actor there? Book an autograph now!",
     "description1": "Welcome to the first edition of Le Grand Focus, the unmissable event dedicated to the world of cinema!",
-    "description2": "Immerse yourself in a unique festival where behind-the-scenes glimpses, innovations, and emotions collide. Between encounters with creators, exclusive previews, and immersive experiences, discover the event that celebrates cinema in all its forms."
-
-
+    "description2": "Immerse yourself in a unique festival where behind-the-scenes glimpses, innovations, and emotions collide. Between encounters with creators, exclusive previews, and immersive experiences, discover the event that celebrates cinema in all its forms.",
+    "3": "Discover"
   },
   "checkboxfilter": [
     {
@@ -212,5 +211,27 @@
     "7": "Confirm booking",
     "8": "You have already booked this screening",
     "9": "Booking confirmed!"
-  }
+  },
+  "FilmCard": {
+    "1": "Realisator",
+    "2": "Vote"
+  },
+  "Classement": {
+    "1": "Pablos Ranking",
+    "2": "Film",
+    "3": "Score",
+    "4": "No votes"
+
+  },
+  "InteractiveMap": {
+  "1": "Owner",
+  "2": "No owner",
+  "3": "Close",
+  "4": "Reserve space",
+  "5": "Request stand reservation",
+  "6": "Reserve stand",
+  "7": "You are about to reserve",
+  "8": "Cancel",
+  "9": "Confirm"
+}
 }

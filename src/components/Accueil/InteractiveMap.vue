@@ -39,20 +39,20 @@
     >
       <h3 class="text-[var(--jaune)] mb-2">{{ popup.stand?.name }}</h3>
       <p class="text-white mb-1">Type: {{ popup.standType?.type }}</p>
-      <p class="text-white mb-2">Propriétaire: {{ popup.owner?.name || 'Aucun propriétaire' }}</p>
+      <p class="text-white mb-2">{{ t('InteractiveMap.1') }}: {{ popup.owner?.name || t('InteractiveMap.2') }}</p>
       <div class="gap-3">
         <button
             class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded"
             @click="hidePopup"
         >
-          Fermer
+          {{ t('InteractiveMap.3') }}
         </button>
 
         <button
             class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded ml-4"
             @click="goToStand(popup.stand.idstand)"
         >
-          <span v-if="userStore.currentUser?.droit !== '1'">Réserver sa place</span>
+          <span v-if="userStore.currentUser?.droit !== '1'">{{ t('InteractiveMap.4') }}</span>
           <span v-else>Consulter ce stand</span>
         </button>
         <button
@@ -60,7 +60,7 @@
             @click="providerReservationRequest(popup.stand.idstand)"
             v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
         >
-          Demande de réservation du stand
+          {{ t('InteractiveMap.5') }}
         </button>
       </div>
     </div>
@@ -73,9 +73,9 @@
         ✕
       </button>
 
-      <h2 class="text-xl font-bold mb-4">Réserver le stand</h2>
+      <h2 class="text-xl font-bold mb-4">{{ t('InteractiveMap.6') }}</h2>
       <p class="mb-4">
-        Vous êtes sur le point de réserver :
+        {{ t('InteractiveMap.7') }} :
         <strong>{{ standsStore.selectedStand.name }}</strong>
       </p>
 
@@ -84,13 +84,13 @@
             class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-xl"
             @click="closeModal"
         >
-          Annuler
+          {{ t('InteractiveMap.8') }}
         </button>
         <button
             class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl"
             @click="confirmReservation"
         >
-          Confirmer
+          {{ t('InteractiveMap.9') }}
         </button>
       </div>
 
@@ -107,8 +107,9 @@ import {useStandsStore} from "@/stores/modules/stands.js";
 import {computed, onMounted, reactive, ref} from "vue";
 import {useUserStore} from "@/stores/index.js";
 import router from "@/router/index.js";
+import {useI18n} from "vue-i18n";
 
-
+const {t} = useI18n();
 const standsStore = useStandsStore()
 const userStore = useUserStore()
 

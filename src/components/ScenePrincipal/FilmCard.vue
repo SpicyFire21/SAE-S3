@@ -1,8 +1,8 @@
 <template>
   <div class="film-card">
     <h3>{{ film.title }}</h3>
-    <p>Réalisateur: {{ film.director }}</p>
-    <button @click="$emit('vote', film)">Voter</button>
+    <p>{{t("FilmCard.1")}}: {{ film.director }}</p>
+    <button @click="$emit('vote', film)">{{t("FilmCard.2")}}</button>
     <div v-for="cat in categories" :key="cat">
       Score {{ cat }}: {{ filmScore[cat] || 0 }}
     </div>
@@ -12,7 +12,8 @@
 <script setup>
 import { computed } from 'vue'
 import { useVotesStore } from "@/stores/modules/votes.js"
-
+import {useI18n} from "vue-i18n";
+const { t,locale } = useI18n()
 const props = defineProps({
   film: Object
 })

@@ -28,7 +28,8 @@
     "fprovider": "Rechercher un Prestataire",
     "favActor": "Votre acteur préféré est présent ? Reservez une dédicace dès maintenant",
     "description1": "Bienvenue à la première édition du Grand Focus, l’événement incontournable dédié à l’univers du cinéma !",
-    "description2": "Plongez au cœur d’un festival inédit où coulisses, innovations et émotions se rencontrent. Entre rencontres avec les créateurs, avant-premières exclusives et expériences immersives, découvrez le rendez-vous qui célèbre le 7ᵉ art sous toutes ses formes."
+    "description2": "Plongez au cœur d’un festival inédit où coulisses, innovations et émotions se rencontrent. Entre rencontres avec les créateurs, avant-premières exclusives et expériences immersives, découvrez le rendez-vous qui célèbre le 7ᵉ art sous toutes ses formes.",
+    "3": "Découvrir"
   },
   "checkboxfilter": [
     {
@@ -211,5 +212,26 @@
     "7": "Confirmer la réservation",
     "8": "Vous avez déjà réservé cette séance",
     "9": "Réservation confirmée !"
+  },
+  "FilmCard": {
+      "1": "Réalisateur",
+    "2": "Voter"
+  },
+  "Classement": {
+    "1": "Classement des Pablos",
+    "2": "Film",
+    "3": "Score",
+    "4": "Aucun vote"
+  },
+  "InteractiveMap": {
+    "1": "Propriétaire",
+    "2": "Aucun propriétaire",
+    "3": "Fermer",
+    "4": "Réserver sa place",
+    "5": "Demande de réservation du stand",
+    "6": "Réserver le stand",
+    "7": "Vous êtes sur le point de réserver",
+    "8": "Annuler",
+    "9": "Confirmer"
   }
 }
