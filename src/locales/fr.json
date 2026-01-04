@@ -84,7 +84,8 @@
   },
   "providerRequests": {
     "1": "Accepter",
-    "2": "Refuser"
+    "2": "Refuser",
+    "3": "Demandes de prestataires"
   },
   "asidebarDashboard": {
     "0": "Mon profile",
@@ -154,6 +155,25 @@
     "11": "Sauvegarder",
     "12": "Ajouter"
 
+  },
+  "StandsRequests": {
+    "1": "Demandes de réservations de stands",
+    "2": "Accepter",
+    "3": "Refuser"
+  },
+  "AdminVotes": {
+    "1": "Gestion des votes",
+    "2": "Statut des votes",
+    "3": "Désactiver les votes",
+    "4": "Activer les votes",
+    "5": "Statut actuel",
+    "6": "Réinitialisation",
+    "7": "Reset votes & scores",
+    "8": "Gestion des catégories",
+    "9": "Supprimer",
+    "10": "Aucune catégorie enregistrée",
+    "11": "Nom de la catégorie",
+    "12": "Ajouter"
   }
 
 }

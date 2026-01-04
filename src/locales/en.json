@@ -87,7 +87,8 @@
   },
   "providerRequests": {
     "1": "Allow",
-    "2": "Deny"
+    "2": "Deny",
+    "3": "Requests from service providers"
   },
   "asidebarDashboard": {
     "0": "My profile",
@@ -157,5 +158,24 @@
     "11": "Save",
     "12": "Add"
 
+  },
+  "StandsRequests": {
+    "1": "Stand reservation requests",
+    "2": "Allow",
+    "3": "Refuse"
+  },
+  "AdminVotes": {
+    "1": "Manage Votes",
+    "2": "Vote Status",
+    "3": "Disable Votes",
+    "4": "Enable Votes",
+    "5": "Current Status",
+    "6": "Reset",
+    "7": "Reset Votes & Scores",
+    "8": "Manage Categories",
+    "9": "Delete",
+    "10": "No Categories Saved",
+    "11": "Category Name",
+    "12": "Add"
   }
 }
