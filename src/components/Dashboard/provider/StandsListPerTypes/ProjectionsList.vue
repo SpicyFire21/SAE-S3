@@ -6,7 +6,7 @@
           class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-900 transition"
           @click="addProjection"
       >
-        Ajouter une projection
+        {{ t("ProjectionsList.1") }}
       </button>
     </div>
 
@@ -23,9 +23,9 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-4">
-        <p><span class="font-semibold">Réalisateur:</span> {{ userStore.getUserById(pr.film.director_id).name }}</p>
-        <p><span class="font-semibold">Genres:</span> {{ formatGenre(pr.genres) }}</p>
-        <p><span class="font-semibold">Date de projection:</span> {{ formatDate(pr.date) }}</p>
+        <p><span class="font-semibold">{{ t("ProjectionsList.2") }}:</span> {{ userStore.getUserById(pr.film.director_id).name }}</p>
+        <p><span class="font-semibold">{{ t("ProjectionsList.3") }}:</span> {{ formatGenre(pr.genres) }}</p>
+        <p><span class="font-semibold">{{ t("ProjectionsList.4") }}:</span> {{ formatDate(pr.date) }}</p>
       </div>
 
       <div class="flex justify-end gap-3">
@@ -33,20 +33,20 @@
             class="px-4 py-2 bg-yellow-600 text-white font-semibold rounded-lg hover:bg-yellow-900 transition"
             @click="editProjection(pr)"
         >
-          Modifier la projection
+          {{ t("ProjectionsList.5") }}
         </button>
         <button
             class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-900 transition"
             @click="$emit('delete-projection', pr)"
         >
-          Supprimer
+          {{ t("ProjectionsList.6") }}
         </button>
       </div>
     </div>
 
     <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-xl w-[500px]">
-        <h2 class="text-2xl font-bold mb-4">Modifier la projection</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ t("ProjectionsList.5") }}</h2>
         <div class="space-y-3">
           <div>
             <label class="font-semibold">Date</label>
@@ -60,15 +60,15 @@
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
-          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
-          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveEditProjection">Sauvegarder</button>
+          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">{{ t("ProjectionsList.7") }}</button>
+          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveEditProjection">{{ t("ProjectionsList.8") }}</button>
         </div>
       </div>
     </div>
 
     <div v-if="showAddModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-xl w-[500px]">
-        <h2 class="text-2xl font-bold mb-4">Ajouter une projection</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ t("ProjectionsList.1") }}</h2>
         <div class="space-y-3">
           <div>
             <label class="font-semibold">Date</label>
@@ -82,8 +82,8 @@
           </div>
         </div>
         <div class="flex justify-end gap-3 mt-6">
-          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">Annuler</button>
-          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveAddProjection">Ajouter</button>
+          <button class="px-4 py-2 bg-[var(--bleu)] text-white rounded hover:bg-[var(--bleu)]/90" @click="closeModal">{{ t("ProjectionsList.7") }}</button>
+          <button class="px-4 py-2 bg-[var(--jaune)] text-white rounded hover:bg-[var(--jaune)]/80 text-white rounded" @click="saveAddProjection">{{ t("ProjectionsList.9") }}</button>
         </div>
       </div>
     </div>
@@ -93,7 +93,8 @@
 <script setup>
 import {ref, computed} from "vue";
 import {useFilmsStore, useUserStore} from "@/stores/index.js";
-
+import {useI18n} from "vue-i18n";
+const { t,locale } = useI18n()
 const props = defineProps({
   standId: String
 });

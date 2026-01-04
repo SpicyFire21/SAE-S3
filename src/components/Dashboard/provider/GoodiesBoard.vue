@@ -87,7 +87,7 @@
       <!-- Ajouter couleur -->
       <div class="mb-6 md:mb-8 p-6 rounded-2xl bg-white shadow-xl flex-1"
            :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
-        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Ajouter une couleur</h2>
+        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{{ t("GoodiesBoard.12") }}</h2>
         <input
             v-model="newColor.label"
             type="text"
@@ -105,7 +105,7 @@
       <!-- Ajouter taille -->
       <div class="mb-6 md:mb-8 p-6 rounded-2xl bg-white shadow-xl flex-1"
            :class="{ 'opacity-50 pointer-events-none': !sellingActive }">
-        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Ajouter une taille</h2>
+        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{{ t("GoodiesBoard.13") }}</h2>
         <input
             v-model="newSize.label"
             type="text"

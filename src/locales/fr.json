@@ -101,7 +101,8 @@
       "3": "Dédicace",
       "4": "Nourriture",
       "5": "Reservations"
-    }
+    },
+    "5" : "Tableau de bord"
   },
   "GoodiesBoard": {
     "1": "Modifier",
@@ -114,8 +115,44 @@
     "8": "Ajouter un goodie",
     "9": "Gestion des Goodies",
     "10": "Tailles :",
-    "11": "Vente de Goodies active :"
-  }
+    "11": "Vente de Goodies active :",
+    "12": "Ajouter une couleur",
+    "13": "Ajouter une taille"
+  },
+  "ProviderStands": {
+    "1": "Carte interactive de l'événement",
+    "2": "Mes Stands",
+    "3": "Rechercher un stand...",
+    "4": "Tous",
+    "5": "Ce stand est sous votre gestion. Vous pouvez y configurer vos projections,\n            gérer vos activités et suivre son statut.",
+    "6": "Modifier"
 
+  },
+  "ProjectionsList": {
+    "1": "Ajouter une projection",
+    "2": "Réalisateur",
+    "3": "Genres",
+    "4": "Date de projection",
+    "5": "Modifier une projection",
+    "6": "Supprimer",
+    "7": "Annuler",
+    "8": "Sauvegarder",
+    "9": "Ajouter"
+  },
+  "AutographsList": {
+    "1": "Dédicaces",
+    "2": "Ajouter une dédicace",
+    "3": "Pendant",
+    "4": "Date de présence du prestataire",
+    "5": "Modifier la dédicace",
+    "6": "Modifier",
+    "7": "Prestataire",
+    "8": "Date de début",
+    "9": "Durée (minutes)",
+    "10": "Annuler",
+    "11": "Sauvegarder",
+    "12": "Ajouter"
+
+  }
 
 }

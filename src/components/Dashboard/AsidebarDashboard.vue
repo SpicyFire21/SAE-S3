@@ -3,13 +3,14 @@
 
     <div class="mb-8">
       <h2 class="text-2xl font-bold text-gray-800 tracking-wide">
-        Dashboard
+        {{ t("asidebarDashboard.5") }}
       </h2>
       <div class="w-12 h-1 bg-yellow-400 rounded mt-2"></div>
     </div>
 
     <button
         @click="go('/provider-dashboard/profile')"
+        v-if="userStore.currentUser.droit === '1'"
         class="w-full text-lg text-left px-4 py-2 rounded-lg text-gray-800 bg-gray-100
                  hover:bg-yellow-300 hover:shadow transition font-semibold space-y-3 mb-3">
       {{ t("asidebarDashboard.0") }}
@@ -107,16 +108,14 @@ const changeLanguage = (lan) => {
 // Définition simple des entrées du menu
 const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
+  { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' },
   { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' },
-  { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' }
+
 ])
 
 const provider = computed(() => [
   { label: "Stands", to: '/provider-dashboard/stands' },
   { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
-  { label: t("asidebarDashboard.4.4"), to: '/provider-dashboard/food' },
-  { label: t("asidebarDashboard.4.5"), to: '/provider-dashboard/reservation' },
-
   { label: t("asidebarDashboard.4.2"), to: '/provider-dashboard/stats' }
 ])
 function go(to) {

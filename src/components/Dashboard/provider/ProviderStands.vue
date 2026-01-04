@@ -1,19 +1,19 @@
 <template>
   <div class="mt-10 m-auto text-center pl-64 pt-10">
 
-  <h1 class="text-[32px] font-bold">Carte interactive de l'événement :</h1>
+  <h1 class="text-[32px] font-bold">{{ t("ProviderStands.1") }} :</h1>
     <InteractiveMap/>
 
     <div class="mt-10 px-6">
       <h1 class="text-3xl font-bold text-gray-900 mb-6">
-        Mes Stands
+        {{ t("ProviderStands.2") }}
       </h1>
 
       <!-- filtres -->
       <div class="m-6 flex gap-4 items-center">
         <input
             v-model="search"
-            placeholder="Rechercher un stand..."
+            :placeholder="t('ProviderStands.3')"
             class="border rounded-xl px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
         />
 
@@ -21,7 +21,7 @@
             v-model="typeFilter"
             class="border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
         >
-          <option value="">Tous</option>
+          <option value="">{{ t("ProviderStands.4") }}</option>
           <option
               v-for="type in standStore.standsTypes"
               :key="type.id"
@@ -52,8 +52,7 @@
           </div>
 
           <p class="text-gray-600 mb-5">
-            Ce stand est sous votre gestion. Vous pouvez y configurer vos projections,
-            gérer vos activités et suivre son statut.
+            {{ t("ProviderStands.5") }}
           </p>
 
           <div class="flex justify-end">
@@ -66,7 +65,7 @@
                flex justify-end cursor-pointer"
                 @click="editStand(stand.idstand)"
             >
-              📝 Modifier
+              📝 {{ t("ProviderStands.6") }}
             </button>
           </div>
 
@@ -84,7 +83,9 @@ import {useReservationsStore, useStandsStore, useUserStore} from "@/stores/index
 import {computed, onMounted, ref} from "vue";
 import router from "@/router/index.js";
 
+import {useI18n} from "vue-i18n";
 
+const { t,locale } = useI18n()
 const standStore = useStandsStore()
 const userStore = useUserStore()
 

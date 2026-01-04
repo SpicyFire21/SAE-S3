@@ -4,13 +4,17 @@
     <editor-content class="border border-gray-200 p-4 rounded-lg shadow-inner min-h-[150px]" :editor="editor"/>
 
     <div class="mt-4 flex justify-end gap-3">
-      <button @click="cancelEdit" class="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100 transition">Annuler</button>
-      <button @click="saveProfile" class="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500 transition">Sauvegarder</button>
+      <button @click="cancelEdit" class="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100 transition">{{ t("AutographsList.10") }}</button>
+      <button @click="saveProfile" class="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500 transition">{{ t("AutographsList.11") }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
+import {useI18n} from "vue-i18n";
+
+const { t,locale } = useI18n()
+
 import { ref, onBeforeUnmount, watch } from "vue";
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
