@@ -113,13 +113,14 @@ onMounted(async () => {
   await votesStore.getCategories()
   await votesStore.getVotes()
   await votesStore.getScores()
+  await filmsStore.getFilmGenres();
 })
 
 const categories = computed(() => votesStore.categories.map(c => c.category_name))
-
 // --- Helpers ---
 const getFilmImage = (fileName) =>
     new URL(`../assets/img/${fileName}`, import.meta.url).href
+
 
 const openVoteModal = (film) => {
   if (!userStore.currentUser) {
