@@ -66,7 +66,6 @@
     "content": "Votre numéro de ticket est le",
     "btn": "Retour a l'accueil"
   },
-
   "prestataireCard": {
     "seeProfile": "Voir le profil / Donner un avis"
   },
@@ -174,6 +173,43 @@
     "10": "Aucune catégorie enregistrée",
     "11": "Nom de la catégorie",
     "12": "Ajouter"
-  }
+  },
+  "Footer": {
+    "1": "Produits exclusifs inspirés du cinéma et services premium pour les fans.",
+    "2": "Navigation",
+    "3": "Accueil",
+    "4": "Billeterie",
+    "5": "Films",
+    "6": "Goodies",
+    "7": "Contact",
+    "8": "Téléphone",
+    "9": "Suivez-nous",
+    "10": "© 2025 Le Grand Focus. Tous droits réservés."
 
+
+  },
+  "AutographStandDetails":{
+    "1": "Liste des dédicaces disponibles à ce stand",
+    "2": "Réserver",
+    "3": "Début",
+    "4": "Fin",
+    "5": "Aucun autographes disponibles pour ce stand.",
+    "6": "Réserver une dédicace",
+    "7": "Vous êtes sur le point de réserver une dédicace pour",
+    "8": "ce prestataire y sera présent pendant",
+    "9": "Vous avez déjà réservé cette séance de dédicace",
+    "10": "Réservation confirmée !"
+
+  },
+  "CinemaStandDetails": {
+    "1": "Liste des films disponibles à ce stand",
+    "2": "Durée",
+    "3": "Réserver",
+    "4": "Réserver le film",
+    "5": "Vous êtes sur le point de réserver",
+    "6": "Choisissez une séance",
+    "7": "Confirmer la réservation",
+    "8": "Vous avez déjà réservé cette séance",
+    "9": "Réservation confirmée !"
+  }
 }

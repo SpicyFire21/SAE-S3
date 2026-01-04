@@ -177,5 +177,40 @@
     "10": "No Categories Saved",
     "11": "Category Name",
     "12": "Add"
+  },
+  "Footer": {
+    "1": "Exclusive movie-inspired products and premium services for fans.",
+    "2": "Navigation",
+    "3": "Home",
+    "4": "Tickets",
+    "5": "Movies",
+    "6": "Merchandise",
+    "7": "Contact",
+    "8": "Phone",
+    "9": "Follow us",
+    "10": "© 2025 Le Grand Focus. All rights reserved."
+  },
+  "AutographStandDetails":{
+    "1": "List of autographs available at this booth",
+    "2": "Book",
+    "3": "Start",
+    "4": "End",
+    "5": "No autographs available at this booth.",
+    "6": "Book an autograph",
+    "7": "You are about to book an autograph for",
+    "8": "This vendor will be present during",
+    "9": "You have already booked this autograph session",
+    "10": "Booking confirmed!"
+  },
+  "CinemaStandDetails": {
+    "1": "List of films available at this stand",
+    "2": "Duration",
+    "3": "Book",
+    "4": "Book the film",
+    "5": "You are about to book",
+    "6": "Choose a screening",
+    "7": "Confirm booking",
+    "8": "You have already booked this screening",
+    "9": "Booking confirmed!"
   }
 }
