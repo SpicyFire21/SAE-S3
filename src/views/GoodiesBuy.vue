@@ -173,7 +173,7 @@ const groupedBasketItems = computed(() => {
     if (!map[key]) {
       map[key] = { ...item, count: Number(item.count) }
     } else {
-      map[key].count += Number(item.count)
+      map[key].count = Number(item.count)
     }
   })
   return Object.values(map)
