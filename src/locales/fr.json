@@ -154,6 +154,28 @@
     "11": "Sauvegarder",
     "12": "Ajouter"
 
+  },
+  "voteModal": {
+    "vote": "Voter",
+    "remove": "Retirer",
+    "youVoted": "Vous avez voté",
+    "alreadyVoted": "Vous avez déjà voté pour \"{film}\" dans la catégorie \"{category}\"",
+    "unableToVote": "Impossible de voter",
+    "unableToRemoveVote": "Impossible de retirer le vote",
+    "close": "Fermer"
+  },
+  "scenePage": {
+    "unknownFilm": "Film inconnu",
+    "mainStageTitle": "Scène principale — Cérémonie des Pablos",
+    "genres": "Genres",
+    "notSpecified": "Non spécifié",
+    "vote": "Voter",
+    "votesDisabled": "Votes désactivés par l’administrateur",
+    "loginToVote": "Connectez-vous pour voter",
+    "votingClosed": "Les votes sont actuellement fermés par l’administrateur",
+    "ranking": "Classement des votes",
+    "points": "pts",
+    "noVotesYet": "Aucun vote pour le moment"
   }
 
 }

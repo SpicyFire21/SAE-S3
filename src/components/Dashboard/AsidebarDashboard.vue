@@ -110,12 +110,7 @@ const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
   { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' },
   { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' },
-<<<<<<< HEAD
-  { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' },
   { label: t("asidebarDashboard.3.4"), to: '/admin-dashboard/votes' }
-=======
-
->>>>>>> cec7e91835e08dd3a5fd3d52cdeb4e7ee4769020
 ])
 
 const provider = computed(() => [

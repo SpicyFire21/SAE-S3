@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-[var(--blanc)] p-25">
     <h1 class="text-3xl font-bold text-center mb-10 tracking-widest">
-      Scène principale — Cérémonie des Pablos
+      {{ t('scenePage.mainStageTitle') }}
     </h1>
 
     <!-- Liste des films -->
@@ -22,7 +22,8 @@
         </h2>
 
         <p class="text-sm text-center text-[var(--grisf)]">
-          🎭 Genres : {{ filmsStore.getGenresOfFilm(film.id).join(', ') || 'Non spécifié' }}
+          🎭 {{ t('scenePage.genres') }} :
+          {{ filmsStore.getGenresOfFilm(film.id).join(', ') || t('scenePage.notSpecified') }}
         </p>
 
         <button
@@ -30,37 +31,36 @@
             @click="openVoteModal(film)"
             class="mt-auto bg-[var(--jaune)] px-4 py-2 rounded-xl font-bold tracking-widest shadow-md hover:scale-105 transition"
         >
-          🗳 Voter
+          🗳 {{ t('scenePage.vote') }}
         </button>
 
         <span
             v-else
             class="text-red-600 font-medium italic"
         >
-        Votes désactivés par l’administrateur
+          {{ t('scenePage.votesDisabled') }}
         </span>
 
         <div v-if="!userStore.currentUser" class="text-center text-red-600 font-semibold mt-6">
-          Connectez-vous pour voter
+          {{ t('scenePage.loginToVote') }}
         </div>
       </div>
     </section>
 
     <!-- Modal de vote -->
-    <div>
-      <VoteModal
-          v-if="showModal"
-          :film="selectedFilm"
-          :categories="categories"
-          @close="showModal = false"
-          @submitVote="submitVote"
-          @removeVote="removeVote"
-      />
-    </div>
+    <VoteModal
+        v-if="showModal"
+        :film="selectedFilm"
+        :categories="categories"
+        @close="showModal = false"
+        @submitVote="submitVote"
+        @removeVote="removeVote"
+    />
+
     <!-- Classement -->
     <section class="mt-15 max-w-3xl mx-auto">
       <h2 class="text-2xl font-bold text-center underline mb-6">
-        🏆 Classement des votes 🏆
+        🏆 {{ t('scenePage.ranking') }} 🏆
       </h2>
 
       <div
@@ -79,22 +79,26 @@
               class="flex justify-between border-b py-2 tracking-wide"
           >
             <span>{{ item.title }}</span>
-            <span class="font-bold">{{ item.score }} pts</span>
+            <span class="font-bold">{{ item.score }} {{ t('scenePage.points') }}</span>
           </li>
         </ul>
 
         <p v-else class="text-sm text-[var(--grisf)] text-center">
-          Aucun vote pour le moment
+          {{ t('scenePage.noVotesYet') }}
         </p>
       </div>
     </section>
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useFilmsStore, useVotesStore, useUserStore } from "@/stores"
 import VoteModal from '@/components/ScenePrincipal/VoteModal.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const filmsStore = useFilmsStore()
 const votesStore = useVotesStore()
@@ -119,9 +123,10 @@ const getFilmImage = (fileName) =>
 
 const openVoteModal = (film) => {
   if (!userStore.currentUser) {
-    alert("Connectez-vous pour voter !")
+    alert(t('scenePage.loginToVote'))
     return
   }
+  console.log(filmsStore.getGenresOfFilm(film.id).join(', '))
   console.log(" votes au debut :", JSON.parse(JSON.stringify(votesStore.votes)))
   selectedFilm.value = film
   showModal.value = true
@@ -130,7 +135,7 @@ const openVoteModal = (film) => {
 const submitVote = async ({ filmId, category, userId }) => {
   const cat = votesStore.categories.find(c => c.category_name === category)
   if (!cat) {
-    alert("Catégorie introuvable")
+    alert(t('scenePage.votingClosed'))
     return
   }
 

@@ -50,7 +50,4 @@ function classementByCategory(category) {
   return result.sort((a, b) => b.score - a.score)
 }
 
-function classementByCategory(cat) {
-  return classementByCategory(cat)
-}
 </script>

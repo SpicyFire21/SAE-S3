@@ -1,50 +1,45 @@
 <template>
   <div class="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
-    <div class="bg-[var(--blanc)] rounded-2xl p-6 max-w-md w-full shadow-lg flex flex-col max-h-[80vh]">
-
-      <!-- Header -->
+    <div class="bg-[var(--blanc)] rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-center">{{ film.title }}</h2>
 
       <div v-if="message" class="text-red-600 font-semibold text-center mb-4">
         {{ message }}
       </div>
 
-      <!-- Body -->
-      <div class="flex-1 overflow-y-auto">
-        <div v-for="catName in categories" :key="catName" class="mb-4">
-          <p class="font-semibold">{{ catName }}</p>
+      <div v-for="catName in categories" :key="catName" class="mb-4">
+        <p class="font-semibold">{{ catName }}</p>
 
-          <div v-if="hasVoted(catName)">
-            <span class="text-green-600 font-bold">✅ Vous avez voté</span>
-            <button
-                @click="removeVoteForCategory(catName)"
-                class="ml-4 bg-red-500 text-white px-2 py-1 rounded font-bold shadow hover:scale-105 transition"
-            >
-              Retirer
-            </button>
-          </div>
+        <div v-if="hasVoted(catName)">
+          <span class="text-green-600 font-bold">✅ {{ t('voteModal.youVoted') }}</span>
+          <button
+              @click="removeVoteForCategory(catName)"
+              class="ml-4 bg-red-500 text-white px-2 py-1 rounded font-bold shadow hover:scale-105 transition"
+          >
+            {{ t('voteModal.remove') }}
+          </button>
+        </div>
 
-          <div v-else>
-            <button
-                @click="submitVoteForCategory(catName)"
-                class="bg-[var(--jaune)] px-4 py-1 rounded font-bold shadow hover:scale-105 transition"
-            >
-              Voter
-            </button>
-          </div>
+        <div v-else>
+          <button
+              @click="submitVoteForCategory(catName)"
+              class="bg-[var(--jaune)] px-4 py-1 rounded font-bold shadow hover:scale-105 transition"
+          >
+            {{ t('voteModal.vote') }}
+          </button>
         </div>
       </div>
 
-      <!-- Footer -->
       <button
           @click="$emit('close')"
-          class="mt-4 bg-gray-300 px-4 py-1 rounded font-semibold hover:bg-gray-400"
+          class="mt-4 bg-gray-300 px-4 py-1 rounded font-semibold hover:bg-gray-400 w-full"
       >
-        Fermer
+        {{ t('voteModal.close') }}
       </button>
     </div>
   </div>
 </template>
+
 
 
 <script setup>
@@ -52,12 +47,13 @@ import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/index.js'
 import { useVotesStore } from '@/stores/modules/votes.js'
 import { useFilmsStore } from "@/stores"
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   film: Object,
   categories: Array
 })
-
+const { t } = useI18n()
 const emit = defineEmits(['close'])
 const userStore = useUserStore()
 const votesStore = useVotesStore()
@@ -75,7 +71,7 @@ const hasVoted = (categoryName) => {
   const cat = votesStore.categories.find(c => c.category_name === categoryName)
   if (!cat) return false
 
-  // Vérifie bien film + catégorie + user
+  // Vérifie film + catégorie + user
   return votesStore.votes.some(v =>
       v.userId === userStore.currentUser.id &&
       v.category_id === cat.id &&
@@ -86,7 +82,7 @@ const hasVoted = (categoryName) => {
 // --- actions pour voter / retirer un vote ---
 const submitVoteForCategory = async (categoryName) => {
   if (!votesStore.votingOpen) {
-    message.value = "Les votes sont actuellement fermés par l'administrateur."
+    message.value = t('voteModal.votingClosed')
     return
   }
 
@@ -105,9 +101,12 @@ const submitVoteForCategory = async (categoryName) => {
     const filmsStore = useFilmsStore()
     const film = filmsStore.films.find(f => f.id === alreadyVoted.filmId)
 
-    const filmName = film ? film.title : "Inconnu"
+    const filmName = film ? film.title : t('scenePage.unknownFilm')
 
-    message.value = `Vous avez déjà voté pour "${filmName}" dans la catégorie "${cat.category_name}"`
+    message.value = t('voteModal.alreadyVoted', {
+      film: filmName,
+      category: cat.category_name
+    })
     return
   }
 
@@ -129,7 +128,7 @@ const submitVoteForCategory = async (categoryName) => {
     await votesStore.getScores()
     message.value = ''
   } else {
-    message.value = res?.data || "Impossible d'ajouter le vote"
+    message.value = res?.data || t('voteModal.unableToAdd')
   }
 
   //console.log("Votes store après ajout :", votesStore.votes)
@@ -137,7 +136,7 @@ const submitVoteForCategory = async (categoryName) => {
 
 const removeVoteForCategory = async (categoryName) => {
   if (!votesStore.votingOpen) {
-    message.value = "Les votes sont actuellement fermés par l'administrateur."
+    message.value = t('voteModal.votingClosed')
     return
   }
   if (!userStore.currentUser || !props.film) return
@@ -153,7 +152,7 @@ const removeVoteForCategory = async (categoryName) => {
   )
 
   if (!voteFilm) {
-    message.value = "Impossible de supprimer le vote"
+    message.value = t('voteModal.unableToRemove')
     return
   }
 
@@ -176,7 +175,7 @@ const removeVoteForCategory = async (categoryName) => {
     await votesStore.getScores()
     message.value = ''
   } else {
-    message.value = res?.data || "Impossible de supprimer le vote"
+    message.value = res?.data || t('voteModal.unableToRemove')
   }
 
   //console.log("Votes store après suppression :", votesStore.votes)

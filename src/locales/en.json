@@ -157,5 +157,27 @@
     "11": "Save",
     "12": "Add"
 
+  },
+  "voteModal": {
+    "vote": "Vote",
+    "remove": "Remove",
+    "youVoted": "You have voted",
+    "alreadyVoted": "You have already voted for \"{film}\" in the \"{category}\" category",
+    "unableToVote": "Unable to vote",
+    "unableToRemoveVote": "Unable to remove vote",
+    "close": "Close"
+  },
+  "scenePage": {
+    "unknownFilm": "Unknown film",
+    "mainStageTitle": "Main Stage — Pablos Ceremony",
+    "genres": "Genres",
+    "notSpecified": "Not specified",
+    "vote": "Vote",
+    "votesDisabled": "Votes are currently closed by the administrator",
+    "loginToVote": "Login to vote",
+    "votingClosed": "Voting is currently closed by the administrator",
+    "ranking": "Vote Ranking",
+    "points": "pts",
+    "noVotesYet": "No votes yet"
   }
 }
