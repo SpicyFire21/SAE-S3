@@ -1,36 +1,41 @@
 <template>
   <div class="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
-    <div class="bg-[var(--blanc)] rounded-2xl p-6 max-w-md w-full shadow-lg">
+    <div class="bg-[var(--blanc)] rounded-2xl p-6 max-w-md w-full shadow-lg flex flex-col max-h-[80vh]">
+
+      <!-- Header -->
       <h2 class="text-xl font-bold mb-4 text-center">{{ film.title }}</h2>
 
       <div v-if="message" class="text-red-600 font-semibold text-center mb-4">
         {{ message }}
       </div>
 
-      <div v-for="catName in categories" :key="catName" class="mb-4">
-        <p class="font-semibold">{{ catName }}</p>
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto">
+        <div v-for="catName in categories" :key="catName" class="mb-4">
+          <p class="font-semibold">{{ catName }}</p>
 
-        <!-- Vérifie si l'utilisateur a voté pour cette catégorie sur ce film -->
-        <div v-if="hasVoted(catName)">
-          <span class="text-green-600 font-bold">✅ Vous avez voté</span>
-          <button
-              @click="removeVoteForCategory(catName)"
-              class="ml-4 bg-red-500 text-white px-2 py-1 rounded font-bold shadow hover:scale-105 transition"
-          >
-            Retirer
-          </button>
-        </div>
+          <div v-if="hasVoted(catName)">
+            <span class="text-green-600 font-bold">✅ Vous avez voté</span>
+            <button
+                @click="removeVoteForCategory(catName)"
+                class="ml-4 bg-red-500 text-white px-2 py-1 rounded font-bold shadow hover:scale-105 transition"
+            >
+              Retirer
+            </button>
+          </div>
 
-        <div v-else>
-          <button
-              @click="submitVoteForCategory(catName)"
-              class="bg-[var(--jaune)] px-4 py-1 rounded font-bold shadow hover:scale-105 transition"
-          >
-            Voter
-          </button>
+          <div v-else>
+            <button
+                @click="submitVoteForCategory(catName)"
+                class="bg-[var(--jaune)] px-4 py-1 rounded font-bold shadow hover:scale-105 transition"
+            >
+              Voter
+            </button>
+          </div>
         </div>
       </div>
 
+      <!-- Footer -->
       <button
           @click="$emit('close')"
           class="mt-4 bg-gray-300 px-4 py-1 rounded font-semibold hover:bg-gray-400"
@@ -40,6 +45,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed } from 'vue'
@@ -79,6 +85,11 @@ const hasVoted = (categoryName) => {
 
 // --- actions pour voter / retirer un vote ---
 const submitVoteForCategory = async (categoryName) => {
+  if (!votesStore.votingOpen) {
+    message.value = "Les votes sont actuellement fermés par l'administrateur."
+    return
+  }
+
   if (!userStore.currentUser || !props.film) return
 
   const cat = votesStore.categories.find(c => c.category_name === categoryName)
@@ -125,6 +136,10 @@ const submitVoteForCategory = async (categoryName) => {
 }
 
 const removeVoteForCategory = async (categoryName) => {
+  if (!votesStore.votingOpen) {
+    message.value = "Les votes sont actuellement fermés par l'administrateur."
+    return
+  }
   if (!userStore.currentUser || !props.film) return
 
   const cat = votesStore.categories.find(c => c.category_name === categoryName)

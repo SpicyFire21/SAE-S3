@@ -131,6 +131,57 @@ export const useVotesStore = defineStore('votes', () => {
         } catch (e) { console.error(e); setScores([]) }
     }
 
+
+    // ----- ADMIN ACTIONS -----
+    // -- ADMIN STATE --
+    const votingOpen = ref(true)
+
+    // Ouvre ou ferme les votes
+    const toggleVoting = async (status) => {
+        votingOpen.value = status
+        return { error: 0, data: `Votes ${status ? "ouverts" : "fermés"}` }
+    }
+
+    // Reset : supprime tous les votes + scores
+    const resetAllVotesAndScores = async () => {
+        const resVotes = await votesService.deleteAllVotes()
+        const resScores = await votesService.deleteAllScores()
+
+        if (resVotes.error === 0 && resScores.error === 0) {
+            votes.value = []
+            scores.value = []
+            return { error: 0, data: "Votes et scores réinitialisés" }
+        }
+
+        return { error: 1, data: "Erreur lors du reset" }
+    }
+
+    const addCategory = async (data) => {
+        try {
+            const res = await votesService.addCategory(data)
+            if (res?.error === 0) {
+                categories.value.push(res.data) // MAJ locale du store
+            }
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Impossible d'ajouter la catégorie" }
+        }
+    }
+
+    const deleteCategory = async (id) => {
+        try {
+            const res = await votesService.deleteCategory(id)
+            if (res?.error === 0) {
+                categories.value = categories.value.filter(c => c.id !== id) // MAJ locale du store
+            }
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Impossible de supprimer la catégorie" }
+        }
+    }
+
     // ----- HELPERS pour modal / composants -----
 
     // vérifie si l'utilisateur a voté pour cette catégorie (any film)
@@ -195,6 +246,11 @@ export const useVotesStore = defineStore('votes', () => {
         updateScore,
         getCategories,
         getScores,
-        hasUserVoted
+        hasUserVoted,
+        votingOpen,
+        toggleVoting,
+        resetAllVotesAndScores,
+        addCategory,
+        deleteCategory
     }
 })

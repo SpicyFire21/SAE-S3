@@ -26,11 +26,19 @@
         </p>
 
         <button
+            v-if="votesStore.votingOpen"
             @click="openVoteModal(film)"
             class="mt-auto bg-[var(--jaune)] px-4 py-2 rounded-xl font-bold tracking-widest shadow-md hover:scale-105 transition"
         >
           🗳 Voter
         </button>
+
+        <span
+            v-else
+            class="text-red-600 font-medium italic"
+        >
+        Votes désactivés par l’administrateur
+        </span>
 
         <div v-if="!userStore.currentUser" class="text-center text-red-600 font-semibold mt-6">
           Connectez-vous pour voter
@@ -52,7 +60,7 @@
     <!-- Classement -->
     <section class="mt-15 max-w-3xl mx-auto">
       <h2 class="text-2xl font-bold text-center underline mb-6">
-        🏆 Classement des votes
+        🏆 Classement des votes 🏆
       </h2>
 
       <div

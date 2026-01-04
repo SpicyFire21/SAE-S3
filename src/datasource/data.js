@@ -817,7 +817,7 @@ let votes_score = [
     {
         "film_id" : "a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d",
         "category_id" : "d4f1c3b7-e9a2-4c6f-8b2e-9f1c8b2e7d3a",
-        "total_score" : 2
+        "total_score" : 1
     }
 ];
 

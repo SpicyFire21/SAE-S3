@@ -111,6 +111,53 @@ async function getScore() {
     return { error: 0, status: 200, data: votes_score };
 }
 
+
+/**
+ * POST → Ajoute une catégorie dans `votes_category`
+ */
+async function addCategory(data) {
+    if (!data.category_name) {
+        return { error: 1, status: 400, data: "category_name manquant" };
+    }
+
+    const newCategory = {
+        id: uuidv4(),
+        category_name: data.category_name
+    };
+
+    return { error: 0, status: 201, data: newCategory };
+}
+
+/**
+ * DELETE → Supprime une catégorie dans `votes_category`
+ */
+async function deleteCategory(id) {
+    const index = votes_category.findIndex(c => c.id === id);
+
+    if (index === -1) {
+        return { error: 1, status: 404, data: "Catégorie inexistante" };
+    }
+
+    const deleted = votes_category.splice(index, 1)[0];
+    return { error: 0, status: 200, data: deleted };
+}
+
+/**
+ * DELETE → Supprime tous les scores dans `votes_score`
+ */
+async function deleteAllScores() {
+    votes_score.splice(0, votes_score.length);
+    return { error: 0, status: 200, data: "Tous les scores ont été supprimés" };
+}
+
+/**
+ * DELETE → Supprime tous les votes dans `votes`
+ */
+async function deleteAllVotes() {
+    votes.splice(0, votes.length);
+    return { error: 0, status: 200, data: "Tous les votes ont été supprimés" };
+}
+
 export default {
     AddVote,
     getVote,
@@ -118,5 +165,11 @@ export default {
     removeVote,
     updateScore,
     getCategory,
-    getScore
+    getScore,
+
+    addCategory,
+    deleteCategory,
+    deleteAllScores,
+    deleteAllVotes,
+
 };

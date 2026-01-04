@@ -29,6 +29,22 @@ async function getScoreFromLocalSource() {
     return votesController.getScore();
 }
 
+async function addCategoryFromLocalSource(data) {
+    return votesController.addCategory(data);
+}
+
+async function deleteCategoryFromLocalSource(id) {
+    return votesController.deleteCategory(id);
+}
+
+async function deleteAllScoresFromLocalSource() {
+    return votesController.deleteAllScores();
+}
+
+async function deleteAllVotesFromLocalSource() {
+    return votesController.deleteAllVotes();
+}
+
 // ---- SERVICE METHODS ----
 
 async function getVotes() {
@@ -101,6 +117,46 @@ async function getScore() {
     return response;
 }
 
+async function addCategory(data) {
+    let response = null;
+    try {
+        response = await addCategoryFromLocalSource(data);
+    } catch (err) {
+        response = { error: 1, status: 404, data: "erreur réseau, impossible d'ajouter la catégorie" };
+    }
+    return response;
+}
+
+async function deleteCategory(id) {
+    let response = null;
+    try {
+        response = await deleteCategoryFromLocalSource(id);
+    } catch (err) {
+        response = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer la catégorie" };
+    }
+    return response;
+}
+
+async function deleteAllScores() {
+    let response = null;
+    try {
+        response = await deleteAllScoresFromLocalSource();
+    } catch (err) {
+        response = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer les scores" };
+    }
+    return response;
+}
+
+async function deleteAllVotes() {
+    let response = null;
+    try {
+        response = await deleteAllVotesFromLocalSource();
+    } catch (err) {
+        response = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer les votes" };
+    }
+    return response;
+}
+
 export default {
     getVotes,
     getVotesByUserId,
@@ -108,5 +164,10 @@ export default {
     removeVote,
     updateScore,
     getCategory,
-    getScore
+    getScore,
+
+    addCategory,
+    deleteCategory,
+    deleteAllScores,
+    deleteAllVotes
 }
