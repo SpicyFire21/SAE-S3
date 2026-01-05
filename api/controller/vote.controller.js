@@ -56,3 +56,47 @@ export const editVote = async  (req,res) =>{
         return res.status(500).send("Erreur lors de la modification du vote");
     }
 }
+
+export const addCategory = async (req,res) => {
+    try {
+        let data = await voteService.addCategory(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de l'ajout de la catégorie");
+    }
+}
+
+export const deleteCategory = async (req,res) => {
+    try {
+        let data = await voteService.deleteCategory(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression de la catégorie par id");
+    }
+}
+
+export const deleteAllScores = async (req,res) => {
+    try {
+        let data = await voteService.deleteAllScores();
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppressions des scores");
+    }
+}
+
+export const deleteAllVotes = async (req,res) => {
+    try {
+        let data = await voteService.deleteAllVotes();
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression des votes");
+    }
+}

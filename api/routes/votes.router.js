@@ -83,6 +83,92 @@ router.post("/", voteController.addVote);
 
 /**
  * @swagger
+ * /votes/categories:
+ *   post:
+ *     summary: Ajouter une catégorie
+ *     tags:
+ *       - Votes
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/VoteCategoryInput'
+ *     responses:
+ *       201:
+ *         description: Catégorie créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/VotesCategory'
+ *       400:
+ *         description: Données invalides
+ *       409:
+ *         description: L'utilisateur a déjà voté dans cette catégorie
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/categories",voteController.addCategory);
+
+/**
+ * @swagger
+ * /votes/categories/{id}:
+ *   delete:
+ *     summary: Supprimer une catégorie par id
+ *     tags:
+ *       - Votes
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de la catégorie
+ *     responses:
+ *       200:
+ *         description: Catégorie supprimé
+ *       400:
+ *         description: Donnée manquante
+ *       404:
+ *         description: Catégorie non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/categories/:id",voteController.deleteCategory);
+
+/**
+ * @swagger
+ * /votes/scores:
+ *   delete:
+ *     summary: Supprimer tous les scores
+ *     tags:
+ *       - Votes
+ *     responses:
+ *       204:
+ *         description: scores supprimés
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/scores",voteController.deleteAllScores);
+
+/**
+ * @swagger
+ * /votes:
+ *   delete:
+ *     summary: Supprimer tous les votes
+ *     tags:
+ *       - Votes
+ *     responses:
+ *       204:
+ *         description: votes supprimés
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/",voteController.deleteAllVotes);
+
+/**
+ * @swagger
  * /votes:
  *   put:
  *     summary: Modifier le score d'un vote existant ou créer la ligne si elle n'existe pas
