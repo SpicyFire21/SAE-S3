@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import votesService from '@/services/votes.service.js'
 import { useFilmsStore } from '@/stores/modules/films.js'
+import {votes_score} from "@/datasource/data.js";
 
 export const useVotesStore = defineStore('votes', () => {
     const filmsStore = useFilmsStore()
@@ -83,7 +84,6 @@ export const useVotesStore = defineStore('votes', () => {
             const res = await votesService.removeVote(data)
             if (res?.error === 0) removeVoteLocally(data)
 
-            // MAJ score
             //await updateScore({ filmId: data.filmId, category_id: data.category_id }, -1)
             //await getScores()
 
@@ -199,6 +199,16 @@ export const useVotesStore = defineStore('votes', () => {
         return vote?.filmId || null
     }
 
+    const getVotesForFilm = (filmId) => {
+        const result = {};
+        categories.value.forEach(category => {
+            // récupère le score pour ce film dans cette catégorie
+            const score = scores.value.find(s => s.film_id === filmId && s.category_id === category.id);
+            result[category.name] = score ? score.total_score : 0;
+        });
+        return result;
+    };
+
     // retourne un classement trié des films pour une catégorie donnée
     const getRanking = (categoryName) => {
         const cat = categories.value.find(c => c.category_name === categoryName)
@@ -218,6 +228,37 @@ export const useVotesStore = defineStore('votes', () => {
         )
     }
 
+    const deleteAllScoresByFilm = async (filmId) => {
+        try {
+            const res = await votesService.deleteAllScoresByFilm(filmId)
+            if (res?.error === 0) {
+                scores.value = scores.value.filter(c => c.filmId !== filmId) // MAJ locale du store
+            }
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Impossible de supprimer les scores du film" }
+        }
+    }
+
+    const removeVotesOfFilm = async (filmId) => {
+        try {
+            const votesToRemove = votes.value.filter(v => v.filmId === filmId)
+
+            for (const v of votesToRemove) {
+                await votesStore.removeVote({
+                    userId: v.userId,
+                    category_id: v.category_id
+                })
+            }
+
+            return { error: 0, data: "Votes du film supprimés ✔" }
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Erreur suppression votes du film" }
+        }
+    }
+
     // ----- RETURN -----
     return {
         votes,
@@ -225,6 +266,7 @@ export const useVotesStore = defineStore('votes', () => {
         categories,
         scores,
 
+        getVotesForFilm,
         getVoteByCategory: (categoryId, userId) => votes.value.find(v => v.category_id === categoryId && v.userId === userId),
         getScoreByFilmAndCategory: (filmId, categoryId) => scores.value.find(s => s.film_id === filmId && s.category_id === categoryId)?.total_score || 0,
         getRanking,
@@ -242,7 +284,7 @@ export const useVotesStore = defineStore('votes', () => {
         getVotes,
         getVotesByUserId,
         AddVote,
-        removeVote,
+        removeVote, removeVotesOfFilm,
         updateScore,
         getCategories,
         getScores,
@@ -251,6 +293,7 @@ export const useVotesStore = defineStore('votes', () => {
         toggleVoting,
         resetAllVotesAndScores,
         addCategory,
-        deleteCategory
+        deleteCategory,
+        deleteAllScoresByFilm
     }
 })

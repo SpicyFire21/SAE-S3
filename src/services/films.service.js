@@ -145,11 +145,125 @@ export async function addProjection(projection) {
     return response;
 }
 
+async function addCastFromLocalSource(data) {
+    return filmsController.addCast(data);
+}
 
+/*async function AddCast(data) {
+    let res;
+    try {
+        res = await addCastFromLocalSource(data);
+    } catch {
+        res = { error: 1, status: 404, data: "Impossible d'ajouter le cast" };
+    }
+    return res;
+}
+
+async function removeCastFromLocalSource(data) {
+    return filmsController.removeCast(data);
+}
+
+async function RemoveCast(data) {
+    let res;
+    try {
+        res = await removeCastFromLocalSource(data);
+    } catch {
+        res = { error: 1, status: 404, data: "Impossible de supprimer le cast" };
+    }
+    return res;
+}*/
+
+async function addFilmFromLocalSource(data) {
+    return filmsController.addFilm(data);
+}
+
+async function AddFilm(data) {
+    let res;
+    try {
+        res = await addFilmFromLocalSource(data);
+    } catch {
+        res = { error: 1, status: 404, data: "erreur réseau, impossible d'ajouter le film" };
+    }
+    return res;
+}
+
+
+async function deleteFilmFromLocalSource(id) {
+    return filmsController.deleteFilm(id);
+}
+
+async function DeleteFilm(id) {
+    let res;
+    try {
+        res = await deleteFilmFromLocalSource(id);
+    } catch {
+        res = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer le film" };
+    }
+    return res;
+}
+
+async function getFilmRequestsFromLocalSource() {
+    return filmsController.getFilmRequests();
+}
+
+async function GetFilmRequests() {
+    let res;
+    try {
+        res = await getFilmRequestsFromLocalSource();
+    } catch {
+        res = { error: 1, status: 404, data: "Erreur réseau, impossible de récupérer les requêtes de films" };
+    }
+    return res;
+}
+
+async function getFilmGenresRequestsFromLocalSource() {
+    return filmsController.getFilmRequestsGenres();
+}
+
+async function GetFilmGenresRequests() {
+    let res;
+    try {
+        res = await getFilmGenresRequestsFromLocalSource();
+    } catch {
+        res = { error: 1, status: 404, data: "Erreur réseau, impossible de récupérer les requêtes de films" };
+    }
+    return res;
+}
+
+async function addFilmRequestFromLocalSource(data) {
+    return filmsController.addFilmRequest(data);
+}
+
+async function AddFilmRequest(data) {
+    let res;
+    try {
+        res = await addFilmRequestFromLocalSource(data);
+    } catch {
+        res = { error: 1, status: 404, data: "erreur réseau, impossible d'ajouter la requête de film" };
+    }
+    return res;
+}
+
+async function deleteFilmRequestFromLocalSource(id) {
+    return filmsController.deleteFilmRequest(id);
+}
+
+async function DeleteFilmRequest(id) {
+    let res;
+    try {
+        res = await deleteFilmRequestFromLocalSource(id);
+    } catch {
+        res = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer la requête de film" };
+    }
+    return res;
+}
 
 
 export default {
     getFilms,
     getProjections,
-    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection, addProjection
+    getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection, addProjection,
+    AddFilm,DeleteFilm,
+    //AddCast, RemoveCast,
+    AddFilmRequest, DeleteFilmRequest, GetFilmRequests, GetFilmGenresRequests
 }

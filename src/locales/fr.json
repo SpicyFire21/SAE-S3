@@ -95,16 +95,49 @@
       "1": "Demande de Prestataires",
       "2": "Statistiques",
       "3": "Requêtes de réservations de stands",
-      "4": "Scène Principal"
+      "4": "Scène Principal",
+      "5": "Films"
     },
     "4": {
       "1": "Goodies",
       "2": "Statistiques",
       "3": "Dédicace",
       "4": "Nourriture",
-      "5": "Reservations"
+      "5": "Reservations",
+      "6": "Mes Films"
     },
     "5" : "Tableau de bord"
+  },
+  "AdminFilms": {
+    "0": "Gestion des requêtes de films",
+    "1": "Aucune requête de film en attente.",
+    "2": "Durée : ",
+    "3": "Description :",
+    "4": "Accepter",
+    "5": "Refuser",
+    "6": "Films déjà acceptés",
+    "7": "Aucun film accepté pour le moment.",
+    "8": "Supprimer le film"
+  },
+  "ProviderFilms": {
+    "0": "Mes films",
+    "1": "Proposer un nouveau film",
+    "2": "Titre du film",
+    "3": "Date de sortie",
+    "4": "Description",
+    "5": "Durée (min)",
+    "6": "Genres (max 2)",
+    "7": "Vous avez atteint le maximum de 2 genres.",
+    "8": "Affiche",
+    "9": "Envoyer la demande",
+    "10": "Mes demandes en cours",
+    "11": "Aucune demande en cours.",
+    "12": "Actions",
+    "13": "Supprimer",
+    "14": "Mes films acceptés",
+    "15": "Date de sortie :",
+    "16": "Votes",
+    "17": "Aucun film accepté pour le moment."
   },
   "GoodiesBoard": {
     "1": "Modifier",
@@ -195,7 +228,9 @@
     "9": "Supprimer",
     "10": "Aucune catégorie enregistrée",
     "11": "Nom de la catégorie",
-    "12": "Ajouter"
+    "12": "Ajouter",
+    "13": "Ouverts",
+    "14": "Fermés"
   },
   "Footer": {
     "1": "Produits exclusifs inspirés du cinéma et services premium pour les fans.",

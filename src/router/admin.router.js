@@ -3,7 +3,7 @@ import ProviderRequests from "@/components/Dashboard/admin/ProviderRequests.vue"
 import AdminStats from "@/components/Dashboard/admin/AdminStats.vue";
 import StandsRequests from "@/components/Dashboard/admin/StandsRequests.vue";
 import AdminVotes from "@/components/Dashboard/admin/AdminVotes.vue";
-
+import AdminFilms from "@/components/Dashboard/admin/AdminFilms.vue";
 
 
 
@@ -33,6 +33,11 @@ const router = [
                 path:'votes',
                 name:'AdminVotes',
                 components: {dashboard:AdminVotes}
+            },
+            {
+                path:'films',
+                name:'AdminFilms',
+                components: {dashboard:AdminFilms}
             }
 
         ]

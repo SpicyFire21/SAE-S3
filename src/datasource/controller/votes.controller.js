@@ -139,7 +139,7 @@ async function deleteCategory(id) {
     }
 
     const deleted = votes_category.splice(index, 1)[0];
-    return { error: 0, status: 200, data: deleted };
+    return { error: 0, status: 204, data: deleted };
 }
 
 /**
@@ -147,7 +147,7 @@ async function deleteCategory(id) {
  */
 async function deleteAllScores() {
     votes_score.splice(0, votes_score.length);
-    return { error: 0, status: 200, data: "Tous les scores ont été supprimés" };
+    return { error: 0, status: 204, data: "Tous les scores ont été supprimés" };
 }
 
 /**
@@ -155,7 +155,15 @@ async function deleteAllScores() {
  */
 async function deleteAllVotes() {
     votes.splice(0, votes.length);
-    return { error: 0, status: 200, data: "Tous les votes ont été supprimés" };
+    return { error: 0, status: 204, data: "Tous les votes ont été supprimés" };
+}
+
+/**
+ * DELETE → Supprime tous les scores d'un film dans 'votes_score'
+ */
+async function deleteAllScoresByFilm(filmId) {
+    const deleted = votes_score.filter(v => v.film_id !== filmId);
+    return { error: 0, status: 204, data: deleted };
 }
 
 export default {
@@ -171,5 +179,5 @@ export default {
     deleteCategory,
     deleteAllScores,
     deleteAllVotes,
-
+    deleteAllScoresByFilm
 };

@@ -45,6 +45,10 @@ async function deleteAllVotesFromLocalSource() {
     return votesController.deleteAllVotes();
 }
 
+async function deleteAllScoresByFilmFromLocalSource(id) {
+    return votesController.deleteAllScoresByFilm(id);
+}
+
 // ---- SERVICE METHODS ----
 
 async function getVotes() {
@@ -157,6 +161,16 @@ async function deleteAllVotes() {
     return response;
 }
 
+async function deleteAllScoresByFilm(id) {
+    let response = null;
+    try {
+        response = await deleteAllScoresByFilmFromLocalSource(id);
+    } catch (err) {
+        response = { error: 1, status: 404, data: "erreur réseau, impossible de supprimer les scores" };
+    }
+    return response;
+}
+
 export default {
     getVotes,
     getVotesByUserId,
@@ -169,5 +183,6 @@ export default {
     addCategory,
     deleteCategory,
     deleteAllScores,
-    deleteAllVotes
+    deleteAllVotes,
+    deleteAllScoresByFilm
 }

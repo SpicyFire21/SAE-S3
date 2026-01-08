@@ -10,6 +10,8 @@ export const useFilmsStore = defineStore('films', () => {
     const genres = ref([])
     const filmGenres = ref([])
     const filmCast = ref([])
+    const filmsRequests = ref([])
+    const filmsGenresRequests = ref([])
     const selectedProjection = ref(null)
 
     const updateFilms = (data) =>{
@@ -34,6 +36,14 @@ export const useFilmsStore = defineStore('films', () => {
 
     const setSelectedProjection = (projection) => {
         selectedProjection.value = projection
+    }
+
+    const updateFilmsRequests = (data) =>{
+        filmsRequests.value = data;
+    }
+
+    const updateFilmsGenresRequests = (data) =>{
+        filmsGenresRequests.value = data;
     }
 
     const removeProjection = (projection) => {
@@ -206,6 +216,98 @@ export const useFilmsStore = defineStore('films', () => {
     }
 
 
+    // --- requêtes de films ---
+    const getFilmRequests = async () => {
+        try {
+            const res = await filmsService.GetFilmRequests()
+            if (res.error === 0) filmsRequests.value = res.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const addFilmRequest = async (payload) => {
+        try {
+            const res = await filmsService.AddFilmRequest(payload)
+            if (res.error === 0) filmsRequests.value.push(res.data)
+            return res
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const deleteFilmRequest = async (id) => {
+        try {
+            const res = await filmsService.DeleteFilmRequest(id)
+            if (res.error === 0)
+                filmsRequests.value = filmsRequests.value.filter(r => r.id !== id)
+            return res
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const getGenresOfFilmRequest = async (filmId) => {
+        try {
+            const res = await filmsService.GetFilmGenresRequests(filmId)
+            if (res.error === 0) {
+                return res.data.map(g => g.name)
+            }
+            return []
+        } catch (e) {
+            console.error(e)
+            return []
+        }
+    }
+
+    const acceptFilmRequest = async (request) => {
+        try {
+            const res = await filmsService.AddFilm({
+                title: request.title,
+                release_date: request.release_date,
+                description: request.description,
+                duration: request.duration,
+                director_id: request.director_id,
+                poster: request.poster
+            })
+
+            if (res.error === 0) {
+                films.value.push(res.data)
+                filmsRequests.value = filmsRequests.value.filter(r => r.id !== request.id)
+            }
+
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Erreur lors de l'acceptation" }
+        }
+    }
+
+    const refuseFilmRequest = async (requestId) => {
+        try {
+            const res = await filmsService.DeleteFilmRequest(requestId)
+            if (res.error === 0) {
+                filmsRequests.value = filmsRequests.value.filter(r => r.id !== requestId)
+            }
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Erreur lors du refus" }
+        }
+    }
+
+    const deleteAcceptedFilm = async (filmId) => {
+        try {
+            const res = await filmsService.DeleteFilm(filmId)
+            if (res.error === 0) {
+                films.value = films.value.filter(f => f.id !== filmId)
+            }
+            return res
+        } catch (e) {
+            console.error(e)
+            return { error: 1, data: "Erreur lors de la suppression du film accepté" }
+        }
+    }
 
     const init = async () => {
         await Promise.all([
@@ -240,6 +342,8 @@ export const useFilmsStore = defineStore('films', () => {
         getFilmsOfGenre,
         genres,
         getFilmByIdForProvider,
-        deleteProjection, updateProjection, addProjection
+        deleteProjection, updateProjection, addProjection,
+        getFilmRequests, addFilmRequest, deleteFilmRequest, getGenresOfFilmRequest, filmsRequests, filmsGenresRequests,
+        acceptFilmRequest, refuseFilmRequest, deleteAcceptedFilm
     }
 })

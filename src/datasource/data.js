@@ -537,6 +537,24 @@ let comments = [
     // }
 ];
 
+
+let film_request_genres = [
+    {"filmId": "f47ac10b-58cc-4372-a567-0e02b2c3d479", "genreId": 1},
+    {"filmId": "f47ac10b-58cc-4372-a567-0e02b2c3d479", "genreId": 2}
+]
+
+let film_requests = [
+    {
+        "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "title": "Proposition",
+        "director_id": "6f207e95-5400-471f-a933-d01d817b0608",
+        "release_date": "2023-10-20",
+        "poster": "",
+        "description": "C'est une propostion comme une autre",
+        "duration": 120,
+    }
+]
+
 let genres = [
     {"id": 1, "name": "Drame"},
     {"id": 2, "name": "Crime"},
@@ -1052,6 +1070,7 @@ export {
     projections,
     films_reservations,
     autographs_reservations,
-    autographs, genres, film_genres, film_cast, stand_reservations_requests,notes
+    autographs, genres, film_genres, film_cast, stand_reservations_requests,notes,
+    film_request_genres, film_requests
 
 }

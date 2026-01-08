@@ -5,6 +5,7 @@ import stands from "@/components/Dashboard/provider/ProviderStands.vue"
 import StandDetails from "@/views/StandDetails.vue";
 import ProviderStandDetails from "@/components/Dashboard/provider/ProviderStandDetails.vue";
 import ProviderProfile from "@/components/Dashboard/provider/ProviderProfile.vue";
+import ProviderFilms from "@/components/Dashboard/provider/ProviderFilms.vue";
 
 
 const router = [
@@ -39,6 +40,11 @@ const router = [
                 name:'ProviderStandDetails',
                 components:{ dashboard: ProviderStandDetails },
                 props:true
+            },
+            {
+                path:'films',
+                name:'ProviderFilms',
+                components: {dashboard:ProviderFilms}
             }
         ]
     }

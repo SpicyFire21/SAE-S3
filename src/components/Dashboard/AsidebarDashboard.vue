@@ -110,12 +110,14 @@ const admin = computed(() => [
   { label: t("asidebarDashboard.3.1"), to: '/admin-dashboard/requests' },
   { label: t("asidebarDashboard.3.3"), to: '/admin-dashboard/standsRequests' },
   { label: t("asidebarDashboard.3.4"), to: '/admin-dashboard/votes' },
+  { label: t("asidebarDashboard.3.5"), to: '/admin-dashboard/Films' },
   { label: t("asidebarDashboard.3.2"), to: '/admin-dashboard/stats' },
 ])
 
 const provider = computed(() => [
   { label: "Stands", to: '/provider-dashboard/stands' },
   { label: t("asidebarDashboard.4.1"), to: '/provider-dashboard/goodies' },
+  { label: t("asidebarDashboard.4.6"), to: '/provider-dashboard/films' },
   { label: t("asidebarDashboard.4.2"), to: '/provider-dashboard/stats' }
 ])
 function go(to) {
