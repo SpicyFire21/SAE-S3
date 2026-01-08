@@ -140,11 +140,85 @@ async function addVote(data){
     }
 }
 
+
+async function addCategory(data) {
+    const db = await pool.connect();
+    if (!data.category_name) {
+        return { error: 1, status: 400, data: "category_name manquant" };
+    }
+
+    try {
+        const check = await db.query('SELECT * FROM votes_category where category_name=$1',[data.category_name])
+        if (check.rowCount > 0) {
+            return { error: 1, status: 409, data: 'Cette catégorie existe deja' };
+        }
+
+        const result = await db.query('INSERT INTO votes_category (id,category_name) VALUES ($1,$2) RETURNING *',
+            [uuidv4(),data.category_name])
+
+        return { error: 0, status: 201, data: result.rows[0] };
+    } catch (error){
+        console.error(error);
+        return { error: 1, status: 500, data: "erreur lors de la création d'une catégorie" };
+    } finally {
+        db.release();
+    }
+}
+async function deleteCategory(id) {
+    const db = await pool.connect();
+    if (!id) return { error: 1, status: 400, data: 'id manquant' };
+
+    try {
+        const check = await db.query('SELECT * FROM votes_category where id=$1 ',[id])
+        if (check.rowCount === 0) {
+            return { error: 1, status: 404, data: 'catégorie inexistant' };
+        }
+
+        const res = await db.query('DELETE FROM votes_category where id=$1 RETURNING *',[id]);
+        return { error: 0, status: 200, data:res.rows[0] };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression de la catégorie' };
+    } finally {
+        db.release();
+    }
+}
+async function deleteAllScores() {
+    const db = await pool.connect();
+    try {
+        const res = await db.query('DELETE FROM votes_score');
+        return { error: 0, status: 204, data:"Tous les scores ont été supprimés" };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression des scores' };
+    } finally {
+        db.release();
+    }
+}
+async function deleteAllVotes() {
+    const db = await pool.connect();
+    try {
+        const res = await db.query('DELETE FROM votes');
+        return { error: 0, status: 204, data:"Tous les votes ont été supprimés" };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression des votes' };
+    } finally {
+        db.release();
+    }
+}
+
+
+
 export default {
     getVotes,
     addVote,
     deleteVote,
     getVotesById,
-    editVote
+    editVote,
+    addCategory,
+    deleteCategory,
+    deleteAllScores,
+    deleteAllVotes
 
 }
