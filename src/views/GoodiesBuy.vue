@@ -8,12 +8,12 @@
         @submit.prevent="pay"
     >
       <h1 class="text-3xl font-bold text-center tracking-wide mb-4">
-        Paiement du panier
+        {{ t('GoodiesBuy.1') }}
       </h1>
 
       <!-- RÉCAP PANIER -->
       <div class="bg-[var(--gris)] rounded-xl p-4 text-sm">
-        <h2 class="font-semibold mb-3">Récapitulatif</h2>
+        <h2 class="font-semibold mb-3">{{ t('GoodiesBuy.2') }}</h2>
         <div
             v-for="item in groupedBasketItems"
             :key="`${item.idgoodie}-${item.idcolor}-${item.idsize}`"
@@ -39,7 +39,7 @@
       <!-- INFOS UTILISATEUR -->
       <div class="grid grid-cols-2 gap-4">
         <div class="flex flex-col">
-          <label class="text-xs mb-1">Prénom</label>
+          <label class="text-xs mb-1">{{ t('GoodiesBuy.3') }}</label>
           <input
               v-model="firstname"
 
@@ -48,7 +48,7 @@
         </div>
 
         <div class="flex flex-col">
-          <label class="text-xs mb-1">Nom</label>
+          <label class="text-xs mb-1">{{ t('GoodiesBuy.4') }}</label>
           <input
               v-model="lastname"
 
@@ -68,7 +68,7 @@
 
       <!-- PAIEMENT -->
       <div class="flex flex-col">
-        <label class="text-xs mb-1">Numéro de carte</label>
+        <label class="text-xs mb-1">{{ t('GoodiesBuy.5') }}</label>
         <input
             v-model="formattedCardNumber"
             placeholder="1234 5678 9012 3456"
@@ -108,7 +108,7 @@
           class="bg-[var(--jaune)] text-[var(--blanc)] rounded-xl py-3 font-semibold tracking-widest"
           :disabled="goodiesStore.basketItems.length === 0"
       >
-        Payer {{ total.toFixed(2) }} €
+        {{ t('GoodiesBuy.6') }} {{ total.toFixed(2) }} €
       </button>
     </form>
   </div>
@@ -119,6 +119,8 @@ import bgImage from "@/assets/img/bgbilleterie.png"
 import { ref, computed, onMounted } from "vue"
 import { useGoodiesStore, useUserStore } from "@/stores"
 import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
+const {t, tm} = useI18n()
 
 const goodiesStore = useGoodiesStore()
 const userStore = useUserStore()
@@ -206,17 +208,17 @@ async function pay() {
   }
   if (!isValid.value) {
 
-    message.value = "❌ Veuillez remplir correctement tous les champs."
+    message.value = `❌ ${t('GoodiesBuy.7')}`
     return
   }
 
-  message.value = "Paiement en cours..."
+  message.value = `${t('GoodiesBuy.8')}`
 
   try {
     await goodiesStore.payOrder(orderId)
-    message.value = "Paiement confirmé"
+    message.value = `${t('GoodiesBuy.9')}`
   } catch {
-    message.value = "Paiement refusé"
+    message.value = `${t('GoodiesBuy.10')}`
   }
 }
 </script>

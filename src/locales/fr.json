@@ -289,5 +289,31 @@
     "7": "Vous êtes sur le point de réserver",
     "8": "Annuler",
     "9": "Confirmer"
+  },
+  "GoodiesBuy": {
+    "1": "Paiement du panier",
+    "2": "Récapitulatif",
+    "3": "Prénom",
+    "4": "Nom",
+    "5": "Numéro de carte",
+    "6": "Payer",
+    "7": "Veuillez remplir correctement tous les champs.",
+    "8": "Paiement en cours...",
+    "9": "Paiement confirmé",
+    "10": "Paiement refusé"
+  },
+  "GoodiesSell": {
+    "1": "Votre Panier",
+    "2": "Votre panier est vide",
+    "3": "Couleur",
+    "4": "Taille",
+    "5": "Retirer",
+    "6": "Total général",
+    "7": "Commander",
+    "8": "Boutique",
+    "9": "Produits exclusifs inspirés du cinéma. Éditions limitées.",
+    "10": "Connectez-vous pour acheter vos goodies.",
+    "11": "en stock",
+    "12": "Ajouter au panier"
   }
 }

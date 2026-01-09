@@ -2,7 +2,7 @@
   "nav": {
     "accueil": "Home",
     "billeterie": "Tickets",
-    "films": "Films",
+    "film": "Movies",
     "seConnecter": "Login",
     "seDeconnecter": "Logout",
     "compte": "My account",
@@ -290,5 +290,31 @@
   "7": "You are about to reserve",
   "8": "Cancel",
   "9": "Confirm"
+  },
+  "GoodiesBuy": {
+    "1": "Checkout",
+    "2": "Summary",
+    "3": "First Name",
+    "4": "Last Name",
+    "5": "Card Number",
+    "6": "Pay",
+    "7": "Please fill in all fields correctly.",
+    "8": "Payment in progress...",
+    "9": "Payment confirmed",
+    "10": "Payment declined"
+  },
+  "GoodiesSell": {
+    "1": "Your Cart",
+    "2": "Your cart is empty",
+    "3": "Color",
+    "4": "Size",
+    "5": "Remove",
+    "6": "Total",
+    "7": "Place Order",
+    "8": "Shop",
+    "9": "Exclusive movie-inspired products. Limited editions.",
+    "10": "Log in to buy your goodies.",
+    "11": "In stock",
+    "12": "Add to cart"
   }
 }

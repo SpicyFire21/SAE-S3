@@ -56,7 +56,6 @@ export const useGoodiesStore = defineStore('goodies', () => {
 
     // mutations
     const setBasket = (data) =>{
-        console.log(data)
         basket.value = data
     }
     const setBasketItems = (data) =>{
@@ -196,7 +195,6 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const removeFromBasket = async (data) =>{
         try {
             const response = await goodiesService.removeFromBasket(data);
-            console.log(response)
             if (response.error === 0){
                 removeBasketItem(response.data)
             } else {
