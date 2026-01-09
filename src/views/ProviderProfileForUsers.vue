@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen pt-30 px-6 m-auto" v-if="user">
-    <h1 class="text-5xl font-extrabold text-gray-900 mb-10 text-center">Profil du prestataire</h1>
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-10 text-center">{{ t('ProviderProfileForUsers.1') }}</h1>
     <div
         class="bg-white shadow-2xl rounded-3xl border border-gray-200 p-10 flex flex-col items-center w-full max-w-2xl m-auto transition-transform hover:scale-105 duration-300">
       <div class="relative">
@@ -17,17 +17,16 @@
           :disabled="!userStore.currentUser || userStore.currentUser.id === user.id"
           class="disabled:cursor-not-allowed disabled:opacity-50 mt-3 bg-yellow-400 text-white px-6 py-3 rounded-2xl font-semibold text-base shadow-md hover:shadow-lg hover:bg-yellow-500 cursor-pointer text-center"
           @click="openCommentModal">
-        Donner un avis
+        {{ t('ProviderProfileForUsers.2') }}
       </button>
-      <h3 v-if="!userStore.currentUser" class="text-red-300 mt-4">Connectez vous
-        pour donner un avis
+      <h3 v-if="!userStore.currentUser" class="text-red-300 mt-4">{{ t('ProviderProfileForUsers.3') }}
       </h3>
-      <h3 v-if="userStore.currentUser && userStore.currentUser.id === user.id" class="text-red-300 mt-4">Vous ne pouvez pas voter pour vous même</h3>
+      <h3 v-if="userStore.currentUser && userStore.currentUser.id === user.id" class="text-red-300 mt-4">{{ t('ProviderProfileForUsers.4') }}</h3>
     </div>
 
     <div class="mt-10 max-w-4xl mx-auto">
       <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b border-gray-900 inline-block mx-auto pb-1">
-        Liste des stands
+        {{ t('ProviderProfileForUsers.5') }}
       </h3>
 
 
@@ -58,7 +57,7 @@
                flex items-center justify-center cursor-pointer"
               @click="goToStand(stand.idstand)"
           >
-            👉 En savoir plus
+            👉 {{ t('ProviderProfileForUsers.6') }}
           </button>
         </div>
       </div>
@@ -67,24 +66,24 @@
 
       <div v-if="standsUser.length === 0">
         <h3 class="text-1xl text-gray-400 mb-6 mx-auto pb-1">
-          Ce prestataire ne possède aucun stand.
+          {{ t('ProviderProfileForUsers.7') }}
         </h3>
       </div>
       <div class="flex justify-between items-center mb-4 mt-20">
         <h3 class="text-2xl font-bold text-gray-800 border-b border-gray-900 inline-block pb-1">
-          Liste des commentaires
+          {{ t('ProviderProfileForUsers.8') }}
         </h3>
 
 <!--        filtre pomme-->
         <div class="flex items-center gap-2">
-          <label for="sortDate" class="text-gray-700 font-medium">Trier par :</label>
+          <label for="sortDate" class="text-gray-700 font-medium">{{ t('ProviderProfileForUsers.9') }} :</label>
           <select
               id="sortDate"
               v-model="commentsSortOrder"
               class="border border-gray-300 rounded-xl px-3 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
           >
-            <option value="newest">Les plus récents</option>
-            <option value="oldest">Les plus anciens</option>
+            <option value="newest">{{ t('ProviderProfileForUsers.10') }}</option>
+            <option value="oldest">{{ t('ProviderProfileForUsers.11') }}</option>
           </select>
         </div>
 
@@ -98,7 +97,7 @@
         >
           <div class="flex justify-between items-center mb-2">
             <h4 class="font-semibold text-gray-900 flex items-center gap-2">
-              💬 Commentaire
+              💬 {{ t('ProviderProfileForUsers.12') }}
             </h4>
 
             <span class="text-sm text-gray-400">
@@ -111,7 +110,7 @@
         </div>
       </div>
       <div v-else class="text-1xl text-gray-400 mb-6 mx-auto pb-1 mt-3">
-        Cette utilisateur n'a aucun commentaires.
+        {{ t('ProviderProfileForUsers.13') }}
       </div>
     </div>
     <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
@@ -122,10 +121,10 @@
           ✕
         </button>
         <h2 class="text-2xl font-extrabold text-gray-900 mb-5 text-center">
-          Ajouter un commentaire
+          {{ t('ProviderProfileForUsers.14') }}
         </h2>
         <div class="flex flex-col items-center gap-2 mb-4">
-          <p class="text-gray-700 font-medium">Votre note (optionnel)</p>
+          <p class="text-gray-700 font-medium">{{ t('ProviderProfileForUsers.15') }}</p>
           <RankingStars v-model="newNoteBase.value"/>
         </div>
         <textarea
@@ -133,21 +132,21 @@
             class="w-full min-h-32 p-4 rounded-2xl border border-gray-300 outline-none
                focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400
                text-gray-700 placeholder-gray-400"
-            placeholder="Ton commentaire...">
+            :placeholder="t('ProviderProfileForUsers.16')">
         </textarea>
         <div class="flex justify-end gap-3 mt-6">
           <button
               @click="closeCommentModal"
               class="px-5 py-2 rounded-xl border border-gray-300 text-gray-700
                 hover:bg-gray-100">
-            Annuler
+            {{ t('ProviderProfileForUsers.17') }}
           </button>
           <button
               @click="addOpinion"
               class="px-6 py-2 rounded-xl bg-black text-[var(--jaune)]
                  hover:bg-[var(--jaune)] hover:text-black
                  font-semibold shadow-md hover:shadow-lg">
-            Ajouter
+            {{ t('ProviderProfileForUsers.18') }}
           </button>
         </div>
       </div>
@@ -164,7 +163,8 @@ import {useRoute} from "vue-router";
 import router from "@/router/index.js";
 import {useCommentsStore} from "@/stores/modules/comments.js";
 import RankingStars from "@/components/Accueil/RankingStars.vue";
-
+import {useI18n} from "vue-i18n";
+const {t, tm} = useI18n()
 const userStore = useUserStore();
 const commentStore = useCommentsStore();
 const standStore = useStandsStore();

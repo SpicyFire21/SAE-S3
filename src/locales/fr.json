@@ -315,5 +315,50 @@
     "10": "Connectez-vous pour acheter vos goodies.",
     "11": "en stock",
     "12": "Ajouter au panier"
+  },
+  "Account": {
+    "1": "Droit",
+    "2": "Moyenne des notes",
+    "3": "Aucun ticket.",
+    "4": "Réservations",
+    "5": "Film",
+    "6": "Aucune réservation.",
+    "7": "Commandes Goodies",
+    "8": "Panier du",
+    "9": "Aucun panier payé.",
+    "10": "Utilisateur non connecté."
+
+  },
+  "StandDetails": {
+    "1": "Connectez-vous pour réserver votre place à ce stand.",
+    "2": "Nom du stand",
+    "3": "Propriétaire",
+    "4": "Aucun propriétaire"
+  },
+  "FilmDetails": {
+    "1": "Nom",
+    "2": "Genre",
+    "3": "Durée"
+  },
+  "ProviderProfileForUsers": {
+    "1": "Profil du prestataire",
+    "2": "Donner un avis",
+    "3": "Connectez vous pour donner un avis",
+    "4": "Vous ne pouvez pas voter pour vous même",
+    "5": "Liste des stands",
+    "6": "En savoir plus",
+    "7": "Ce prestataire ne possède aucun stand.",
+    "8": "Liste des commentaires",
+    "9": "Trier par",
+    "10": "Les plus récents",
+    "11": "Les plus anciens",
+    "12": "Commentaire",
+    "13": "Cette utilisateur n'a aucun commentaires.",
+    "14": "Ajouter un commentaire",
+    "15": "Votre note (optionnel)",
+    "16": "Ton commentaire...",
+    "17": "Annuler",
+    "18": "Ajouter"
   }
+
 }
