@@ -65,6 +65,45 @@ router.get("/genres", filmController.getFilmsGenres)
  */
 router.get("/casts", filmController.getFilmsCasts)
 
+/**
+ * @swagger
+ * /films/requests:
+ *  get:
+ *    summary: Récupérer toutes les demandes de films
+ *    tags:
+ *      - FilmRequests
+ *    responses:
+ *      200:
+ *        description: Liste des demandes récupérée
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: array
+ *      500:
+ *        description: Erreur serveur
+ */
+router.get("/requests", filmController.getFilmRequests)
+
+/**
+ * @swagger
+ * /films/requests/genres:
+ *  get:
+ *    summary: Récupérer les demandes avec leurs genres
+ *    tags:
+ *      - FilmGenreRequests
+ *    responses:
+ *      200:
+ *        description: Liste des genres des demandes récupérée
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: array
+ *      404:
+ *         description: Film non trouvé
+ *      500:
+ *        description: Erreur serveur
+ */
+router.get("/requests/genres", filmController.getFilmRequestsGenres)
 
 /**
  * @swagger
@@ -95,5 +134,115 @@ router.get("/casts", filmController.getFilmsCasts)
  *         description: Erreur serveur
  */
 router.get("/:id", filmController.getFilmsById)
+
+
+/**
+ * @swagger
+ * /films:
+ *   post:
+ *     summary: Ajouter un film
+ *     tags:
+ *       - Film
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmInput'
+ *     responses:
+ *       201:
+ *         description: Film créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Film'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/", filmController.addFilm)
+
+/**
+ * @swagger
+ * /films/requests:
+ *   post:
+ *     summary: Créer une nouvelle demande de film
+ *     tags:
+ *       - Film
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmRequestInput'
+ *     responses:
+ *       201:
+ *         description: Film créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FilmRequests'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/requests", filmController.addFilmRequest)
+
+
+/**
+ * @swagger
+ * /films/{id}:
+ *   delete:
+ *     summary: Supprimer un film par id
+ *     tags:
+ *       - Film
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID du film
+ *     responses:
+ *       200:
+ *         description: Film supprimé
+ *       400:
+ *         description: Donnée manquante
+ *       404:
+ *         description: Film non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/:id", filmController.deleteFilm)
+
+/**
+ * @swagger
+ * /films/requests/{id}:
+ *   delete:
+ *     summary: Supprimer une requête de film par id
+ *     tags:
+ *       - FilmRequests
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de la requête du film
+ *     responses:
+ *       200:
+ *         description: Requête film supprimé
+ *       400:
+ *         description: Donnée manquante
+ *       404:
+ *         description: Requête film non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/requests/:id", filmController.deleteFilmRequest)
 
 export default router

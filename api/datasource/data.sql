@@ -5,8 +5,10 @@ DROP TABLE IF EXISTS film_reservations CASCADE;
 DROP TABLE IF EXISTS reservations CASCADE;
 DROP TABLE IF EXISTS projections CASCADE;
 DROP TABLE IF EXISTS films_cast CASCADE;
+DROP TABLE IF EXISTS films_genres_request CASCADE;
 DROP TABLE IF EXISTS films_genres CASCADE;
 DROP TABLE IF EXISTS genres CASCADE;
+DROP TABLE IF EXISTS films_request CASCADE;
 DROP TABLE IF EXISTS films CASCADE;
 DROP TABLE IF EXISTS stands CASCADE;
 DROP TABLE IF EXISTS stand_types CASCADE;
@@ -205,6 +207,18 @@ CREATE TABLE IF NOT EXISTS films
     FOREIGN KEY (director_id) REFERENCES users (id)
 );
 
+CREATE TABLE IF NOT EXISTS films_request
+(
+    id           UUID PRIMARY KEY,
+    title        VARCHAR(255) NOT NULL,
+    director_id  UUID         NOT NULL,
+    release_date DATE,
+    duration     INT,
+    description  TEXT,
+    poster       VARCHAR(255),
+    FOREIGN KEY (director_id) REFERENCES users (id)
+    );
+
 CREATE TABLE IF NOT EXISTS genres
 (
     id    SERIAL PRIMARY KEY,
@@ -219,6 +233,15 @@ CREATE TABLE IF NOT EXISTS films_genres
     FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE,
     FOREIGN KEY (genre_id) REFERENCES genres (id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS films_genres_request
+(
+    film_id  UUID,
+    genre_id INT,
+    PRIMARY KEY (film_id, genre_id),
+    FOREIGN KEY (film_id) REFERENCES films_request (id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genres (id) ON DELETE CASCADE
+    );
 
 CREATE TABLE IF NOT EXISTS films_cast
 (

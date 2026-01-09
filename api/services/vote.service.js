@@ -208,7 +208,19 @@ async function deleteAllVotes() {
     }
 }
 
-
+async function deleteAllScoresByFilm(idFilm) {
+    const db = await pool.connect();
+    if (!idFilm) return { error: 1, status: 400, data: 'idFilm manquant' };
+    try {
+        const res = await db.query('DELETE FROM votes_score WHERE film_id=$1 RETURNING *',[idFilm]);
+        return { error: 0, status: 200, data:res };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression des scores ' };
+    } finally {
+        db.release();
+    }
+}
 
 export default {
     getVotes,
@@ -219,6 +231,6 @@ export default {
     addCategory,
     deleteCategory,
     deleteAllScores,
-    deleteAllVotes
-
+    deleteAllVotes,
+    deleteAllScoresByFilm
 }

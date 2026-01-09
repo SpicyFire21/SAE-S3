@@ -154,6 +154,33 @@ router.delete("/scores",voteController.deleteAllScores);
 
 /**
  * @swagger
+ * /votes/scores/{idFilm}:
+ *   delete:
+ *     summary: Supprimer les scores d'un film par id
+ *     tags:
+ *       - Votes
+ *     parameters:
+ *       - in: path
+ *         name: idFilm
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID du film
+ *     responses:
+ *       200:
+ *         description: Scores du film supprimé
+ *       400:
+ *         description: Donnée manquante
+ *       404:
+ *         description: Film non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/scores/:idFilm",voteController.deleteAllScoresByFilm);
+
+/**
+ * @swagger
  * /votes:
  *   delete:
  *     summary: Supprimer tous les votes

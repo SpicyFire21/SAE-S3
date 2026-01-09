@@ -100,3 +100,14 @@ export const deleteAllVotes = async (req,res) => {
         return res.status(500).send("Erreur lors de la suppression des votes");
     }
 }
+
+export const deleteAllScoresByFilm = async (req,res) => {
+    try {
+        let data = await voteService.deleteAllScoresByFilm(req.params.idfilm);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression des scores du film");
+    }
+}
