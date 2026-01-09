@@ -10,9 +10,9 @@
           />
         </div>
         <div class="flex flex-col justify-right align-right ml-5 gap-2">
-      <h1 class="text-[var(--jaune)] font-bold">Nom : {{ film.title }}</h1>
-      <h1>Genre : {{ formatGenre(genres) }}</h1>
-      <h1>Durée : {{ formatDuration(film.duration) }}</h1>
+      <h1 class="text-[var(--jaune)] font-bold">{{ t('FilmDetails.1') }} : {{ film.title }}</h1>
+      <h1>{{ t('FilmDetails.2') }} : {{ formatGenre(genres) }}</h1>
+      <h1>{{ t('FilmDetails.3') }} : {{ formatDuration(film.duration) }}</h1>
         </div>
       </div>
   </div>
@@ -23,7 +23,8 @@
 import {useFilmsStore} from "@/stores/modules/films.js";
 import {computed, onMounted} from "vue";
 import {useRoute} from "vue-router";
-
+import {useI18n} from "vue-i18n";
+const {t, tm} = useI18n()
 const filmsStore = useFilmsStore();
 const route = useRoute();
 const id = route.params.id;

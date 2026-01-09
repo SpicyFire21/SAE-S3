@@ -31,7 +31,7 @@
       <div class="grid md:grid-cols-2 gap-6 mt-6">
         <div class="space-y-2">
           <p><span class="font-semibold text-gray-900">Email :</span> {{ user.email }}</p>
-          <p><span class="font-semibold text-gray-900">Droit :</span> {{ droitLabel }}</p>
+          <p><span class="font-semibold text-gray-900">{{ t('Account.1') }} :</span> {{ droitLabel }}</p>
 
           <p v-if="user.description">
             <span class="font-semibold text-gray-900">Description :</span>
@@ -40,7 +40,7 @@
         </div>
 
         <div v-if="user.note?.length" class="bg-gray-50 border rounded-xl p-4">
-          <p class="font-semibold text-gray-900">Moyenne des notes</p>
+          <p class="font-semibold text-gray-900">{{ t('Account.2') }} </p>
           <p class="text-3xl font-extrabold text-yellow-500">
             {{ moyenneNotes }} <span class="text-gray-600 text-lg">/ 5</span>
           </p>
@@ -67,12 +67,12 @@
             </div>
           </div>
 
-          <p v-else class="text-gray-400 mt-2">Aucun ticket.</p>
+          <p v-else class="text-gray-400 mt-2">{{ t('Account.3') }} </p>
         </section>
 
         <section>
           <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            📅 Réservations
+            📅 {{ t('Account.4') }}
           </h2>
 
           <div v-if="reservations.length" class="mt-4 grid md:grid-cols-2 gap-4">
@@ -83,10 +83,10 @@
             >
               <div v-if="r.type === '1'">
                 <h2 class="text-xl font-bold text-gray-900 flex items-center justify-center gap-2 pb-5">
-                  Film
+                  {{ t('Account.5') }}
                 </h2>
 <!--                absolute cinema-->
-                <p class="font-semibold">Film: {{ r.filmTitle }}</p>
+                <p class="font-semibold">{{ t('Account.5') }} : {{ r.filmTitle }}</p>
               <p class="text-gray-500 text-sm">
                 {{
                   new Date(r.date).toLocaleString('fr-FR', {
@@ -131,12 +131,12 @@
 
           </div>
 
-          <p v-else class="text-gray-400 mt-2">Aucune réservation.</p>
+          <p v-else class="text-gray-400 mt-2">{{ t('Account.6') }} </p>
         </section>
 
         <section>
           <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            🛍️ Commandes Goodies
+            🛍️ {{ t('Account.7') }}
           </h2>
 
           <div v-if="paidBaskets.length" class="mt-4 space-y-4">
@@ -146,7 +146,7 @@
                 class="p-5 border rounded-xl bg-gray-50 shadow-sm"
             >
               <p class="font-semibold text-gray-900">
-                Panier du {{ basket.date }}
+                {{ t('Account.8') }}  {{ basket.date }}
               </p>
 
               <ul class="mt-2 space-y-1 text-sm">
@@ -171,7 +171,7 @@
             </div>
           </div>
 
-          <p v-else class="text-gray-400 mt-2">Aucun panier payé.</p>
+          <p v-else class="text-gray-400 mt-2">{{ t('Account.9') }} </p>
         </section>
 
       </div>
@@ -180,7 +180,7 @@
   </div>
 
   <div v-else class="text-center text-gray-400 mt-10">
-    Utilisateur non connecté.
+    {{ t('Account.10') }}
   </div>
 </template>
 
@@ -188,8 +188,9 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useGoodiesStore, useTicketsStore, useUserStore, useReservationsStore, useStandsStore } from '@/stores/index.js';
-import {getEventFromReservation} from "@/services/reservations.service.js";
 
+import {useI18n} from "vue-i18n";
+const {t, tm} = useI18n()
 const userStore = useUserStore();
 const goodiesStore = useGoodiesStore();
 const ticketStore = useTicketsStore();

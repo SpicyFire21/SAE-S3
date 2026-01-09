@@ -7,13 +7,13 @@
               v-if="!userStore.currentUser"
               class="flex items-center gap-3 px-4 py-3 rounded-xl border border-red-500/40 bg-red-500/10 text-red-600 font-semibold text-lg shadow-sm backdrop-blur-sm animate-pulse"
           >
-            🔔 Connectez-vous pour réserver votre place à ce stand. 🔔
+            🔔 {{ t('StandDetails.1') }} 🔔
           </h1>
           <h1 class="text-[var(--jaune)] font-bold">
-            Nom du stand: {{ stand?.name }}
+            {{ t('StandDetails.2') }}: {{ stand?.name }}
           </h1>
           <h1>Type: {{ typeStand?.type }}</h1>
-          <h1>Propriétaire: {{ user?.name || 'Aucun propriétaire' }}</h1>
+          <h1>{{ t('StandDetails.3') }}: {{ user?.name || t('StandDetails.4')  }}</h1>
 <!--          si pas de nom == aucun propriétaire-->
         </div>
       </div>
@@ -33,8 +33,9 @@ import { useStandsStore } from "@/stores/modules/stands.js";
 import CinemaStandDetails from "@/components/StandDetails/CinemaStandDetails.vue";
 import AutographStandDetails from "@/components/StandDetails/AutographStandDetails.vue";
 import {useUserStore} from "@/stores/index.js";
+import {useI18n} from "vue-i18n";
 
-
+const {t, tm} = useI18n()
 const standsStore = useStandsStore();
 const userStore = useUserStore();
 const route = useRoute();

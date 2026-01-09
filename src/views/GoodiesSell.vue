@@ -5,16 +5,16 @@
     <div class="flex-1 max-w-7xl">
       <header class="mb-16 text-center">
         <h1 class="text-5xl font-extrabold tracking-wide mb-4">
-          Boutique
+          {{ t('GoodiesSell.8') }}
         </h1>
 
         <p class="text-neutral-500 text-lg max-w-2xl mx-auto">
-          Produits exclusifs inspirés du cinéma. Éditions limitées.
+          {{ t('GoodiesSell.9') }}
         </p>
 
         <p v-if="!userStore.currentUser"
            class="text-red-600 text-lg max-w-2xl mx-auto mt-2">
-          Connectez-vous pour acheter vos goodies.
+          {{ t('GoodiesSell.10') }}
         </p>
       </header>
 
@@ -50,7 +50,7 @@
               </span>
 
               <span class="text-sm px-3 py-1 rounded-full bg-neutral-100 text-neutral-700">
-                {{ goodie.quantity }} en stock
+                {{ goodie.quantity }} {{ t('GoodiesSell.11') }}
               </span>
             </div>
 
@@ -82,7 +82,7 @@
                   :disabled="!userStore.currentUser"
                   @click="addBasket(goodie, quantities[goodie.id])"
               >
-                Ajouter au panier
+                {{ t('GoodiesSell.12') }}
               </button>
 
               <input
@@ -103,10 +103,10 @@
         class="w-96 bg-white border border-neutral-200 p-6 rounded-2xl shadow-xl sticky top-16 h-[calc(100vh-4rem)] flex flex-col ml-8"
     >
       <h2 class="text-2xl mb-4">
-        Votre Panier
+        {{t('GoodiesSell.1')}}
       </h2>
       <div v-if="goodiesStore.basketItems.length === 0" class="text-neutral-400 mb-4">
-        Votre panier est vide
+        {{t('GoodiesSell.2')}}
       </div>
 
       <ul class="flex-1 overflow-y-auto mb-4">
@@ -122,8 +122,8 @@
       </span>
 
               <div class="text-sm text-neutral-500">
-                Couleur : {{ goodiesStore.getColor(item.idcolor) }} ·
-                Taille : {{ goodiesStore.getSize(item.idsize) }}
+                {{t('GoodiesSell.3')}} : {{ goodiesStore.getColor(item.idcolor) }} ·
+                {{t('GoodiesSell.4')}} : {{ goodiesStore.getSize(item.idsize) }}
               </div>
 
               <div class="text-sm">
@@ -139,7 +139,7 @@
                 class="h-fit px-3 py-2 rounded-lg bg-[var(--rouge)] text-[var(--noir)] hover:bg-[var(--jaune)] transition"
                 @click="removeFromBasket(item)"
             >
-              Retirer
+              {{t('GoodiesSell.5')}}
             </button>
           </div>
         </li>
@@ -147,7 +147,7 @@
       </ul>
 
       <div class="flex justify-between text-yellow-500 mb-4 text-lg">
-        <span>Total général</span>
+        <span>{{t('GoodiesSell.6')}}</span>
         <span>{{ total.toFixed(2) }} €</span>
       </div>
 
@@ -156,7 +156,7 @@
           :disabled="goodiesStore.basket.length === 0"
           @click="command()"
       >
-        Commander
+        {{t('GoodiesSell.7')}}
       </button>
     </aside>
 
@@ -168,12 +168,13 @@
 import {useGoodiesStore, useUserStore} from "@/stores/index.js"
 import { ref, computed, onMounted } from "vue"
 import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
 
 const quantities = ref({})
 const selectedColors = ref({})
 const selectedSizes = ref({})
 const route = useRouter()
-
+const {t, tm} = useI18n()
 const userStore = useUserStore()
 const goodiesStore = useGoodiesStore();
 

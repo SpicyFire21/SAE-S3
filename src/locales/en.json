@@ -2,7 +2,7 @@
   "nav": {
     "accueil": "Home",
     "billeterie": "Tickets",
-    "films": "Films",
+    "film": "Movies",
     "seConnecter": "Login",
     "seDeconnecter": "Logout",
     "compte": "My account",
@@ -290,5 +290,74 @@
   "7": "You are about to reserve",
   "8": "Cancel",
   "9": "Confirm"
+  },
+  "GoodiesBuy": {
+    "1": "Checkout",
+    "2": "Summary",
+    "3": "First Name",
+    "4": "Last Name",
+    "5": "Card Number",
+    "6": "Pay",
+    "7": "Please fill in all fields correctly.",
+    "8": "Payment in progress...",
+    "9": "Payment confirmed",
+    "10": "Payment declined"
+  },
+  "GoodiesSell": {
+    "1": "Your Cart",
+    "2": "Your cart is empty",
+    "3": "Color",
+    "4": "Size",
+    "5": "Remove",
+    "6": "Total",
+    "7": "Place Order",
+    "8": "Shop",
+    "9": "Exclusive movie-inspired products. Limited editions.",
+    "10": "Log in to buy your goodies.",
+    "11": "In stock",
+    "12": "Add to cart"
+  },
+  "Account": {
+    "1": "Right",
+    "2": "Average rating",
+    "3": "No Tickets",
+    "4": "Reservations",
+    "5": "Movie",
+    "6": "No Reservations",
+    "7": "Merchandise Orders",
+    "8": "Basket of",
+    "9": "No Paid Cart",
+    "10": "User Not Logged In"
+  },
+  "StandDetails": {
+    "1": "Log in to reserve your spot at this booth.",
+    "2": "Booth Name",
+    "3": "Owner",
+    "4": "No owner"
+  },
+  "FilmDetails": {
+    "1": "Name",
+    "2": "Genre",
+    "3": "Duration"
+  },
+  "ProviderProfileForUsers": {
+    "1": "Provider Profile",
+    "2": "Leave a Review",
+    "3": "Log in to leave a review",
+    "4": "You cannot vote for yourself",
+    "5": "List of Booths",
+    "6": "Learn More",
+    "7": "This provider has no booths.",
+    "8": "List of Comments",
+    "9": "Sort by",
+    "10": "Newest",
+    "11": "Oldest",
+    "12": "Comment",
+    "13": "This user has no comments.",
+    "14": "Add a Comment",
+    "15": "Your Rating (Optional)",
+    "16": "Your Comment...",
+    "17": "Cancel",
+    "18": "Add"
   }
 }
