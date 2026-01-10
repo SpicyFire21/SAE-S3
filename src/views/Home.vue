@@ -131,6 +131,8 @@ const goToTicketPage = () => {
 
 onMounted(async () => {
   await filmsStore.getFilms();
+  await filmsStore.getGenres();
+  await filmsStore.getFilmGenres();
   await filmsStore.getProjections();
   await reservationStore.getFilmsReservations()
   await userStore.getProviders();

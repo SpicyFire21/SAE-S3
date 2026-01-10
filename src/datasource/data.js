@@ -378,7 +378,7 @@ let stands = [
 
     {
         "idstand": "4",
-        "name": "adamdedicace1",
+        "name": "dedicace1",
         "x": 886,
         "y": 348,
         "width": 65,
@@ -388,7 +388,7 @@ let stands = [
     },
     {
         "idstand": "5",
-        "name": "adamdedicace2",
+        "name": "dedicace2",
         "x": 781,
         "y": 348,
         "width": 65,
@@ -396,8 +396,26 @@ let stands = [
         "type": "2",
         "owner": "bb4b684c-0c67-4d19-ac21-b225b3e5c018"
     },
-    // {"idstand": "6", "name": "adamdedicace3", "x": 886, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
-    // {"idstand": "7", "name": "adamdedicace4", "x": 781, "y": 1002, "width": 65, "height": 164, "type": "2", "owner": null},
+    {
+        "idstand": "6",
+        "name": "dedicace3",
+        "x": 886,
+        "y": 1002,
+        "width": 65,
+        "height": 164,
+        "type": "2",
+        "owner": null
+    },
+    {
+        "idstand": "7",
+        "name": "dedicace3",
+        "x": 781,
+        "y": 1002,
+        "width": 65,
+        "height": 164,
+        "type": "2",
+        "owner": null
+    },
     // {"idstand": "8", "name": "adamdedicace5", "x": 1892, "y": 1230, "width": 65, "height": 164, "type": "2", "owner": null},
     // {"idstand": "9", "name": "adamdedicace6", "x": 1892, "y": 1427, "width": 65, "height": 164, "type": "2", "owner": null},
 
@@ -572,6 +590,8 @@ let genres = [
 ]
 
 let film_genres = [
+    {"filmId": "v9u8t7s6-r5q4-p3o2-n1m0-l987654321abc", "genreId": 5},
+    {"filmId": "z1y2x3w4-v5u6-t7s8-r9q0-p123456abcdef", "genreId": 5},
     {"filmId": "6f207e95-5400-471f-a933-d01d817b0608", "genreId": 1},
     {"filmId": "6f207e95-5400-471f-a933-d01d817b0608", "genreId": 2},
     {"filmId": "b58b41e4-7f5d-452b-af72-9301dafa7896", "genreId": 2},
@@ -655,6 +675,24 @@ let films = [
         "poster": "killers_moon.jpg",
         "description": "Une sombre histoire de meurtres dans la nation Osage dans les années 1920",
         "duration": 206,
+    },
+    {
+        "id": "z1y2x3w4-v5u6-t7s8-r9q0-p123456abcdef",
+        "title": "Avatar: Fire and Ashes",
+        "director_id": "bb4b684c-0c67-4d19-ac21-b225b3e5c018",
+        "release_date": "2025-12-17",
+        "poster": "avatar_fire_and_ashes.jpg",
+        "description": "Troisième volet de la saga Avatar, concluant l’histoire épique de Pandora.",
+        "duration": 160,
+    },
+    {
+        "id": "v9u8t7s6-r5q4-p3o2-n1m0-l987654321abc",
+        "title": "Borderlands",
+        "director_id": "e1fbdadd-fd8f-4a6d-b0cb-f8c77b3e7238",
+        "release_date": "2026-01-09",
+        "poster": "borderlands.jpg",
+        "description": "Adaptation cinématographique du jeu vidéo à succès mêlant action et humour.",
+        "duration": 115,
     },
     {
         "id": "b58b41e4-7f5d-452b-af72-9301dafa7896",
