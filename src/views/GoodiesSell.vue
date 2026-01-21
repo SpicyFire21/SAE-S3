@@ -206,7 +206,14 @@ const total = computed(() => {
 })
 
 async function command(){
-  await route.push({path: `/goodies/${goodiesStore.basket.id}`})
+
+  if (!userStore.currentUser){
+    await route.push({path: `/login`})
+  } else {
+    await route.push({path: `/goodies/${goodiesStore.basket.id}`})
+  }
+
+
 
 }
 
