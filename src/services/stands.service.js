@@ -1,4 +1,5 @@
 import standController from "@/datasource/controller/stands.controller.js"
+import {getRequest, postRequest} from "@/services/axios.service.js";
 
 async function getStandsFromLocalSource(){
     return standController.getStands();
@@ -24,10 +25,35 @@ async function addStandRequestFromLocalSource(data) {
     return standController.addStandRequest(data)
 }
 
+async function getStandsFromAPI(){
+    return getRequest("/stands","GET-STANDS");
+}
+
+async function getStandsTypesFromAPI() {
+    return getRequest("/stands/types","GET-STANDS-TYPES");
+}
+
+async function getStandByIdFromAPI(id) {
+    return getRequest(`/stands/${id}`,"GET-STANDS-BY-ID");}
+
+async function getTypeStandByIdFromAPI(id) {
+    return getRequest(`/stands/types/${id}`,"GET-STANDS-TYPES-BY-ID");
+}
+
+async function getStandsReservationsRequestsFromAPI() {
+    return getRequest(`/stands/reservations`,"GET-STANDS-RESERVATIONS");
+}
+
+async function addStandRequestFromAPI(data) {
+    return postRequest(`/stands/reservations`,data,"ADD-STANDS-RESERVATIONS");
+}
+
 export async function addStandRequest(data){
     let response = null;
     try {
-        response = await addStandRequestFromLocalSource(data);
+        // response = await addStandRequestFromLocalSource(data);
+        response = await addStandRequestFromAPI(data);
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible dajouter une requete pour ce stand'}
     }
@@ -37,7 +63,9 @@ export async function addStandRequest(data){
 export async function getStandsReservationsRequests(){
     let response = null;
     try {
-        response = await getStandsReservationsRequestsFromLocalSource();
+        // response = await getStandsReservationsRequestsFromLocalSource();
+        response = await getStandsReservationsRequestsFromAPI();
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les requests des stands'}
     }
@@ -47,7 +75,9 @@ export async function getStandsReservationsRequests(){
 export async function getStandTypeById(id){
     let response = null;
     try {
-        response = await getTypeStandByIdFromLocalSource(id);
+        // response = await getTypeStandByIdFromLocalSource(id);
+        response = await getTypeStandByIdFromAPI(id);
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le stand'}
     }
@@ -58,7 +88,9 @@ export async function getStandTypeById(id){
 export async function getStandById(id){
     let response = null;
     try {
-        response = await getStandByIdFromLocalSource(id);
+        // response = await getStandByIdFromLocalSource(id);
+        response = await getStandByIdFromAPI(id);
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer le stand'}
     }
@@ -69,7 +101,9 @@ export async function getStandById(id){
 export async function getStands(){
     let response = null;
     try {
-        response = await getStandsFromLocalSource();
+        // response = await getStandsFromLocalSource();
+        response = await getStandsFromAPI();
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les stands'}
     }
@@ -79,7 +113,9 @@ export async function getStands(){
 export async function getStandsTypes(){
     let response = null;
     try {
-        response = await getStandsTypesFromLocalSource();
+        // response = await getStandsTypesFromLocalSource();
+        response = await getStandsTypesFromAPI();
+
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les types de stands'}
     }
