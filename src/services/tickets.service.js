@@ -4,6 +4,10 @@ async function getFilmTicketsFromLocalSource(){
     return ticketController.getFilmTickets();
 }
 
+async function getFilmTicketsFromAPI(){
+    return ticketController.getFilmTickets();
+}
+
 export async function getFilmTickets(){
     let response = null;
     try {

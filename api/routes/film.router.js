@@ -142,7 +142,7 @@ router.get("/:id", filmController.getFilmsById)
  *   post:
  *     summary: Ajouter un film
  *     tags:
- *       - Film
+ *       - Films
  *     requestBody:
  *       required: true
  *       content:
@@ -169,7 +169,7 @@ router.post("/", filmController.addFilm)
  *   post:
  *     summary: Créer une nouvelle demande de film
  *     tags:
- *       - Film
+ *       - Films
  *     requestBody:
  *       required: true
  *       content:
@@ -197,7 +197,7 @@ router.post("/requests", filmController.addFilmRequest)
  *   delete:
  *     summary: Supprimer un film par id
  *     tags:
- *       - Film
+ *       - Films
  *     parameters:
  *       - in: path
  *         name: id

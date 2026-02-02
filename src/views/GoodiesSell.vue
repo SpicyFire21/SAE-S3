@@ -222,7 +222,6 @@ async function removeFromBasket(item){
   await goodiesStore.removeFromBasket(item);
 }
 
-
 const groupedBasketItems = computed(() => {
   const map = {}
 
