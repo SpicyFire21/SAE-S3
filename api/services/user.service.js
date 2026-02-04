@@ -71,6 +71,7 @@ async function login(data){
     try {
         const check = await db.query('SELECT * FROM users WHERE users.login=$1',[data.login]);
         if (check.rows.length === 0) {
+
             return {error: 1, status: 404, data: 'login et/ou mot de passe incorrect'};
         }
         let user = check.rows[0];

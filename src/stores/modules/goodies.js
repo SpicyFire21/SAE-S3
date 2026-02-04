@@ -165,9 +165,9 @@ export const useGoodiesStore = defineStore('goodies', () => {
             console.error(e)
         }
     }
-    const getAllBasketItems = async (userid) =>{
+    const getAllBasketItems = async () =>{
         try {
-            const response = await goodiesService.getAllBasketItems(userid);
+            const response = await goodiesService.getAllBasketItems();
             if (response.error === 0){
                 setBasketItems(response.data)
             } else {

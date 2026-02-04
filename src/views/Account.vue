@@ -243,7 +243,7 @@ onMounted(async () => {
 
   // récupère les items pour chaque panier
 
-  await goodiesStore.getAllBasketItems(user.value.id);
+  await goodiesStore.getAllBasketItems();
 
 
   await ticketStore.getBilletsByUserId(user.value.id);

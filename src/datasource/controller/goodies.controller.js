@@ -217,7 +217,7 @@ async function getAllBasketByUserId(id){
 
 }
 
-async function getAllBasketItems(id){
+async function getAllBasketItems(){
     return { error: 0, status: 201, data: basket_items };
 }
 
