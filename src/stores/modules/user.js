@@ -98,7 +98,7 @@ export const useUserStore = defineStore('user', () => {
         try{
             const response = await userService.login(data);
             if (response.error ===0){
-                updateCurrentUser(response.data)
+                setSession(response.data.accessToken)
                 // alert("Connexion réussi")
             } else {
                 alert(response.data)

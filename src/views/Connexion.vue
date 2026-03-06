@@ -137,8 +137,8 @@ const toggleForm = ref(true);
 const userStore = useUserStore();
 const adminStore = useAdminStore()
 const login = {
-  login: "",
-  password: ""
+  login: "client",
+  password: "client"
 };
 const registerUser = {
   //id
