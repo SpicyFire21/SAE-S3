@@ -1,6 +1,9 @@
 import pool from '../database/db.js';
-import { v4 as uuidv4 } from "uuid";
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
+import jwtConfig from "../config/jwt.config.js"
+import { v4 as uuidv4 } from "uuid";
+
 
 let salt = 10;
 
@@ -81,7 +84,14 @@ async function login(data){
             return { error: 1, status: 404, data: 'login et/ou mot de passe incorrect' };
         }
 
-        return { error: 0, status: 200, data: check.rows[0] };
+        let jti = uuidv4()
+        const accessToken = await jwtConfig.createAccessToken(user,user.droit)
+        const refreshToken = await jwtConfig.createRefreshToken(jti,user)
+
+        return { error: 0, status: 200, data: {
+                accessToken,
+                refreshToken
+            } };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: "erreur lors de la création d'un utilisateur" };
@@ -105,12 +115,27 @@ async function getNotesByUserId(id){
     }
 }
 
+async function logout(refreshToken) {
+    const db = await pool.connect();
+    const payload = jwt.verify(refreshToken, jwtConfig.refreshTokenSecret);
+
+    try {
+        await jwtConfig.deleteTokenByJti(db,payload.jti);
+        return { error: 0, status: 200, data:"Deconnexion réussi" };
+    } catch (error) {
+        console.error(error);
+        return {error: 1, status: 500, data: 'Erreur lors de la deconnexion de l\'utilisateur'};
+    } finally {
+        db.release();
+    }
+}
 
 export default {
     getUsers,
     addUser,
     login,
     getUsersById,
-    getNotesByUserId
+    getNotesByUserId,
+    logout
 
 }

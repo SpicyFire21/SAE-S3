@@ -154,14 +154,14 @@ const registerUser = {
 async function Login() {
   console.log(login)
   const res = await userStore.Login(login)
-  console.log(res.data)
+  console.log(res)
   if(res.error ===0){
-    if(res.data.droit ==="0"){
-      await route.push({path: `/`})
-    } else if (res.data.droit === "1"){
+    if(res.data.droit ===0){
+      await route.push({name: `HomePage`})
+    } else if (res.data.droit === 1){
       await route.push({path: `/provider-dashboard`})
 
-    } else if (res.data.droit === "2"){
+    } else if (res.data.droit === 2){
       await route.push({path: `/admin-dashboard`})
 
     }

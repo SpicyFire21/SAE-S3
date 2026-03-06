@@ -1,10 +1,69 @@
 import axios from 'axios'
+import {useUserStore} from "@/stores/index.js";
 
 export const API_URL = "http://localhost:3000";
 
 const axiosAgent = axios.create({
-    baseURL: API_URL
+    baseURL: API_URL,
+    withCredentials: true
 })
+
+const refreshAgent = axios.create({
+    baseURL: API_URL,
+    withCredentials: true
+})
+
+let refreshing = false
+let queue = []
+
+axiosAgent.interceptors.request.use(config => {
+    const userStore = useUserStore()
+    if (userStore.accessToken) {
+        config.headers.Authorization = `Bearer ${userStore.accessToken}`
+    }
+    return config
+})
+
+axiosAgent.interceptors.response.use(
+    res => res,
+    async error => {
+        const authStore = useUserStore();
+        const original = error.config;
+
+        if (error.response?.status === 401 && !original._retry && authStore.currentUser) {
+            original._retry = true
+
+            if (!refreshing) {
+                refreshing = true
+                try {
+                    const newToken = await authStore.refreshAccessToken()
+
+                    queue.forEach(cb => cb(newToken))
+                    queue = []
+                } catch {
+                    queue.forEach(cb => cb(null))
+                    queue = []
+                    await authStore.logout()
+                } finally {
+                    refreshing = false
+                }
+            }
+
+            return new Promise((resolve, reject) => {
+                queue.push(token => {
+
+                    if (!token) return reject(error)
+                    original.headers.Authorization = `Bearer ${token}`
+                    resolve(axiosAgent(original))
+                })
+            })
+        }
+
+        return Promise.reject(error);
+    }
+);
+
+
 
 
 function handleError(serviceName, err) {
@@ -88,12 +147,27 @@ async function deleteRequest(uri, name, config = {}) {
     return response.data;
 }
 
-
+async function refreshTokenPostRequest(uri, data, name, config = {}) {
+    let response = null
+    try {
+        response = await refreshAgent.post(uri, data, config)
+    } catch (err) {
+        response =  {
+            data: {
+                error: 0,
+                data: err.response.data
+            }
+        };
+    }
+    return response.data;
+}
 
 export {
     getRequest,
     postRequest,
     patchRequest,
     putRequest,
-    deleteRequest
+    deleteRequest,
+
+    refreshTokenPostRequest
 }

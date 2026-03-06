@@ -55,6 +55,8 @@ router.get("/", userController.getUsers)
  */
 router.post("/login", userController.login)
 
+router.delete("/logout",userController.logout)
+
 /**
  * @openapi
  * /users/register:

@@ -1,8 +1,8 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import userService from "@/services/user.service.js"
-import standsService from "@/services/stands.service.js";
-import reservationsService from "@/services/reservations.service.js";
+import {parseJwt} from "@/plugins/jwt.js";
+
 
 export const useUserStore = defineStore('user', () => {
     // state
@@ -10,19 +10,20 @@ export const useUserStore = defineStore('user', () => {
     const currentUser = ref(null)
     const providers = ref([])
     const notes = ref([])
-
-    //hydratation
-    const storedUser = sessionStorage.getItem('currentUser');
-    if (storedUser) {
-        currentUser.value = JSON.parse(storedUser);
-    }
+    const accessToken = ref(null)
 
 
     //getter
+    const getUserById = (id) => {
+        return users.value.find(u => u.id === id);
+    };
 
 
 
     //mutation
+    const updateAccessToken = (data) => {
+        accessToken.value = data
+    }
     const updateCurrentUser = (data) => {
         currentUser.value = data;
 
@@ -35,7 +36,6 @@ export const useUserStore = defineStore('user', () => {
     const updateNotes = (data) =>{
         notes.value = data;
     }
-
     const updateUsers = (data) =>{
         users.value = data;
     }
@@ -45,11 +45,25 @@ export const useUserStore = defineStore('user', () => {
     const addUser = (data) =>{
         users.value.push(data)
     }
-
     const pushNote = (data) => {
         notes.value.push(data)
     }
+    const clearSession = () => {
+        accessToken.value = null
+        currentUser.value = null
+    }
 
+    const setSession = (payload) => {
+        accessToken.value = payload;
+        const tokenPayload = parseJwt(payload);
+
+        currentUser.value = {
+            id: tokenPayload.id,
+            pseudo: tokenPayload.pseudo,
+            email:tokenPayload.email
+        };
+
+    };
 
     //action
     const getUsers = async () => {
@@ -70,19 +84,6 @@ export const useUserStore = defineStore('user', () => {
             console.error(e)
         }
     }
-
-    const getUserById = (id) => {
-        return users.value.find(u => u.id === id);
-    };
-
-    // const getUserById = async (id) => {
-    //     try {
-    //         const response = await userService.getUserById(id);
-    //         return response.data
-    //     } catch (e) {
-    //         console.error(e)
-    //     }
-    // }
 
     const getProviders = async () => {
         try {
@@ -109,10 +110,20 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    const logout = async()=>{
-        updateCurrentUser(null)
 
+
+    const logout = async () => {
+        try {
+            let result = await userService.logout();
+            if (result.error === 0){
+                updateCurrentUser(null);
+
+            }
+        } catch (error){
+            console.error("Erreur lors de la deconnexion", error)
+        }
     }
+
 
     const registerUser = async (data) =>{
         try{
@@ -156,7 +167,17 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    const refreshAccessToken = async () => {
+        const res = await userService.refreshTokens()
 
+        if (res.error !== 0 || !res.data?.accessToken) {
+            clearSession()
+            throw new Error('Refresh failed')
+        }
+
+        setSession(res.data.accessToken)
+        return res.data.accessToken
+    }
 
 
 
@@ -167,10 +188,11 @@ export const useUserStore = defineStore('user', () => {
         users,
         currentUser,
         notes,
-
+        accessToken,
         //getter
 
         //mutation
+        updateAccessToken,
 
         //action
         getProviders,
@@ -181,6 +203,7 @@ export const useUserStore = defineStore('user', () => {
         registerProvider,
         getUserById,
         getNotes,
-        addNote
+        addNote,
+        refreshAccessToken
     }
 })

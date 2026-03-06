@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS notes CASCADE;
 DROP TABLE IF EXISTS provider_requests CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS stand_reservation_requests;
-
+DROP TABLE IF EXISTS refresh_tokens CASCADE;
 
 DROP TABLE IF EXISTS votes_category CASCADE;
 DROP TABLE IF EXISTS votes CASCADE;
@@ -340,21 +340,41 @@ CREATE TABLE IF NOT EXISTS votes_score
     CONSTRAINT fk_score_category FOREIGN KEY (category_id) REFERENCES votes_category (id) ON DELETE CASCADE
 );
 
+-- REFRESH TOKEN
+CREATE TABLE IF NOT EXISTS refresh_tokens
+(
+    id         SERIAL PRIMARY KEY,
+    iduser     UUID        NOT NULL,
+    session_id UUID        NOT NULL,
+    jti        UUID UNIQUE NOT NULL,
+    token_hash TEXT        NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMPTZ NOT NULL,
+    revoked_at TIMESTAMPTZ,
+    user_agent TEXT,
+    ip         INET,
+    FOREIGN KEY (iduser) REFERENCES users (id) ON DELETE CASCADE
+
+);
+
+
+
+
 
 -- INSERT
 INSERT INTO users (id, name, login, password, email, droit, session, type, nom_photo, description)
-VALUES ('a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa', '', 'admin', 'admin', 'admin@festival.com', 2, '', '', '', ''),
-       ('bb4b684c-0c67-4d19-ac21-b225b3e5c018', 'Martin Scorsese', 'presta', 'presta', 'scorsese@cinema.com', 1, '',
+VALUES ('a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa', '', 'admin', '$2b$10$cDBTIciOleUTBMyrox0ZouQsmCipWI8.JtzwCc1VN/njj35Qv44Mi', 'admin@festival.com', 2, '', '', '', ''),
+       ('bb4b684c-0c67-4d19-ac21-b225b3e5c018', 'Martin Scorsese', 'presta', '$2b$10$oBOSkf4UkKpVRyIBBDeNIua6jk3Yx7VOkuYTqnTT0t.MyBVO2fJdy', 'scorsese@cinema.com', 1, '',
         'Réalisateur', 'scorsese.jpg', 'Réalisateur légendaire oscarisé, maître du cinéma américain'),
-       ('c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '', 'client', 'client', 'client@mail.com', 0, '', '', 'producteur.jpg',
+       ('c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '', 'client', '$2b$10$CjrQ9uGIL0gcGUHoMtrTg.nes0YUwP6XHsrdqYvuR/UAiSdJ5xNo6', 'client@mail.com', 0, '', '', 'producteur.jpg',
         ''),
-       ('d4e9116b-e3e8-4e0e-8a3b-6a93e1d6c4f4', '', 'client2', 'client2', 'client2@mail.com', 0, '', '', '', ''),
-       ('e55733ef-f3d2-447d-94db-9e3aaef624c1', 'Quentin Tarantino', 'presta2', 'presta2', 'tarantino@pulp.com', 1, '',
+       ('d4e9116b-e3e8-4e0e-8a3b-6a93e1d6c4f4', '', 'client2', '$2b$10$gHSeue6UuDAjfug1k.UOGuvp0dtn63I2sKwrlWb7ZqhMeXZcWjXWK', 'client2@mail.com', 0, '', '', '', ''),
+       ('e55733ef-f3d2-447d-94db-9e3aaef624c1', 'Quentin Tarantino', 'presta2', '$2b$10$NQkgKPXfAR/kJr/VmVEPdehppx.GUT9UtcNsplnC7H04BK19rK9be', 'tarantino@pulp.com', 1, '',
         'Réalisateur', 'tarantino.jpg', 'Créateur de Pulp Fiction et Kill Bill, style unique et référencé'),
-       ('f68ab44a-557b-4d44-b1df-a38f894c2dca', 'Christopher Nolan', 'prestaknaghui V2', 'prestakhnaghui V2',
+       ('f68ab44a-557b-4d44-b1df-a38f894c2dca', 'Christopher Nolan', 'prestaknaghui V2', '$2b$10$cmp4RThxAuj5Zk3zPa2GxeHBXm8/66b4/e6AYgbUryn8PgCSzUo2m',
         'nolan@inception.com', 1, '', 'Réalisateur', 'nolan.jpg',
         'Génie des films à intrigue complexe et effets visuels innovants'),
-       ('a81699b9-94d1-4f72-9df4-1588dc1b2cc5', 'Leonardo DiCaprio', 'cityxl', 'cityxl', 'dicaprio@actor.com', 1, '',
+       ('a81699b9-94d1-4f72-9df4-1588dc1b2cc5', 'Leonardo DiCaprio', 'cityxl', '$2b$10$jFOrTLJiX/uBRgcAicI4c.Uhk881i4sjzkQWshGuhG02VvxL8sIoK', 'dicaprio@actor.com', 1, '',
         'Acteur', 'dicaprio.jpg', 'Acteur oscarisé, star internationale');
 INSERT INTO notes (user_id, value)
 VALUES ('bb4b684c-0c67-4d19-ac21-b225b3e5c018', 5),

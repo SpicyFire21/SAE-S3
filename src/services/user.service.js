@@ -1,5 +1,5 @@
 import userController from "@/datasource/controller/user.controller.js"
-import {getRequest, postRequest} from "@/services/axios.service.js";
+import {deleteRequest, getRequest, postRequest} from "@/services/axios.service.js";
 
 
 async function getUserByIdFromLocalSource(id) {
@@ -151,6 +151,40 @@ async function addNote(data){
     return response;
 }
 
+
+async function logoutFromAPI(){
+    const config = { withCredentials: true }
+    return deleteRequest("/users/logout","LOGOUT",config);
+}
+async function logout(){
+    let response = null;
+    try {
+        // response = await addNoteFromLocalSource(data);
+        response = await logoutFromAPI();
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de se déconnecter'}
+    }
+    return response;
+}
+
+async function refreshTokensFromAPI(){
+    const config = { withCredentials: true }
+    return refreshTokenPostRequest("/users/refreshtoken", {},"REFRESH-TOKEN",config);
+}
+async function refreshTokens(){
+    let response = null;
+    try {
+
+        response = await refreshTokensFromAPI();
+    }
+    catch(err) {
+        console.error(err)
+        response = {error: 1, status: 404, data: 'erreur rÃ©seau, impossible de générer un autre refresh token'  }
+    }
+    return response.data
+}
+
 export default {
     getUsers,
     login,
@@ -159,5 +193,7 @@ export default {
     registerProvider,
     getUserById,
     getNotes,
-    addNote
+    addNote,
+    logout,
+    refreshTokens
 }
