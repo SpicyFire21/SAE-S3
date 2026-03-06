@@ -86,7 +86,7 @@ async function login(data,meta){
 
         let jti = uuidv4()
         const sessionId = uuidv4();
-
+        console.log(meta)
         const accessToken = await jwtConfig.createAccessToken(user,user.droit)
         const refreshToken = await jwtConfig.createRefreshToken(jti,user)
         const savePayload = {
@@ -144,12 +144,72 @@ async function logout(refreshToken) {
     }
 }
 
+async function refreshToken(token){
+    if (!token) {
+
+        return {error: 1, status: 401, data: "Le jeton d'actualisation est requis!"};
+    }
+    const db = await pool.connect();
+    try {
+        let payload = jwt.verify(token,jwtConfig.refreshTokenSecret)
+        if (!payload) {
+
+            return {error: 1, status: 403, data: "Le jeton d'actualisation n'est pas valide!"};
+        }
+
+        const valid = await jwtConfig.existsToken(db,{ jti: payload.jti, token: token });
+
+        if (!valid) {
+
+            return {error: 1, status: 403, data: "Le jeton d'actualisation n'est pas dans la base de données!"};
+
+        }
+        let newJTI = uuidv4()
+
+        const getDetails = await db.query(`SELECT session_id, ip, user_agent, expires_at FROM refresh_tokens WHERE jti = $1`,
+            [payload.jti])
+
+        payload = {
+            ...payload,
+            sessionId:getDetails.rows[0].session_id,
+            ip:getDetails.rows[0].ip,
+            userAgent:getDetails.rows[0].user_agent,
+            expiresAt:getDetails.rows[0].expires_at
+        }
+
+
+
+        let result = await jwtConfig.createAccessRefreshTokens(newJTI,payload,db);
+        await jwtConfig.deleteTokenByJti(db,payload.jti);
+        return {error: 0, status: 200, data: result};
+
+    } catch (err) {
+        if (err.name === 'TokenExpiredError') {
+            return {
+                error: 1,
+                status: 401,
+                data: 'Refresh token expiré'
+            }
+        }
+
+        console.error(err)
+        return {
+            error: 1,
+            status: 500,
+            data: 'Erreur interne'
+        }
+    } finally {
+        db.release();
+    }
+}
+
+
 export default {
     getUsers,
     addUser,
     login,
     getUsersById,
     getNotesByUserId,
-    logout
-
+    logout,
+    refreshToken
 }

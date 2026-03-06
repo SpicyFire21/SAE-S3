@@ -96,6 +96,9 @@ router.delete("/logout",userController.logout)
  */
 router.post("/register", userController.addUser)
 
+router.post("/refreshtoken",userController.refreshToken)
+
+
 /**
  * @swagger
  * /users/{id}/notes:

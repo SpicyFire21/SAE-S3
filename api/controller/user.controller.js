@@ -92,3 +92,31 @@ export const getNotesByUserId = async (req,res) => {
 }
 
 
+
+export const refreshToken = async (req,res) =>{
+
+    try {
+        const refreshToken = req.cookies.refreshToken
+        let data = await userService.refreshToken(refreshToken);
+        if (data.error === 0){
+
+            if(data.data.refreshToken) {
+                return res
+                    .cookie("refreshToken", data.data.refreshToken, cookieConfig)
+                    .status(data.status)
+                    .json({ data: data });
+            } else {
+                return res
+                    .clearCookie("refreshToken",clearCookieConfig)
+                    .status(data.status)
+                    .json({ data: data });
+            }
+
+        }
+        return res.status(data.status).json({ data: data });
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send("Erreur lors du rafraichissement des tokens");
+    }
+}

@@ -3,6 +3,8 @@ import pool from './database/db.js'
 import cors from 'cors'
 import bodyParser from "body-parser";
 import http from "http";
+import cookieParser from 'cookie-parser';
+
 
 import swaggerUi from "swagger-ui-express"
 import swaggerConfig from './config/swaggerConfig.js'
@@ -30,6 +32,7 @@ const PORT = 3000
 const apiURL = `http://localhost:${PORT}`
 const server = http.createServer(app);
 
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
