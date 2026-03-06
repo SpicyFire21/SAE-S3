@@ -66,7 +66,7 @@ async function addUser(data){
     }
 }
 
-async function login(data){
+async function login(data,meta){
     const db = await pool.connect();
     if ((!data.login) || (!data.password)) return { error: 1, status: 400, data: 'login et/ou mot de passe manquant' };
 
@@ -85,8 +85,22 @@ async function login(data){
         }
 
         let jti = uuidv4()
+        const sessionId = uuidv4();
+
         const accessToken = await jwtConfig.createAccessToken(user,user.droit)
         const refreshToken = await jwtConfig.createRefreshToken(jti,user)
+        const savePayload = {
+            id: user.id,
+            jti,
+            refreshToken,
+            sessionId,
+            ip: meta.ip,
+            userAgent: meta.userAgent,
+            expiresAt: meta.expiresAt,
+            db
+        }
+        await jwtConfig.saveToken(savePayload);
+
 
         return { error: 0, status: 200, data: {
                 accessToken,

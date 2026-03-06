@@ -8,6 +8,7 @@ import App from './App.vue'
 import router from './router/index.js'
 import fr from '@/locales/fr.json'
 import en from '@/locales/en.json'
+import {useUserStore} from "@/stores/index.js";
 
 
 const i18n = createI18n({
@@ -17,11 +18,15 @@ const i18n = createI18n({
     messages:{fr,en}
 })
 
+// Gestion du pending du refreshtoken
 
 const app = createApp(App)
 app.use(i18n)
 
 app.use(createPinia())
 app.use(router)
+
+await useUserStore().bootstrap()
+
 
 app.mount('#app')

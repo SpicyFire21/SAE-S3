@@ -1,5 +1,6 @@
 import userService from "../services/user.service.js";
 import {clearCookieConfig, cookieConfig} from "../config/cookie.config.js";
+import jwtConfig from "../config/jwt.config.js";
 // besoin d'implémenter une route de déconnexion
 
 export const getUsers = async (req,res) => {
@@ -41,7 +42,15 @@ export const addUser = async (req,res) => {
 
 export const login = async (req,res) =>{
     try {
-        let data = await userService.login(req.body);
+
+        const meta = {
+            ip: req.headers["x-forwarded-for"]?.split(",")[0]
+                || req.socket.remoteAddress,
+            userAgent: req.headers["user-agent"],
+            expiresAt: new Date(Date.now() + jwtConfig.jwtRefreshExpiration * 1000)
+        };
+
+        let data = await userService.login(req.body,meta);
         return res
             .cookie("refreshToken", data.data.refreshToken, cookieConfig)
             .status(data.status)

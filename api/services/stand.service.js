@@ -51,7 +51,7 @@ async function getStandTypeById(idtype) {
     }
     try {
         const res = await db.query('SELECT * FROM stand_types where id =$1',[idtype]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération des types de stands par id' };

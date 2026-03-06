@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', () => {
     const providers = ref([])
     const notes = ref([])
     const accessToken = ref(null)
+    const bootstrapped = ref(false)
 
 
     //getter
@@ -24,15 +25,7 @@ export const useUserStore = defineStore('user', () => {
     const updateAccessToken = (data) => {
         accessToken.value = data
     }
-    const updateCurrentUser = (data) => {
-        currentUser.value = data;
 
-        if (data) {
-            sessionStorage.setItem('currentUser', JSON.stringify(data));
-        } else {
-            sessionStorage.removeItem('currentUser');
-        }
-    };
     const updateNotes = (data) =>{
         notes.value = data;
     }
@@ -59,7 +52,7 @@ export const useUserStore = defineStore('user', () => {
 
         currentUser.value = {
             id: tokenPayload.id,
-            pseudo: tokenPayload.pseudo,
+            name: tokenPayload.name,
             email:tokenPayload.email
         };
 
@@ -110,20 +103,17 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-
-
     const logout = async () => {
         try {
             let result = await userService.logout();
             if (result.error === 0){
-                updateCurrentUser(null);
 
+                clearSession()
             }
         } catch (error){
             console.error("Erreur lors de la deconnexion", error)
         }
     }
-
 
     const registerUser = async (data) =>{
         try{
@@ -179,7 +169,21 @@ export const useUserStore = defineStore('user', () => {
         return res.data.accessToken
     }
 
-
+    const bootstrap = async () => {
+        try {
+            await Promise.race([
+                refreshAccessToken(),
+                new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Bootstrap timeout')), 5000)
+                )
+            ]);
+        } catch (error) {
+            console.warn('⚠️ Bootstrap timeout ou erreur:', error);
+            clearSession();
+        } finally {
+            bootstrapped.value = true;
+        }
+    };
 
     //sert a export les fonctions/states du store
     return {
@@ -204,6 +208,7 @@ export const useUserStore = defineStore('user', () => {
         getUserById,
         getNotes,
         addNote,
-        refreshAccessToken
+        refreshAccessToken,
+        bootstrap
     }
 })
