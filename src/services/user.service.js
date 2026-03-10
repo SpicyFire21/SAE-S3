@@ -165,7 +165,7 @@ async function logout(){
         console.error(err)
         response = {error:1, status:404,data:'erreur réseau, impossible de se déconnecter'}
     }
-    return response;
+    return response.data;
 }
 
 async function refreshTokensFromAPI(){

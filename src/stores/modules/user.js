@@ -106,6 +106,7 @@ export const useUserStore = defineStore('user', () => {
     const logout = async () => {
         try {
             let result = await userService.logout();
+            console.log(result)
             if (result.error === 0){
 
                 clearSession()
