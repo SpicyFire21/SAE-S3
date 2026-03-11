@@ -38,7 +38,7 @@
         :style="{ top: popup.y + 'px', left: popup.x + 'px' }"
     >
       <h3 class="text-[var(--jaune)] mb-2">{{ popup.stand?.name }}</h3>
-      <p class="text-white mb-1">Type: {{ popup?.standType.type }}</p>
+      <p class="text-white mb-1">Type: {{ popup.standType?.type }}</p>
       <p class="text-white mb-2">{{ t('InteractiveMap.1') }}: {{ popup.owner?.name || t('InteractiveMap.2') }}</p>
       <div class="gap-3">
         <button
@@ -52,13 +52,13 @@
             class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded ml-4"
             @click="goToStand(popup.stand.id)"
         >
-          <span v-if="userStore.currentUser?.droit !== '1'">{{ t('InteractiveMap.4') }}</span>
+          <span v-if="userStore.currentUser?.droit !== 1">{{ t('InteractiveMap.4') }}</span>
           <span v-else>Consulter ce stand</span>
         </button>
         <button
             class="bg-[var(--bleu)] hover:bg-[var(--bleu)]/70 text-white text-sm px-3 py-1 rounded mr-3 mt-3 mb-3"
             @click="providerReservationRequest(popup.stand.id)"
-            v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
+            v-if="userStore.currentUser?.droit === 1 && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
         >
           {{ t('InteractiveMap.5') }}
         </button>
@@ -142,7 +142,7 @@ const closeModal = () => {
 
 const confirmReservation = async () => {
   await standsStore.addStandRequest({
-    standId: standsStore.selectedStand.idstand,
+    standId: standsStore.selectedStand.id,
     userId: userStore.currentUser.id,
     status: "pending",
   });
@@ -151,11 +151,10 @@ const confirmReservation = async () => {
 
 const hasAlreadyDoneAStandRequest = (stand) => {
   if (!stand || !userStore.currentUser) return false
-
   return standsStore.standReservationsRequests.some(
       request =>
-          request.standId === stand.idstand &&
-          request.userId === userStore.currentUser.id &&
+          request.stand_id === stand.id &&
+          request.user_id === userStore.currentUser.id &&
           request.status === "pending" // comme lorsqu'un admin refuse cela ne supprime pas la demande mais la met en refused,
       // on va filtrer uniquement sur les demandes en pending sinon meme lorsque la demande se fait refuser, on ne pourra plus jamais
       // demander pour ce stand
@@ -186,17 +185,18 @@ const showPopup = async (event, stand) => {
   popup.visible = true;
   popup.standType = await standsStore.getStandTypeById(stand.type_id)
   popup.owner = await userStore.getUserById(stand.owner_id);
+  console.log("owner:" + JSON.stringify(popup.owner))
 };
 
 
-const goToStand = (id) => {
-  const selectedStand = standsStore.stands.find(stand => stand.idstand === id)
+const goToStand = (standId) => {
+  const selectedStand = standsStore.stands.find(stand => stand.id === standId)
   standsStore.setSelectedStand(selectedStand)
   router.push({name: 'StandDetails', params: {id}})
 }
 
-const providerReservationRequest = (id) => {
-  const selectedStand = standsStore.stands.find(stand => stand.idstand === id);
+const providerReservationRequest = (standId) => {
+  const selectedStand = standsStore.stands.find(stand => stand.id === standId);
   standsStore.setSelectedStand(selectedStand);
   openModal();
 }

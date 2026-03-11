@@ -1,37 +1,8 @@
 import reservationController from "@/datasource/controller/reservations.controller.js"
 import {getRequest} from "@/services/axios.service.js";
 
-async function getReservationsFromLocalSource(){
-    return reservationController.getReservations();
-}
-
-async function getFilmsReservationsFromLocalSource(){
-    return reservationController.getFilmsReservations();
-}
-
-async function getAutographsReservationsFromLocalSource(){
-    return reservationController.getAutographReservations();
-}
-
-async function addFilmReservationFromLocalSource(data) {
-    return reservationController.addFilmReservation(data);
-}
-
-async function addAutographReservationFromLocalSource(data) {
-    return reservationController.addAutographReservation(data);
-}
-
-async function getReservationByIdUserFromLocalSource(id) {
-    return reservationController.getReservationByIdUser(id)
-}
-
-async function getEventFromReservationFromLocalSource(reservation) {
-    return reservationController.getEventFromReservation(reservation)
-}
-
-
 async function getReservationsFromAPI(){
-    return "route manquante dans l'api";
+    return getRequest("/reservations", "GET-RESERVATIONS");
 }
 
 async function getFilmsReservationsFromAPI(){
@@ -114,9 +85,7 @@ export async function addFilmReservation(data){
 export async function getReservations(){
     let response = null;
     try {
-        // response = await getReservationsFromLocalSource();
         response = await getReservationsFromAPI();
-
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible de récupérer les reservations'}
     }

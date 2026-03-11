@@ -43,7 +43,7 @@
       <h3 class="font-semibold mb-2">{{t("CinemaStandDetails.6")}} :</h3>
       <div class="flex flex-col gap-2 mb-4 max-h-60 overflow-y-auto">
         <button
-            v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.idstand, selectedFilm.id)"
+            v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, selectedFilm.id)"
             :key="projection.id"
             @click="filmsStore.setSelectedProjection(projection)"
             :class="[
@@ -124,7 +124,7 @@ const reservationsStore = useReservationsStore();
 
 onMounted(async () => {
   await filmsStore.getProjections();
-  await filmsStore.getFilmsByStand(props.stand.idstand);
+  await filmsStore.getFilmsByStand(props.stand.id);
   await usersStore.getUsers();
   await standsStore.getStands();
   await reservationsStore.getReservations();
@@ -132,14 +132,16 @@ onMounted(async () => {
 })
 
 const hasAlreadyReservedProjection = computed(() => {
-  if (!filmsStore.selectedProjection || !usersStore.currentUser) return false;
+  if (!filmsStore.selectedProjection || !usersStore.currentUser || !reservationsStore.filmsReservations) return false; // peut etre a changé
+  // la derniere condition mais cest normalement logique, si personne a reservé, l'utilisateur n'a forcement pas déjà reservé
+  console.log("reservation exemple: " + JSON.stringify(reservationsStore.filmsReservations))
 
   return reservationsStore.reservations.some(r =>
-      r.userId === usersStore.currentUser.id &&
-      r.type === "1" &&
+      r.user_id === usersStore.currentUser.id &&
+      r.type === "film" &&
       reservationsStore.filmsReservations.some(fr =>
-          fr.reservationId === r.id &&
-          fr.projectionId === filmsStore.selectedProjection.id
+          fr.reservation_id === r.id &&
+          fr.projection_id === filmsStore.selectedProjection.id
       )
   );
 });

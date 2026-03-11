@@ -108,7 +108,7 @@ async function login(data,meta){
             } };
     } catch (error){
         console.error(error);
-        return { error: 1, status: 500, data: "erreur lors de la création d'un utilisateur" };
+        return { error: 1, status: 500, data: "erreur lors de la connexion de l'utilisateur" };
     } finally {
         db.release();
     }

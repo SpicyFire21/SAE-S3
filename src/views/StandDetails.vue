@@ -18,7 +18,7 @@
         </div>
       </div>
       <component
-          :is="componentMap[stand.type]"
+          :is="componentMap[stand.type_id]"
           :stand="stand"
       />
     </div>

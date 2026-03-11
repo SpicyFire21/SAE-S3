@@ -44,7 +44,7 @@ export const useStandsStore = defineStore('stands', () => {
 
     const getProjectionsByStandAndFilm = (standId, filmId) => {
         return filmStore.projections.filter(
-            p => p.standId === standId && p.filmId === filmId
+            p => p.stand_id === standId && p.film_id === filmId
         );
     }
 

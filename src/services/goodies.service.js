@@ -1,10 +1,6 @@
 import goodiesController from "@/datasource/controller/goodies.controller.js"
 import {deleteRequest, getRequest, patchRequest, postRequest, putRequest} from "@/services/axios.service.js";
 
-async function getBasketByUserIdFromLocalSource(id){
-    return goodiesController.getBasketByUserId(id);
-}
-
 async function getBasketByUserIdFromAPI(id){
     return getRequest(`/baskets/current/${id}`,"GET-CURRENT-BASKET");
 }

@@ -26,6 +26,7 @@ import VoteRoute from './routes/votes.router.js'
 import ScoreRoute from './routes/scores.router.js'
 import CategoryRoute from './routes/categories.router.js'
 import CommentRoute from './routes/comments.router.js'
+import ReservationRoute from './routes/reservation.router.js'
 
 const app = express();
 const PORT = 3000
@@ -62,6 +63,7 @@ app.use('/votes',VoteRoute);
 app.use('/scores',ScoreRoute);
 app.use('/categories',CategoryRoute);
 app.use('/comments',CommentRoute);
+app.use('/reservations', ReservationRoute)
 
 
 

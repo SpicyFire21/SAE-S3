@@ -188,8 +188,8 @@ export const useFilmsStore = defineStore('films', () => {
         try {
             const response = await filmsService.getFilms()
             const allFilms = response.data
-            const projectionsForStand = projections.value.filter(p => p.standId === standId)
-            const filmIds = projectionsForStand.map(p => p.filmId)
+            const projectionsForStand = projections.value.filter(p => p.stand_id === standId)
+            const filmIds = projectionsForStand.map(p => p.film_id)
             const filmsForStand = allFilms.filter(film => filmIds.includes(film.id))
             updateFilms(filmsForStand)
         } catch (e) {

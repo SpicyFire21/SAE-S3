@@ -1,30 +1,6 @@
 import standController from "@/datasource/controller/stands.controller.js"
 import {getRequest, postRequest} from "@/services/axios.service.js";
 
-async function getStandsFromLocalSource(){
-    return standController.getStands();
-}
-
-async function getStandsTypesFromLocalSource() {
-    return standController.getStandsTypes();
-}
-
-async function getStandByIdFromLocalSource(id) {
-    return standController.getStandById(id)
-}
-
-async function getTypeStandByIdFromLocalSource(id) {
-    return standController.getStandTypeById(id)
-}
-
-async function getStandsReservationsRequestsFromLocalSource() {
-    return standController.getStandsReservationsRequests();
-}
-
-async function addStandRequestFromLocalSource(data) {
-    return standController.addStandRequest(data)
-}
-
 async function getStandsFromAPI(){
     return getRequest("/stands","GET-STANDS");
 }
