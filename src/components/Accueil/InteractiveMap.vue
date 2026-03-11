@@ -13,7 +13,7 @@
 
       <template v-for="stand in standsStore.stands" :key="stand.id">
         <rect
-            :class="['interactive', getStandStyle(stand.type)]"
+            :class="['interactive', getStandStyle(stand.type_id)]"
             :x="stand.x"
             :y="stand.y"
             :width="stand.width"
@@ -24,7 +24,7 @@
             class="label"
             :x="stand.x + stand.width / 2"
             :y="stand.y + stand.height / 2"
-            :font-size="getFontSize(stand.height, stand.type)"
+            :font-size="getFontSize(stand.height, stand.type_id)"
         >
           {{ stand.name }}
         </text>
@@ -38,7 +38,7 @@
         :style="{ top: popup.y + 'px', left: popup.x + 'px' }"
     >
       <h3 class="text-[var(--jaune)] mb-2">{{ popup.stand?.name }}</h3>
-      <p class="text-white mb-1">Type: {{ popup.standType?.type }}</p>
+      <p class="text-white mb-1">Type: {{ popup?.standType.type }}</p>
       <p class="text-white mb-2">{{ t('InteractiveMap.1') }}: {{ popup.owner?.name || t('InteractiveMap.2') }}</p>
       <div class="gap-3">
         <button
@@ -50,14 +50,14 @@
 
         <button
             class="bg-[var(--jaune)] hover:bg-[var(--jaune)]/70 text-white text-sm px-3 py-1 rounded ml-4"
-            @click="goToStand(popup.stand.idstand)"
+            @click="goToStand(popup.stand.id)"
         >
           <span v-if="userStore.currentUser?.droit !== '1'">{{ t('InteractiveMap.4') }}</span>
           <span v-else>Consulter ce stand</span>
         </button>
         <button
             class="bg-[var(--bleu)] hover:bg-[var(--bleu)]/70 text-white text-sm px-3 py-1 rounded mr-3 mt-3 mb-3"
-            @click="providerReservationRequest(popup.stand.idstand)"
+            @click="providerReservationRequest(popup.stand.id)"
             v-if="userStore.currentUser?.droit === '1' && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
         >
           {{ t('InteractiveMap.5') }}
@@ -118,7 +118,6 @@ onMounted(async () => {
   await standsStore.getStands();
   await userStore.getUsers();
   await standsStore.getStandsTypes();
-
 
   if (svgMap.value) {
     panzoom(svgMap.value, {
@@ -185,8 +184,8 @@ const showPopup = async (event, stand) => {
   popup.x = event.clientX; // position souris
   popup.y = event.clientY;
   popup.visible = true;
-  popup.standType = await standsStore.getStandTypeById(stand.type)
-  popup.owner = await userStore.getUserById(stand.owner);
+  popup.standType = await standsStore.getStandTypeById(stand.type_id)
+  popup.owner = await userStore.getUserById(stand.owner_id);
 };
 
 
@@ -205,11 +204,11 @@ const providerReservationRequest = (id) => {
 const getFontSize = (h, type) => {
   switch (type) {
 
-    case 'cinema':
-      return h * 0.12; // Gros texte
+    case '1':
+      return h * 0.12; // cinema
 
-    case 'scene':
-      return h * 0.40; // Très visible
+    case '2':
+      return h * 0.40; // dedicaces
 
     case 'standXL':
       return h * 0.22; // ex-grand stand
@@ -224,9 +223,9 @@ const getFontSize = (h, type) => {
 
 const getStandStyle = (type) => {
   switch (type) {
-    case '1': return "cinema";
+    case 1: return "cinema";
     case 'scene': return "scene";
-    case '2': return "standXL";
+    case 2: return "standXL";
     case 'stand': return "stand";
     default: return "";
   }

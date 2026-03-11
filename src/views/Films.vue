@@ -61,7 +61,7 @@
     <div v-for="genre in categories" :key="genre.id" class="pt-10">
       <FilmCarousel
           :get-director-name="getDirectorName"
-          :category="genre.name"
+          :category="genre.label"
           :films="filmsStore.getFilmsOfGenre(genre.id)"
       />
     </div>

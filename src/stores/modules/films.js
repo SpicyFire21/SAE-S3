@@ -200,18 +200,18 @@ export const useFilmsStore = defineStore('films', () => {
 
     const getGenresOfFilm = (idFilm) => {
         return filmGenres.value
-            .filter(fg => fg.filmId === idFilm)
+            .filter(fg => fg.film_id === idFilm)
             .map(fg => {
-                const genre = genres.value.find(g => g.id === fg.genreId)
-                return genre ? genre.name : null
+                const genre = genres.value.find(g => g.id === fg.genre_id)
+                return genre ? genre.label : null
             })
             .filter(Boolean)
     }
 
     const getFilmsOfGenre = (idGenre) => {
         const filmIds = filmGenres.value
-            .filter(fg => fg.genreId === idGenre)
-            .map(fg => fg.filmId)
+            .filter(fg => fg.genre_id === idGenre)
+            .map(fg => fg.film_id)
         return films.value.filter(film => filmIds.includes(film.id))
     }
 

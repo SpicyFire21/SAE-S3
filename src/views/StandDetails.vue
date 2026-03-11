@@ -48,8 +48,8 @@ const user = ref(null)
 onMounted(async () => {
   await standsStore.init();
   stand.value = await standsStore.getStandById(id);
-  typeStand.value = await standsStore.getStandTypeById(stand.value.type);
-  user.value = await userStore.getUserById(stand.value.owner);
+  typeStand.value = await standsStore.getStandTypeById(stand.value.type_id);
+  user.value = await userStore.getUserById(stand.value.owner_id);
 })
 
 const componentMap = { // faut bien faire attention a se referer aux ids dans data

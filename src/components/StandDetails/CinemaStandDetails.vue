@@ -11,7 +11,7 @@
         <p class="text-gray-500">{{t("CinemaStandDetails.2")}}: {{ film.duration }} min</p>
       </div>
       <div class="mt-2">
-      <span v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.idstand, film.id)" :key="projection.id"
+      <span v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, film.id)" :key="projection.id"
             class="bg-black text-white text-sm px-2 text-center py-3 rounded-full shadow-sm mr-2">
       {{
           new Date(projection.date).toLocaleString('fr-FR', {
