@@ -57,7 +57,7 @@ const props = defineProps({
 const userStore = useUserStore();
 
 const average = computed(() => {
-  const userNotes = userStore.notes.filter(n => n.userId === props.userId);
+  const userNotes = userStore.notes.filter(n => n.user_id === props.userId);
   if (!userNotes.length) return 0;
   const sum = userNotes.reduce((acc, n) => acc + Number(n.value), 0);
   return sum / userNotes.length;

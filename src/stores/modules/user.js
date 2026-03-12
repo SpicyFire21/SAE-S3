@@ -53,9 +53,9 @@ export const useUserStore = defineStore('user', () => {
         currentUser.value = {
             id: tokenPayload.id,
             name: tokenPayload.name,
-            email:tokenPayload.email
+            email: tokenPayload.email,
+            droit: String(tokenPayload.role)
         };
-
     };
 
     //action

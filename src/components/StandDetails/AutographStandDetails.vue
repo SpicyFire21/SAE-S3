@@ -26,11 +26,11 @@
       <div class="text-gray-700 text-sm space-y-1">
         <p>
           <span class="font-medium">{{t("AutographStandDetails.3")}} :</span>
-          {{ formatDate(autograph.beginDate) }}
+          {{ formatDate(autograph.begin_date) }}
         </p>
         <p>
           <span class="font-medium">{{t("AutographStandDetails.4")}} :</span>
-          {{ formatDate(new Date(new Date(autograph.beginDate).getTime() + autograph.duration * 60000)) }}
+          {{ formatDate(new Date(new Date(autograph.begin_date).getTime() + autograph.duration * 60000)) }}
 <!--          date de fin (* 60000 c'est conversion minute en miliseconds)-->
         </p>
       </div>
@@ -48,7 +48,7 @@
       <p class="mb-4">{{t("AutographStandDetails.7")}} : <strong>{{ autographStore.selectedAutograph.userName }}</strong></p>
       <div class="flex flex-col gap-2 max-h-60 overflow-y-auto items-center">
       <span class="inline-block py-2 px-4 rounded border bg-gray-100 border-gray-300 text-center">
-        Le {{ formatDate(autographStore.selectedAutograph.beginDate) }}<br>{{t("AutographStandDetails.8")}} {{ formatDuration(autographStore.selectedAutograph.duration) }}
+        Le {{ formatDate(autographStore.selectedAutograph.begin_date) }}<br>{{t("AutographStandDetails.8")}} {{ formatDuration(autographStore.selectedAutograph.duration) }}
       </span>
       </div>
       <button
@@ -100,7 +100,7 @@ const closeModal = () => {
 }
 
 onMounted(async () => {
-  await autographStore.getAutographsByStandId(props.stand.idstand)
+  await autographStore.getAutographsByStandId(props.stand.id)
   await standStore.getStands();
   await userStore.getUsers()
   await reservationStore.getReservations();
@@ -122,7 +122,7 @@ const hasAlreadyReservedAutograph = computed(() => {
 
 const autographs = computed(() =>
     autographStore.autographs.map(a => {
-      const user = userStore.getUserById(a.userId)
+      const user = userStore.getUserById(a.user_id)
       return {
         ...a,
         userName: user?.name || 'Utilisateur inconnu',
@@ -135,9 +135,9 @@ const confirmAutographReservation = async () => {
   await reservationStore.addAutographReservation({
     userId: userStore.currentUser.id,
     type: props.stand.type,
-    date: autographStore.selectedAutograph.beginDate,
+    date: autographStore.selectedAutograph.begin_date,
     autographId: autographStore.selectedAutograph.id,
-    standId: props.stand.idstand
+    standId: props.stand.id_stand
   });
 
   closeModal();

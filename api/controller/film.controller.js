@@ -105,6 +105,16 @@ export const deleteFilmRequest = async (req,res) => {
     }
 }
 
+export const getProjections = async (req,res) => {
+    try {
+        let data = await filmService.getProjections();
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des projections");
+    }
+}
 
 
 

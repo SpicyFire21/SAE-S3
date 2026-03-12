@@ -3,9 +3,7 @@ import {defineStore} from 'pinia'
 import filmsService from "@/services/films.service.js"
 import {getUsers} from "@/services/user.service.js";
 import standsService from "@/services/stands.service.js";
-import reservationsService, {
-    addFilmReservation, getEventFromReservation,
-} from "@/services/reservations.service.js";
+import reservationsService from "@/services/reservations.service.js";
 
 export const useReservationsStore = defineStore('reservations', () => {
     const reservations = ref([])
@@ -24,11 +22,15 @@ export const useReservationsStore = defineStore('reservations', () => {
         autographsReservations.value = data;
     }
 
-    const pushFilmReservation = (data) =>{
+
+    // temporaire les arrays parce que ya pas encore getfilmsreservations comme route et ca fait bug
+    const pushFilmReservation = (data) => {
+        if (!Array.isArray(filmsReservations.value)) filmsReservations.value = [];
         filmsReservations.value.push(data)
     }
 
     const pushReservation = (data) => {
+        if (!Array.isArray(reservations.value)) reservations.value = [];
         reservations.value.push(data)
     }
 

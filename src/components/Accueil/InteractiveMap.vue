@@ -58,7 +58,7 @@
         <button
             class="bg-[var(--bleu)] hover:bg-[var(--bleu)]/70 text-white text-sm px-3 py-1 rounded mr-3 mt-3 mb-3"
             @click="providerReservationRequest(popup.stand.id)"
-            v-if="userStore.currentUser?.droit === 1 && popup.stand.owner === null && !hasAlreadyDoneAStandRequest(popup.stand)"
+            v-if="userStore.currentUser?.droit === '1' && popup.stand.owner_id == null && !hasAlreadyDoneAStandRequest(popup.stand)"
         >
           {{ t('InteractiveMap.5') }}
         </button>
@@ -150,7 +150,7 @@ const confirmReservation = async () => {
 }
 
 const hasAlreadyDoneAStandRequest = (stand) => {
-  if (!stand || !userStore.currentUser) return false
+  if (!stand || !userStore.currentUser || !standsStore.standReservationsRequests) return false
   return standsStore.standReservationsRequests.some(
       request =>
           request.stand_id === stand.id &&
@@ -185,12 +185,11 @@ const showPopup = async (event, stand) => {
   popup.visible = true;
   popup.standType = await standsStore.getStandTypeById(stand.type_id)
   popup.owner = await userStore.getUserById(stand.owner_id);
-  console.log("owner:" + JSON.stringify(popup.owner))
 };
 
 
-const goToStand = (standId) => {
-  const selectedStand = standsStore.stands.find(stand => stand.id === standId)
+const goToStand = (id) => {
+  const selectedStand = standsStore.stands.find(stand => stand.id === id)
   standsStore.setSelectedStand(selectedStand)
   router.push({name: 'StandDetails', params: {id}})
 }

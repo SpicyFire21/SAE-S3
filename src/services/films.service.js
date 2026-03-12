@@ -1,12 +1,9 @@
 import filmsController from "@/datasource/controller/films.controller.js"
 import {deleteRequest, getRequest, postRequest, putRequest} from "@/services/axios.service.js";
 
-async function getProjectionsFromLocalSource() {
-    return filmsController.getProjections();
-}
 
 async function getProjectionsFromAPI() {
-    return getRequest("/projections","GET-PROJECTIONS")
+    return getRequest("/films/projections","GET-PROJECTIONS")
 }
 
 export async function getProjections(){
@@ -173,14 +170,10 @@ export async function deleteProjection(projection) {
         // response = await deleteProjectionFromLocalSource(projection);
         response = await deleteProjectionFromAPI(projection);
 
-    } catch (err){
-        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer la projection'}
+    } catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau, impossible de supprimer la projection'}
     }
     return response;
-}
-
-async function addProjectionFromLocalSource(projection) {
-    return filmsController.addProjection(projection)
 }
 
 async function addProjectionFromAPI(projection) {
@@ -196,10 +189,6 @@ export async function addProjection(projection) {
         response = {error:1, status:404,data:'erreur réseau, impossible dajouter la projection'}
     }
     return response;
-}
-
-async function addCastFromLocalSource(data) {
-    return filmsController.addCast(data);
 }
 
 /*async function AddCast(data) {

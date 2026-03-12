@@ -17,7 +17,6 @@ import sizeRoute from './routes/size.router.js';
 import basketRoute from './routes/basket.router.js'
 import autographRoute from './routes/autographs.router.js'
 import filmRoute from './routes/film.router.js'
-import projectionRoute from './routes/projection.router.js'
 import standRoute from './routes/stand.router.js'
 import ticketRoute from './routes/ticket.router.js'
 import GenreRoute from './routes/genres.router.js'
@@ -26,7 +25,7 @@ import VoteRoute from './routes/votes.router.js'
 import ScoreRoute from './routes/scores.router.js'
 import CategoryRoute from './routes/categories.router.js'
 import CommentRoute from './routes/comments.router.js'
-import ReservationRoute from './routes/reservation.router.js'
+import ReservationRoute from "./routes/reservation.router.js";
 
 const app = express();
 const PORT = 3000
@@ -54,7 +53,6 @@ app.use('/sizes',sizeRoute);
 app.use('/baskets',basketRoute);
 app.use('/autographs',autographRoute);
 app.use('/films',filmRoute);
-app.use('/projections',projectionRoute);
 app.use('/stands',standRoute);
 app.use('/tickets',ticketRoute);
 app.use('/genres',GenreRoute);

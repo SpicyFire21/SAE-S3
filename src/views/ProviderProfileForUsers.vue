@@ -33,7 +33,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" v-if="standsUser">
         <div
             v-for="stand in standsUser"
-            :key="stand.idstand"
+            :key="stand.id_stand"
             class="bg-white border border-yellow-200 rounded-2xl shadow-md p-6
              hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
         >
@@ -55,7 +55,7 @@
                transition-all duration-300
                shadow-sm hover:shadow-lg
                flex items-center justify-center cursor-pointer"
-              @click="goToStand(stand.idstand)"
+              @click="goToStand(stand.id)"
           >
             👉 {{ t('ProviderProfileForUsers.6') }}
           </button>
@@ -74,7 +74,7 @@
           {{ t('ProviderProfileForUsers.8') }}
         </h3>
 
-<!--        filtre pomme-->
+<!-- filtre pomme -->
         <div class="flex items-center gap-2">
           <label for="sortDate" class="text-gray-700 font-medium">{{ t('ProviderProfileForUsers.9') }} :</label>
           <select
@@ -183,26 +183,26 @@ onMounted(async () => {
 });
 
 const goToStand = (id) => {
-  const selectedStand = standStore.stands.find(stand => stand.idstand === id)
+  const selectedStand = standStore.stands.find(stand => stand.id === id)
   standStore.setSelectedStand(selectedStand)
   router.push({name: 'StandDetails', params: {id}})
 }
 
 const standsUser = ref([])
 const commentsUser = computed(() =>
-    commentStore.comments.filter(c => c.userId === user.value.id)
+    commentStore.comments.filter(c => c.user_id === user.value.id)
 )
 const user = computed(() => userStore.getUserById(id));
 const isModalOpen = ref(false);
 
 const newCommentBase = ref({
-  userId: id,
+  iduser: id,
   content: "",
   date: "",
 })
 
 const newNoteBase = ref({
-  userId: id,
+  iduser: id,
   value: ""
 })
 

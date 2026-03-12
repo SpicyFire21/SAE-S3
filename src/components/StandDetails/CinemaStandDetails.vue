@@ -134,7 +134,6 @@ onMounted(async () => {
 const hasAlreadyReservedProjection = computed(() => {
   if (!filmsStore.selectedProjection || !usersStore.currentUser || !reservationsStore.filmsReservations) return false; // peut etre a changé
   // la derniere condition mais cest normalement logique, si personne a reservé, l'utilisateur n'a forcement pas déjà reservé
-  console.log("reservation exemple: " + JSON.stringify(reservationsStore.filmsReservations))
 
   return reservationsStore.reservations.some(r =>
       r.user_id === usersStore.currentUser.id &&
@@ -149,14 +148,13 @@ const hasAlreadyReservedProjection = computed(() => {
 
 
 const confirmFilmReservation = async () => {
-  await reservationsStore.addFilmReservation({
+  const zob = await reservationsStore.addFilmReservation({
     userId: usersStore.currentUser.id,
-    type: props.stand.type,
+    type: "film", // on est dans le composant des cinemas cest donc impossible que cela soit autre chose
     date: filmsStore.selectedProjection.date,
+    standId: props.stand.id,
     projectionId: filmsStore.selectedProjection.id,
-    standId: props.stand.idstand
   });
-
   closeModal();
 
   showSuccessPopup.value = true;

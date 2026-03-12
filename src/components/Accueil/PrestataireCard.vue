@@ -92,7 +92,7 @@ const scrollRight = () => {
 
 
 const averageNoteByUser = (userId) => {
-  const userNotes = userStore.notes.filter(n => n.userId === userId)
+  const userNotes = userStore.notes.filter(n => n.user_id === userId)
   if (userNotes.length === 0) return 0
 
   const sum = userNotes.reduce((acc, n) => acc + Number(n.value), 0)

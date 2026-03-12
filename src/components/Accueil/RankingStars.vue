@@ -8,10 +8,7 @@
         @mouseleave="hoverRating = 0"
         @click="onClick($event, star)"
     >
-      <!-- Fond étoile vide -->
       <span class="text-gray-400">★</span>
-
-      <!-- Couche jaune pour les parties remplies -->
       <span
           class="absolute left-0 top-0 text-yellow-400 overflow-hidden"
           :style="{ width: getFillWidth(star) }"
@@ -19,6 +16,15 @@
         ★
       </span>
     </div>
+
+    <!-- Bouton reset -->
+    <button
+        v-if="rating > 0"
+        @click="resetRating"
+        class="ml-2 text-sm text-gray-400 hover:text-red-400 transition"
+    >
+      ✕
+    </button>
   </div>
 </template>
 
@@ -53,5 +59,11 @@ function getFillWidth(star) {
   if (value >= star) return '100%'
   if (value + 0.5 > star - 0.001 && value + 0.5 < star + 0.001) return '50%'
   return '0%'
+}
+
+function resetRating() {
+  rating.value = 0
+  hoverRating.value = 0
+  emit('update:modelValue', 0)
 }
 </script>

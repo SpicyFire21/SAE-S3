@@ -79,16 +79,16 @@ const createRefreshToken = async (jti,payload) => {
 // user → 0
 // prestataire → 1
 // admin → 2
-const createAccessToken = async (payload, role = 0) => {
+const createAccessToken = async (payload, role = "0") => {
     let jwtPayload = {
-            id:payload.id,
-            pseudo:payload.pseudo,
-            email:payload.email
-        };
+        id: payload.id,
+        pseudo: payload.pseudo,
+        email: payload.email
+    };
     return jwt.sign(
         {
             ...jwtPayload,
-            role
+            role: String(role)
         },
         accessTokenSecret,
         { expiresIn: jwtExpiration }

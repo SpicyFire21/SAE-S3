@@ -1,5 +1,5 @@
 import reservationController from "@/datasource/controller/reservations.controller.js"
-import {getRequest} from "@/services/axios.service.js";
+import {getRequest, postRequest} from "@/services/axios.service.js";
 
 async function getReservationsFromAPI(){
     return getRequest("/reservations", "GET-RESERVATIONS");
@@ -14,7 +14,7 @@ async function getAutographsReservationsFromAPI(){
 }
 
 async function addFilmReservationFromAPI(data) {
-    return "route manquante dans l'api";
+    return postRequest("/films/reservation", data, "ADD-RESERVATIONS");
 }
 
 async function addAutographReservationFromAPI(data) {
