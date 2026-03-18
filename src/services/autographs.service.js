@@ -1,6 +1,6 @@
 import autographController from "@/datasource/controller/autographs.controller.js"
 import filmsController from "@/datasource/controller/films.controller.js";
-import {getRequest} from "@/services/axios.service.js";
+import {deleteRequest, getRequest, postRequest, putRequest} from "@/services/axios.service.js";
 
 async function getAutographsFromLocalSource() {
     return autographController.getAutographs()
@@ -82,13 +82,14 @@ async function updateAutographFromLocalSource(autograph) {
 
 
 async function addAutographFromAPI(autograph) {
-    return "route manquante dans l'api"
+    return postRequest("/",autograph,"ADD-AUTOGRAPH")
 }
 async function deleteAutographFromAPI(autograph) {
-    return  "route manquante dans l'api"
+    console.log("debug : ", autograph)
+    return  deleteRequest(`/${autograph}`,"DELETE-AUTOGRAPH")
 }
 async function updateAutographFromAPI(autograph) {
-    return  "route manquante dans l'api"
+    return  putRequest("/",autograph,"UPDATE-AUTOGRAPH")
 }
 
 

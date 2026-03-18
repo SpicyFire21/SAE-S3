@@ -83,7 +83,11 @@ router.get("/:id",autographsController.getAutographsById);
  */
 router.get("/stand/:idstand",autographsController.getAutographsByStandId);
 
+router.post("/",autographsController.addAutograph)
 
+router.put("/",autographsController.editAutograph)
+
+router.delete("/:id",autographsController.deleteAutograph)
 
 
 export default router;

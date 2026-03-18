@@ -1,5 +1,6 @@
 import filmService from "../services/film.service.js";
 import voteService from "../services/vote.service.js";
+import router from "../routes/film.router.js";
 
 
 export const getFilms = async (req,res) => {
@@ -116,7 +117,36 @@ export const getProjections = async (req,res) => {
     }
 }
 
+export const addProjection = async (req,res) => {
+    try {
+        let data = await filmService.addProjection(req.body);
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de l'ajout' des projections");
+    }
+}
+export const editProjection = async (req,res) => {
+    try {
+        let data = await filmService.editProjection(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la modification de la projection");
+    }
+}
+export const deleteProjection = async (req,res) => {
+    try {
+        let data = await filmService.deleteProjection(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression de la projection");
+    }
+}
 
 
 

@@ -45,7 +45,7 @@ async function getVotesById(id){
 
     try {
         const res = await db.query('SELECT * FROM votes where id=$1',[id]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération du vote par id' };

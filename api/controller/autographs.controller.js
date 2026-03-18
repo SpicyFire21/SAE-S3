@@ -34,6 +34,39 @@ export const getAutographsByStandId = async (req,res) => {
     }
 }
 
+export const addAutograph = async (req,res) => {
+    try {
+        let data = await autographsService.addAutograph(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Erreur lors de la création de l\'autograph');
+    }
+}
+
+export const editAutograph = async (req,res) => {
+    try {
+        let data = await autographsService.editAutograph(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Erreur lors de la modification de l\'autograph');
+    }
+}
+
+export const deleteAutograph = async (req,res) => {
+    try {
+        let data = await autographsService.deleteAutograph(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Erreur lors de la suppression de l\'autograph');
+    }
+}
+
 
 
 

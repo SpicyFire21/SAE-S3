@@ -23,7 +23,7 @@ async function getFilmsById(id){
     }
     try {
         const res = await db.query('SELECT * FROM films where id =$1',[id]);
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération du film par id' };
@@ -267,6 +267,104 @@ async function getProjections() {
         db.release();
     }
 }
+
+async function addProjection(projection) {
+    const db = await pool.connect();
+
+    if (!projection.idstand) {
+        return { error: 1, status: 400, data: 'Identifiant du stand manquant' };
+    }
+    if (!projection.idfilm) {
+        return { error: 1, status: 400, data: 'Identifiant du film manquant' };
+    }
+    if (!projection.date) {
+        return { error: 1, status: 400, data: 'date manquante' };
+    }
+    const checkStand = await db.query('SELECT * FROM stands WHERE id = $1', [projection.idstand]);
+
+    if (checkStand.rowCount === 0) {
+        return { error: 1, status: 404, data: 'projection inexistant' };
+    }
+
+    const checkFilm = await db.query('SELECT * FROM films WHERE id = $1', [projection.idfilm]);
+
+    if (checkFilm.rowCount === 0) {
+        return { error: 1, status: 404, data: 'film inexistant' };
+    }
+
+
+    try {
+        const res = await db.query('INSERT INTO projections (id, stand_id, film_id, date) VALUES ($1,$2,$3,$4) RETURNING *',[uuidv4(),projection.idstand,projection.idfilm,projection.date]);
+        return {error: 0, status: 200, data: res.rows[0]};
+    } catch (error) {
+        console.error(error);
+        return {error: 1, status: 500, data: 'Erreur lors de l\'ajout de la projections'};
+    } finally {
+        db.release();
+    }
+}
+
+async function editProjection(projection) {
+    const db = await pool.connect();
+    if (!projection.idstand) {
+        return { error: 1, status: 400, data: 'Identifiant du stand manquant' };
+    }
+    if (!projection.idfilm) {
+        return { error: 1, status: 400, data: 'Identifiant du film manquant' };
+    }
+    if (!projection.date) {
+        return { error: 1, status: 400, data: 'date manquante' };
+    }
+    if (!projection.id) {
+        return { error: 1, status: 400, data: 'Identifiant manquante' };
+    }
+
+    const checkStand = await db.query('SELECT * FROM stands WHERE id = $1', [projection.idstand]);
+
+    if (checkStand.rowCount === 0) {
+        return { error: 1, status: 404, data: 'projection inexistant' };
+    }
+    const check = await db.query('SELECT * FROM projections WHERE id = $1', [id]);
+
+    if (check.rowCount === 0) {
+        return { error: 1, status: 404, data: 'projection inexistant' };
+    }
+    const checkFilm = await db.query('SELECT * FROM films WHERE id = $1', [projection.idfilm]);
+
+    if (checkFilm.rowCount === 0) {
+        return { error: 1, status: 404, data: 'film inexistant' };
+    }
+    try {
+        const res = await db.query('UPDATE projections SET stand_id=$2,film_id=$3,date=$4 where id=$1 RETURNING *',[uuidv4(),projection.idstand,projection.idfilm,projection.date]);
+        return {error: 0, status: 200, data: res.rows[0]};
+    } catch (error) {
+        console.error(error);
+        return {error: 1, status: 500, data: 'Erreur lors de la modification des projections'};
+    } finally {
+        db.release();
+    }
+}
+
+async function deleteProjection(id) {
+    const db = await pool.connect();
+    try {
+        const check = await db.query('SELECT * FROM projections WHERE id = $1', [id]);
+
+        if (check.rowCount === 0) {
+            return { error: 1, status: 404, data: 'projection inexistant' };
+        }
+
+        const res = await db.query('DELETE FROM projections WHERE id = $1 RETURNING *', [id]);
+
+        return {error: 0, status: 200, data: res.rows[0]};
+    } catch (error) {
+        console.error(error);
+        return {error: 1, status: 500, data: 'Erreur lors de la suppresion des projections'};
+    } finally {
+        db.release();
+    }
+}
+
 export default {
     getFilms,
     getFilmsById,
@@ -280,6 +378,10 @@ export default {
 
     deleteFilm,
     deleteFilmRequest,
-    getProjections
+
+    getProjections,
+    addProjection,
+    editProjection,
+    deleteProjection
 
 }

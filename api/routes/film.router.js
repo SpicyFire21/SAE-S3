@@ -127,6 +127,10 @@ router.get("/requests/genres", filmController.getFilmRequestsGenres)
 
 router.get("/projections",filmController.getProjections);
 
+router.post("/projections",filmController.addProjection);
+router.put("/projections",filmController.editProjection);
+router.delete("/projections/:id",filmController.deleteProjection);
+
 /**
  * @swagger
  * /films/{id}:

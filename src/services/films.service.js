@@ -141,7 +141,7 @@ async function updateProjectionFromLocalSource(projection) {
 }
 
 async function updateProjectionFromAPI(projection) {
-    return "route manquante dans l'api"
+    return putRequest(`/films/projections`,projection,"EDIT-PROJECTION")
 }
 
 export async function updateProjection(projection) {
@@ -160,7 +160,7 @@ async function deleteProjectionFromLocalSource(projection) {
 }
 
 async function deleteProjectionFromAPI(projection) {
-    return "route manquante dans l'api"
+    return deleteRequest(`/films/projections/${projection}`,"DELETE-PROJECTION")
 }
 
 
@@ -177,7 +177,7 @@ export async function deleteProjection(projection) {
 }
 
 async function addProjectionFromAPI(projection) {
-    return "route manquante dans l'api"
+    return postRequest(`/films/projections`,projection,"ADD-PROJECTION")
 }
 
 export async function addProjection(projection) {
