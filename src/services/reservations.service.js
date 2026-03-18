@@ -6,11 +6,11 @@ async function getReservationsFromAPI(){
 }
 
 async function getFilmsReservationsFromAPI(){
-    return "route manquante dans l'api";
+    return getRequest("/films/reservations","GET-FILMS-RESERVATIONS");
 }
 
 async function getAutographsReservationsFromAPI(){
-    return "route manquante dans l'api";
+    return getRequest("/autographs/reservations","GET-AUTOGRAPHS-RESERVATIONS");
 }
 
 async function addFilmReservationFromAPI(data) {
@@ -18,15 +18,15 @@ async function addFilmReservationFromAPI(data) {
 }
 
 async function addAutographReservationFromAPI(data) {
-    return "route manquante dans l'api";
+    return postRequest("/autographs/reservations",data,"ADD-AUTOGRAPHS-RESERVATIONS");
 }
 
 async function getReservationByIdUserFromAPI(id) {
-    return "route manquante dans l'api"
+    return getRequest(`/${id}/reservations`,"GET-RESERVATIONS-BY-USER-ID")
 }
 
 async function getEventFromReservationFromAPI(reservation) {
-    return "route manquante dans l'api"
+    return getRequest(`/reservations/event`,"GET-EVENT-BY-RESERVATIONS-BY")
 }
 
 

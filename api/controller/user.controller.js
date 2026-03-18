@@ -91,6 +91,17 @@ export const getNotesByUserId = async (req,res) => {
     }
 }
 
+export const getReservationsByUserId = async (req,res) => {
+    try {
+        let data = await userService.getReservationsByUserId(req.params.id);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des réservations de l\'utilisateur");
+    }
+}
+
 
 
 export const refreshToken = async (req,res) =>{

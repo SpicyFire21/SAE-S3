@@ -204,6 +204,21 @@ async function refreshToken(token){
 }
 
 
+async function getReservationsByUserId(id){
+    const db = await pool.connect();
+    if (!id) return { error: 1, status: 400, data: 'id manquant' };
+
+    try {
+        const res = await db.query('SELECT * FROM reservations where user_id=$1',[id]);
+        return { error: 0, status: 200, data:res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des notes de l\'utilisateur' };
+    } finally {
+        db.release();
+    }
+}
+
 export default {
     getUsers,
     addUser,
@@ -211,5 +226,6 @@ export default {
     getUsersById,
     getNotesByUserId,
     logout,
-    refreshToken
+    refreshToken,
+    getReservationsByUserId
 }

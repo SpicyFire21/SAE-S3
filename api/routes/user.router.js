@@ -98,7 +98,7 @@ router.post("/register", userController.addUser)
 
 router.post("/refreshtoken",userController.refreshToken)
 
-
+router.get("/:id/reservations", userController.getReservationsByUserId)
 /**
  * @swagger
  * /users/{id}/notes:

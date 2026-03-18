@@ -127,11 +127,66 @@ async function deleteAutograph(autograph){
     }
 }
 
+async function getAutographsReservations() {
+    const db = await pool.connect();
+    try {
+        const res = await db.query('SELECT * FROM autograph_reservations');
+        return { error: 0, status: 200, data:res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des réservations des autographes' };
+    } finally {
+        db.release();
+    }
+}
+
+async function addAutographsReservations(data) {
+    const db = await pool.connect();
+
+    if (!data.iduser){
+        return { error: 1, status: 400, data: 'iduser manquant' };
+    }
+    if (!data.type){
+        return { error: 1, status: 400, data: 'type manquant' };
+    }
+    if (!data.date){
+        return { error: 1, status: 400, data: 'date manquant' };
+    }
+    if (!data.idstand){
+        return { error: 1, status: 400, data: 'idstand manquant' };
+    }
+    if (!data.idautograph){
+        return { error: 1, status: 400, data: 'idstand manquant' };
+    }
+
+    try {
+        await db.query('BEGIN');
+        const reservation = await db.query('INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5)',
+            [uuidv4(),data.iduser,data.date,data.idstand,data.type]);
+
+        const autographResservation = await db.query('INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES ($1,$2)',
+            [reservation.rows[0].id,data.idautograph]);
+
+        await db.query('COMMIT');
+        return { error: 0, status: 201, data: {
+            reservation,
+                autographResservation
+            }};
+    } catch (error) {
+        await db.query('ROLLBACK');
+        console.error(error);
+        return { error: 1, status: 500, data: "Erreur lors de l'ajout de la réservation de l'autograph" };
+    } finally {
+        db.release();
+    }
+}
 
 export default {
     getAutographs,
     getAutographsById,
     getAutographsByStandId,
+    getAutographsReservations,
+    addAutographsReservations,
     addAutograph,
     editAutograph,
     deleteAutograph

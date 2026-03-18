@@ -25,6 +25,9 @@ let router = express.Router()
  */
 router.get("/", filmController.getFilms)
 
+router.get("/reservations",filmController.getFilmsReservations)
+
+
 /**
  * @swagger
  * /films/genres:
@@ -126,6 +129,38 @@ router.get("/requests/genres", filmController.getFilmRequestsGenres)
  */
 
 router.get("/projections",filmController.getProjections);
+/**
+ * @swagger
+ * /films/reservation:
+ *   post:
+ *     summary: Créer une nouvelle reservation de film (projection)
+ *     tags:
+ *       - Films
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmRequestInput'
+ *           example:
+ *             userId: "c38acd4c-d6fc-4a19-bd24-98a7c18fa414"
+ *             type: "film"
+ *             date: "2025-12-23T14:00:00"
+ *             standId: 1
+ *             projectionId: 1
+ *     responses:
+ *       201:
+ *         description: Reservation de film créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FilmReservation'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/reservation", filmController.addFilmReservation)
 
 router.post("/projections",filmController.addProjection);
 router.put("/projections",filmController.editProjection);

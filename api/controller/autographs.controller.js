@@ -1,4 +1,5 @@
 import autographsService from "../services/autographs.service.js";
+import filmService from "../services/film.service.js";
 
 
 export const getAutographs = async (req,res) => {
@@ -67,7 +68,28 @@ export const deleteAutograph = async (req,res) => {
     }
 }
 
+export const getAutographsReservations = async (req,res) => {
+    try {
+        let data = await autographsService.getAutographsReservations();
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des réservations des autographs");
+    }
+}
+
+
+export const addAutographsReservations = async (req,res) => {
+    try {
+        let data = await autographsService.addAutographsReservations(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de l'ajout de la réservation de l'autograph");
+    }
+}
 
 
 

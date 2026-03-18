@@ -148,7 +148,26 @@ export const deleteProjection = async (req,res) => {
     }
 }
 
+export const addFilmReservation = async (req,res) => {
+    try {
+        let data = await filmService.addFilmReservation(req.body);
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de l'ajout de la reservation de film");
+    }
+}
 
+export const getFilmsReservations = async (req,res) => {
+    try {
+        let data = await filmService.getFilmsReservations();
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des réservations des films");
+    }
+}
 
 

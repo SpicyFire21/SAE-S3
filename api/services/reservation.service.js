@@ -15,36 +15,21 @@ async function getReservations() {
     }
 }
 
-async function addFilmReservation(data) {
+
+
+async function getEventFromReservation(id) {
     const db = await pool.connect();
 
-    if (!data.userId) return { error: 1, status: 400, data: 'userId manquant' };
-    if (!data.type) return { error: 1, status: 400, data: 'type manquant' };
-    if (!data.date) return { error: 1, status: 400, data: 'date manquant' };
-    if (!data.standId) return { error: 1, status: 400, data: 'standId manquant' };
-    if (!data.projectionId) return { error: 1, status: 400, data: 'projectionId manquant' };
+    if(!id){
+        return { error: 1, status: 400, data: 'id manquant' }
+    }
 
     try {
-        await db.query('BEGIN');
-
-        const reservationRes = await db.query(
-            'INSERT INTO reservations (user_id, type, date, stand_id) VALUES ($1, $2, $3, $4) RETURNING *',
-            [data.userId, data.type, data.date, data.standId]
-        );
-        const reservation = reservationRes.rows[0];
-
-        const filmReservationRes = await db.query(
-            'INSERT INTO film_reservations (reservation_id, projection_id) VALUES ($1, $2) RETURNING *',
-            [reservation.id, data.projectionId]
-        );
-
-        await db.query('COMMIT');
-
-        return { error: 0, status: 201, data: { reservation, filmReservation: filmReservationRes.rows[0] } };
+        // a finir
+        return { error: 0, status: 200, data:[] };
     } catch (error) {
-        await db.query('ROLLBACK');
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de l\'ajout de la reservation de film' };
+        return { error: 1, status: 500, data: "Erreur lors de la récupération des events via reservation" };
     } finally {
         db.release();
     }
@@ -53,7 +38,7 @@ async function addFilmReservation(data) {
 
 
 
-
 export default {
-    getReservations, addFilmReservation
+    getReservations,
+    getEventFromReservation
 }

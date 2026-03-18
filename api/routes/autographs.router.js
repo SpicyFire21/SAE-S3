@@ -1,5 +1,6 @@
 import express from 'express'
 import * as autographsController from "../controller/autographs.controller.js";
+import * as filmController from "../controller/film.controller.js";
 
 
 let router = express.Router();
@@ -24,6 +25,8 @@ let router = express.Router();
  *         description: Erreur serveur
  */
 router.get("/",autographsController.getAutographs);
+router.get("/reservations",autographsController.getAutographsReservations)
+router.post("/reservations",autographsController.addAutographsReservations)
 
 /**
  * @swagger

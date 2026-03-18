@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS autographs CASCADE;
 DROP TABLE IF EXISTS comments_golden_book CASCADE;
 
+DROP TABLE IF EXISTS autograph_reservations cascade ;
 DROP TABLE IF EXISTS film_reservations CASCADE;
 DROP TABLE IF EXISTS reservations CASCADE;
 DROP TABLE IF EXISTS projections CASCADE;
@@ -285,6 +286,14 @@ CREATE TABLE IF NOT EXISTS film_reservations
     projection_id  INT NOT NULL,
     FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE CASCADE,
     FOREIGN KEY (projection_id) REFERENCES projections (id)
+);
+
+CREATE TABLE IF NOT EXISTS autograph_reservations
+(
+    reservation_id INT PRIMARY KEY,
+    autograph_id  INT NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES reservations (id) ON DELETE CASCADE,
+    FOREIGN KEY (autograph_id) REFERENCES autographs (id)
 );
 
 
