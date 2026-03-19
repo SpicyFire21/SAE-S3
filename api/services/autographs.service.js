@@ -161,8 +161,14 @@ async function addAutographsReservations(data) {
 
     try {
         await db.query('BEGIN');
-        const reservation = await db.query('INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5)',
-            [uuidv4(),data.iduser,data.date,data.idstand,data.type]);
+
+        const {rows} = await db.query('SELECT max(id) from reservations')
+
+
+        let newId = rows[0].max + 1
+
+        const reservation = await db.query('INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+            [newId,data.iduser,data.date,data.idstand,data.type]);
 
         const autographResservation = await db.query('INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES ($1,$2)',
             [reservation.rows[0].id,data.idautograph]);
