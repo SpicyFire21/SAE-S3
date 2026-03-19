@@ -164,7 +164,6 @@ async function addAutographsReservations(data) {
 
         const {rows} = await db.query('SELECT max(id) from reservations')
 
-
         let newId = rows[0].max + 1
 
         const reservation = await db.query('INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5) RETURNING *',
