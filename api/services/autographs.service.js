@@ -64,7 +64,7 @@ async function addAutograph(autograph){
 
 
     try {
-        const res = await db.query('INSERT INTO autographs (id, stand_id, user_id, begin_date, duration) VALUES ($1,$2,$3,$4,$5)',
+        const res = await db.query('INSERT INTO autographs (id, stand_id, user_id, begin_date, duration) VALUES ($1,$2,$3,$4,$5) RETURNING *',
             [uuidv4(),autograph.idstand,autograph.iduser,autograph.begindate,autograph.duration]);
         return { error: 0, status: 201, data:res.rows[0] };
     } catch (error) {
@@ -95,8 +95,8 @@ async function editAutograph(autograph){
 
 
     try {
-        // fonction a finir ....
-        const res = await db.query('UPDATE autographs SET duration = $5,begin_date=$4, ',
+
+        const res = await db.query('UPDATE autographs SET duration = $5,begin_date=$4,user_id=$3 where id=$1 and stand_id=$2; ',
             [autograph.id,autograph.idstand,autograph.iduser,autograph.begindate,autograph.duration]);
         return { error: 0, status: 201, data:res.rows[0] };
     } catch (error) {
