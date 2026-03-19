@@ -5,28 +5,76 @@ import * as filmController from "../controller/film.controller.js";
 
 let router = express.Router();
 
+router.get("/", autographsController.getAutographs);
+
 /**
  * @swagger
- * /autographs:
+ * /autographs/reservations:
  *   get:
- *     summary: Récupérer tous les autographes
+ *     summary: Récupérer toutes les réservations d'autographes
  *     tags:
  *       - Autographs
  *     responses:
  *       200:
- *         description: Liste des autographes
+ *         description: Liste des réservations d'autographes
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Autograph'
+ *                 type: object
+ *                 properties:
+ *                   reservation_id:
+ *                     type: integer
+ *                   autograph_id:
+ *                     type: integer
  *       500:
  *         description: Erreur serveur
  */
-router.get("/",autographsController.getAutographs);
-router.get("/reservations",autographsController.getAutographsReservations)
-router.post("/reservations",autographsController.addAutographsReservations)
+router.get("/reservations", autographsController.getAutographsReservations);
+
+/**
+ * @swagger
+ * /autographs/reservations:
+ *   post:
+ *     summary: Ajouter une réservation d'autographe
+ *     tags:
+ *       - Autographs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - iduser
+ *               - type
+ *               - date
+ *               - idstand
+ *               - idautograph
+ *             properties:
+ *               iduser:
+ *                 type: string
+ *                 format: uuid
+ *               type:
+ *                 type: string
+ *                 example: autograph
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *               idstand:
+ *                 type: integer
+ *               idautograph:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Réservation créée avec succès
+ *       400:
+ *         description: Paramètre manquant
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/reservations", autographsController.addAutographsReservations);
 
 /**
  * @swagger
@@ -41,7 +89,7 @@ router.post("/reservations",autographsController.addAutographsReservations)
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID de l’autographe
+ *         description: ID de l'autographe
  *     responses:
  *       200:
  *         description: Autographe trouvé
@@ -54,13 +102,13 @@ router.post("/reservations",autographsController.addAutographsReservations)
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:id",autographsController.getAutographsById);
+router.get("/:id", autographsController.getAutographsById);
 
 /**
  * @swagger
  * /autographs/stand/{idstand}:
  *   get:
- *     summary: Récupérer les autographes d’un stand
+ *     summary: Récupérer les autographes d'un stand
  *     tags:
  *       - Autographs
  *     parameters:
@@ -84,13 +132,113 @@ router.get("/:id",autographsController.getAutographsById);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/stand/:idstand",autographsController.getAutographsByStandId);
+router.get("/stand/:idstand", autographsController.getAutographsByStandId);
 
-router.post("/",autographsController.addAutograph)
+/**
+ * @swagger
+ * /autographs:
+ *   post:
+ *     summary: Ajouter un autographe
+ *     tags:
+ *       - Autographs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idstand
+ *               - iduser
+ *               - begindate
+ *               - duration
+ *             properties:
+ *               idstand:
+ *                 type: integer
+ *               iduser:
+ *                 type: string
+ *                 format: uuid
+ *               begindate:
+ *                 type: string
+ *                 format: date-time
+ *               duration:
+ *                 type: integer
+ *                 description: Durée en minutes
+ *     responses:
+ *       201:
+ *         description: Autographe créé avec succès
+ *       400:
+ *         description: Paramètre manquant
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post("/", autographsController.addAutograph);
 
-router.put("/",autographsController.editAutograph)
+/**
+ * @swagger
+ * /autographs:
+ *   put:
+ *     summary: Modifier un autographe
+ *     tags:
+ *       - Autographs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - idstand
+ *               - iduser
+ *               - begindate
+ *               - duration
+ *             properties:
+ *               id:
+ *                 type: integer
+ *               idstand:
+ *                 type: integer
+ *               iduser:
+ *                 type: string
+ *                 format: uuid
+ *               begindate:
+ *                 type: string
+ *                 format: date-time
+ *               duration:
+ *                 type: integer
+ *                 description: Durée en minutes
+ *     responses:
+ *       201:
+ *         description: Autographe modifié avec succès
+ *       400:
+ *         description: Paramètre manquant
+ *       500:
+ *         description: Erreur serveur
+ */
+router.put("/", autographsController.editAutograph);
 
-router.delete("/:id",autographsController.deleteAutograph)
-
+/**
+ * @swagger
+ * /autographs/{id}:
+ *   delete:
+ *     summary: Supprimer un autographe
+ *     tags:
+ *       - Autographs
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'autographe à supprimer
+ *     responses:
+ *       201:
+ *         description: Autographe supprimé avec succès
+ *       400:
+ *         description: ID manquant
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/:id", autographsController.deleteAutograph);
 
 export default router;

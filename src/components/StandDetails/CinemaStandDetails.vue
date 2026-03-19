@@ -134,7 +134,6 @@ onMounted(async () => {
 const hasAlreadyReservedProjection = computed(() => {
   if (!filmsStore.selectedProjection || !usersStore.currentUser || !reservationsStore.filmsReservations) return false; // peut etre a changé
   // la derniere condition mais cest normalement logique, si personne a reservé, l'utilisateur n'a forcement pas déjà reservé
-
   return reservationsStore.reservations.some(r =>
       r.user_id === usersStore.currentUser.id &&
       r.type === "film" &&
@@ -148,7 +147,7 @@ const hasAlreadyReservedProjection = computed(() => {
 
 
 const confirmFilmReservation = async () => {
-  const zob = await reservationsStore.addFilmReservation({
+  await reservationsStore.addFilmReservation({
     userId: usersStore.currentUser.id,
     type: "film", // on est dans le composant des cinemas cest donc impossible que cela soit autre chose
     date: filmsStore.selectedProjection.date,

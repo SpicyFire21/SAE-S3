@@ -47,7 +47,7 @@
         <h2 class="text-2xl font-bold mb-4">{{ t("AutographsList.5") }}</h2>
         <div class="space-y-3">
           <label class="font-semibold">{{ t("AutographsList.7") }}</label>
-          <select v-model="autographStore.selectedAutograph.userId" class="border p-2 rounded w-full">
+          <select v-model="autographStore.selectedAutograph.user_id" class="border p-2 rounded w-full">
             <option v-for="provider in userStore.providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
           </select>
           <div>
@@ -71,7 +71,7 @@
       <h2 class="text-2xl font-bold mb-4">{{ t("AutographsList.2") }}</h2>
       <div class="space-y-3">
         <label class="font-semibold">{{ t("AutographsList.7") }}</label>
-        <select v-model="newAutographBase.userId" class="border p-2 rounded w-full">
+        <select v-model="newAutographBase.user_id" class="border p-2 rounded w-full">
           <option v-for="provider in userStore.providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
         </select>
         <div>
@@ -113,11 +113,12 @@ const userStore = useUserStore();
 const showEditModal = ref(false);
 const showAddModal = ref(false);
 
+
 const autographsWithUser = computed(() =>
     autographStore.autographs
-        .filter(a => a.standId === props.standId)
+        .filter(a => a.stand_id === props.standId)
         .map(aut => {
-          const user = userStore.getUserById(aut.userId);
+          const user = userStore.getUserById(aut.user_id);
           return { ...aut, user };
         })
 );
@@ -143,7 +144,7 @@ const saveEditAutograph = async () => {
 };
 
 async function saveAddAutograph() {
-  if (newAutographBase.value.beginDate === "" || newAutographBase.value.userId === "" || newAutographBase.value.duration === 0) {
+  if (newAutographBase.value.beginDate === "" || newAutographBase.value.user_id === "" || newAutographBase.value.duration === 0) {
     showAddModal.value = false;
     return;
   }

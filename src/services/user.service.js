@@ -5,6 +5,24 @@ import {deleteRequest, getRequest, postRequest, refreshTokenPostRequest} from "@
 async function getUserByIdFromLocalSource(id) {
     return userController.getUserById(id);
 }
+
+async function getReservationByIdUserFromAPI(id) {
+    return getRequest(`/users/${id}/reservations`,"GET-RESERVATIONS-BY-USER-ID")
+}
+
+export async function getReservationByIdUser(id){
+    let response = null;
+    try {
+        // response = await getReservationByIdUserFromLocalSource(id);
+        response = await getReservationByIdUserFromAPI(id);
+
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de recuperer des reservations pour cet utilisateur'}
+    }
+    return response;
+}
+
+
 async function getUserFromLocalSource(){
     return userController.getUsers();
 }
@@ -195,5 +213,6 @@ export default {
     getNotes,
     addNote,
     logout,
-    refreshTokens
+    refreshTokens,
+    getReservationByIdUser
 }

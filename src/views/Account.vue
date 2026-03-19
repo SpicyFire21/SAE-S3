@@ -57,10 +57,10 @@
           <div v-if="tickets.length" class="mt-4 grid md:grid-cols-2 gap-4">
             <div
                 v-for="t in tickets"
-                :key="t.idticket"
+                :key="t.id"
                 class="p-4 bg-gray-50 border rounded-xl shadow-sm"
             >
-              <div class="font-bold">#{{ t.idticket }}</div>
+              <div class="font-bold">#{{ t.id }}</div>
               <div class="text-gray-500 text-sm">
                 {{ t.datefrom }} → {{ t.dateto }}
               </div>
@@ -81,7 +81,7 @@
                 :key="r.id"
                 class="p-4 bg-gray-50 border rounded-xl shadow-sm"
             >
-              <div v-if="r.type === '1'">
+              <div v-if="r.type === 'film'">
                 <h2 class="text-xl font-bold text-gray-900 flex items-center justify-center gap-2 pb-5">
                   {{ t('Account.5') }}
                 </h2>
@@ -101,14 +101,14 @@
               </p>
 
               <p class="mt-1 text-sm">
-                <span class="font-medium">Type :</span> {{ r.typeTitle }}
+                <span class="font-medium">Type :</span> {{ r.type }}
               </p>
 
               <p class="text-sm">
                 <span class="font-medium">Stand :</span> {{ r.standTitle }}
               </p>
             </div>
-              <div v-else-if="r.type === '2'">
+              <div v-else-if="r.type === 'autograph'">
                 <h2 class="text-xl font-bold text-gray-900 flex items-center justify-center gap-2 pb-5">
                   Dédicace
                 </h2>
@@ -120,7 +120,7 @@
 
 
                 <p class="mt-1 text-sm">
-                  <span class="font-medium">Type :</span> {{ r.typeTitle }}
+                  <span class="font-medium">Type :</span> {{ r.type }}
                 </p>
 
                 <p class="text-sm">
@@ -254,15 +254,16 @@ onMounted(async () => {
 
   // pour affichage d'infos
   for (const r of reservations.value) {
-    const film = await reservationStore.getEventFromReservation(r);
-    r.filmTitle = film?.title || 'Titre inconnu';
-    const autograph = await reservationStore.getEventFromReservation(r);
-    const userOfAutograph = await userStore.getUserById(autograph.userId);
-    r.starName = userOfAutograph?.name || 'Nom de la star inconnu';
-    const stand = await standStore.getStandById(r.standId);
+    const event = await reservationStore.getEventFromReservation(r.id);
+    const stand = await standStore.getStandById(r.stand_id);
     r.standTitle = stand?.name || 'Titre inconnu';
-    const typeStand = await standStore.getStandTypeById(r.type);
-    r.typeTitle = typeStand?.type || 'Type inconnu';
+
+    if (r.type === 'film') {
+      r.filmTitle = event?.title || 'Titre inconnu';
+    } else if (r.type === 'autograph') {
+      const userOfAutograph = await userStore.getUserById(event?.user_id);
+      r.starName = userOfAutograph?.name || 'Nom de la star inconnu';
+    }
   }
 });
 

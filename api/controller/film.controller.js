@@ -1,6 +1,5 @@
 import filmService from "../services/film.service.js";
 import voteService from "../services/vote.service.js";
-import router from "../routes/film.router.js";
 
 
 export const getFilms = async (req,res) => {

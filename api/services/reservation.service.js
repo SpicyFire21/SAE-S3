@@ -18,6 +18,7 @@ async function getReservations() {
 
 
 async function getEventFromReservation(id) {
+    // cest pas tres tres opti mais on part du principe qu'on a max 2 ou 3 types de stands
     const db = await pool.connect();
 
     if (!id) {
@@ -25,7 +26,6 @@ async function getEventFromReservation(id) {
     }
 
     try {
-        // 1. Récupérer la réservation
         const reservationRes = await db.query(
             'SELECT * FROM reservations WHERE id = $1',
             [id]
@@ -37,9 +37,7 @@ async function getEventFromReservation(id) {
 
         const reservation = reservationRes.rows[0];
 
-        // 2. SWITCH LOGIQUE PAR TYPE
-        if (reservation.type === '1') {
-            // FILM
+        if (reservation.type === 'film') {
 
             const filmRes = await db.query(
                 'SELECT * FROM film_reservations WHERE reservation_id = $1',
@@ -75,8 +73,7 @@ async function getEventFromReservation(id) {
                 data: filmResFinal.rows[0]
             };
 
-        } else if (reservation.type === '2') {
-            // AUTOGRAPH
+        } else if (reservation.type === 'autograph') {
 
             const autographRes = await db.query(
                 'SELECT * FROM autograph_reservations WHERE reservation_id = $1',

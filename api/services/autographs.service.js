@@ -38,7 +38,7 @@ async function getAutographsByStandId(idstand){
     }
     try {
         const res = await db.query('SELECT * FROM autographs where stand_id =$1',[idstand]);
-        return { error: 0, status: 200, data:res.rows[0] };
+        return { error: 0, status: 200, data:res.rows };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération des autographs par id de stand' };

@@ -1,9 +1,10 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import filmsService from "@/services/films.service.js"
-import {getUsers} from "@/services/user.service.js";
+import userService, {getReservationByIdUser} from "@/services/user.service.js";
 import standsService from "@/services/stands.service.js";
 import reservationsService from "@/services/reservations.service.js";
+import {useUserStore} from "@/stores/index.js";
 
 export const useReservationsStore = defineStore('reservations', () => {
     const reservations = ref([])
@@ -43,7 +44,7 @@ export const useReservationsStore = defineStore('reservations', () => {
 
     const getReservationByIdUser = async (id) => {
         try {
-            const response = await reservationsService.getReservationByIdUser(id)
+            const response = await userService.getReservationByIdUser(id)
             updateReservations(response.data)
         } catch (e) {
             console.error(e)

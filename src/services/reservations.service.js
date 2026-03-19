@@ -21,12 +21,8 @@ async function addAutographReservationFromAPI(data) {
     return postRequest("/autographs/reservations",data,"ADD-AUTOGRAPHS-RESERVATIONS");
 }
 
-async function getReservationByIdUserFromAPI(id) {
-    return getRequest(`/${id}/reservations`,"GET-RESERVATIONS-BY-USER-ID")
-}
-
-async function getEventFromReservationFromAPI(reservation) {
-    return getRequest(`/reservations/event`,"GET-EVENT-BY-RESERVATIONS-BY")
+async function getEventFromReservationFromAPI(id) {
+    return getRequest(`/reservations/${id}/event`,"GET-EVENT-BY-RESERVATIONS-BY")
 }
 
 
@@ -34,26 +30,14 @@ async function getEventFromReservationFromAPI(reservation) {
 
 
 
-export async function getEventFromReservation(reservation){
+export async function getEventFromReservation(id) {
     let response = null;
     try {
         // response = await getEventFromReservationFromLocalSource(reservation);
-        response = await getEventFromReservationFromAPI(reservation);
+        response = await getEventFromReservationFromAPI(id);
 
-    } catch (err){
-        response = {error:1, status:404,data:'erreur réseau, impossible de recuperer le nom de ce film'}
-    }
-    return response;
-}
-
-export async function getReservationByIdUser(id){
-    let response = null;
-    try {
-        // response = await getReservationByIdUserFromLocalSource(id);
-        response = await getReservationByIdUserFromAPI(id);
-
-    } catch (err){
-        response = {error:1, status:404,data:'erreur réseau, impossible de recuperer des reservations pour cet utilisateur'}
+    } catch (err) {
+        response = {error: 1, status: 404, data: 'erreur réseau, impossible de recuperer le nom de ce film'}
     }
     return response;
 }
@@ -122,7 +106,6 @@ export default {
     getAutographsReservations,
     getFilmsReservations,
     addFilmReservation,
-    getReservationByIdUser,
     getEventFromReservation,
     addAutographReservation
 }

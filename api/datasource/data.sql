@@ -581,13 +581,6 @@ INSERT INTO autographs (id, stand_id, user_id, begin_date, duration) VALUES
                                                                          (2, 4, 'a81699b9-94d1-4f72-9df4-1588dc1b2cc5', '2025-12-23 21:00:00', 60),
                                                                          (3, 5, 'a81699b9-94d1-4f72-9df4-1588dc1b2cc5', '2025-12-27 21:00:00', 120);
 
-INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES
-                                                                 (1, 'c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '2025-12-23 14:00:00', 1, 'film'),
-                                                                 (2, 'c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '2025-12-23 14:00:00', 4, 'autograph');
-
-INSERT INTO film_reservations (reservation_id, projection_id) VALUES
-    (1, 1);
-
 INSERT INTO stand_reservation_requests (id, request_date, stand_id, user_id, status) VALUES
                                                                                          (1, '2025-12-23 14:00:00', 4, 'f1b92326-1e85-49af-8cf7-2270e2e725e8', 'pending'),
                                                                                          (2, '2025-12-23 17:00:00', 3, 'f1b92326-1e85-49af-8cf7-2270e2e725e8', 'pending');
@@ -619,3 +612,21 @@ INSERT INTO votes (id, user_id, film_id, category_id) VALUES
 INSERT INTO votes_score (film_id, category_id, total_score) VALUES
                                                                 ('a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d', '3a6d9e1f-2b7c-4f8a-9c5d-7e3a1f6b9d2c', 1),
                                                                 ('a7b8c9d0-1e2f-4a3b-5c6d-7e8f9a0b1c2d', 'd4f1c3b7-e9a2-4c6f-8b2e-9f1c8b2e7d3a', 1);
+
+INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES
+                                                                 (1, 'c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '2025-12-23 14:00:00', 1, 'film'),
+                                                                 (2, 'c38acd4c-d6fc-4a19-bd24-98a7c18fa414', '2025-12-23 18:00:00', 4, 'autograph'),
+                                                                 (3, 'd4e9116b-e3e8-4e0e-8a3b-6a93e1d6c4f4', '2025-12-23 17:00:00', 1, 'film'),
+                                                                 (4, 'bb4b684c-0c67-4d19-ac21-b225b3e5c018', '2025-12-23 16:00:00', 2, 'film'),
+                                                                 (5, 'd4e9116b-e3e8-4e0e-8a3b-6a93e1d6c4f4', '2025-12-23 21:00:00', 4, 'autograph'),
+                                                                 (6, 'bb4b684c-0c67-4d19-ac21-b225b3e5c018', '2025-12-27 21:00:00', 5, 'autograph');
+
+INSERT INTO film_reservations (reservation_id, projection_id) VALUES
+                                                                  (1, 1),
+                                                                  (3, 2),
+                                                                  (4, 6);
+
+INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES
+                                                                      (2, 1),
+                                                                      (5, 2),
+                                                                      (6, 3);

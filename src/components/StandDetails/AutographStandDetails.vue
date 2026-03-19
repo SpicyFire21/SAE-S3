@@ -111,11 +111,11 @@ const hasAlreadyReservedAutograph = computed(() => {
   if (!autographStore.selectedAutograph || !userStore.currentUser) return false;
 
   return reservationStore.reservations.some(r =>
-      r.userId === userStore.currentUser.id &&
-      r.type === "2" &&
+      r.user_id === userStore.currentUser.id &&
+      r.type === "autograph" &&
       reservationStore.autographsReservations.some(ar =>
-          ar.reservationId === r.id &&
-          ar.autographId === autographStore.selectedAutograph.id
+          ar.reservation_id === r.id &&
+          ar.autograph_id === autographStore.selectedAutograph.id
       )
   );
 });
@@ -133,11 +133,11 @@ const autographs = computed(() =>
 
 const confirmAutographReservation = async () => {
   await reservationStore.addAutographReservation({
-    userId: userStore.currentUser.id,
-    type: props.stand.type,
+    iduser: userStore.currentUser.id,
+    type: "autograph",
     date: autographStore.selectedAutograph.begin_date,
-    autographId: autographStore.selectedAutograph.id,
-    standId: props.stand.id_stand
+    idautograph: autographStore.selectedAutograph.id,
+    idstand: props.stand.id
   });
 
   closeModal();
