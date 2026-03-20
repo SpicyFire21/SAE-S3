@@ -35,7 +35,7 @@ async function getStandsTypes(){
     const db = await pool.connect();
     try {
         const res = await db.query('SELECT * FROM stand_types');
-        return { error: 0, status: 200, data:res.rows[0] };
+        return { error: 0, status: 200, data:res.rows };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération des types de stands' };

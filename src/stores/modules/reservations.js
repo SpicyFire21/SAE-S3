@@ -74,6 +74,7 @@ export const useReservationsStore = defineStore('reservations', () => {
     const addAutographReservation = async (data) => {
         try {
             const response = await reservationsService.addAutographReservation(data);
+            console.log("response:" + JSON.stringify(response.data))
             pushAutographReservation(response.data.autographReservation)
             pushReservation(response.data.reservation)
             return response.data

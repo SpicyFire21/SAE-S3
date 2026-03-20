@@ -110,6 +110,8 @@ onMounted(async () => {
 const hasAlreadyReservedAutograph = computed(() => {
   if (!autographStore.selectedAutograph || !userStore.currentUser) return false;
 
+  console.log("ar:" + JSON.stringify(reservationStore.autographsReservations))
+
   return reservationStore.reservations.some(r =>
       r.user_id === userStore.currentUser.id &&
       r.type === "autograph" &&

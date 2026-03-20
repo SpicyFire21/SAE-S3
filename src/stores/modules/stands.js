@@ -68,6 +68,7 @@ export const useStandsStore = defineStore('stands', () => {
     const getStandsTypes = async () => {
         try {
             const response = await standsService.getStandsTypes();
+            console.log("type stands:" + JSON.stringify(response.data))
             updateStandsTypes(response.data)
         } catch (e) {
             console.error(e)
@@ -118,6 +119,7 @@ export const useStandsStore = defineStore('stands', () => {
     }
 
     const getStandTypeByIdForProvider = (typeId) => {
+        console.log("stand types:" + JSON.stringify(standsTypes.value))
         return standsTypes.value.find(st => st.id === typeId)
     }
 

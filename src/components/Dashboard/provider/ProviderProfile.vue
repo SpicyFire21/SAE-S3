@@ -64,7 +64,7 @@ const editing = ref(false);
 const previewTemp = ref("");
 
 const user = computed(() => userStore.getUserById(userStore.currentUser.id));
-const nbStands = computed(() => standStore.stands.filter(s => s.owner === user.value.id).length);
+const nbStands = computed(() => standStore.stands.filter(s => s.owner_id === user.value.id).length);
 
 const getProfilePicture = (fileName) => new URL(`../../../assets/img/${fileName}`, import.meta.url).href;
 const previewImage = ref(null);

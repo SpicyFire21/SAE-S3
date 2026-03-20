@@ -143,40 +143,33 @@ async function getAutographsReservations() {
 async function addAutographsReservations(data) {
     const db = await pool.connect();
 
-    if (!data.iduser){
-        return { error: 1, status: 400, data: 'iduser manquant' };
-    }
-    if (!data.type){
-        return { error: 1, status: 400, data: 'type manquant' };
-    }
-    if (!data.date){
-        return { error: 1, status: 400, data: 'date manquant' };
-    }
-    if (!data.idstand){
-        return { error: 1, status: 400, data: 'idstand manquant' };
-    }
-    if (!data.idautograph){
-        return { error: 1, status: 400, data: 'idstand manquant' };
-    }
+    if (!data.iduser) return { error: 1, status: 400, data: 'iduser manquant' };
+    if (!data.type) return { error: 1, status: 400, data: 'type manquant' };
+    if (!data.date) return { error: 1, status: 400, data: 'date manquant' };
+    if (!data.idstand) return { error: 1, status: 400, data: 'idstand manquant' };
+    if (!data.idautograph) return { error: 1, status: 400, data: 'idautograph manquant' };
 
     try {
         await db.query('BEGIN');
 
-        const {rows} = await db.query('SELECT max(id) from reservations')
+        const { rows } = await db.query('SELECT max(id) FROM reservations');
+        const newId = rows[0].max + 1;
 
-        let newId = rows[0].max + 1
+        const reservationResult = await db.query(
+            'INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+            [newId, data.iduser, data.date, data.idstand, data.type]
+        );
+        const reservation = reservationResult.rows[0];
 
-        const reservation = await db.query('INSERT INTO reservations (id, user_id, date, stand_id, type) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [newId,data.iduser,data.date,data.idstand,data.type]);
-
-        const autographResservation = await db.query('INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES ($1,$2)',
-            [reservation.rows[0].id,data.idautograph]);
+        const autographReservationResult = await db.query(
+            'INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES ($1,$2) RETURNING *',
+            [reservation.id, data.idautograph]
+        );
+        const autographReservation = autographReservationResult.rows[0];
 
         await db.query('COMMIT');
-        return { error: 0, status: 201, data: {
-            reservation,
-                autographResservation
-            }};
+        return { error: 0, status: 201, data: { reservation, autographReservation } };
+
     } catch (error) {
         await db.query('ROLLBACK');
         console.error(error);

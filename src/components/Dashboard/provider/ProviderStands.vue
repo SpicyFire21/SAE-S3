@@ -34,10 +34,10 @@
 
       <div
           v-for="stand in filteredStands"
-          :key="stand.idstand"
+          :key="stand.id"
       >
         <div
-            v-if="stand.owner === userStore.currentUser.id"
+            v-if="stand.owner_id === userStore.currentUser.id"
             class="bg-white border border-yellow-300/40 rounded-2xl shadow-md mb-6 p-6
              hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
         >
@@ -47,7 +47,7 @@
             </h2>
 
             <span class="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-700 font-medium">
-              {{ standStore.getStandTypeByIdForProvider(stand.type).type }}
+              {{ standStore.getStandTypeByIdForProvider(stand.type_id).type }}
             </span>
           </div>
 
@@ -63,7 +63,7 @@
                transition-all duration-300
                shadow-sm hover:shadow-lg
                flex justify-end cursor-pointer"
-                @click="editStand(stand.idstand)"
+                @click="editStand(stand.id)"
             >
               📝 {{ t("ProviderStands.6") }}
             </button>
