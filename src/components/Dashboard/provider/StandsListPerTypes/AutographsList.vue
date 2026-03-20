@@ -23,7 +23,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-4">
-        <p><span class="font-semibold">{{ t("AutographsList.4") }}:</span> {{ formatDate(aut.beginDate) }}</p>
+        <p><span class="font-semibold">{{ t("AutographsList.4") }}:</span> {{ formatDate(aut.begin_date) }}</p>
       </div>
 
       <div class="flex justify-end gap-3">
@@ -35,7 +35,7 @@
         </button>
         <button
             class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-900 transition"
-            @click="$emit('delete-autograph', aut)"
+            @click="$emit('delete-autograph', aut.id)"
         >
           {{ t("AutographsList.6") }}
         </button>
@@ -52,7 +52,7 @@
           </select>
           <div>
             <label class="font-semibold">{{ t("AutographsList.8") }}</label>
-            <input type="datetime-local" v-model="autographStore.selectedAutograph.beginDate" class="border p-2 rounded w-full">
+            <input type="datetime-local" v-model="autographStore.selectedAutograph.begin_date" class="border p-2 rounded w-full">
           </div>
           <div>
             <label class="font-semibold">{{ t("AutographsList.9") }}</label>
@@ -71,12 +71,12 @@
       <h2 class="text-2xl font-bold mb-4">{{ t("AutographsList.2") }}</h2>
       <div class="space-y-3">
         <label class="font-semibold">{{ t("AutographsList.7") }}</label>
-        <select v-model="newAutographBase.user_id" class="border p-2 rounded w-full">
+        <select v-model="newAutographBase.iduser" class="border p-2 rounded w-full">
           <option v-for="provider in userStore.providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
         </select>
         <div>
           <label class="font-semibold">{{ t("AutographsList.8") }}</label>
-          <input type="datetime-local" v-model="newAutographBase.beginDate" class="border p-2 rounded w-full">
+          <input type="datetime-local" v-model="newAutographBase.begindate" class="border p-2 rounded w-full">
         </div>
         <div>
           <label class="font-semibold">{{ t("AutographsList.9") }}</label>
@@ -102,9 +102,9 @@ const props = defineProps({
 });
 
 const newAutographBase = ref({
-  standId: props.standId,
-  userId: "",
-  beginDate: "",
+  idstand: props.standId,
+  iduser: "",
+  begindate: "",
   duration: 0
 })
 
@@ -116,7 +116,7 @@ const showAddModal = ref(false);
 
 const autographsWithUser = computed(() =>
     autographStore.autographs
-        .filter(a => a.stand_id === props.standId)
+        .filter(a => a.stand_id === parseInt(props.standId))
         .map(aut => {
           const user = userStore.getUserById(aut.user_id);
           return { ...aut, user };
@@ -124,7 +124,13 @@ const autographsWithUser = computed(() =>
 );
 
 const editAutograph = (autograph) => {
-  autographStore.setSelectedAutograph({ ...autograph });
+  const date = new Date(autograph.begin_date)
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
+  autographStore.setSelectedAutograph({
+    ...autograph,
+    begin_date: localDate // c'est juste pour être conforme au format de la bdd sinon ca va soit pas afficher la date dans le edit,
+    // sois afficher avec une heure de retard
+  });
   showEditModal.value = true;
 };
 
@@ -139,19 +145,25 @@ const closeModal = () => {
 };
 
 const saveEditAutograph = async () => {
-  await autographStore.updateAutograph(autographStore.selectedAutograph);
+  await autographStore.updateAutograph({
+    id: autographStore.selectedAutograph.id,
+    idstand: autographStore.selectedAutograph.stand_id,
+    iduser: autographStore.selectedAutograph.user_id,
+    begindate: autographStore.selectedAutograph.begin_date,
+    duration: autographStore.selectedAutograph.duration
+  })
   showEditModal.value = false;
 };
 
 async function saveAddAutograph() {
-  if (newAutographBase.value.beginDate === "" || newAutographBase.value.user_id === "" || newAutographBase.value.duration === 0) {
+  if (newAutographBase.value.begindate === "" || newAutographBase.value.iduser === "" || newAutographBase.value.duration === 0) {
     showAddModal.value = false;
     return;
   }
   await autographStore.addAutograph(newAutographBase.value)
   showAddModal.value = false;
   newAutographBase.value.beginDate = ""
-  newAutographBase.value.userId = ""
+  newAutographBase.value.user_id = ""
   newAutographBase.value.duration = 0
 }
 

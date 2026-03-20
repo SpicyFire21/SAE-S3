@@ -161,8 +161,9 @@ export const useFilmsStore = defineStore('films', () => {
         }
     }
 
-    const getFilmByIdForProvider = (id) => {
-        return films.value.find(f => f.id === id);
+    const getFilmByIdForProvider = (id_film) => {
+        console.log("filmbyprovider:" +  JSON.stringify(films.value.find(f=> f.id === id_film)))
+        return films.value.find(f => f.id === id_film);
     }
 
     const getGenreById = async (id) => {

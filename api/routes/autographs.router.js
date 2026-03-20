@@ -155,15 +155,19 @@ router.get("/stand/:idstand", autographsController.getAutographsByStandId);
  *             properties:
  *               idstand:
  *                 type: integer
+ *                 example: 4
  *               iduser:
  *                 type: string
  *                 format: uuid
+ *                 example: "a81699b9-94d1-4f72-9df4-1588dc1b2cc5"
  *               begindate:
  *                 type: string
  *                 format: date-time
+ *                 example: "2025-12-23T18:00:00.000Z"
  *               duration:
  *                 type: integer
  *                 description: Durée en minutes
+ *                 example: 60
  *     responses:
  *       201:
  *         description: Autographe créé avec succès

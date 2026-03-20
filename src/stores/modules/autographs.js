@@ -24,7 +24,7 @@ export const useAutographsStore = defineStore('autographs', () => {
     }
 
     const removeAutograph = (autograph) => {
-        const index = autographs.value.findIndex(a => a.id === autograph.id);
+        const index = autographs.value.findIndex(a => a.id === autograph);
         if (index !== -1) {
             autographs.value.splice(index, 1);
         } else {
@@ -35,7 +35,7 @@ export const useAutographsStore = defineStore('autographs', () => {
     const editAutograph = (autograph) => {
         const index = autographs.value.findIndex(a => a.id === autograph.id)
         if (index !== -1) {
-            autographs.value.splice(index, 1, autograph)
+            autographs.value.splice(index, 1, autograph.id)
         } else {
             console.warn("autograph non trouvé :", autograph.id)
         }

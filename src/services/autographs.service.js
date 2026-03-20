@@ -2,19 +2,6 @@ import autographController from "@/datasource/controller/autographs.controller.j
 import filmsController from "@/datasource/controller/films.controller.js";
 import {deleteRequest, getRequest, postRequest, putRequest} from "@/services/axios.service.js";
 
-async function getAutographsFromLocalSource() {
-    return autographController.getAutographs()
-}
-
-async function getAutographByIdFromLocalSource(id) {
-    return autographController.getAutographById(id)
-}
-
-async function getAutographByStandIdFromLocalSource(id) {
-    return autographController.getAutographsByStandId(id)
-}
-
-
 
 async function getAutographsFromAPI() {
     return getRequest("/autographs","GET-AUTOGRAPHS");
@@ -82,14 +69,13 @@ async function updateAutographFromLocalSource(autograph) {
 
 
 async function addAutographFromAPI(autograph) {
-    return postRequest("/",autograph,"ADD-AUTOGRAPH")
+    return postRequest("/autographs",autograph,"ADD-AUTOGRAPH")
 }
 async function deleteAutographFromAPI(autograph) {
-    console.log("debug : ", autograph)
-    return  deleteRequest(`/${autograph}`,"DELETE-AUTOGRAPH")
+    return deleteRequest(`autographs/${autograph}`,"DELETE-AUTOGRAPH")
 }
 async function updateAutographFromAPI(autograph) {
-    return  putRequest("/",autograph,"UPDATE-AUTOGRAPH")
+    return  putRequest("/autographs",autograph,"UPDATE-AUTOGRAPH")
 }
 
 

@@ -73,7 +73,6 @@ const onDescriptionSaved = async (newContent) => {
   user.value.description = newContent;
   if (previewImage.value) {
     user.value.nom_photo = previewImage.value;
-    console.log("test image:" + previewImage.value)
     previewImage.value = null;
     previewTemp.value = "";
   }

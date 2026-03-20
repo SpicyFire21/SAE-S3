@@ -1,5 +1,5 @@
 <template>
-  <div v-if="stand && typeStand && stand.owner === userStore.currentUser.id"
+  <div v-if="stand && typeStand && stand.owner_id === userStore.currentUser.id"
        class="pl-64 pt-10 min-h-screen m-auto text-gray-900">
     <div class="max-w-5xl mx-auto mb-12">
       <h1 class="text-5xl font-extrabold tracking-tight mb-4 text-yellow-500">{{ stand.name }}</h1>
@@ -8,13 +8,13 @@
 
     <div class="max-w-5xl mx-auto space-y-12">
       <ProjectionsList
-          v-if="stand.type === '1'"
+          v-if="stand.type_id === 1"
           :standId="id"
           @delete-projection="deleteFilmProjection"
       />
 
       <AutographsList
-          v-else-if="stand.type === '2'"
+          v-else-if="stand.type_id === 2"
           :standId="id"
           @delete-autograph="deleteAutograph"
       />
@@ -51,14 +51,15 @@ onMounted(async () => {
 
 
   stand.value = await standStore.getStandById(id);
-  typeStand.value = await standStore.getStandTypeById(stand.value.type);
+  typeStand.value = await standStore.getStandTypeById(stand.value.type_id);
 });
 
 const deleteFilmProjection = async (projection) => {
   await filmStore.deleteProjection(projection);
 };
 
-const deleteAutograph = async (autograph) => {
-  await autographStore.deleteAutograph(autograph);
+const deleteAutograph = async (idautograph) => {
+  console.log("id autograph:" + JSON.stringify(idautograph))
+  await autographStore.deleteAutograph(idautograph);
 };
 </script>

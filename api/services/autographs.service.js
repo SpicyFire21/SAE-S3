@@ -61,11 +61,12 @@ async function addAutograph(autograph){
     if (!autograph.duration){
         return { error: 1, status: 400, data: 'duration manquant' };
     }
-
+    const { rows } = await db.query('SELECT max(id) FROM autographs');
+    const newId = rows[0].max + 1;
 
     try {
         const res = await db.query('INSERT INTO autographs (id, stand_id, user_id, begin_date, duration) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [uuidv4(),autograph.idstand,autograph.iduser,autograph.begindate,autograph.duration]);
+            [newId,autograph.idstand,autograph.iduser,autograph.begindate,autograph.duration]);
         return { error: 0, status: 201, data:res.rows[0] };
     } catch (error) {
         console.error(error);
@@ -75,53 +76,53 @@ async function addAutograph(autograph){
     }
 }
 
-async function editAutograph(autograph){
+async function editAutograph(autograph) {
     const db = await pool.connect();
-    if (!autograph.idstand){
-        return { error: 1, status: 400, data: 'idstand manquant' };
-    }
-    if (!autograph.iduser){
-        return { error: 1, status: 400, data: 'iduser manquant' };
-    }
-    if (!autograph.begindate){
-        return { error: 1, status: 400, data: 'begindate manquant' };
-    }
-    if (!autograph.duration){
-        return { error: 1, status: 400, data: 'duration manquant' };
-    }
-    if (!autograph.id){
-        return { error: 1, status: 400, data: 'id manquant' };
-    }
 
+    if (!autograph.id) return { error: 1, status: 400, data: 'id manquant' };
+    if (!autograph.idstand) return { error: 1, status: 400, data: 'idstand manquant' };
+    if (!autograph.iduser) return { error: 1, status: 400, data: 'iduser manquant' };
+    if (!autograph.begindate) return { error: 1, status: 400, data: 'begindate manquant' };
+    if (!autograph.duration) return { error: 1, status: 400, data: 'duration manquant' };
 
     try {
-
-        const res = await db.query('UPDATE autographs SET duration = $5,begin_date=$4,user_id=$3 where id=$1 and stand_id=$2; ',
-            [autograph.id,autograph.idstand,autograph.iduser,autograph.begindate,autograph.duration]);
-        return { error: 0, status: 201, data:res.rows[0] };
+        const res = await db.query(
+            'UPDATE autographs SET duration=$1, begin_date=$2, user_id=$3 WHERE id=$4 RETURNING *',
+            [autograph.duration, autograph.begindate, autograph.iduser, autograph.id]
+        );
+        return { error: 0, status: 200, data: res.rows[0] };
     } catch (error) {
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de la création de l\'autograph' };
+        return { error: 1, status: 500, data: "Erreur lors de la modification de l'autograph" };
     } finally {
         db.release();
     }
 }
 
-async function deleteAutograph(autograph){
+async function deleteAutograph(id) {
     const db = await pool.connect();
-    if (!autograph.id){
-        return { error: 1, status: 400, data: 'id manquant' };
-    }
 
+    if (!id) return { error: 1, status: 400, data: 'id manquant' };
 
     try {
+        await db.query('BEGIN');
 
-    const res = await db.query('DELETE FROM autographs WHERE id = $1 RETURNING *',
-            [autograph.id]);
-        return { error: 0, status: 201, data:res.rows[0] };
+        await db.query(
+            'DELETE FROM reservations WHERE id IN (SELECT reservation_id FROM autograph_reservations WHERE autograph_id=$1)',
+            [id]
+        );
+
+        const res = await db.query(
+            'DELETE FROM autographs WHERE id=$1 RETURNING *',
+            [id]
+        );
+
+        await db.query('COMMIT');
+        return { error: 0, status: 200, data: res.rows[0] };
     } catch (error) {
+        await db.query('ROLLBACK');
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de la création de l\'autograph' };
+        return { error: 1, status: 500, data: "Erreur lors de la suppression de l'autograph" };
     } finally {
         db.release();
     }

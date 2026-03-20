@@ -37,7 +37,7 @@
         </button>
         <button
             class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-900 transition"
-            @click="$emit('delete-projection', pr)"
+            @click="$emit('delete-projection', pr.id)"
         >
           {{ t("ProjectionsList.6") }}
         </button>
@@ -54,7 +54,7 @@
           </div>
           <div>
             <label class="font-semibold">Film</label>
-            <select v-model="filmStore.selectedProjection.filmId" class="border p-2 rounded w-full">
+            <select v-model="filmStore.selectedProjection.film_id" class="border p-2 rounded w-full">
               <option v-for="film in filmStore.films" :key="film.id" :value="film.id">{{ film.title }}</option>
             </select>
           </div>
@@ -100,8 +100,8 @@ const props = defineProps({
 });
 
 const newProjectionBase = ref({
-  standId: props.standId,
-  filmId: "",
+  stand_id: props.standId,
+  film_id: "",
   date: ""
 })
 
@@ -112,13 +112,15 @@ const showAddModal = ref(false);
 
 const projectionsWithFilms = computed(() =>
     filmStore.projections
-        .filter(p => p.standId === props.standId)
+        .filter(p => p.stand_id === parseInt(props.standId))
         .map(pr => {
-          const film = filmStore.getFilmByIdForProvider(pr.filmId);
-          const genres = filmStore.getGenresOfFilm(pr.filmId);
+          const film = filmStore.getFilmByIdForProvider(pr.film_id);
+          const genres = filmStore.getGenresOfFilm(pr.film_id);
           return { ...pr, film, genres };
         })
 );
+
+console.log("projection films:" + JSON.stringify(projectionsWithFilms.value))
 
 const editProjection = (projection) => {
   filmStore.setSelectedProjection({ ...projection }); // crée un clone
@@ -135,14 +137,14 @@ const saveEditProjection = async () => {
 };
 
 async function saveAddProjection() {
-  if (newProjectionBase.value.date === "" || newProjectionBase.value.filmId === "") {
+  if (newProjectionBase.value.date === "" || newProjectionBase.value.film_id === "") {
     showAddModal.value = false;
     return;
   }
   await filmStore.addProjection(newProjectionBase.value)
   showAddModal.value = false;
   newProjectionBase.value.date = ""
-  newProjectionBase.value.filmId = ""
+  newProjectionBase.value.film_id = ""
 }
 
 const closeModal = () => {
