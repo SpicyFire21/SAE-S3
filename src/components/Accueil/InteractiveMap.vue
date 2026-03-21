@@ -26,7 +26,6 @@
             :y="stand.y + stand.height / 2"
             :font-size="getFontSize(stand.height, stand.type_id)"
         >
-          {{ stand.name }}
         </text>
       </template>
     </svg>
