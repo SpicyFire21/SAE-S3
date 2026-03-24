@@ -324,7 +324,7 @@ async function editProjection(projection) {
     if (checkStand.rowCount === 0) {
         return { error: 1, status: 404, data: 'projection inexistant' };
     }
-    const check = await db.query('SELECT * FROM projections WHERE id = $1', [id]);
+    const check = await db.query('SELECT * FROM projections WHERE id = $1', [projection.id]);
 
     if (check.rowCount === 0) {
         return { error: 1, status: 404, data: 'projection inexistant' };
@@ -335,7 +335,7 @@ async function editProjection(projection) {
         return { error: 1, status: 404, data: 'film inexistant' };
     }
     try {
-        const res = await db.query('UPDATE projections SET stand_id=$2,film_id=$3,date=$4 where id=$1 RETURNING *',[uuidv4(),projection.idstand,projection.idfilm,projection.date]);
+        const res = await db.query('UPDATE projections SET stand_id=$2,film_id=$3,date=$4 where id=$1 RETURNING *',[projection.id,projection.idstand,projection.idfilm,projection.date]);
         return {error: 0, status: 200, data: res.rows[0]};
     } catch (error) {
         console.error(error);
