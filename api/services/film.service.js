@@ -295,7 +295,7 @@ async function addProjection(projection) {
 
     try {
         const res = await db.query('INSERT INTO projections (id, stand_id, film_id, date) VALUES ($1,$2,$3,$4) RETURNING *',[uuidv4(),projection.idstand,projection.idfilm,projection.date]);
-        return {error: 0, status: 200, data: res.rows[0]};
+        return {error: 0, status: 201, data: res.rows[0]};
     } catch (error) {
         console.error(error);
         return {error: 1, status: 500, data: 'Erreur lors de l\'ajout de la projections'};

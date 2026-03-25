@@ -162,8 +162,115 @@ router.get("/projections",filmController.getProjections);
  */
 router.post("/reservation", filmController.addFilmReservation)
 
+/**
+ * @swagger
+ * /films/projections:
+ *   post:
+ *     summary: Créer une nouvelle projection de film
+ *     tags:
+ *       - Films
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmProjectionInput'
+ *           example:
+ *             userId: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa"
+ *             type: "film"
+ *             date: "2025-12-23T14:00:00"
+ *             standId: 1
+ *             projectionId: 1
+ *     responses:
+ *       201:
+ *         description: Projections de film créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Projection'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ */
 router.post("/projections",filmController.addProjection);
+/**
+ * @swagger
+ * /films/projections:
+ *   put:
+ *     summary: Modifier une projection de film
+ *     tags:
+ *       - Films
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmProjectionUpdateInput'
+ *           example:
+ *             id: 1
+ *             date: "2025-12-24T18:00:00"
+ *             standId: 2
+ *             projectionId: 1
+ *     responses:
+ *       200:
+ *         description: Projection modifiée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Projection'
+ *       400:
+ *         description: Données invalides
+ *       500:
+ *         description: Erreur serveur
+ *
+ * /films/projections/{id}:
+ *   delete:
+ *     summary: Supprimer une projection de film
+ *     tags:
+ *       - Films
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Projection supprimée
+ *       404:
+ *         description: Projection non trouvée
+ *       500:
+ *         description: Erreur serveur
+ */
 router.put("/projections",filmController.editProjection);
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     FilmProjectionUpdateInput:
+ *       type: object
+ *       required:
+ *         - id
+ *         - standId
+ *         - projectionId
+ *         - date
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         standId:
+ *           type: integer
+ *           example: 2
+ *         projectionId:
+ *           type: integer
+ *           example: 1
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-12-24T18:00:00"
+ */
 router.delete("/projections/:id",filmController.deleteProjection);
 
 /**
