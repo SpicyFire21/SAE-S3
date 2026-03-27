@@ -23,7 +23,6 @@ async function getStandsReservationsRequestsFromAPI() {
 async function addStandRequestFromAPI(data) {
     return postRequest(`/stands/reservations`,data,"ADD-STANDS-RESERVATIONS");
 }
-
 export async function addStandRequest(data){
     let response = null;
     try {

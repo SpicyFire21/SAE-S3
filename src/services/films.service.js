@@ -332,6 +332,10 @@ async function DeleteFilmRequest(id) {
     return res;
 }
 
+async function getStandsByFilmId(id) {
+    return getRequest(`/films/${id}/stands`,"GET-STANDS-BY-FILM-ID");
+}
+
 
 export default {
     getFilms,
@@ -339,5 +343,6 @@ export default {
     getFilmCast, getFilmGenres, getGenres, getFilmById, getGenreById,updateProjection, deleteProjection, addProjection,
     AddFilm,DeleteFilm,
     //AddCast, RemoveCast,
-    AddFilmRequest, DeleteFilmRequest, GetFilmRequests, GetFilmGenresRequests
+    AddFilmRequest, DeleteFilmRequest, GetFilmRequests, GetFilmGenresRequests,
+    getStandsByFilmId
 }

@@ -13,9 +13,14 @@ export const useFilmsStore = defineStore('films', () => {
     const filmsRequests = ref([])
     const filmsGenresRequests = ref([])
     const selectedProjection = ref(null)
+    const standsInSelectedFilm = ref([])
 
     const updateFilms = (data) =>{
         films.value = data;
+    }
+
+    const updateStandsInSelectedFilm = (data) => {
+        standsInSelectedFilm.value = data
     }
 
     const updateGenres = (data) =>{
@@ -54,6 +59,18 @@ export const useFilmsStore = defineStore('films', () => {
             console.warn("Projection non trouvé :", projection.id);
         }
     };
+
+    const getStandsByFilmId = async (id) => {
+        try {
+            const response = await filmsService.getStandsByFilmId(id);
+            updateStandsInSelectedFilm(response.data)
+            console.log("test: " + JSON.stringify(response.data))
+            return response.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
 
     const pushProjection = (projection) => {
         projections.value.push(projection);
@@ -310,6 +327,10 @@ export const useFilmsStore = defineStore('films', () => {
         }
     }
 
+
+
+
+
     const init = async () => {
         await Promise.all([
             getFilms(),
@@ -345,6 +366,6 @@ export const useFilmsStore = defineStore('films', () => {
         getFilmByIdForProvider,
         deleteProjection, updateProjection, addProjection,
         getFilmRequests, addFilmRequest, deleteFilmRequest, getGenresOfFilmRequest, filmsRequests, filmsGenresRequests,
-        acceptFilmRequest, refuseFilmRequest, deleteAcceptedFilm
+        acceptFilmRequest, refuseFilmRequest, deleteAcceptedFilm, getStandsByFilmId, standsInSelectedFilm
     }
 })

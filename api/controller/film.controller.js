@@ -1,5 +1,6 @@
 import filmService from "../services/film.service.js";
 import voteService from "../services/vote.service.js";
+import standService from "../services/stand.service.js";
 
 
 export const getFilms = async (req,res) => {
@@ -150,7 +151,6 @@ export const deleteProjection = async (req,res) => {
 export const addFilmReservation = async (req,res) => {
     try {
         let data = await filmService.addFilmReservation(req.body);
-
         return res.status(data.status).json(data);
     } catch (error) {
         console.error(error);
@@ -169,4 +169,13 @@ export const getFilmsReservations = async (req,res) => {
     }
 }
 
+export const getStandsByFilmId = async (req,res) => {
+    try {
+        let data = await filmService.getStandsByFilmId(req.params.filmId);
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la récupération des stands par id de film");
+    }
+}
 

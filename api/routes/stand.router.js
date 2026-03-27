@@ -115,7 +115,6 @@ router.get("/reservations",standController.getStandsReservationsRequests)
 
 router.post("/reservations",standController.addStandRequest)
 
-
 /**
  * @swagger
  * /stands/{id}:

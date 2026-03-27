@@ -25,6 +25,27 @@ let router = express.Router()
  */
 router.get("/", filmController.getFilms)
 
+
+/**
+ * @swagger
+ * /films/reservations:
+ *   get:
+ *     summary: Récupérer tous les reservations de film
+ *     description: Retourne la liste complète des reservations de film.
+ *     tags:
+ *       - Films
+ *     responses:
+ *       200:
+ *         description: Liste des reservations de film
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/FilmReservation'
+ *       500:
+ *         description: Erreur serveur
+ */
 router.get("/reservations",filmController.getFilmsReservations)
 
 
@@ -302,6 +323,40 @@ router.delete("/projections/:id",filmController.deleteProjection);
  *         description: Erreur serveur
  */
 router.get("/:id", filmController.getFilmsById)
+
+/**
+ * @swagger
+ * /films/{filmId}/stands:
+ *   get:
+ *     summary: Récupérer les stands qui projettent un film
+ *     description: Retourne la liste des stands ayant une projection du film spécifié.
+ *     tags:
+ *       - Films
+ *     parameters:
+ *       - in: path
+ *         name: filmId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Identifiant du film
+ *     responses:
+ *       200:
+ *         description: Liste des stands
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Stand'
+ *       400:
+ *         description: Identifiant manquant
+ *       404:
+ *         description: Film non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get("/:filmId/stands", filmController.getStandsByFilmId)
 
 
 /**

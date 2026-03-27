@@ -16,6 +16,9 @@
         </div>
       </div>
   </div>
+    <div v-for="stand in filmsStore.standsInSelectedFilm">
+      {{ stand }}
+    </div>
   </div>
 </template>
 
@@ -24,17 +27,21 @@ import {useFilmsStore} from "@/stores/modules/films.js";
 import {computed, onMounted} from "vue";
 import {useRoute} from "vue-router";
 import {useI18n} from "vue-i18n";
+import {useStandsStore} from "@/stores/index.js";
 const {t, tm} = useI18n()
 const filmsStore = useFilmsStore();
+const standsStore = useStandsStore()
 const route = useRoute();
 const id = route.params.id;
 
 onMounted(async () => {
   if (!filmsStore.films.length) {
     await filmsStore.getFilms();
+    await standsStore.getStands()
     await filmsStore.getFilmGenres();
     await filmsStore.getGenres();
     await filmsStore.getFilmCast();
+    await filmsStore.getStandsByFilmId(id)
   }
 });
 
@@ -46,6 +53,7 @@ const film = computed(() =>
 );
 
 const genres = computed(() => filmsStore.getGenresOfFilm(id))
+
 
 
 const formatDuration = (minutes) => {

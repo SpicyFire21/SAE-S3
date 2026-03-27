@@ -405,10 +405,32 @@ async function getFilmsReservations() {
     const db = await pool.connect();
     try {
         const res = await db.query('SELECT * FROM film_reservations');
-        return { error: 0, status: 200, data:res.rows };
+        return {error: 0, status: 200, data: res.rows};
     } catch (error) {
         console.error(error);
-        return { error: 1, status: 500, data: 'Erreur lors de la récupération des réservations des films' };
+        return {error: 1, status: 500, data: 'Erreur lors de la récupération des réservations des films'};
+    } finally {
+        db.release();
+    }
+}
+
+async function getStandsByFilmId(filmId) {
+    const db = await pool.connect();
+    if (!filmId) {
+        return { error: 1, status: 400, data: 'filmId manquant' };
+    }
+    try {
+        const res = await db.query(
+            `SELECT DISTINCT s.*
+             FROM stands s
+             JOIN projections p ON p.stand_id = s.id
+             WHERE p.film_id = $1`,
+            [filmId]
+        );
+        return { error: 0, status: 200, data: res.rows };
+    } catch (error) {
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la récupération des stands du film' };
     } finally {
         db.release();
     }
@@ -435,6 +457,6 @@ export default {
     getProjections,
     addProjection,
     editProjection,
-    deleteProjection
-
+    deleteProjection,
+    getStandsByFilmId
 }
