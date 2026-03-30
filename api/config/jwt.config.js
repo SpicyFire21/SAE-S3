@@ -41,9 +41,8 @@ const createAccessRefreshTokens = async (jti, payload,db) => {
         pseudo: payload.pseudo,
         email:payload.email
     };
-
-    const accessToken = await createAccessToken(newPayload);
-    const refreshToken = await createRefreshToken(jti, newPayload);
+    const accessToken = await createAccessToken(newPayload,payload.droit);
+    const refreshToken = await createRefreshToken(jti, newPayload,payload.droit);
 
     await saveToken({
         id: payload.id,
@@ -59,11 +58,12 @@ const createAccessRefreshTokens = async (jti, payload,db) => {
 };
 
 
-const createRefreshToken = async (jti,payload) => {
+const createRefreshToken = async (jti,payload, role = "0") => {
     let jwtPayload = {
         id:payload.id,
         pseudo:payload.pseudo,
-        email:payload.email
+        email:payload.email,
+        droit: String(role)
     };
 
     return jwt.sign(
@@ -88,7 +88,7 @@ const createAccessToken = async (payload, role = "0") => {
     return jwt.sign(
         {
             ...jwtPayload,
-            role: String(role)
+            droit: String(role)
         },
         accessTokenSecret,
         { expiresIn: jwtExpiration }

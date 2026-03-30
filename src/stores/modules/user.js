@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', () => {
             id: tokenPayload.id,
             name: tokenPayload.name,
             email: tokenPayload.email,
-            droit: String(tokenPayload.role)
+            droit: String(tokenPayload.droit)
         };
     };
 

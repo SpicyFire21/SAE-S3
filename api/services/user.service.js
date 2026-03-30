@@ -88,7 +88,7 @@ async function login(data,meta){
         const sessionId = uuidv4();
         console.log(user)
         const accessToken = await jwtConfig.createAccessToken(user,user.droit)
-        const refreshToken = await jwtConfig.createRefreshToken(jti,user)
+        const refreshToken = await jwtConfig.createRefreshToken(jti,user,user.droit)
         const savePayload = {
             id: user.id,
             jti,
@@ -176,7 +176,6 @@ async function refreshToken(token){
             userAgent:getDetails.rows[0].user_agent,
             expiresAt:getDetails.rows[0].expires_at
         }
-
 
 
         let result = await jwtConfig.createAccessRefreshTokens(newJTI,payload,db);
