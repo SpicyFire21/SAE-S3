@@ -291,10 +291,11 @@ async function addProjection(projection) {
     if (checkFilm.rowCount === 0) {
         return { error: 1, status: 404, data: 'film inexistant' };
     }
-
+    const newid = await db.query('SELECT MAX(id) FROM projections');
+    const id = newid.rows[0].max + 1;
 
     try {
-        const res = await db.query('INSERT INTO projections (id, stand_id, film_id, date) VALUES ($1,$2,$3,$4) RETURNING *',[uuidv4(),projection.idstand,projection.idfilm,projection.date]);
+        const res = await db.query('INSERT INTO projections (id, stand_id, film_id, date) VALUES ($1,$2,$3,$4) RETURNING *',[id,projection.idstand,projection.idfilm,projection.date]);
         return {error: 0, status: 201, data: res.rows[0]};
     } catch (error) {
         console.error(error);
@@ -349,10 +350,15 @@ async function deleteProjection(id) {
     const db = await pool.connect();
     try {
         const check = await db.query('SELECT * FROM projections WHERE id = $1', [id]);
-
         if (check.rowCount === 0) {
             return { error: 1, status: 404, data: 'projection inexistant' };
         }
+
+        const checkFilmReservation = await db.query('SELECT projection_id FROM film_reservations WHERE projection_id = $1', [id]);
+        if (checkFilmReservation.rowCount !== 0) {
+            return { error: 1, status: 409, data: 'la projections existe dans une reservations de film' };
+        }
+
 
         const res = await db.query('DELETE FROM projections WHERE id = $1 RETURNING *', [id]);
 

@@ -135,7 +135,7 @@ router.get("/requests/genres", filmController.getFilmRequestsGenres)
  *   get:
  *     summary: Récupérer la liste des projections
  *     tags:
- *       - Projections
+ *       - Films
  *     responses:
  *       200:
  *         description: Liste des projections récupérée avec succès
@@ -148,7 +148,6 @@ router.get("/requests/genres", filmController.getFilmRequestsGenres)
  *       500:
  *         description: Erreur serveur
  */
-
 router.get("/projections",filmController.getProjections);
 /**
  * @swagger
@@ -197,11 +196,10 @@ router.post("/reservation", filmController.addFilmReservation)
  *           schema:
  *             $ref: '#/components/schemas/FilmProjectionInput'
  *           example:
- *             userId: "a2b1c8c4-2e53-4c37-a4de-3c4fc35b18fa"
- *             type: "film"
  *             date: "2025-12-23T14:00:00"
- *             standId: 1
- *             projectionId: 1
+ *             idstand: 1
+ *             idfilm: 6f207e95-5400-471f-a933-d01d817b0608
+ *
  *     responses:
  *       201:
  *         description: Projections de film créé
@@ -231,8 +229,8 @@ router.post("/projections",filmController.addProjection);
  *           example:
  *             id: 1
  *             date: "2025-12-24T18:00:00"
- *             standId: 2
- *             projectionId: 1
+ *             idstand: 2
+ *             idfilm: 6f207e95-5400-471f-a933-d01d817b0608
  *     responses:
  *       200:
  *         description: Projection modifiée
@@ -245,7 +243,12 @@ router.post("/projections",filmController.addProjection);
  *       500:
  *         description: Erreur serveur
  *
- * /films/projections/{id}:
+ *
+ */
+router.put("/projections",filmController.editProjection);
+/**
+ * @swagger
+ *     /films/projections/{id}:
  *   delete:
  *     summary: Supprimer une projection de film
  *     tags:
@@ -262,35 +265,10 @@ router.post("/projections",filmController.addProjection);
  *         description: Projection supprimée
  *       404:
  *         description: Projection non trouvée
+ *       409:
+ *          description: Projections existante dans une réservation
  *       500:
  *         description: Erreur serveur
- */
-router.put("/projections",filmController.editProjection);
-/**
- * @swagger
- * components:
- *   schemas:
- *     FilmProjectionUpdateInput:
- *       type: object
- *       required:
- *         - id
- *         - standId
- *         - projectionId
- *         - date
- *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *         standId:
- *           type: integer
- *           example: 2
- *         projectionId:
- *           type: integer
- *           example: 1
- *         date:
- *           type: string
- *           format: date-time
- *           example: "2025-12-24T18:00:00"
  */
 router.delete("/projections/:id",filmController.deleteProjection);
 
