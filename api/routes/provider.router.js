@@ -1,5 +1,6 @@
 import express from 'express'
 import * as providerController from "../controller/provider.controller.js"
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -39,7 +40,7 @@ router.get("/", providerController.getProviders)
  *               items:
  *                 $ref: '#/components/schemas/ProviderRequest'
  */
-router.get("/requests", providerController.getProviderRequests)
+router.get("/requests",[verifyToken,verifyRole([2])], providerController.getProviderRequests)
 
 /**
  * @swagger
@@ -82,6 +83,6 @@ router.post("/requests", providerController.addProviderRequests)
  *       404:
  *         description: Demande introuvable
  */
-router.delete("/requests/:id", providerController.deleteProviderRequests)
+router.delete("/requests/:id",[verifyToken,verifyRole([2])], providerController.deleteProviderRequests)
 
 export default router

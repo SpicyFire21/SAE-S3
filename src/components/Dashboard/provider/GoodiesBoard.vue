@@ -218,7 +218,7 @@ const sellingActive = ref(true)
 const selectedSizes = ref([])
 const selectedColors = ref([])
 const newGoodieBase = ref({
-  user_id: userStore.currentUser.id,
+  iduser: userStore.currentUser.id,
   name: "",
   price: 0,
   quantity: 0,
@@ -275,19 +275,19 @@ async function addGoodieVariants() {
 
   if (selectedSizes.value.length === 0) return
   if (selectedColors.value.length === 0) return
-
+  console.log(newGoodieBase.value)
   const newGoodie = await goodiesStore.addGoodie(newGoodieBase.value)
   console.log(newGoodie)
 
   selectedSizes.value.forEach(sizeId => {
     goodiesStore.addGoodieSize({
-      idgoodie:newGoodie.id,
+      idgoodie :newGoodie.id,
       idsize:sizeId
     })
   })
   selectedColors.value.forEach(colorId => {
     goodiesStore.addGoodieColor({
-      idgoodie:newGoodie.id,
+      idgoodie :newGoodie.id,
       idcolor:colorId
     })
 

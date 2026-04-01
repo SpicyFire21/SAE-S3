@@ -1,5 +1,6 @@
 import express from 'express'
 import * as colorController from "../controller/color.controller.js"
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -45,6 +46,6 @@ router.get("/", colorController.getColors)
  *       500:
  *         description: Erreur serveur
  */
-router.post("/", colorController.addColor)
+router.post("/",[verifyToken,verifyRole([1,2])], colorController.addColor)
 
 export default router

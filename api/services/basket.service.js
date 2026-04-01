@@ -68,12 +68,12 @@ async function getBasketByUserId(iduser){
         const res = await db.query('SELECT * FROM baskets where user_id = $1 and state = $2',[iduser,"wait"]);
         if (res.rows.length === 0 ){
             const newbasket = await db.query('INSERT INTO baskets (id,user_id,date,state) values ($1,$2,$3,$4) RETURNING *',[uuidv4(),iduser,currentDate,"wait"])
-            return { error: 0, status: 201, data:newbasket.rows };
+            return { error: 0, status: 201, data:newbasket.rows[0] };
         }
 
 
 
-        return { error: 0, status: 200, data:res.rows };
+        return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la récupération des items des paniers' };

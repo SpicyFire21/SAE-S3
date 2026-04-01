@@ -1,5 +1,6 @@
 import express from 'express'
 import * as goodieController from "../controller/goodie.controller.js"
+import {verifyToken,verifyRole} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -39,7 +40,7 @@ router.get("/", goodieController.getGoodies)
  *       201:
  *         description: Goodie créé
  */
-router.post("/", goodieController.addGoodies)
+router.post("/",[verifyToken,verifyRole([1,2])], goodieController.addGoodies)
 
 /**
  * @swagger
@@ -98,7 +99,7 @@ router.get("/sizes", goodieController.getGoodiesSizes)
  *       400:
  *         description: Données invalides
  */
-router.post("/colors", goodieController.addGoodiesColors)
+router.post("/colors",[verifyToken,verifyRole([1,2])], goodieController.addGoodiesColors)
 
 /**
  * @swagger
@@ -119,7 +120,7 @@ router.post("/colors", goodieController.addGoodiesColors)
  *       400:
  *         description: Données invalides
  */
-router.post("/sizes", goodieController.addGoodiesSizes)
+router.post("/sizes",[verifyToken,verifyRole([1,2])], goodieController.addGoodiesSizes)
 
 /**
  * @swagger
@@ -140,7 +141,7 @@ router.post("/sizes", goodieController.addGoodiesSizes)
  *       404:
  *         description: Goodie introuvable
  */
-router.delete("/:idgoodie/colors", goodieController.removeGoodiesColors)
+router.delete("/:idgoodie/colors",[verifyToken,verifyRole([1,2])], goodieController.removeGoodiesColors)
 
 /**
  * @swagger
@@ -161,7 +162,7 @@ router.delete("/:idgoodie/colors", goodieController.removeGoodiesColors)
  *       404:
  *         description: Goodie introuvable
  */
-router.delete("/:idgoodie/sizes", goodieController.removeGoodiesSizes)
+router.delete("/:idgoodie/sizes",[verifyToken,verifyRole([1,2])], goodieController.removeGoodiesSizes)
 
 /**
  * @swagger
@@ -189,7 +190,7 @@ router.delete("/:idgoodie/sizes", goodieController.removeGoodiesSizes)
  *       404:
  *         description: Goodie introuvable
  */
-router.put("/:iduser", goodieController.editGoodies)
+router.put("/:iduser",[verifyToken,verifyRole([1,2])], goodieController.editGoodies)
 
 /**
  * @swagger
@@ -215,6 +216,6 @@ router.put("/:iduser", goodieController.editGoodies)
  *               items:
  *                 $ref: '#/components/schemas/Goodie'
  */
-router.get("/:idprovider", goodieController.getGoodiesByProviderId)
+router.get("/:idprovider",[verifyToken,verifyRole([1,2])], goodieController.getGoodiesByProviderId)
 
 export default router

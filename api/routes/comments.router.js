@@ -1,5 +1,6 @@
 import express from 'express'
 import * as commentsController from "../controller/comments.controller.js";
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 
 let router = express.Router();
@@ -48,7 +49,7 @@ router.get("/",commentsController.getComments);
  *       500:
  *         description: Erreur serveur
  */
-router.post("/",commentsController.addComments);
+router.post("/",[verifyToken,verifyRole([0,1,2])],commentsController.addComments);
 
 
 export default router;

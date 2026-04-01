@@ -70,10 +70,10 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const removeBasketItem = (data) => {
         basketItems.value = basketItems.value.filter(b =>
             !(
-                b.idbasket === data.idbasket &&
-                b.idgoodie === data.idgoodie &&
-                b.idcolor === data.idcolor &&
-                b.idsize === data.idsize
+                b.basket_id === data.basket_id &&
+                b.goodie_id === data.goodie_id &&
+                b.color_id === data.color_id &&
+                b.size_id === data.size_id
             )
         )
     }
@@ -181,6 +181,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const addBasketItems = async (data) =>{
         try {
             const response = await goodiesService.addBasketItems(data);
+            console.log(response)
             if (response.error === 0){
                 pushBasketItems(response.data)
             } else {
@@ -195,6 +196,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const removeFromBasket = async (data) =>{
         try {
             const response = await goodiesService.removeFromBasket(data);
+            console.log(response)
             if (response.error === 0){
                 removeBasketItem(response.data)
             } else {
@@ -250,7 +252,6 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getSizes = async () => {
         try {
             const response = await goodiesService.getSizes();
-
             if (response.error === 0){
                 updateSizes(response.data)
             } else {
@@ -264,27 +265,34 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getGoodiesSizes = async () => {
         try {
             const response = await goodiesService.getGoodiesSizes();
-
             if (response.error === 0){
-                updateGoodiesSizes(response.data)
+                // Transformer les données pour utiliser les bons noms de propriétés
+                const transformedData = response.data.map(item => ({
+                    idgoodie: item.goodie_id,
+                    idsize: item.size_id
+                }));
+                updateGoodiesSizes(transformedData)
             } else {
                 console.error(response.data)
             }
-
         } catch (e) {
             console.error(e)
         }
     }
-    const getGoodiesColors = async () =>{
+    const getGoodiesColors = async () => {
         try {
             const response = await goodiesService.getGoodiesColors();
 
             if (response.error === 0){
-                updateGoodiesColors(response.data)
+                // Transformer les données pour utiliser les bons noms de propriétés
+                const transformedData = response.data.map(item => ({
+                    idgoodie: item.goodie_id,
+                    idcolor: item.color_id
+                }));
+                updateGoodiesColors(transformedData)
             } else {
                 console.error(response.data)
             }
-
         } catch (e) {
             console.error(e)
         }
@@ -319,6 +327,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const addGoodie = async(data) =>{
         try {
             const response = await goodiesService.addGoodie(data);
+            console.log(response)
             if (response.error === 0){
                 addGoodies(response.data)
                 return response.data

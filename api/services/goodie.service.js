@@ -78,7 +78,7 @@ async function addGoodies(data){
 
         const res = await db.query('INSERT INTO goodies (id,owner_id,name,price,quantity) values ($1,$2,$3,$4,$5) RETURNING *'
             ,[newId,data.iduser,data.name,data.price,data.quantity]);
-        return { error: 0, status: 201, data:res.rows };
+        return { error: 0, status: 201, data:res.rows[0] };
     } catch (error){
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de l\'ajout du goodie' };

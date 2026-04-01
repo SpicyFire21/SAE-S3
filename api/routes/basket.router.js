@@ -1,5 +1,6 @@
 import express from 'express'
 import * as basketController from "../controller/basket.controller.js"
+import {verifyToken,verifyRole} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -20,7 +21,7 @@ let router = express.Router()
  *               items:
  *                 $ref: '#/components/schemas/BasketItem'
  */
-router.get("/items", basketController.getAllBasketItems)
+router.get("/items",[verifyToken,verifyRole([0,1,2])], basketController.getAllBasketItems)
 
 /**
  * @swagger
@@ -39,7 +40,7 @@ router.get("/items", basketController.getAllBasketItems)
  *       201:
  *         description: Item ajouté au panier
  */
-router.post("/items", basketController.addBasketItems)
+router.post("/items",[verifyToken,verifyRole([0,1,2])], basketController.addBasketItems)
 
 /**
  * @swagger
@@ -63,7 +64,7 @@ router.post("/items", basketController.addBasketItems)
  *             schema:
  *               $ref: '#/components/schemas/Basket'
  */
-router.get("/current/:iduser", basketController.getBasketByUserId)
+router.get("/current/:iduser",[verifyToken,verifyRole([0,1,2])], basketController.getBasketByUserId)
 
 /**
  * @swagger
@@ -89,7 +90,7 @@ router.get("/current/:iduser", basketController.getBasketByUserId)
  *               items:
  *                 $ref: '#/components/schemas/BasketItem'
  */
-router.get("/:idbasket/items", basketController.getBasketItems)
+router.get("/:idbasket/items",[verifyToken,verifyRole([0,1,2])], basketController.getBasketItems)
 
 /**
  * @swagger
@@ -126,7 +127,7 @@ router.get("/:idbasket/items", basketController.getBasketItems)
  *       404:
  *         description: Item non trouvé
  */
-router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize", basketController.removeFromBasket)
+router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize",[verifyToken,verifyRole([0,1,2])], basketController.removeFromBasket)
 
 /**
  * @swagger
@@ -152,7 +153,7 @@ router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize", basketController.re
  *               items:
  *                 $ref: '#/components/schemas/Basket'
  */
-router.get("/:iduser", basketController.getAllBasketByUserId)
+router.get("/:iduser",[verifyToken,verifyRole([0,1,2])], basketController.getAllBasketByUserId)
 
 /**
  * @swagger
@@ -176,6 +177,6 @@ router.get("/:iduser", basketController.getAllBasketByUserId)
  *             schema:
  *               $ref: '#/components/schemas/Basket'
  */
-router.patch("/:idbasket", basketController.payOrder)
+router.patch("/:idbasket",[verifyToken,verifyRole([0,1,2])], basketController.payOrder)
 
 export default router

@@ -16,17 +16,17 @@
         <h2 class="font-semibold mb-3">{{ t('GoodiesBuy.2') }}</h2>
         <div
             v-for="item in groupedBasketItems"
-            :key="`${item.idgoodie}-${item.idcolor}-${item.idsize}`"
+            :key="`${item.goodie_id}-${item.idcolor}-${item.size_id}`"
             class="flex justify-between mb-1"
         >
           <span>
-            {{ goodiesStore.getName(item.idgoodie) }}
-            ({{ goodiesStore.getColor(item.idcolor) }} /
-            {{ goodiesStore.getSize(item.idsize) }})
+            {{ goodiesStore.getName(item.goodie_id) }}
+            ({{ goodiesStore.getColor(item.color_id) }} /
+            {{ goodiesStore.getSize(item.size_id) }})
             × {{ item.count }}
           </span>
           <span>
-            {{ (item.count * goodiesStore.getPrice(item.idgoodie)).toFixed(2) }} €
+            {{ (item.count * goodiesStore.getPrice(item.goodie_id)).toFixed(2) }} €
           </span>
         </div>
 
@@ -143,14 +143,12 @@ onMounted(async () => {
   await goodiesStore.getGoodiesColors()
 
   if (userStore.currentUser) {
-    // await goodiesStore.getBasketByUserId(userStore.currentUser.id)
-    // await goodiesStore.getBasketItems(goodiesStore.basket.id)
+    await goodiesStore.getBasketByUserId(userStore.currentUser.id)
+    await goodiesStore.getBasketItems(goodiesStore.basket.id)
     firstname.value = userStore.currentUser.name
     lastname.value = userStore.currentUser.lastname
     email.value = userStore.currentUser.email
   }
-
-
 
 
 })
@@ -171,7 +169,7 @@ const groupedBasketItems = computed(() => {
   const map = {}
 
   goodiesStore.basketItems.forEach(item => {
-    const key = `${item.idgoodie}-${item.idcolor}-${item.idsize}`
+    const key = `${item.goodie_id}-${item.color_id}-${item.size_id}`
     if (!map[key]) {
       map[key] = { ...item, count: Number(item.count) }
     } else {
@@ -184,7 +182,7 @@ const groupedBasketItems = computed(() => {
 const total = computed(() =>
     groupedBasketItems.value.reduce(
         (sum, item) =>
-            sum + goodiesStore.getPrice(item.idgoodie) * item.count,
+            sum + goodiesStore.getPrice(item.goodie_id) * item.count,
         0
     )
 )

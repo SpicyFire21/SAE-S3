@@ -95,7 +95,7 @@ router.delete("/logout",userController.logout)
  *         description: Données invalides
  */
 router.post("/register", userController.addUser)
-
+    
 router.post("/refreshtoken",userController.refreshToken)
 
 router.get("/:id/reservations", userController.getReservationsByUserId)

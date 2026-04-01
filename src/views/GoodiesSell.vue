@@ -19,6 +19,7 @@
       </header>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
         <article
             v-for="(goodie, index) in goodiesStore.goodiesWithOptions"
             :key="index"
@@ -56,6 +57,8 @@
 
             <!-- OPTIONS -->
             <div class="flex gap-3 mt-2">
+
+
               <select
                   v-model="selectedColors[goodie.id]"
                   class="border rounded-xl px-3 py-2 bg-white focus:ring-2 focus:ring-yellow-400"
@@ -100,6 +103,7 @@
 
     <!-- PANIER -->
     <aside
+        v-if="goodiesStore.goodies.length > 0"
         class="w-96 bg-white border border-neutral-200 p-6 rounded-2xl shadow-xl sticky top-16 h-[calc(100vh-4rem)] flex flex-col ml-8"
     >
       <h2 class="text-2xl mb-4">
@@ -115,23 +119,24 @@
             :key="index"
             class="py-3 border-b border-neutral-200"
         >
+
           <div class="flex justify-between items-start gap-4">
             <div class="flex flex-col gap-1">
-      <span>
-        {{ goodiesStore.getName(item.idgoodie) }}
+      <span v-if="item.goodie_id">
+        {{ goodiesStore.getName(item.goodie_id) }}
       </span>
 
-              <div class="text-sm text-neutral-500">
-                {{t('GoodiesSell.3')}} : {{ goodiesStore.getColor(item.idcolor) }} ·
-                {{t('GoodiesSell.4')}} : {{ goodiesStore.getSize(item.idsize) }}
+              <div v-if="item.goodie_id" class="text-sm text-neutral-500">
+                {{t('GoodiesSell.3')}} : {{ goodiesStore.getColor(item.goodie_id) }} ·
+                {{t('GoodiesSell.4')}} : {{ goodiesStore.getSize(item.goodie_id) }}
               </div>
 
-              <div class="text-sm">
-                {{ item.count }} × {{ goodiesStore.getPrice(item.idgoodie) }} €
+              <div v-if="item.goodie_id" class="text-sm">
+                {{ item.count }} × {{ goodiesStore.getPrice(item.goodie_id) }} €
               </div>
 
-              <div class="text-yellow-500 text-sm">
-                Total : {{ (goodiesStore.getPrice(item.idgoodie) * item.count).toFixed(2) }} €
+              <div v-if="item.goodie_id" class="text-yellow-500 text-sm">
+                Total : {{ (Number(goodiesStore.getPrice(item.goodie_id)) * item.count).toFixed(2) }} €
               </div>
             </div>
 
@@ -182,6 +187,8 @@ const goodiesStore = useGoodiesStore();
 const getImg = (img) => new URL(`../assets/goodies/${img}.png`, import.meta.url).href
 
 async function addBasket(goodie, count) {
+
+
   const idcolor = selectedColors.value[goodie.id]
   const idsize = selectedSizes.value[goodie.id]
 
@@ -201,7 +208,13 @@ async function addBasket(goodie, count) {
 
 const total = computed(() => {
   return goodiesStore.basketItems.reduce((sum, item) => {
-    return sum + (goodiesStore.getPrice(item.idgoodie) || 0) * Number(item.count)
+    // Vérifier si item et item.idgoodie existent
+    if (!item || !item.goodie_id) return sum
+
+    const price = goodiesStore.getPrice(item.goodie_id) || 0
+    const count = Number(item.count) || 0
+
+    return sum + (price * count)
   }, 0)
 })
 
@@ -218,15 +231,22 @@ async function command(){
 }
 
 async function removeFromBasket(item){
-  console.log(item)
-  await goodiesStore.removeFromBasket(item);
+
+  await goodiesStore.removeFromBasket(
+      {
+        idbasket:item.basket_id  ,
+        idgoodie:item.goodie_id,
+        idcolor:item.color_id,
+        idsize:item.size_id
+      }
+  );
 }
 
 const groupedBasketItems = computed(() => {
   const map = {}
-
   goodiesStore.basketItems.forEach(item => {
-    const key = `${item.idgoodie}-${item.idcolor}-${item.idsize}`
+
+    const key = `${item.goodie_id}-${item.color_id}-${item.size_id}`
     if (!map[key]) {
       map[key] = { ...item, count: Number(item.count) }
     }
@@ -248,6 +268,7 @@ onMounted(async () => {
   }
 
   goodiesStore.goodiesWithOptions.forEach(goodie => {
+
     const firstColorRelation = goodiesStore.goodiesColors.find(gc => gc.idgoodie === goodie.id)
     const firstSizeRelation = goodiesStore.goodiesSizes.find(gs => gs.idgoodie === goodie.id)
     selectedColors.value[goodie.id] = firstColorRelation?.idcolor ?? null

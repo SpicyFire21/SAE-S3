@@ -1,5 +1,6 @@
 import express from 'express'
 import * as ticketController from "../controller/ticket.controller.js"
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -28,7 +29,7 @@ let router = express.Router()
  *       404:
  *         description: Données inexistante
  */
-router.post("/", ticketController.createTicket)
+router.post("/",[verifyToken,verifyRole([0,1,2])], ticketController.createTicket)
 
 /**
  * @swagger
