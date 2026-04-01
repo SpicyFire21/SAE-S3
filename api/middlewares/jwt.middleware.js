@@ -26,7 +26,7 @@ export const verifyToken = (req, res, next) => {
             return catchError(err,res);
         }
 
-        if (!decoded.type) {
+        if (!decoded.droit) {
 
             return res.status(403).json({ message: "Unauthorized" });
         }
@@ -38,7 +38,13 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyRole = (roles) => (req,res,next) => {
-    if (roles.includes(req.userRole)) {
+
+    console.log(roles)
+    console.log(req.userRole)
+
+    const tokenRole = Number(req.userRole)
+
+    if (roles.includes(tokenRole)) {
         next();
     } else {
         res.status(403).send({ message: "Accès réservé à certains rôles!" });

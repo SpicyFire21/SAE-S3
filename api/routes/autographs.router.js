@@ -1,6 +1,6 @@
 import express from 'express'
 import * as autographsController from "../controller/autographs.controller.js";
-import * as filmController from "../controller/film.controller.js";
+import { verifyToken, verifyRole } from "../middlewares/jwt.middleware.js";
 
 
 let router = express.Router();
