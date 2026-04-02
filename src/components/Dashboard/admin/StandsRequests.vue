@@ -64,7 +64,7 @@ async function acceptReservation(sr) {
 
 
 async function refuseReservation(sr) {
-  sr.status = "refused";
+  await standStore.deleteStandReservation(sr.id)
 }
 
 

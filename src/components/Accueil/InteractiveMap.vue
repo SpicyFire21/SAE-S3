@@ -151,7 +151,7 @@ const confirmReservation = async () => {
     idstand: standsStore.selectedStand.id,
     iduser: userStore.currentUser.id,
   });
-  console.log("standsStore reservations:" + JSON.stringify(standsStore.standReservationsRequests))
+  await standsStore.getStandsReservationsRequests()
   closeModal();
 }
 

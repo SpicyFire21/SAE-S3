@@ -1,5 +1,5 @@
 import standController from "@/datasource/controller/stands.controller.js"
-import {getRequest, postRequest} from "@/services/axios.service.js";
+import {deleteRequest, getRequest, postRequest} from "@/services/axios.service.js";
 
 async function getStandsFromAPI(){
     return getRequest("/stands","GET-STANDS");
@@ -14,6 +14,10 @@ async function getStandByIdFromAPI(id) {
 
 async function getTypeStandByIdFromAPI(id) {
     return getRequest(`/stands/types/${id}`,"GET-STANDS-TYPES-BY-ID");
+}
+
+async function deleteStandReservationFromAPI(id) {
+    return deleteRequest(`/stands/reservations/${id}`,"DELETE-STAND-RESERVATION");
 }
 
 async function getStandsReservationsRequestsFromAPI() {
@@ -59,6 +63,17 @@ export async function getStandTypeById(id){
     return response;
 }
 
+export async function deleteStandReservation(id){
+    let response = null;
+    try {
+        response = await deleteStandReservationFromAPI(id);
+
+    } catch (err){
+        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer la demande de reservation de stand'}
+    }
+    return response;
+}
+
 
 export async function getStandById(id){
     let response = null;
@@ -98,5 +113,6 @@ export async function getStandsTypes(){
 }
 
 export default {
-    getStands, getStandsTypes, getStandById, getStandTypeById, addStandRequest, getStandsReservationsRequests
+    getStands, getStandsTypes, getStandById, getStandTypeById, addStandRequest, getStandsReservationsRequests,
+    deleteStandReservation
 }

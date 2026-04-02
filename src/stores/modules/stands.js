@@ -41,6 +41,15 @@ export const useStandsStore = defineStore('stands', () => {
         standReservationsRequests.value.push(data);
     }
 
+    const removeStandReservation = (sr) => {
+        const index = standReservationsRequests.value.findIndex(sr => sr.id === sr.id);
+        if (index !== -1) {
+            standReservationsRequests.value.splice(index, 1);
+        } else {
+            console.warn("Reservation de stand non trouvé :", sr.id);
+        }
+    };
+
 
     const getProjectionsByStandAndFilm = (standId, filmId) => {
         return filmStore.projections.filter(
@@ -108,6 +117,17 @@ export const useStandsStore = defineStore('stands', () => {
     }
 
 
+    const deleteStandReservation = async (id) => {
+        try {
+            const response = await standsService.deleteStandReservation(id);
+            removeStandReservation(response.data)
+            return response.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     const getStandTypeById = async (id) => {
         try {
             const response = await standsService.getStandTypeById(id);
@@ -131,6 +151,6 @@ export const useStandsStore = defineStore('stands', () => {
         stands, selectedStand, getStands, setSelectedStand,
         clearSelectedStand, getStandsTypes, standsTypes, init,
         getProjectionsByStandAndFilm, getStandById, getStandTypeById, getStandsReservationsRequests, addStandRequest, standReservationsRequests,
-        getStandByIdForAdmin, getStandTypeByIdForProvider
+        getStandByIdForAdmin, getStandTypeByIdForProvider, deleteStandReservation
     }
 })
