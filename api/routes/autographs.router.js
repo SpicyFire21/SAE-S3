@@ -139,6 +139,8 @@ router.get("/stand/:idstand", autographsController.getAutographsByStandId);
  * /autographs:
  *   post:
  *     summary: Ajouter un autographe
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Autographs
  *     requestBody:
@@ -183,6 +185,8 @@ router.post("/", [verifyToken, verifyRole([1, 2])], autographsController.addAuto
  * /autographs:
  *   put:
  *     summary: Modifier un autographe
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Autographs
  *     requestBody:
@@ -226,6 +230,8 @@ router.put("/", [verifyToken, verifyRole([1, 2])], autographsController.editAuto
  * /autographs/{id}:
  *   delete:
  *     summary: Supprimer un autographe
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Autographs
  *     parameters:

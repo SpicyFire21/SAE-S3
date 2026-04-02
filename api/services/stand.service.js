@@ -102,6 +102,31 @@ async function addStandRequest(data) {
     }
 }
 
+async function removeStandRequest(reservationId) {
+    const db = await pool.connect();
+
+    if (!reservationId) {
+        return {error: 1, status: 400, data: "idreservation manquant"};
+    }
+
+
+    const {rows} = await db.query('SELECT * FROM stand_reservation_requests WHERE id = $1',[reservationId]);
+
+    if(rows.length === 0) {
+        return {error: 1, status: 404, data: "Cette reservation n'existe plus"};
+    }
+
+    try {
+        const res = await db.query('DELETE FROM stand_reservation_requests WHERE id = $1 RETURNING *', [reservationId]);
+        return {error: 0, status: 200, data: res.rows[0]};
+    } catch (error) {
+        console.error(error);
+        return {error: 1, status: 500, data: 'Erreur lors de l\'ajout d\'un requête de stands'};
+    } finally {
+        db.release();
+    }
+}
+
 
 export default {
     getStands,
@@ -110,4 +135,5 @@ export default {
     getStandTypeById,
     getStandsReservationsRequests,
     addStandRequest,
+    removeStandRequest
 }

@@ -9,6 +9,8 @@ let router = express.Router()
  * /baskets/items:
  *   get:
  *     summary: Récupérer tous les items de panier (admin / debug)
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     responses:
@@ -28,6 +30,8 @@ router.get("/items",[verifyToken,verifyRole([0,1,2])], basketController.getAllBa
  * /baskets/items:
  *   post:
  *     summary: Ajouter un item au panier
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     requestBody:
@@ -47,6 +51,8 @@ router.post("/items",[verifyToken,verifyRole([0,1,2])], basketController.addBask
  * /baskets/current/{iduser}:
  *   get:
  *     summary: Récupérer le panier actif d’un utilisateur
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     parameters:
@@ -71,6 +77,8 @@ router.get("/current/:iduser",[verifyToken,verifyRole([0,1,2])], basketControlle
  * /baskets/{idbasket}/items:
  *   get:
  *     summary: Récupérer les items d’un panier
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     parameters:
@@ -97,6 +105,8 @@ router.get("/:idbasket/items",[verifyToken,verifyRole([0,1,2])], basketControlle
  * /baskets/{idbasket}/items/{idgoodie}/{idcolor}/{idsize}:
  *   delete:
  *     summary: Supprimer un item précis du panier
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     parameters:
@@ -134,6 +144,8 @@ router.delete("/:idbasket/items/:idgoodie/:idcolor/:idsize",[verifyToken,verifyR
  * /baskets/{iduser}:
  *   get:
  *     summary: Récupérer tous les paniers d’un utilisateur
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     parameters:
@@ -160,6 +172,8 @@ router.get("/:iduser",[verifyToken,verifyRole([0,1,2])], basketController.getAll
  * /baskets/{idbasket}:
  *   patch:
  *     summary: Payer un panier
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Baskets
  *     parameters:

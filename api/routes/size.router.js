@@ -28,6 +28,8 @@ router.get("/", sizeController.getSizes)
  * /sizes:
  *   post:
  *     summary: Ajouter une taille
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Sizes
  *     requestBody:

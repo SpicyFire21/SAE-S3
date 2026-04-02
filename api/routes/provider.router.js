@@ -28,6 +28,8 @@ router.get("/", providerController.getProviders)
  * /providers/requests:
  *   get:
  *     summary: Récupérer les demandes de prestataires
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Providers
  *     responses:
@@ -47,6 +49,8 @@ router.get("/requests",[verifyToken,verifyRole([2])], providerController.getProv
  * /providers/requests:
  *   post:
  *     summary: Ajouter une demande de prestataire
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Providers
  *     requestBody:
@@ -68,6 +72,8 @@ router.post("/requests", [verifyToken, verifyRole([1, 2])], providerController.a
  * /providers/requests/{id}:
  *   delete:
  *     summary: Supprimer une demande de prestataire
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Providers
  *     parameters:

@@ -30,6 +30,8 @@ router.get("/",commentsController.getComments);
  * /comments:
  *   post:
  *     summary: Ajouter un commentaire dans le livre d'or
+ *     security:
+ *       - bearerAuth: []
  *     tags: [CommentsGoldenBook]
  *     requestBody:
  *       required: true

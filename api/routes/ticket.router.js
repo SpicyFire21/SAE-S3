@@ -9,6 +9,8 @@ let router = express.Router()
  * /tickets:
  *   post:
  *     summary: Créer un billet
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Tickets
  *     requestBody:

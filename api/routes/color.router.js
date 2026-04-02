@@ -30,6 +30,8 @@ router.get("/", colorController.getColors)
  * /colors:
  *   post:
  *     summary: Ajouter une nouvelle couleur
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Colors
  *     requestBody:

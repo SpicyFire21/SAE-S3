@@ -95,6 +95,8 @@ router.get("/reservations",standController.getStandsReservationsRequests)
  *   post:
  *     tags: [Stands]
  *     summary: Créer une demande de réservation de stand
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -104,17 +106,45 @@ router.get("/reservations",standController.getStandsReservationsRequests)
  *     responses:
  *       201:
  *         description: Demande créée
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/StandReservationRequest'
  *       400:
  *         description: Données invalides
+ *       401:
+ *         description: Non authentifié
+ *       403:
+ *         description: Accès refusé
  *       500:
  *         description: Erreur serveur
  */
+router.post("/reservations", [verifyToken, verifyRole([1,2])], standController.addStandRequest)
 
-router.post("/reservations", [verifyToken, verifyRole([1])], standController.addStandRequest)
+/**
+ * @swagger
+ * /stands/reservations/{idreservation}:
+ *   delete:
+ *     tags: [Stands]
+ *     summary: Supprimer une demande de réservation de stand
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: idreservation
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Demande supprimée
+ *       401:
+ *         description: Non authentifié
+ *       403:
+ *         description: Accès refusé
+ *       404:
+ *         description: Non trouvée
+ *       500:
+ *         description: Erreur serveur
+ */
+router.delete("/reservations/:idreservation", [verifyToken, verifyRole([1,2])], standController.removeStandRequest)
+
 
 /**
  * @swagger

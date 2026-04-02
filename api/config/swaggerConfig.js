@@ -22,6 +22,7 @@ const swaggerOptions = {
         path.join(__dirname, "../routes/*.js"),
         path.join(__dirname, "./schema/Outputs/*.js"),   // ← schémas
         path.join(__dirname, "./schema/Inputs/*.js"),
+        path.join(__dirname, "./schema/*.js"),
     ],};
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

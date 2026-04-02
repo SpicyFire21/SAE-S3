@@ -69,8 +69,13 @@ export const addStandRequest = async (req,res) => {
 }
 
 
+export const removeStandRequest = async (req,res) => {
+    try {
+        let data = await standService.removeStandRequest(req.params.idreservation);
 
-
-
-
-
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression d'un requête de stands");
+    }
+}

@@ -188,6 +188,8 @@ router.post("/reservation", filmController.addFilmReservation)
  * /films/projections:
  *   post:
  *     summary: Créer une nouvelle projection de film
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Films
  *     requestBody:
@@ -219,6 +221,8 @@ router.post("/projections", [verifyToken, verifyRole([1, 2])], filmController.ad
  * /films/projections:
  *   put:
  *     summary: Modifier une projection de film
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Films
  *     requestBody:
@@ -252,6 +256,8 @@ router.put("/projections", [verifyToken, verifyRole([1, 2])], filmController.edi
  *     /films/projections/{id}:
  *   delete:
  *     summary: Supprimer une projection de film
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Films
  *     parameters:

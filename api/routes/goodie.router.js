@@ -28,6 +28,8 @@ router.get("/", goodieController.getGoodies)
  * /goodies:
  *   post:
  *     summary: Ajouter un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     requestBody:
@@ -85,6 +87,8 @@ router.get("/sizes", goodieController.getGoodiesSizes)
  * /goodies/colors:
  *   post:
  *     summary: Associer une couleur à un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     requestBody:
@@ -106,6 +110,8 @@ router.post("/colors",[verifyToken,verifyRole([1,2])], goodieController.addGoodi
  * /goodies/sizes:
  *   post:
  *     summary: Associer une taille à un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     requestBody:
@@ -127,6 +133,8 @@ router.post("/sizes",[verifyToken,verifyRole([1,2])], goodieController.addGoodie
  * /goodies/{idgoodie}/colors:
  *   delete:
  *     summary: Supprimer toutes les couleurs d’un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     parameters:
@@ -148,6 +156,8 @@ router.delete("/:idgoodie/colors",[verifyToken,verifyRole([1,2])], goodieControl
  * /goodies/{idgoodie}/sizes:
  *   delete:
  *     summary: Supprimer toutes les tailles d’un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     parameters:
@@ -169,6 +179,8 @@ router.delete("/:idgoodie/sizes",[verifyToken,verifyRole([1,2])], goodieControll
  * /goodies/{iduser}:
  *   put:
  *     summary: Modifier un goodie
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     parameters:
@@ -197,6 +209,8 @@ router.put("/:iduser",[verifyToken,verifyRole([1,2])], goodieController.editGood
  * /goodies/{idprovider}:
  *   get:
  *     summary: Récupérer les goodies d’un prestataire
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Goodies
  *     parameters:
