@@ -146,7 +146,7 @@ async function editStandRequest(payload) {
         return {error: 1, status: 400, data: "idreservation manquant"};
     }
     try {
-
+        await db.query("BEGIN");
         const checkRequests = await db.query('SELECT * FROM stand_reservation_requests WHERE id = $1', [payload.idreservation]);
         if (checkRequests.rows.length === 0) {
             return {error: 1, status: 404, data: "Cette reservation n'existe plus"};
@@ -160,9 +160,11 @@ async function editStandRequest(payload) {
         }
 
         const editStandRequest = await db.query('UPDATE stand_reservation_requests SET status=$2 WHERE id = $1 RETURNING *', [payload.idreservation,"accepted"]);
+        await db.query("COMMIT");
         return {error: 0, status: 200, data: editStandRequest.rows[0]};
     } catch (error) {
         console.error(error);
+        await db.query("ROLLBACK");
         return {error: 1, status: 500, data: 'Erreur lors de l\'ajout d\'un requête de stands'};
     } finally {
         db.release();

@@ -410,6 +410,22 @@ async function removeFromBasket(data){
     return response;
 }
 
+async function deleteGoodieFromAPI(id){
+    return deleteRequest(`/goodies/${id}`,"DELETE-GOODIE");
+}
+
+async function deleteGoodie(id){
+    let response = null;
+    try {
+        response = await deleteGoodieFromAPI(id);
+
+    } catch (err){
+        console.error(err)
+        response = {error:1, status:404,data:'erreur réseau, impossible de supprimer le goodie '}
+    }
+    return response;
+}
+
 
 export default {
     getBasketByUserId,
@@ -432,5 +448,6 @@ export default {
     addBasketItems,
     getAllBasketByUserId,
     getAllBasketItems,
-    removeFromBasket
+    removeFromBasket,
+    deleteGoodie
 }

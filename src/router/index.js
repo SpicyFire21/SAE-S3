@@ -101,7 +101,7 @@ const router = createRouter({
 router.beforeEach((to) => {
     const userStore = useUserStore()
     const isLogged = !!userStore.currentUser
-    const userRole = userStore.currentUser?.droit
+    const userRole = String(userStore.currentUser?.droit)
 
     if (to.meta.requiresAuth && !isLogged) {
         return { name: 'LoginPage' }

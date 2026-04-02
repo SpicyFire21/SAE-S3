@@ -230,6 +230,30 @@ async function addGoodiesSizes(data){
     }
 }
 
+async function removeGoodie(goodieId){
+    const db = await pool.connect();
+    if (!goodieId) {
+        return { error: 1, status: 400, data: 'idgoodie manquant' };
+    }
+
+
+    try {
+        const check = await db.query('SELECT * FROM goodies where id=$1',[goodieId]);
+        if (check.rows.length === 0){
+            return { error: 1, status: 404, data:"goodies inexistant" };
+        }
+
+        const res = await db.query('DELETE FROM goodies where id=$1 RETURNING *'
+            ,[goodieId]);
+        return { error: 0, status: 200, data:res.rows[0] };
+    } catch (error){
+        console.error(error);
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression du goodie' };
+    }finally {
+        db.release();
+    }
+}
+
 export default {
     getGoodies,
     getGoodiesByProviderId,
@@ -240,7 +264,8 @@ export default {
     removeGoodiesColors,
     removeGoodiesSizes,
     addGoodiesColors,
-    addGoodiesSizes
+    addGoodiesSizes,
+    removeGoodie
 
 
 }

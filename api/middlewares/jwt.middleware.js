@@ -39,8 +39,7 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyRole = (roles) => (req,res,next) => {
 
-    console.log(roles)
-    console.log(req.userRole)
+
 
     const tokenRole = Number(req.userRole)
 
