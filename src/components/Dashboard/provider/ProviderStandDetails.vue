@@ -59,7 +59,6 @@ const deleteFilmProjection = async (projection) => {
 };
 
 const deleteAutograph = async (idautograph) => {
-  console.log("id autograph:" + JSON.stringify(idautograph))
   await autographStore.deleteAutograph(idautograph);
 };
 </script>

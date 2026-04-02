@@ -1,77 +1,77 @@
 <template>
-  <div class="text-center pt-10">
-    <img :src="autographImage" alt="cinema" class="m-auto rounded-lg w-150 h-72">
-    <h1 class="pt-4 text-2xl font-bold">{{t("AutographStandDetails.1")}} :</h1>
-  </div>
+  <div>
 
-  <div v-if="autographs.length" class="mt-6 max-w-3xl mx-auto flex flex-col gap-4">
-    <div
-        v-for="autograph in autographs"
-        :key="autograph.id"
-        class="p-4 border border-gray-200 rounded-xl shadow-sm bg-white hover:shadow-md transition-shadow duration-200"
-    >
-      <img :src="getUserImage(autograph.userProfilePicture)" alt="Utilisateur"
-           class="w-24 h-24 rounded-full mx-auto mb-2">
-      <div class="flex items-center justify-between mb-2">
-        <span class="font-semibold text-lg text-[var(--jaune)]">
-          {{ autograph.userName }}
-        </span>
-        <button @click="openModal(autograph)"
-                class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
-                disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="!userStore.currentUser || userStore.currentUser.droit === '1'">
-          {{t("AutographStandDetails.2")}}
-        </button>
-      </div>
-      <div class="text-gray-700 text-sm space-y-1">
-        <p>
-          <span class="font-medium">{{t("AutographStandDetails.3")}} :</span>
-          {{ formatDate(autograph.begin_date) }}
-        </p>
-        <p>
-          <span class="font-medium">{{t("AutographStandDetails.4")}} :</span>
-          {{ formatDate(new Date(new Date(autograph.begin_date).getTime() + autograph.duration * 60000)) }}
-<!--          date de fin (* 60000 c'est conversion minute en miliseconds)-->
-        </p>
-      </div>
+    <div class="flex items-center gap-4 mb-8">
+      <h2 class="text-gray-900 text-xl font-bold tracking-tight whitespace-nowrap">{{ t("AutographStandDetails.1") }}</h2>
+      <div class="h-px flex-1 bg-gray-100"></div>
+      <span class="text-gray-400 text-xs font-semibold tracking-widest uppercase">{{ autographs.length }} invités</span>
     </div>
-  </div>
 
-  <div v-else class="text-center mt-6 text-gray-500">
-    {{t("AutographStandDetails.5")}}
-  </div>
-
-  <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-    <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
-      <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">✕</button>
-      <h2 class="text-xl font-bold mb-4">{{t("AutographStandDetails.6")}}</h2>
-      <p class="mb-4">{{t("AutographStandDetails.7")}} : <strong>{{ autographStore.selectedAutograph.userName }}</strong></p>
-      <div class="flex flex-col gap-2 max-h-60 overflow-y-auto items-center">
-      <span class="inline-block py-2 px-4 rounded border bg-gray-100 border-gray-300 text-center">
-        Le {{ formatDate(autographStore.selectedAutograph.begin_date) }}<br>{{t("AutographStandDetails.8")}} {{ formatDuration(autographStore.selectedAutograph.duration) }}
-      </span>
-      </div>
-      <button
-          @click="confirmAutographReservation"
-          class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full
-          disabled:opacity-50 mt-3"
-          :disabled="!autographStore.selectedAutograph || hasAlreadyReservedAutograph"
+    <div v-if="autographs.length" class="flex flex-col gap-3">
+      <div
+          v-for="autograph in autographs"
+          :key="autograph.id"
+          class="rounded-2xl border border-gray-100 bg-gray-50 p-5 hover:border-gray-200"
       >
-        Confirmer la réservation
-      </button>
-      <p v-if="hasAlreadyReservedAutograph" class="text-red-500 text-sm mt-5">
-        {{t("AutographStandDetails.9")}}
-      </p>
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4 flex-1 min-w-0">
+            <img :src="getUserImage(autograph.userProfilePicture)" alt="Utilisateur"
+                 class="w-14 h-14 rounded-full object-cover shrink-0">
+            <div>
+              <p class="text-gray-900 font-bold text-base leading-tight mb-1">{{ autograph.userName }}</p>
+              <p class="text-gray-400 text-sm">{{ t("AutographStandDetails.3") }} : {{ formatDate(autograph.begin_date) }}</p>
+              <p class="text-gray-400 text-sm">{{ t("AutographStandDetails.4") }} : {{ formatDate(new Date(new Date(autograph.begin_date).getTime() + autograph.duration * 60000)) }}</p>
+            </div>
+          </div>
+          <button @click="openModal(autograph)"
+                  class="shrink-0 bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-sm font-bold px-5 py-2.5 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
+                  :disabled="!userStore.currentUser || userStore.currentUser.droit === '1'">
+            {{ t("AutographStandDetails.2") }}
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div v-if="showSuccessPopup"
-       class="fixed top-1/10 left-1/2 -translate-x-1/2
-            bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl
-            z-50 text-center">
-    🎉 {{t("AutographStandDetails.10")}}
-  </div>
+    <div v-else class="text-center mt-6 text-gray-400 text-sm">
+      {{ t("AutographStandDetails.5") }}
+    </div>
 
+    <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+      <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl relative border border-gray-100">
+
+        <button @click="closeModal" class="absolute top-5 right-5 text-gray-300 hover:text-gray-600 text-base leading-none">✕</button>
+
+        <p class="text-yellow-400 text-xs font-semibold tracking-widest uppercase mb-1">{{ t("AutographStandDetails.6") }}</p>
+        <h2 class="text-gray-900 text-2xl font-black tracking-tight mb-1">{{ autographStore.selectedAutograph.userName }}</h2>
+        <p class="text-gray-400 text-sm mb-7">{{ t("AutographStandDetails.7") }}</p>
+
+        <div class="bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 mb-6 text-sm text-gray-700">
+          <p class="font-medium">{{ formatDate(autographStore.selectedAutograph.begin_date) }}</p>
+          <p class="text-gray-400 mt-0.5">{{ t("AutographStandDetails.8") }} {{ formatDuration(autographStore.selectedAutograph.duration) }}</p>
+        </div>
+
+        <button
+            @click="confirmAutographReservation"
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3.5 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed text-sm"
+            :disabled="!autographStore.selectedAutograph || hasAlreadyReservedAutograph"
+        >
+          Confirmer la réservation
+        </button>
+
+        <p v-if="hasAlreadyReservedAutograph" class="text-red-400 text-xs text-center mt-3">
+          {{ t("AutographStandDetails.9") }}
+        </p>
+
+      </div>
+    </div>
+
+    <div v-if="showSuccessPopup"
+         class="fixed top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-6 py-3.5 rounded-2xl shadow-xl z-50">
+      <span class="text-yellow-400">✓</span>
+      {{ t("AutographStandDetails.10") }}
+    </div>
+
+  </div>
 </template>
 
 <script setup>
@@ -80,7 +80,6 @@ import { useAutographsStore } from '@/stores/modules/autographs.js'
 import {useReservationsStore, useStandsStore, useUserStore} from '@/stores/index.js'
 import {useI18n} from "vue-i18n";
 const { t } = useI18n()
-const autographImage = new URL('@/assets/img/dedicace.png', import.meta.url).href
 const autographStore = useAutographsStore()
 const userStore = useUserStore()
 const reservationStore = useReservationsStore();
@@ -90,7 +89,6 @@ const props = defineProps({ stand: { type: Object, required: true } })
 
 const isModalOpen = ref(false)
 const showSuccessPopup = ref(false);
-
 
 const openModal = (autograph) => {
   autographStore.selectedAutograph = autograph; isModalOpen.value = true
@@ -109,7 +107,6 @@ onMounted(async () => {
 
 const hasAlreadyReservedAutograph = computed(() => {
   if (!autographStore.selectedAutograph || !userStore.currentUser) return false;
-
   return reservationStore.reservations.some(r =>
       r.user_id === userStore.currentUser.id &&
       r.type === "autograph" &&
@@ -139,14 +136,9 @@ const confirmAutographReservation = async () => {
     idautograph: autographStore.selectedAutograph.id,
     idstand: props.stand.id
   });
-
   closeModal();
-
   showSuccessPopup.value = true;
-
-  setTimeout(() => {
-    showSuccessPopup.value = false;
-  }, 2250);
+  setTimeout(() => { showSuccessPopup.value = false; }, 2250);
 }
 
 const getUserImage = (fileName) => {
@@ -165,5 +157,4 @@ const formatDuration = (minutes) => {
   const m = minutes % 60
   return `${h > 0 ? h + 'h ' : ''}${m}min`
 }
-
 </script>

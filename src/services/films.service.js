@@ -183,7 +183,6 @@ async function addProjectionFromAPI(projection) {
 export async function addProjection(projection) {
     let response = null;
     try {
-        // response = await addProjectionFromLocalSource(projection);
         response = await addProjectionFromAPI(projection);
     } catch (err){
         response = {error:1, status:404,data:'erreur réseau, impossible dajouter la projection'}

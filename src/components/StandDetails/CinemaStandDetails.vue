@@ -1,93 +1,100 @@
 <template>
-  <div class="text-center pt-10">
-    <img :src="cinemaImage" alt="cinema" width="580" height="580" class="m-auto rounded-lg shadow-lg">
-    <h1 class="pt-4 text-[25px] font-bold">{{t("CinemaStandDetails.1")}} :</h1>
-  </div>
-  <div v-if="filmsStore.films.length" class="mt-6 flex flex-col gap-4 max-w-3xl mx-auto">
-    <div v-for="film in filmsStore.films" :key="film.id"
-         class="items-center p-4 border rounded-lg shadow hover:shadow-lg transition">
-      <div class="text-left">
-        <h2 class="text-lg font-semibold">{{ film.title }}</h2>
-        <p class="text-gray-500">{{t("CinemaStandDetails.2")}}: {{ film.duration }} min</p>
-      </div>
-      <div class="mt-2">
-      <span v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, film.id)" :key="projection.id"
-            class="bg-black text-white text-sm px-2 text-center py-3 rounded-full shadow-sm mr-2">
-      {{
-          new Date(projection.date).toLocaleString('fr-FR', {
-            weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-          })
-        }}
-    </span>
-      <button @click="openModal(film)"
-              class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded
-              disabled:opacity-50 disabled:cursor-not-allowed ml-5 rounded-full"
-              :disabled="!usersStore.currentUser || usersStore.currentUser.droit === '1'">
-        {{t("CinemaStandDetails.3")}}
-      </button>
+  <div>
+
+    <div class="flex items-center gap-4 mb-8">
+      <h2 class="text-gray-900 text-xl font-bold tracking-tight whitespace-nowrap">{{ t("CinemaStandDetails.1") }}</h2>
+      <div class="h-px flex-1 bg-gray-100"></div>
+      <span class="text-gray-400 text-xs font-semibold tracking-widest uppercase">{{ filmsStore.films.length }} films</span>
+    </div>
+
+    <div v-if="filmsStore.films.length" class="flex flex-col gap-3">
+      <div v-for="film in filmsStore.films" :key="film.id"
+           class="rounded-2xl border border-gray-100 bg-gray-50 p-5 hover:border-gray-200">
+
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <h3 class="text-gray-900 font-bold text-base leading-tight mb-1">{{ film.title }}</h3>
+            <p class="text-gray-400 text-sm mb-4">{{ t("CinemaStandDetails.2") }} · {{ film.duration }} min</p>
+            <div class="flex flex-wrap gap-2">
+              <span v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, film.id)"
+                    :key="projection.id"
+                    class="inline-flex items-center bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-full">
+                {{
+                  new Date(projection.date).toLocaleString('fr-FR', {
+                    weekday: 'short', day: 'numeric', month: 'short',
+                    hour: '2-digit', minute: '2-digit'
+                  })
+                }}
+              </span>
+            </div>
+          </div>
+
+          <button @click="openModal(film)"
+                  class="shrink-0 bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-sm font-bold px-5 py-2.5 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
+                  :disabled="!usersStore.currentUser || usersStore.currentUser.droit === '1'">
+            {{ t("CinemaStandDetails.3") }}
+          </button>
+        </div>
+
       </div>
     </div>
-  </div>
 
-  <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-    <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
+    <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+      <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl relative border border-gray-100">
 
-      <button @click="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
-        ✕
-      </button>
-
-      <h2 class="text-xl font-bold mb-4">{{t("CinemaStandDetails.4")}}</h2>
-      <p class="mb-4">{{t("CinemaStandDetails.5")}} : <strong>{{ selectedFilm.title }}</strong></p>
-
-      <h3 class="font-semibold mb-2">{{t("CinemaStandDetails.6")}} :</h3>
-      <div class="flex flex-col gap-2 mb-4 max-h-60 overflow-y-auto">
-        <button
-            v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, selectedFilm.id)"
-            :key="projection.id"
-            @click="filmsStore.setSelectedProjection(projection)"
-            :class="[
-          'py-2 px-3 rounded border text-left',
-          filmsStore.selectedProjection && filmsStore.selectedProjection.id === projection.id
-            ? 'bg-[var(--jaune)] text-black border-yellow-400'
-            : 'bg-gray-100 hover:bg-gray-200 border-gray-300'
-        ]"
-        >
-          {{
-            new Date(projection.date).toLocaleString('fr-FR', {
-              weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
-              hour: '2-digit', minute: '2-digit'
-            })
-          }}
+        <button @click="closeModal"
+                class="absolute top-5 right-5 text-gray-300 hover:text-gray-600 text-base leading-none">
+          ✕
         </button>
+
+        <p class="text-yellow-400 text-xs font-semibold tracking-widest uppercase mb-1">{{ t("CinemaStandDetails.4") }}</p>
+        <h2 class="text-gray-900 text-2xl font-black tracking-tight mb-1">{{ selectedFilm.title }}</h2>
+        <p class="text-gray-400 text-sm mb-7">{{ t("CinemaStandDetails.5") }}</p>
+
+        <p class="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-3">{{ t("CinemaStandDetails.6") }}</p>
+
+        <div class="flex flex-col gap-2 mb-6 max-h-60 overflow-y-auto">
+          <button
+              v-for="projection in standsStore.getProjectionsByStandAndFilm(props.stand.id, selectedFilm.id)"
+              :key="projection.id"
+              @click="filmsStore.setSelectedProjection(projection)"
+              :class="[
+                'py-3 px-4 rounded-xl border text-left text-sm font-medium',
+                filmsStore.selectedProjection && filmsStore.selectedProjection.id === projection.id
+                  ? 'bg-yellow-400 text-gray-900 border-yellow-300 font-bold'
+                  : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-100'
+              ]">
+            {{
+              new Date(projection.date).toLocaleString('fr-FR', {
+                weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+              })
+            }}
+          </button>
+        </div>
+
+        <button
+            @click="confirmFilmReservation"
+            class="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3.5 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed text-sm"
+            :disabled="!filmsStore.selectedProjection || hasAlreadyReservedProjection">
+          {{ t("CinemaStandDetails.7") }}
+        </button>
+
+        <p v-if="hasAlreadyReservedProjection" class="text-red-400 text-xs text-center mt-3">
+          {{ t("CinemaStandDetails.8") }}
+        </p>
+
       </div>
-
-      <button
-          @click="confirmFilmReservation"
-          class="bg-[var(--jaune)] hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full
-          disabled:opacity-50"
-          :disabled="!filmsStore.selectedProjection || hasAlreadyReservedProjection"
-      >
-        {{t("CinemaStandDetails.7")}}
-      </button>
-      <p v-if="hasAlreadyReservedProjection" class="text-red-500 text-sm mt-5">
-        {{t("CinemaStandDetails.8")}}
-      </p>
-
     </div>
+
+    <div v-if="showSuccessPopup"
+         class="fixed top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-6 py-3.5 rounded-2xl shadow-xl z-50">
+      <span class="text-yellow-400">✓</span>
+      {{ t("CinemaStandDetails.9") }}
+    </div>
+
   </div>
-  <div v-if="showSuccessPopup"
-       class="fixed top-1/10 left-1/2 -translate-x-1/2
-            bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl
-            z-50 text-center">
-    🎉 {{t("CinemaStandDetails.9")}}
-  </div>
-
-
-
-
 </template>
-
 
 <script setup>
 import {ref, onMounted, computed} from 'vue'
@@ -116,7 +123,6 @@ const closeModal = () => {
 
 const route = useRoute()
 
-const cinemaImage = new URL('@/assets/img/cinema.jpg', import.meta.url).href
 const filmsStore = useFilmsStore();
 const usersStore = useUserStore();
 const standsStore = useStandsStore();
@@ -132,8 +138,7 @@ onMounted(async () => {
 })
 
 const hasAlreadyReservedProjection = computed(() => {
-  if (!filmsStore.selectedProjection || !usersStore.currentUser || !reservationsStore.filmsReservations) return false; // peut etre a changé
-  // la derniere condition mais cest normalement logique, si personne a reservé, l'utilisateur n'a forcement pas déjà reservé
+  if (!filmsStore.selectedProjection || !usersStore.currentUser || !reservationsStore.filmsReservations) return false;
   return reservationsStore.reservations.some(r =>
       r.user_id === usersStore.currentUser.id &&
       r.type === "film" &&
@@ -144,25 +149,18 @@ const hasAlreadyReservedProjection = computed(() => {
   );
 });
 
-
-
 const confirmFilmReservation = async () => {
   await reservationsStore.addFilmReservation({
     userId: usersStore.currentUser.id,
-    type: "film", // on est dans le composant des cinemas cest donc impossible que cela soit autre chose
+    type: "film",
     date: filmsStore.selectedProjection.date,
     standId: props.stand.id,
     projectionId: filmsStore.selectedProjection.id,
   });
   closeModal();
-
   showSuccessPopup.value = true;
-
-  setTimeout(() => {
-    showSuccessPopup.value = false;
-  }, 2250);
+  setTimeout(() => { showSuccessPopup.value = false; }, 2250);
 }
-
 
 const props = defineProps({
   stand: {

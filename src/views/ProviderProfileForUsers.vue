@@ -33,7 +33,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" v-if="standsUser">
         <div
             v-for="stand in standsUser"
-            :key="stand.id_stand"
+            :key="stand.id"
             class="bg-white border border-yellow-200 rounded-2xl shadow-md p-6
              hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
         >
@@ -43,7 +43,7 @@
                 {{ stand.name }}
               </h4>
               <span class="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-700 font-medium">
-            {{ standStore.getStandTypeByIdForProvider(stand.type).type }}
+            {{ standStore.getStandTypeByIdForProvider(stand.type)?.type }}
           </span>
             </div>
           </div>
@@ -179,7 +179,8 @@ onMounted(async () => {
   await standStore.getStandsTypes();
   await standStore.getStands();
   await commentStore.getComments();
-  standsUser.value = standStore.stands.filter(s => s.owner === user.value.id);
+  standsUser.value = standStore.stands.filter(s => s.owner_id === user.value.id);
+  console.log("stand user:" + JSON.stringify(standsUser.value))
 });
 
 const goToStand = (id) => {

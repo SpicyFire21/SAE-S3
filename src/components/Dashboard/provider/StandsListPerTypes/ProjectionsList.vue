@@ -54,7 +54,7 @@
           </div>
           <div>
             <label class="font-semibold">Film</label>
-            <select v-model="filmStore.selectedProjection.film_id" class="border p-2 rounded w-full">
+            <select v-model="filmStore.selectedProjection.idfilm" class="border p-2 rounded w-full">
               <option v-for="film in filmStore.films" :key="film.id" :value="film.id">{{ film.title }}</option>
             </select>
           </div>
@@ -76,7 +76,7 @@
           </div>
           <div>
             <label class="font-semibold">Film</label>
-            <select v-model="newProjectionBase.filmId" class="border p-2 rounded w-full">
+            <select v-model="newProjectionBase.idfilm" class="border p-2 rounded w-full">
               <option v-for="film in filmStore.films" :key="film.id" :value="film.id">{{ film.title }}</option>
             </select>
           </div>
@@ -100,9 +100,9 @@ const props = defineProps({
 });
 
 const newProjectionBase = ref({
-  stand_id: props.standId,
-  film_id: "",
-  date: ""
+  date: "",
+  idfilm: "",
+  idstand: props.standId,
 })
 
 const filmStore = useFilmsStore();
@@ -120,11 +120,15 @@ const projectionsWithFilms = computed(() =>
         })
 );
 
-console.log("projection films:" + JSON.stringify(projectionsWithFilms.value))
 
 const editProjection = (projection) => {
-  filmStore.setSelectedProjection({ ...projection }); // crée un clone
-  showEditModal.value = true;
+  filmStore.setSelectedProjection({
+    id: projection.id,
+    date: formatForInputDate(projection.date),
+    idstand: projection.stand_id,
+    idfilm: projection.film_id});
+    showEditModal.value = true;
+
 };
 
 const addProjection = () => {
@@ -137,14 +141,14 @@ const saveEditProjection = async () => {
 };
 
 async function saveAddProjection() {
-  if (newProjectionBase.value.date === "" || newProjectionBase.value.film_id === "") {
+  if (newProjectionBase.value.date === "" || newProjectionBase.value.idfilm === "") {
     showAddModal.value = false;
     return;
   }
   await filmStore.addProjection(newProjectionBase.value)
   showAddModal.value = false;
   newProjectionBase.value.date = ""
-  newProjectionBase.value.film_id = ""
+  newProjectionBase.value.idfilm = ""
 }
 
 const closeModal = () => {
@@ -168,5 +172,14 @@ const formatDate = (date) => {
     weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
     hour: '2-digit', minute: '2-digit'
   });
+};
+
+const formatForInputDate = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+
+  const pad = (n) => n.toString().padStart(2, "0");
+
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 </script>

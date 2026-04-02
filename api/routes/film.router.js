@@ -1,5 +1,6 @@
 import express from 'express'
 import * as filmController from "../controller/film.controller.js"
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -212,7 +213,7 @@ router.post("/reservation", filmController.addFilmReservation)
  *       500:
  *         description: Erreur serveur
  */
-router.post("/projections",filmController.addProjection);
+router.post("/projections", [verifyToken, verifyRole([1, 2])], filmController.addProjection);
 /**
  * @swagger
  * /films/projections:
@@ -245,7 +246,7 @@ router.post("/projections",filmController.addProjection);
  *
  *
  */
-router.put("/projections",filmController.editProjection);
+router.put("/projections", [verifyToken, verifyRole([1, 2])], filmController.editProjection);
 /**
  * @swagger
  *     /films/projections/{id}:
@@ -270,7 +271,7 @@ router.put("/projections",filmController.editProjection);
  *       500:
  *         description: Erreur serveur
  */
-router.delete("/projections/:id",filmController.deleteProjection);
+router.delete("/projections/:id", [verifyToken, verifyRole([1, 2])], filmController.deleteProjection);
 
 /**
  * @swagger

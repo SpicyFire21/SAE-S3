@@ -1,5 +1,6 @@
 import express from 'express'
 import * as standController from "../controller/stand.controller.js"
+import {verifyRole, verifyToken} from "../middlewares/jwt.middleware.js";
 
 let router = express.Router()
 
@@ -113,7 +114,7 @@ router.get("/reservations",standController.getStandsReservationsRequests)
  *         description: Erreur serveur
  */
 
-router.post("/reservations",standController.addStandRequest)
+router.post("/reservations", [verifyToken, verifyRole([1])], standController.addStandRequest)
 
 /**
  * @swagger

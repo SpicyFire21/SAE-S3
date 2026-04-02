@@ -100,3 +100,4 @@ router.get("/:id", noteController.getNoteById);
 router.delete("/:id", noteController.deleteNote);
 
 export default router;
+

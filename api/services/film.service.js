@@ -354,18 +354,30 @@ async function deleteProjection(id) {
             return { error: 1, status: 404, data: 'projection inexistant' };
         }
 
-        const checkFilmReservation = await db.query('SELECT projection_id FROM film_reservations WHERE projection_id = $1', [id]);
-        if (checkFilmReservation.rowCount !== 0) {
-            return { error: 1, status: 409, data: 'la projections existe dans une reservations de film' };
-        }
+        await db.query('BEGIN');
 
+        const filmReservations = await db.query(
+            'DELETE FROM film_reservations WHERE projection_id = $1 RETURNING reservation_id',
+            [id]
+        );
+
+        const reservationIds = filmReservations.rows.map(r => r.reservation_id);
+        if (reservationIds.length > 0) {
+            await db.query(
+                'DELETE FROM reservations WHERE id = ANY($1)',
+                [reservationIds]
+            );
+        }
 
         const res = await db.query('DELETE FROM projections WHERE id = $1 RETURNING *', [id]);
 
-        return {error: 0, status: 200, data: res.rows[0]};
+        await db.query('COMMIT');
+
+        return { error: 0, status: 200, data: res.rows[0] };
     } catch (error) {
+        await db.query('ROLLBACK');
         console.error(error);
-        return {error: 1, status: 500, data: 'Erreur lors de la suppresion des projections'};
+        return { error: 1, status: 500, data: 'Erreur lors de la suppression de la projection' };
     } finally {
         db.release();
     }

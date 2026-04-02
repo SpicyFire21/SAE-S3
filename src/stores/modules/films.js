@@ -52,7 +52,7 @@ export const useFilmsStore = defineStore('films', () => {
     }
 
     const removeProjection = (projection) => {
-        const index = projections.value.findIndex(p => p.id === projection.id);
+        const index = projections.value.findIndex(p => p.id === projection);
         if (index !== -1) {
             projections.value.splice(index, 1);
         } else {
@@ -64,7 +64,6 @@ export const useFilmsStore = defineStore('films', () => {
         try {
             const response = await filmsService.getStandsByFilmId(id);
             updateStandsInSelectedFilm(response.data)
-            console.log("test: " + JSON.stringify(response.data))
             return response.data
         } catch (e) {
             console.error(e)
@@ -80,8 +79,6 @@ export const useFilmsStore = defineStore('films', () => {
         const index = projections.value.findIndex(a => a.id === projection.id)
         if (index !== -1) {
             projections.value.splice(index, 1, projection)
-            console.log("projections actuelles:", projections);
-
         } else {
             console.warn("projection non trouvé :", projection.id)
         }
@@ -179,7 +176,6 @@ export const useFilmsStore = defineStore('films', () => {
     }
 
     const getFilmByIdForProvider = (id_film) => {
-        console.log("filmbyprovider:" +  JSON.stringify(films.value.find(f=> f.id === id_film)))
         return films.value.find(f => f.id === id_film);
     }
 

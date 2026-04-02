@@ -7,7 +7,7 @@
              class="border-b border-gray-200 pb-4 last:border-b-0 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
           <div class="flex-1" v-if="sr.status === 'pending'">
-            <h2 class="text-lg font-semibold text-gray-900 mb-1">{{ userStore.getUserById(sr.userId).name }}</h2>
+            <h2 class="text-lg font-semibold text-gray-900 mb-1">{{ userStore.getUserById(sr.user_id).name }}</h2>
             <p class="text-gray-700 mb-1">Stand: <span
                 class="font-medium">{{ standStore.getStandByIdForAdmin(sr.standId).name }}</span></p>
             <p class="text-gray-600 text-sm">Date: {{ formatDate(sr.requestDate) }}</p>
@@ -58,7 +58,7 @@ const standStore = useStandsStore();
 
 async function acceptReservation(sr) {
   const stand = standStore.getStandByIdForAdmin(sr.standId)
-  stand.owner = sr.userId;
+  stand.owner = sr.user_id;
   sr.status = "accepted";
 }
 

@@ -61,7 +61,7 @@ router.get("/requests",[verifyToken,verifyRole([2])], providerController.getProv
  *       403:
  *         description: email deja utilisé
  */
-router.post("/requests", providerController.addProviderRequests)
+router.post("/requests", [verifyToken, verifyRole([1, 2])], providerController.addProviderRequests)
 
 /**
  * @swagger

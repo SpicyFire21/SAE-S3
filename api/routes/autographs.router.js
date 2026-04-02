@@ -176,7 +176,7 @@ router.get("/stand/:idstand", autographsController.getAutographsByStandId);
  *       500:
  *         description: Erreur serveur
  */
-router.post("/", autographsController.addAutograph);
+router.post("/", [verifyToken, verifyRole([1, 2])], autographsController.addAutograph);
 
 /**
  * @swagger
@@ -219,7 +219,7 @@ router.post("/", autographsController.addAutograph);
  *       500:
  *         description: Erreur serveur
  */
-router.put("/", autographsController.editAutograph);
+router.put("/", [verifyToken, verifyRole([1, 2])], autographsController.editAutograph);
 
 /**
  * @swagger
@@ -243,6 +243,6 @@ router.put("/", autographsController.editAutograph);
  *       500:
  *         description: Erreur serveur
  */
-router.delete("/:id", autographsController.deleteAutograph);
+router.delete("/:id", [verifyToken, verifyRole([1, 2])], autographsController.deleteAutograph);
 
 export default router;

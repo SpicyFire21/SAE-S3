@@ -47,7 +47,7 @@
             </h2>
 
             <span class="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-700 font-medium">
-              {{ standStore.getStandTypeByIdForProvider(stand.type_id).type }}
+              {{ standStore.getStandTypeByIdForProvider(stand.type_id)?.type }}
             </span>
           </div>
 
@@ -105,7 +105,7 @@ const typeFilter = ref("");
 const filteredStands = computed(() =>
     standStore.stands.filter(s =>
         s.name.toLowerCase().includes(search.value.toLowerCase()) &&
-        (typeFilter.value === "" || s.type === typeFilter.value)
+        (typeFilter.value === "" || s.type_id === typeFilter.value)
     )
 );
 
