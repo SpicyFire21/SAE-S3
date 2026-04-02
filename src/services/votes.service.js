@@ -64,16 +64,18 @@ async function addVoteFromAPI(data) {
 }
 
 async function removeVoteFromAPI(data) {
-    return deleteRequest(`/votes/${data.userId}/${data.category_id}`,"REMOVE-VOTE")
+    return deleteRequest(`/votes/${data.iduser}/${data.idcategory}`, "REMOVE-VOTE")
 }
 
-async function updateScoreFromAPI(data,modif) {
+async function updateScoreFromAPI(data, modif) {
     const payload = {
-        ...data,
-        modif
+        idfilm: data.idfilm || data.film_id || data.filmId, // On accepte plusieurs formats par sécurité
+        idcategory: data.idcategory || data.category_id || data.categoryId,
+        value: modif
     }
-    console.warn("verifier si cette route fonctionne !")
-    return putRequest("/votes",payload,"EDIT-SCORES");
+
+    console.log("Payload envoyé au PUT /votes :", payload);
+    return putRequest("/votes", payload, "EDIT-SCORES");
 }
 
 async function getCategoryFromAPI() {

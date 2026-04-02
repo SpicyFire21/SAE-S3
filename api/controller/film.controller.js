@@ -67,7 +67,7 @@ export const getFilmRequestsGenres = async (req,res) => {
 }
 export const addFilm = async (req,res) => {
     try {
-        let data = await voteService.addFilm(req.body);
+        let data = await filmService.addFilm(req.body);
 
         return res.status(data.status).json(data);
     } catch (error) {
@@ -77,7 +77,7 @@ export const addFilm = async (req,res) => {
 }
 export const addFilmRequest = async (req,res) => {
     try {
-        let data = await voteService.addFilmRequest(req.body);
+        let data = await filmService.addFilmRequest(req.body);
 
         return res.status(data.status).json(data);
     } catch (error) {
@@ -87,7 +87,7 @@ export const addFilmRequest = async (req,res) => {
 }
 export const deleteFilm = async (req,res) => {
     try {
-        let data = await voteService.deleteFilm(req.params.id);
+        let data = await filmService.deleteFilm(req.params.id);
 
         return res.status(data.status).json(data);
     } catch (error) {
@@ -97,7 +97,7 @@ export const deleteFilm = async (req,res) => {
 }
 export const deleteFilmRequest = async (req,res) => {
     try {
-        let data = await voteService.deleteFilmRequest(req.params.id);
+        let data = await filmService.deleteFilmRequest(req.params.id);
 
         return res.status(data.status).json(data);
     } catch (error) {

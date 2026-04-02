@@ -23,7 +23,7 @@ export const useVotesStore = defineStore('votes', () => {
     const addVoteLocally = (vote) => { votes.value.push(vote) }
     const removeVoteLocally = (vote) => {
         votes.value = votes.value.filter(v =>
-            !(v.userId === vote.userId && v.category_id === vote.category_id)
+            !(v.user_id === vote.iduser && v.category_id === vote.idcategory)
         )
     }
     const updateScoreLocally = (score) => {
@@ -53,7 +53,7 @@ export const useVotesStore = defineStore('votes', () => {
         try {
             // Vérifie si l'utilisateur a déjà voté pour cette catégorie
             const existingVote = votes.value.find(
-                v => v.userId === data.userId && v.category_id === data.category_id
+                v => v.user_id === data.iduser && v.category_id === data.idcategory
             );
 
             if (existingVote) {
@@ -94,8 +94,8 @@ export const useVotesStore = defineStore('votes', () => {
     const updateScore = async (data, modif) => {
         try {
             const payload = {
-                film_id: data.filmId,
-                category_id: data.category_id
+                idfilm: data.film_id,
+                idcategory: data.category_id
             }
 
             console.log("➡ updateScore envoyé au controller :", payload, "modif :", modif)
@@ -188,15 +188,15 @@ export const useVotesStore = defineStore('votes', () => {
     const hasVotedCategory = (categoryName, userId) => {
         const cat = categories.value.find(c => c.category_name === categoryName)
         if (!cat) return false
-        return votes.value.some(v => v.userId === userId && v.category_id === cat.id)
+        return votes.value.some(v => v.user_id === userId && v.category_id === cat.id)
     }
 
     // récupère le film_id sur lequel l'utilisateur a voté pour cette catégorie
     const getVotedFilmIdForCategory = (categoryName, userId) => {
         const cat = categories.value.find(c => c.category_name === categoryName)
         if (!cat) return null
-        const vote = votes.value.find(v => v.userId === userId && v.category_id === cat.id)
-        return vote?.filmId || null
+        const vote = votes.value.find(v => v.user_id === userId && v.category_id === cat.id)
+        return vote?.film_id || null
     }
 
     const getVotesForFilm = (filmId) => {
@@ -246,10 +246,7 @@ export const useVotesStore = defineStore('votes', () => {
             const votesToRemove = votes.value.filter(v => v.filmId === filmId)
 
             for (const v of votesToRemove) {
-                await votesStore.removeVote({
-                    userId: v.userId,
-                    category_id: v.category_id
-                })
+                await removeVote({ iduser: v.user_id, idcategory: v.category_id })
             }
 
             return { error: 0, data: "Votes du film supprimés ✔" }

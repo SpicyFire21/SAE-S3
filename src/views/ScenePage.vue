@@ -141,8 +141,8 @@ const submitVote = async ({ filmId, category, userId }) => {
   }
 
   const res = await votesStore.AddVote({
-    userId,
-    filmId,
+    iduser: userId,
+    idfilm: filmId,
     category_id: cat.id
   })
 

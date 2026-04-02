@@ -21,7 +21,7 @@
                 @click="toggleGenre(genre.id)"
                 :class="['px-3 py-1 rounded-full border cursor-pointer', selectedGenres.includes(genre.id) ? 'bg-yellow-400 border-yellow-500' : 'bg-white border-gray-300']"
             >
-              {{ genre.name }}
+              {{ genre.name || genre.label }}
             </button>
           </div>
           <p v-if="selectedGenres.length === 2" class="text-sm text-gray-500 mt-1">

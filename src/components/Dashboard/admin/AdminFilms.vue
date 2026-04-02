@@ -54,8 +54,11 @@ const filmsStore = useFilmsStore()
 const votesStore = useVotesStore()
 
 onMounted(() => {
+  filmsStore.init()
   filmsStore.getFilmRequests()
   filmsStore.getFilms()
+  filmsStore.getAllFilmGenresRequests()
+
   votesStore.getScores()
   votesStore.getVotes()
 })

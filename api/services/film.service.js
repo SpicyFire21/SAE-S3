@@ -87,49 +87,58 @@ async function getFilmRequestsGenres() {
 async function addFilm(data) {
     const db = await pool.connect();
 
-    if (!data.title) {
-        return { error: 1, status: 400, data: "Le titre du film est manquant" };
-    }
-    if (!data.director_id) {
-        return { error: 1, status: 400, data: "L'identifiant du réalisateur (director_id) est manquant" };
-    }
-    if (!data.duration) {
-        return { error: 1, status: 400, data: "La durée du film est manquant" };
+    if (!data.title || !data.director_id || !data.duration) {
+        return { error: 1, status: 400, data: "Données manquantes pour la création du film" };
     }
 
     try {
-        // vérifie si le film existe déjà (par titre et réalisateur)
+        await db.query('BEGIN'); // Début de transaction
+
         const check = await db.query(
             'SELECT * FROM films WHERE title = $1 AND director_id = $2',
             [data.title, data.director_id]
         );
 
         if (check.rowCount > 0) {
-            return { error: 1, status: 409, data: 'Ce film existe déjà pour ce réalisateur' };
+            await db.query('ROLLBACK');
+            return { error: 1, status: 409, data: 'Ce film existe déjà' };
         }
-        const queryText = `
-            INSERT INTO films (id, title, director_id, release_date, duration, description, poster) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7) 
-            RETURNING *`;
 
+        const queryText = `
+            INSERT INTO films (id, title, director_id, release_date, duration, description, poster)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING *`;
+
+        const filmId = data.id || uuidv4();
         const values = [
-            uuidv4(),                        // $1
-            data.title,                      // $2
-            data.director_id,                // $3
-            data.release_date || null,       // $4
-            data.duration,                   // $5
-            data.description || null,        // $6
-            data.poster || null              // $7
+            filmId,
+            data.title,
+            data.director_id,
+            data.release_date || null,
+            data.duration,
+            data.description || null,
+            data.poster || null
         ];
 
         const result = await db.query(queryText, values);
-        return { error: 0, status: 201, data: result.rows[0] };
+        const newFilm = result.rows[0];
+
+        // --- INSERTION DES GENRES ---
+        if (data.genreIds && Array.isArray(data.genreIds)) {
+            for (const genreId of data.genreIds) {
+                await db.query(
+                    'INSERT INTO films_genres (film_id, genre_id) VALUES ($1, $2)',
+                    [filmId, genreId]
+                );
+            }
+        }
+
+        await db.query('COMMIT');
+        return { error: 0, status: 201, data: newFilm };
 
     } catch (error) {
+        await db.query('ROLLBACK');
         console.error("Erreur dans addFilm:", error);
-        if (error.code === '23503') {
-            return { error: 1, status: 400, data: "Le réalisateur spécifié n'existe pas" };
-        }
         return { error: 1, status: 500, data: "Erreur lors de la création du film" };
     } finally {
         db.release();
@@ -139,50 +148,62 @@ async function addFilm(data) {
 async function addFilmRequest(data) {
     const db = await pool.connect();
 
-    if (!data.title) {
-        return { error: 1, status: 400, data: "Le titre du film est manquant" };
-    }
-    if (!data.director_id) {
-        return { error: 1, status: 400, data: "L'identifiant du réalisateur (director_id) n'a pas pu être récupérer" };
-    }
-    if (!data.duration) {
-        return { error: 1, status: 400, data: "La durée du film est manquant" };
+    // 1. Validations de base
+    if (!data.title || !data.director_id || !data.duration) {
+        return { error: 1, status: 400, data: "Données manquantes (titre, réalisateur ou durée)" };
     }
 
     try {
-        // vérifie si la requete de film existe déjà (par titre et réalisateur)
+        // Début de la transaction pour éviter les données orphelines
+        await db.query('BEGIN');
+
+        // 2. Vérification d'existence
         const check = await db.query(
             'SELECT * FROM films_request WHERE title = $1 AND director_id = $2',
             [data.title, data.director_id]
         );
-
         if (check.rowCount > 0) {
-            return { error: 1, status: 409, data: 'Cette requête de film existe déjà pour ce réalisateur' };
+            await db.query('ROLLBACK');
+            return { error: 1, status: 409, data: 'Cette requête de film existe déjà' };
         }
-        const queryText = `
+
+        // 3. Insertion du film
+        const queryFilm = `
             INSERT INTO films_request (id, title, director_id, release_date, duration, description, poster) 
             VALUES ($1, $2, $3, $4, $5, $6, $7) 
             RETURNING *`;
 
-        const values = [
-            uuidv4(),                        // $1
-            data.title,                      // $2
-            data.director_id,                // $3
-            data.release_date || null,       // $4
-            data.duration,                   // $5
-            data.description || null,        // $6
-            data.poster || null              // $7
+        const filmId = uuidv4();
+        const filmValues = [
+            filmId,
+            data.title,
+            data.director_id,
+            data.release_date || null,
+            data.duration,
+            data.description || null,
+            data.poster || null
         ];
 
-        const result = await db.query(queryText, values);
-        return { error: 0, status: 201, data: result.rows[0] };
+        const result = await db.query(queryFilm, filmValues);
+        const newFilmRequest = result.rows[0];
+
+        // 4. Insertion des genres
+        if (data.genreIds && Array.isArray(data.genreIds) && data.genreIds.length > 0) {
+            for (const genreId of data.genreIds) {
+                await db.query(
+                    'INSERT INTO films_genres_request (film_id, genre_id) VALUES ($1, $2)',
+                    [filmId, genreId]
+                );
+            }
+        }
+
+        await db.query('COMMIT');
+        return { error: 0, status: 201, data: newFilmRequest };
 
     } catch (error) {
+        await db.query('ROLLBACK');
         console.error("Erreur dans addFilmRequest:", error);
-        if (error.code === '23503') {
-            return { error: 1, status: 400, data: "Le réalisateur n'existe pas" };
-        }
-        return { error: 1, status: 500, data: "Erreur lors de la requête de film" };
+        return { error: 1, status: 500, data: "Erreur lors de la création de la requête" };
     } finally {
         db.release();
     }

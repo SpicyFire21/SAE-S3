@@ -62,7 +62,7 @@ const message = ref('')
 // --- recupere les votes de l'utilisateur actuel ---
 const userVotes = computed(() => {
   if (!userStore.currentUser) return []
-  return votesStore.votes.filter(v => v.userId === userStore.currentUser.id)
+  return votesStore.votes.filter(v => v.user_id === userStore.currentUser.id)
 })
 
 // --- vérifie si l'utilisateur a déjà voté pour cette catégorie sur ce film ---
@@ -73,9 +73,9 @@ const hasVoted = (categoryName) => {
 
   // Vérifie film + catégorie + user
   return votesStore.votes.some(v =>
-      v.userId === userStore.currentUser.id &&
+      v.user_id === userStore.currentUser.id &&
       v.category_id === cat.id &&
-      v.filmId === props.film.id
+      v.film_id === props.film.id
   )
 }
 
@@ -93,13 +93,13 @@ const submitVoteForCategory = async (categoryName) => {
 
   // Bloque si déjà voté pour UN film dans cette catégorie
   const alreadyVoted = votesStore.votes.find(v =>
-      v.userId === userStore.currentUser.id &&
+      v.user_id === userStore.currentUser.id &&
       v.category_id === cat.id
   )
 
   if (alreadyVoted) {
     const filmsStore = useFilmsStore()
-    const film = filmsStore.films.find(f => f.id === alreadyVoted.filmId)
+    const film = filmsStore.films.find(f => f.id === alreadyVoted.film_id)
 
     const filmName = film ? film.title : t('scenePage.unknownFilm')
 
@@ -111,16 +111,16 @@ const submitVoteForCategory = async (categoryName) => {
   }
 
   const res = await votesStore.AddVote({
-    userId: userStore.currentUser.id,
-    category_id: cat.id,
-    filmId: props.film.id
+    iduser: userStore.currentUser.id,
+    idcategory: cat.id,
+    idfilm: props.film.id
   })
 
   console.log("Vote ajouté API :", res)
 
   if (res?.error === 0) {
     await votesStore.updateScore(
-        { filmId: props.film.id, category_id: cat.id },
+        { film_id: props.film.id, category_id: cat.id },
         1
     )
     await votesStore.getVotes()
@@ -142,13 +142,25 @@ const removeVoteForCategory = async (categoryName) => {
   if (!userStore.currentUser || !props.film) return
 
   const cat = votesStore.categories.find(c => c.category_name === categoryName)
-  if (!cat) return
+  if (!cat || !cat.id) {
+    console.error("Catégorie non trouvée pour :", categoryName)
+    return
+  }
+
+  const userId = userStore.currentUser?.id // Utilise le safe navigation ?.
+
+  if (!userId) {
+    console.error("ID Utilisateur introuvable")
+    return
+  }
+
+  console.log("Tentative de suppression - User:", userId, "Category:", cat.id)
 
   // Trouver précisément le vote du film courant
   const voteFilm = votesStore.votes.find(v =>
-      v.userId === userStore.currentUser.id &&
+      v.user_id === userStore.currentUser.id &&
       v.category_id === cat.id &&
-      v.filmId === props.film.id
+      v.film_id === props.film.id
   )
 
   if (!voteFilm) {
@@ -158,15 +170,15 @@ const removeVoteForCategory = async (categoryName) => {
 
   // Appel API via store (filmId ignoré côté controller mais on s'en fout)
   const res = await votesStore.removeVote({
-    userId: userStore.currentUser.id,
-    category_id: cat.id
+    iduser: userStore.currentUser.id,
+    idcategory: cat.id
   })
 
   console.log("Vote supprimé API :", res)
 
   if (res?.error === 0) {
     await votesStore.updateScore(
-        { filmId: props.film.id, category_id: cat.id },
+        { film_id: props.film.id, category_id: cat.id },
         -1
     )
     // Recharger tous les votes pour resync

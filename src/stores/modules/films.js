@@ -217,7 +217,7 @@ export const useFilmsStore = defineStore('films', () => {
             .filter(fg => fg.film_id === idFilm)
             .map(fg => {
                 const genre = genres.value.find(g => g.id === fg.genre_id)
-                return genre ? genre.label : null
+                return genre ? (genre.label || genre.name) : null;
             })
             .filter(Boolean)
     }
@@ -261,6 +261,17 @@ export const useFilmsStore = defineStore('films', () => {
         }
     }
 
+    const getAllFilmGenresRequests = async () => {
+        try {
+            const res = await filmsService.GetFilmGenresRequests();
+            if (res.error === 0) {
+                filmsGenresRequests.value = res.data;
+            }
+        } catch (e) {
+            console.error("Erreur chargement genres requêtes:", e);
+        }
+    }
+
     const getGenresOfFilmRequest = async (filmId) => {
         try {
             const res = await filmsService.GetFilmGenresRequests(filmId)
@@ -276,24 +287,27 @@ export const useFilmsStore = defineStore('films', () => {
 
     const acceptFilmRequest = async (request) => {
         try {
+            const genreIds = filmsGenresRequests.value
+                .filter(fg => fg.film_id === request.id)
+                .map(fg => fg.genre_id);
+
             const res = await filmsService.AddFilm({
-                title: request.title,
-                release_date: request.release_date,
-                description: request.description,
-                duration: request.duration,
-                director_id: request.director_id,
-                poster: request.poster
-            })
+                ...request,
+                genreIds: genreIds
+            });
 
-            if (res.error === 0) {
-                films.value.push(res.data)
-                filmsRequests.value = filmsRequests.value.filter(r => r.id !== request.id)
+            if (res.error === 0 || res.status === 409) {
+                await filmsService.DeleteFilmRequest(request.id);
+
+                if (res.error === 0) films.value.push(res.data);
+
+                filmsRequests.value = filmsRequests.value.filter(r => r.id !== request.id);
+                await getFilmGenres();
             }
-
-            return res
+            return res;
         } catch (e) {
-            console.error(e)
-            return { error: 1, data: "Erreur lors de l'acceptation" }
+            console.error(e);
+            return { error: 1, data: "Erreur lors de l'acceptation" };
         }
     }
 
@@ -331,9 +345,11 @@ export const useFilmsStore = defineStore('films', () => {
         await Promise.all([
             getFilms(),
             getGenres(),
-            getFilmCast()
+            getFilmGenres(),
+            getFilmCast(),
+            getFilmRequests()
         ])
-    } // ca évite de mettre 3 lignes a chaque fichiers
+    } // ca évite de mettre 5 lignes a chaque fichiers
 
 
 
@@ -362,6 +378,6 @@ export const useFilmsStore = defineStore('films', () => {
         getFilmByIdForProvider,
         deleteProjection, updateProjection, addProjection,
         getFilmRequests, addFilmRequest, deleteFilmRequest, getGenresOfFilmRequest, filmsRequests, filmsGenresRequests,
-        acceptFilmRequest, refuseFilmRequest, deleteAcceptedFilm, getStandsByFilmId, standsInSelectedFilm
+        acceptFilmRequest, refuseFilmRequest, deleteAcceptedFilm, getStandsByFilmId, standsInSelectedFilm, getAllFilmGenresRequests
     }
 })
