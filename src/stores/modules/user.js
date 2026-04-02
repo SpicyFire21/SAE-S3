@@ -56,6 +56,7 @@ export const useUserStore = defineStore('user', () => {
             email: tokenPayload.email,
             droit: String(tokenPayload.droit)
         };
+        return tokenPayload.droit
     };
 
     //action
@@ -90,14 +91,15 @@ export const useUserStore = defineStore('user', () => {
     const Login = async (data) =>{
         try{
             const response = await userService.login(data);
+            let redirect = null;
             if (response.error ===0){
-                setSession(response.data.accessToken)
+                redirect = setSession(response.data.accessToken)
                 // alert("Connexion réussi")
             } else {
                 alert(response.data)
 
             }
-            return response;
+            return redirect;
         }catch (e) {
             console.error(e)
         }

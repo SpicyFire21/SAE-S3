@@ -9,7 +9,7 @@
           <div class="flex-1" v-if="sr.status === 'pending'">
             <h2 class="text-lg font-semibold text-gray-900 mb-1">{{ userStore.getUserById(sr.user_id).name }}</h2>
             <p class="text-gray-700 mb-1">Stand: <span
-                class="font-medium">{{ standStore.getStandByIdForAdmin(sr.standId).name }}</span></p>
+                class="font-medium">{{ standStore.getStandByIdForAdmin(sr.stand_id).name }}</span></p>
             <p class="text-gray-600 text-sm">Date: {{ formatDate(sr.requestDate) }}</p>
             <p class="text-gray-600 text-sm">Status:
               <span :class="{
@@ -57,14 +57,16 @@ const standStore = useStandsStore();
 
 
 async function acceptReservation(sr) {
-  const stand = standStore.getStandByIdForAdmin(sr.standId)
-  stand.owner = sr.user_id;
-  sr.status = "accepted";
+  console.log("sr:" + JSON.stringify(sr))
+  await standStore.acceptStandRequest({
+    idreservation: sr.id
+  })
+
 }
 
 
 async function refuseReservation(sr) {
-  sr.status = "refused";
+  await standStore.deleteStandReservation(sr.id)
 }
 
 

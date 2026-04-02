@@ -41,6 +41,27 @@ export const useStandsStore = defineStore('stands', () => {
         standReservationsRequests.value.push(data);
     }
 
+    const updateStandReservation = (updatedReservation) => {
+        const index = standReservationsRequests.value.findIndex(
+            r => r.id === updatedReservation.id
+        );
+
+        if (index !== -1) {
+            standReservationsRequests.value[index] = updatedReservation;
+        } else {
+            console.warn("Reservation non trouvée :", updatedReservation.id);
+        }
+    };
+
+    const removeStandReservation = (standReservation) => {
+        const index = standReservationsRequests.value.findIndex(sr => sr.id === standReservation.id);
+        if (index !== -1) {
+            standReservationsRequests.value.splice(index, 1);
+        } else {
+            console.warn("Reservation de stand non trouvé :", sr.id);
+        }
+    };
+
 
     const getProjectionsByStandAndFilm = (standId, filmId) => {
         return filmStore.projections.filter(
@@ -83,6 +104,21 @@ export const useStandsStore = defineStore('stands', () => {
         }
     }
 
+    const acceptStandRequest = async(data) =>{
+        try {
+            const response = await standsService.acceptStandReservation(data);
+            if (response.error === 0){
+                updateStandReservation(response.data)
+                return response.data
+            } else {
+                console.error(response.data)
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const addStandRequest = async(data) =>{
         try {
             const response = await standsService.addStandRequest(data);
@@ -108,6 +144,17 @@ export const useStandsStore = defineStore('stands', () => {
     }
 
 
+    const deleteStandReservation = async (id) => {
+        try {
+            const response = await standsService.deleteStandReservation(id);
+            removeStandReservation(response.data)
+            return response.data
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     const getStandTypeById = async (id) => {
         try {
             const response = await standsService.getStandTypeById(id);
@@ -122,7 +169,7 @@ export const useStandsStore = defineStore('stands', () => {
     }
 
     const getStandByIdForAdmin = (id) => {
-        return stands.value.find(s => s.idstand === id);
+        return stands.value.find(s => s.id === id);
     }
 
 
@@ -131,6 +178,6 @@ export const useStandsStore = defineStore('stands', () => {
         stands, selectedStand, getStands, setSelectedStand,
         clearSelectedStand, getStandsTypes, standsTypes, init,
         getProjectionsByStandAndFilm, getStandById, getStandTypeById, getStandsReservationsRequests, addStandRequest, standReservationsRequests,
-        getStandByIdForAdmin, getStandTypeByIdForProvider
+        getStandByIdForAdmin, getStandTypeByIdForProvider, deleteStandReservation, acceptStandRequest
     }
 })

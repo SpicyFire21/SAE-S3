@@ -112,5 +112,14 @@ export const addGoodiesSizes = async (req,res) =>{
 
 
 
+export const removeGoodie = async (req,res) =>{
+    try {
+        let data = await goodieService.removeGoodie(req.params.idgoodie);
 
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la suppression du goodies");
+    }
+}
 

@@ -174,6 +174,8 @@ router.delete("/:idgoodie/colors",[verifyToken,verifyRole([1,2])], goodieControl
  */
 router.delete("/:idgoodie/sizes",[verifyToken,verifyRole([1,2])], goodieController.removeGoodiesSizes)
 
+router.delete("/:idgoodie",[verifyToken,verifyRole([1,2])], goodieController.removeGoodie)
+
 /**
  * @swagger
  * /goodies/{iduser}:

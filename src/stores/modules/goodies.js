@@ -422,7 +422,19 @@ export const useGoodiesStore = defineStore('goodies', () => {
         }
     }
 
+    const deleteGoodie = async (id) => {
+        try {
+            const response = await goodiesService.deleteGoodie(id);
+            if (response.error === 0){
+                removeGoodie(response.data)
+            } else {
+                console.error(response.data)
+            }
 
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
 
 
@@ -474,7 +486,8 @@ export const useGoodiesStore = defineStore('goodies', () => {
         addBasketItems,
         getAllBasketByUserId,
         getAllBasketItems,
-        removeFromBasket
+        removeFromBasket,
+        deleteGoodie
 
 
     }

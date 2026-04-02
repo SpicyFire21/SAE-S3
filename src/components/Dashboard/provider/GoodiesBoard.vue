@@ -305,7 +305,8 @@ async function addGoodieVariants() {
 
 async function removeGoodie(item) {
   if (!sellingActive.value) return
-  goodiesStore.removeGoodie(item)
+  console.log(item)
+  await goodiesStore.deleteGoodie(item.id)
 }
 
 async function toggleSelling() {

@@ -79,3 +79,15 @@ export const removeStandRequest = async (req,res) => {
         return res.status(500).send("Erreur lors de la suppression d'un requête de stands");
     }
 }
+
+
+export const editStandRequest = async (req,res) => {
+    try {
+        let data = await standService.editStandRequest(req.body);
+
+        return res.status(data.status).json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erreur lors de la validation de la requête de stands");
+    }
+}
