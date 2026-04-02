@@ -154,7 +154,7 @@ async function editStandRequest(payload) {
 
         const st = checkRequests.rows[0];
 
-        const editStand = await db.query('UPDATE stands SET owner_id = $1 WHERE id=$2 RETURNING *',[st.user_id,st.id])
+        const editStand = await db.query('UPDATE stands SET owner_id = $1 WHERE id=$2 RETURNING *',[st.user_id,st.stand_id])
         if (editStand.rows.length === 0) {
             return {error: 1, status: 404, data: "Erreur lors de la mise a jour du stand"};
         }

@@ -41,8 +41,20 @@ export const useStandsStore = defineStore('stands', () => {
         standReservationsRequests.value.push(data);
     }
 
-    const removeStandReservation = (sr) => {
-        const index = standReservationsRequests.value.findIndex(sr => sr.id === sr.id);
+    const updateStandReservation = (updatedReservation) => {
+        const index = standReservationsRequests.value.findIndex(
+            r => r.id === updatedReservation.id
+        );
+
+        if (index !== -1) {
+            standReservationsRequests.value[index] = updatedReservation;
+        } else {
+            console.warn("Reservation non trouvée :", updatedReservation.id);
+        }
+    };
+
+    const removeStandReservation = (standReservation) => {
+        const index = standReservationsRequests.value.findIndex(sr => sr.id === standReservation.id);
         if (index !== -1) {
             standReservationsRequests.value.splice(index, 1);
         } else {
@@ -87,6 +99,21 @@ export const useStandsStore = defineStore('stands', () => {
         try {
             const response = await standsService.getStandsReservationsRequests();
             updateStandReservationsRequests(response.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const acceptStandRequest = async(data) =>{
+        try {
+            const response = await standsService.acceptStandReservation(data);
+            if (response.error === 0){
+                updateStandReservation(response.data)
+                return response.data
+            } else {
+                console.error(response.data)
+            }
+
         } catch (e) {
             console.error(e)
         }
@@ -142,7 +169,7 @@ export const useStandsStore = defineStore('stands', () => {
     }
 
     const getStandByIdForAdmin = (id) => {
-        return stands.value.find(s => s.idstand === id);
+        return stands.value.find(s => s.id === id);
     }
 
 
@@ -151,6 +178,6 @@ export const useStandsStore = defineStore('stands', () => {
         stands, selectedStand, getStands, setSelectedStand,
         clearSelectedStand, getStandsTypes, standsTypes, init,
         getProjectionsByStandAndFilm, getStandById, getStandTypeById, getStandsReservationsRequests, addStandRequest, standReservationsRequests,
-        getStandByIdForAdmin, getStandTypeByIdForProvider, deleteStandReservation
+        getStandByIdForAdmin, getStandTypeByIdForProvider, deleteStandReservation, acceptStandRequest
     }
 })
