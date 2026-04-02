@@ -145,6 +145,42 @@ router.post("/reservations", [verifyToken, verifyRole([1,2])], standController.a
  */
 router.delete("/reservations/:idreservation", [verifyToken, verifyRole([1,2])], standController.removeStandRequest)
 
+/**
+ * @swagger
+ * /stands/reservations:
+ *   put:
+ *     tags: [Stands]
+ *     summary: Modifier une demande de réservation de stand
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idreservation:
+ *                 type: string
+ *                 format: uuid
+ *                 default: a81699b9-94d1-4f72-9df4-1588dc1b2cc5
+ *             required:
+ *               - idreservation
+ *     responses:
+ *       200:
+ *         description: Demande modifiée avec succès
+ *       400:
+ *         description: Données invalides
+ *       401:
+ *         description: Non authentifié (JWT manquant ou invalide)
+ *       403:
+ *         description: Accès refusé (rôle insuffisant)
+ *       404:
+ *         description: Demande non trouvée
+ *       500:
+ *         description: Erreur serveur
+ */
+router.put("/reservations", [verifyToken, verifyRole([2])],standController.editStandRequest)
 
 /**
  * @swagger

@@ -7,6 +7,8 @@
  *       properties:
  *         status:
  *           type: string
+ *           enum: ["pending", "accepted", "rejected"]
+ *           default: "pending"
  *         idstand:
  *           type: integer
  *         iduser:
