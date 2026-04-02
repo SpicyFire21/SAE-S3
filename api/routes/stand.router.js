@@ -163,7 +163,7 @@ router.delete("/reservations/:idreservation", [verifyToken, verifyRole([1,2])], 
  *               idreservation:
  *                 type: string
  *                 format: uuid
- *                 default: a81699b9-94d1-4f72-9df4-1588dc1b2cc5
+ *                 default: 1
  *             required:
  *               - idreservation
  *     responses:
