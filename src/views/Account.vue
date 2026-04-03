@@ -216,19 +216,19 @@ const moyenneNotes = computed(() => {
 
 // Paniers payés
 const paidBaskets = computed(() =>
-    goodiesStore.baskets.filter(b => b.state === 'payed' && b.iduser === user.value?.id)
+    goodiesStore.baskets.filter(b => b.state === 'payed' && b.user_id === user.value?.id)
 );
 
 // Items pour un panier
 const paidBasketItemsForBasket = (idbasket) => {
   return goodiesStore.basketItems
-      .filter(i => i.idbasket === idbasket)
+      .filter(i => i.basket_id === idbasket)
       .map(i => ({
         ...i,
-        name: goodiesStore.getName(i.idgoodie),
-        price: goodiesStore.getPrice(i.idgoodie),
-        color: goodiesStore.getColor(i.idcolor),
-        size: goodiesStore.getSize(i.idsize)
+        name: goodiesStore.getName(i.goodie_id),
+        price: goodiesStore.getPrice(i.goodie_id),
+        color: goodiesStore.getColor(i.color_id),
+        size: goodiesStore.getSize(i.color_id)
       }));
 };
 
@@ -244,7 +244,8 @@ onMounted(async () => {
   // récupère les items pour chaque panier
 
   await goodiesStore.getAllBasketItems();
-
+  console.log(goodiesStore.baskets)
+  console.log(goodiesStore.basketItems)
 
   await ticketStore.getBilletsByUserId(user.value.id);
   await reservationStore.getReservationByIdUser(user.value.id);

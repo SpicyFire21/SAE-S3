@@ -155,6 +155,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getAllBasketByUserId = async (id) =>{
         try {
             const response = await goodiesService.getAllBasketByUserId(id);
+            console.log(response)
             if (response.error === 0){
                 setBaskets(response.data)
             } else {
@@ -168,6 +169,7 @@ export const useGoodiesStore = defineStore('goodies', () => {
     const getAllBasketItems = async () =>{
         try {
             const response = await goodiesService.getAllBasketItems();
+            console.log(response)
             if (response.error === 0){
                 setBasketItems(response.data)
             } else {
