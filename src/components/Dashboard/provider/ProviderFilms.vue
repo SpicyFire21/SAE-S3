@@ -50,7 +50,7 @@
         <tbody>
         <tr v-for="request in myRequests" :key="request.id">
           <td class="p-2 border">{{ request.title }}</td>
-          <td class="p-2 border">{{ request.release_date }}</td>
+          <td class="p-2 border">{{ formatDate(request.release_date) }}</td>
           <td class="p-2 border">
             <button @click="deleteRequest(request.id)" class="btn bg-red-400">
               {{ t("ProviderFilms.13") }}
@@ -78,7 +78,7 @@
         <tr v-for="film in myFilms" :key="film.id">
           <td class="p-2 border">{{ film.title }}</td>
           <td class="p-2 border">{{ filmsStore.getGenresOfFilm(film.id).join(', ') }}</td>
-          <td class="p-2 border">{{ film.release_date }}</td>
+          <td class="p-2 border">{{ formatDate(film.release_date) }}</td>
           <td class="p-2 border">
             <div v-for="score in getVotesByFilm(film.id)" :key="score.category">
               {{ score.category }} : {{ score.total_score }}
@@ -200,6 +200,18 @@ const getGenresOfFilm = (filmId) => {
 // Récupérer les votes depuis votesStore
 const getVotes = (filmId) => {
   return votesStore.getVotesForFilm(filmId);
+}
+
+const formatDate = (dateString) => {
+  if (!dateString) return "Date non définie";
+
+  const date = new Date(dateString);
+
+  return new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
 }
 
 // Initialisation
