@@ -213,7 +213,7 @@ async function deleteAllScoresByFilm(idFilm) {
     if (!idFilm) return { error: 1, status: 400, data: 'idFilm manquant' };
     try {
         const res = await db.query('DELETE FROM votes_score WHERE film_id=$1 RETURNING *',[idFilm]);
-        return { error: 0, status: 200, data:res };
+        return { error: 0, status: 200, data:res.rows[0] };
     } catch (error) {
         console.error(error);
         return { error: 1, status: 500, data: 'Erreur lors de la suppression des scores ' };

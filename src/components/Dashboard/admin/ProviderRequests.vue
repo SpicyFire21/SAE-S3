@@ -47,12 +47,15 @@ const headers = [
 ]
 
 async function accept(data) {
+  console.log(data)
   await userStore.registerProvider(data)
-  await adminStore.removeProviderRequests(data);
+  await adminStore.deleteProviderRequests(data.id);
+
 }
 
 async function refuse(data) {
-  await adminStore.deleteProviderRequests(data);
+  console.log(data)
+  await adminStore.deleteProviderRequests(data.id);
 }
 
 

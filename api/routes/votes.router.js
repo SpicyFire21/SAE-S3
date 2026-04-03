@@ -177,7 +177,7 @@ router.delete("/scores",voteController.deleteAllScores);
  *       500:
  *         description: Erreur serveur
  */
-router.delete("/scores/:idFilm",voteController.deleteAllScoresByFilm);
+router.delete("/scores/:idfilm",voteController.deleteAllScoresByFilm);
 
 /**
  * @swagger

@@ -103,6 +103,7 @@ async function deleteAllVotesFromAPI() {
 }
 
 async function deleteAllScoresByFilmFromAPI(id) {
+    console.log("id :",id)
     return deleteRequest(`/votes/scores/${id}`,'DELETE-ALL-SCORES-BY-FILM-ID')
 }
 
