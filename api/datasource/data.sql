@@ -630,3 +630,5 @@ INSERT INTO autograph_reservations (reservation_id, autograph_id) VALUES
                                                                       (2, 1),
                                                                       (5, 2),
                                                                       (6, 3);
+
+SELECT setval('reservations_id_seq', (SELECT MAX(id) FROM reservations));
